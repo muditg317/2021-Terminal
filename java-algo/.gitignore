@@ -4,3 +4,4 @@
 build/*
 !build/docs
 out
+!algos/**/*.jar
