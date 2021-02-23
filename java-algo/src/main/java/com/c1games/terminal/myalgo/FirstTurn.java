@@ -22,7 +22,7 @@ public class FirstTurn {
     final Coords[] upgrades = {new Coords(13,3)};
 //    Utility.placeTurrets(move, turrets);
 //    Utility.placeWalls(move, walls);
-    Utility.placeFactories(move, factories);
+    Utility.placeSupports(move, factories);
     Utility.applyUpgrades(move, upgrades);
 
     //spawn mobile units

@@ -242,7 +242,7 @@ public class Utility {
    * @param move    the game state on which to deploy moves
    * @param locations the locations to place them
    */
-  static int placeFactories(GameState move, Coords[] locations) {
+  static int placeSupports(GameState move, Coords[] locations) {
     return move.attemptSpawnMultiple(Arrays.asList(locations), SUPPORT);
   }
 

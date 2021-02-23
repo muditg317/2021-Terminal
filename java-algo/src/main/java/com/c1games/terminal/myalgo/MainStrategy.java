@@ -89,7 +89,7 @@ public class MainStrategy {
     int saveCores = 0;
 
     if (algoState.awaitingBoom) {
-      int ourSPIncome = 5 + countOurUpgradedFactories() * 3;
+      int ourSPIncome = 5;
       int growthByBoom = algoState.turnsUntilBoom * ourSPIncome;
       //we need ATLEAST 25 by the time we boom with all walls and a few turrets at the end
       saveCores = Math.max(0, 25 - growthByBoom);
@@ -220,7 +220,7 @@ public class MainStrategy {
       }
     }).forEach(location -> {
       if (numFactories[0] > 0 && location.y < 11) {
-        Utility.placeFactories(move, new Coords[]{location});
+        Utility.placeSupports(move, new Coords[]{location});
         numFactories[0]--;
       } else {
         Utility.placeWalls(move, new Coords[]{location});
@@ -267,7 +267,6 @@ public class MainStrategy {
     int rightCost = rightHeuristic[0] + rightHeuristic[1];
 
     int cheaperCost = Math.min(leftCost, rightCost);
-    int enemySPIncome = 5 + countEnemyUpgradedFactories() * 3;
 
     return cheaperCost;
   }
@@ -346,9 +345,9 @@ public class MainStrategy {
       for (Unit attacker : attackers) {
         if (attacker.owner == PlayerId.Player2) {
           if (attacker.upgraded) {
-            effectiveTurretRating += 40/3;
+            effectiveTurretRating += 20;
           } else {
-            effectiveTurretRating += 5;
+            effectiveTurretRating += 6;
           }
         }
       }
@@ -362,11 +361,10 @@ public class MainStrategy {
    */
   private static float extrapolateFutureMP(int turns, int expectedBaseCostPerTurn) {
     float currentMP = move.data.p1Stats.bits;
-    int numFactories = move.data.p1Units.support.size();
     for(int i = 0; i < turns; i++) {
-      int baseMPIncome = 5 + (move.data.turnInfo.turnNumber + i) / 10;
+      int baseMPIncome = 4 + (move.data.turnInfo.turnNumber + i) / 10;
       currentMP *= 0.75;
-      currentMP += baseMPIncome + numFactories - expectedBaseCostPerTurn;
+      currentMP += baseMPIncome - expectedBaseCostPerTurn;
     }
     return currentMP;
   }
@@ -612,14 +610,16 @@ public class MainStrategy {
     float enemyMPIncome = baseMPIncome + move.data.p2Units.support.size();
     float defenseRating = calculateDefenseRating();
 
-    //we want to scale our defensives with the number of our factories
-    int numFactories = countOurUpgradedFactories();
 
     //we want atleast 1 rating per 1 MP they have
     double enemyAttackRating = 1.7 * enemyMP + (0 * enemyMPIncome) - (ourHealth * 0.1) + 15;
-    return (int) Math.ceil(enemyAttackRating - defenseRating) + (numFactories);
+    return (int) Math.ceil(enemyAttackRating - defenseRating);
   }
 
+  /**
+   * Calculates some rating of our defense...
+   * @return
+   */
   private static float calculateDefenseRating() {
 
    float leftRating = 0;
@@ -660,48 +660,7 @@ public class MainStrategy {
     return 2 * Math.min(leftRating, rightRating);
   }
 
-  private static int countEnemyUpgradedFactories() {
-    int count = 0;
-    List<Unit>[][] allUnits = move.allUnits;
-    for (int x = 0; x < allUnits.length; x++) {
-      List<Unit>[] row = allUnits[x];
-      for (List<Unit> units : row) {
-        if (units.isEmpty() || move.isInfo(units.get(0).type)) {
-          continue;
-        }
-        Unit unit = units.get(0);
-        if (unit.owner == PlayerId.Player2) { //this is enemy firewall
-          float unitValue = 0;
-          if(unit.type == Utility.SUPPORT && unit.upgraded) {
-            count++;
-          }
 
-        }
-      }
-    }
-    return count;
-  }
-  private static int countOurUpgradedFactories() {
-    int count = 0;
-    List<Unit>[][] allUnits = move.allUnits;
-    for (int x = 0; x < allUnits.length; x++) {
-      List<Unit>[] row = allUnits[x];
-      for (List<Unit> units : row) {
-        if (units.isEmpty() || move.isInfo(units.get(0).type)) {
-          continue;
-        }
-        Unit unit = units.get(0);
-        if (unit.owner == PlayerId.Player1) { //this is our firewall
-          float unitValue = 0;
-          if(unit.type == Utility.SUPPORT && unit.upgraded) {
-            count++;
-          }
-
-        }
-      }
-    }
-    return count;
-  }
   /**
    * How many of a certain unit type we can afford. Copied and modified from GameState.java
    */
