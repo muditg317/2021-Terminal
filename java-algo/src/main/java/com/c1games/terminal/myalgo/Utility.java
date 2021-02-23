@@ -1,4 +1,4 @@
-package com.c1games.terminal.turtlealgo;
+package com.c1games.terminal.myalgo;
 
 import com.c1games.terminal.algo.Config;
 import com.c1games.terminal.algo.Coords;
@@ -39,7 +39,7 @@ public class Utility {
    * @param move
    * @return the number of cores that were ever invested
    */
-  static void trackEnemyCoresInvestedInFactories(TurtleAlgo algoState, GameState move) {
+  static void trackEnemyCoresInvestedInFactories(MyAlgo algoState, GameState move) {
     List<FrameData.Events.SpawnEvent> spawnEvents = move.data.events.spawn;
     for(FrameData.Events.SpawnEvent spawnEvent : spawnEvents) {
       if (spawnEvent.owner == PlayerId.Player2) {
@@ -181,7 +181,7 @@ public class Utility {
   /**
    * Build defenses reactively based on where we got scored on
    */
-  static void buildReactiveDefenses(TurtleAlgo algoState, GameState move) {
+  static void buildReactiveDefenses(MyAlgo algoState, GameState move) {
     for (int i = algoState.scoredOnLocations.size() - 1; i > 0; i--) {
       ArrayList<Coords> locations = algoState.scoredOnLocations.get(i);
       for (Coords loc : locations) {

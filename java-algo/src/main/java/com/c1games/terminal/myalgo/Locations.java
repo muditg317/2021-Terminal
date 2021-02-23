@@ -1,4 +1,4 @@
-package com.c1games.terminal.turtlealgo;
+package com.c1games.terminal.myalgo;
 
 import com.c1games.terminal.algo.Coords;
 

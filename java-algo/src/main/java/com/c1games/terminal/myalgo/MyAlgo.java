@@ -1,4 +1,4 @@
-package com.c1games.terminal.turtlealgo;
+package com.c1games.terminal.myalgo;
 
 import com.c1games.terminal.algo.Config;
 import com.c1games.terminal.algo.Coords;
@@ -8,19 +8,14 @@ import com.c1games.terminal.algo.PlayerId;
 import com.c1games.terminal.algo.io.GameLoop;
 import com.c1games.terminal.algo.io.GameLoopDriver;
 import com.c1games.terminal.algo.map.GameState;
-import com.c1games.terminal.algo.map.MapBounds;
-import com.c1games.terminal.algo.map.Unit;
-import com.c1games.terminal.algo.units.UnitType;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 /**
  * Turtle Algo:
  */
-public class TurtleAlgo implements GameLoop {
+public class MyAlgo implements GameLoop {
 
   final static int NUM_EARLY_GAME_TURNS = 5;
 
@@ -32,7 +27,7 @@ public class TurtleAlgo implements GameLoop {
   String boomSide = "";
 
   public static void main(String[] args) {
-    new GameLoopDriver(new TurtleAlgo()).run();
+    new GameLoopDriver(new MyAlgo()).run();
   }
 
 

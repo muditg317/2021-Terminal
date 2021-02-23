@@ -1,4 +1,4 @@
-package com.c1games.terminal.turtlealgo;
+package com.c1games.terminal.myalgo;
 
 import com.c1games.terminal.algo.Coords;
 import com.c1games.terminal.algo.FrameData;
@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class SecondTurn {
-  private static TurtleAlgo algoState;
+  private static MyAlgo algoState;
   private static GameState move;
 
   /**
@@ -24,7 +24,7 @@ public class SecondTurn {
    *
    * @param move
    */
-  static void execute(TurtleAlgo algoState, GameState move) {
+  static void execute(MyAlgo algoState, GameState move) {
     SecondTurn.algoState = algoState;
     SecondTurn.move = move;
     float enemyMP = move.data.p2Stats.bits;

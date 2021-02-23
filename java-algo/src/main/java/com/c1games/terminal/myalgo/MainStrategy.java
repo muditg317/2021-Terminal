@@ -1,4 +1,4 @@
-package com.c1games.terminal.turtlealgo;
+package com.c1games.terminal.myalgo;
 
 import com.c1games.terminal.algo.*;
 import com.c1games.terminal.algo.map.CanSpawn;
@@ -12,13 +12,13 @@ import javax.naming.InsufficientResourcesException;
 import java.util.*;
 
 public class MainStrategy {
-  private static TurtleAlgo algoState;
+  private static MyAlgo algoState;
   private static GameState move;
   /**
    * Places the two factories, turret, and wall as first turn
    * @param move the game state dude bruh
    */
-  static void execute(TurtleAlgo algoState, GameState move) {
+  static void execute(MyAlgo algoState, GameState move) {
     MainStrategy.algoState = algoState;
     MainStrategy.move = move;
     // Defenses
