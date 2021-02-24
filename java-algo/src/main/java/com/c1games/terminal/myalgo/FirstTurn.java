@@ -18,16 +18,16 @@ public class FirstTurn {
     //place buildings
     //Get the core corner turrets down
     Coords firstLeftTurret = new Coords(3, 13);
-    Utility.placeTurrets(move, new Coords[]{firstLeftTurret});
+    SpawnUtility.placeTurrets(move, new Coords[]{firstLeftTurret});
     Coords firstRightTurret = new Coords(24, 13);
-    Utility.placeTurrets(move, new Coords[]{firstRightTurret});
-    Utility.applyUpgrades(move, new Coords[]{firstLeftTurret, firstRightTurret});
+    SpawnUtility.placeTurrets(move, new Coords[]{firstRightTurret});
+    SpawnUtility.applyUpgrades(move, new Coords[]{firstLeftTurret, firstRightTurret});
     //get the main wall down
-    Utility.placeWalls(move, Locations.mainWallCoords);
+    SpawnUtility.placeWalls(move, Locations.mainWallCoords);
 
     //place down left entrance turret
     Coords leftEntranceTurret = new Coords(4, 11);
-    Utility.placeTurrets(move, new Coords[]{leftEntranceTurret});
+    SpawnUtility.placeTurrets(move, new Coords[]{leftEntranceTurret});
 
     //place corner walls down
 
