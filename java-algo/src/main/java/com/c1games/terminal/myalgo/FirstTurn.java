@@ -16,16 +16,23 @@ public class FirstTurn {
     FirstTurn.move = move;
 
     //place buildings
-//    final Coords[] turrets = {new Coords(13,1)};
-//    final Coords[] walls = {new Coords(14,1)};
-    final Coords[] factories = {new Coords(13,3), new Coords(14,3)};
-    final Coords[] upgrades = {new Coords(13,3)};
-//    Utility.placeTurrets(move, turrets);
-//    Utility.placeWalls(move, walls);
-    SpawnUtility.placeSupports(move, factories);
-    SpawnUtility.applyUpgrades(move, upgrades);
+    //Get the core corner turrets down
+    Coords firstLeftTurret = new Coords(3, 13);
+    Utility.placeTurrets(move, new Coords[]{firstLeftTurret});
+    Coords firstRightTurret = new Coords(24, 13);
+    Utility.placeTurrets(move, new Coords[]{firstRightTurret});
+    Utility.applyUpgrades(move, new Coords[]{firstLeftTurret, firstRightTurret});
+    //get the main wall down
+    Utility.placeWalls(move, Locations.mainWallCoords);
 
-    //spawn mobile units
-    SpawnUtility.spawnInterceptors(move, Locations.spacedInters5, 1);
+    //place down left entrance turret
+    Coords leftEntranceTurret = new Coords(4, 11);
+    Utility.placeTurrets(move, new Coords[]{leftEntranceTurret});
+
+    //place corner walls down
+
+
+    //spawn mobile units - Right now we are doing nothing
+    //Utility.spawnInterceptors(move, Locations.spacedInters5, 1);
   }
 }
