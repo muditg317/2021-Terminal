@@ -5,4 +5,4 @@ if (!$args[1]) { $algo2="$defaultAlgo\run.ps1" } else { $algo2="$($args[1])\run.
 echo p1: $algo1
 echo p2: $algo2
 
-java -jar engine.jar work $algo1 $algo2
+java12 -jar engine.jar work $algo1 $algo2

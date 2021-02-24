@@ -135,9 +135,9 @@ class Locations {
 
 
 
-  //FACTORY LOCATIONS
+  //SUPPORT TOWER LOCATIONS
 
-  static final Coords[] factoryCoords = {
+  static final Coords[] supportTowerCoords = {
           new Coords(13, 3),
           new Coords(14, 3),
 

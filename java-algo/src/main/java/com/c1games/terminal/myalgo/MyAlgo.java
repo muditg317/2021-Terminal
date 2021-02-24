@@ -21,7 +21,7 @@ public class MyAlgo implements GameLoop {
 
   final Random rand = new Random();
   ArrayList<ArrayList<Coords>> scoredOnLocations = new ArrayList<>();
-  int enemyFactoryCoresInvestment = 0;
+  int enemySupportTowerCoresInvestment = 0;
   boolean awaitingBoom = false;
   int turnsUntilBoom = -1;
   String boomSide = "";

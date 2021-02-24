@@ -33,35 +33,35 @@ public class SecondTurn {
     defensiveInters();
 
     //structure strategy
-    greedyFactory();
+    greedySupportTowers();
   }
 
   /**
-   * Upgrade factory (min 9 SP). Saves ATLEAST 1 core (currently 2)
+   * Upgrade supportTower (min 9 SP). Saves ATLEAST 1 core (currently 2)
    */
-  static void greedyFactory() {
-    for (FrameData.PlayerUnit factory : move.data.p1Units.support) {
+  static void greedySupportTowers() {
+    for (FrameData.PlayerUnit supportTower : move.data.p1Units.support) {
       boolean isUpgraded = false;
       for (FrameData.PlayerUnit upgrade : move.data.p1Units.upgrade) {
-        if (upgrade.x == factory.x && upgrade.y == factory.y) {
+        if (upgrade.x == supportTower.x && upgrade.y == supportTower.y) {
           isUpgraded = true;
           break;
         }
       }
-      if (!isUpgraded && move.attemptUpgrade(new Coords(factory.x,factory.y)) != 1) {
+      if (!isUpgraded && move.attemptUpgrade(new Coords(supportTower.x,supportTower.y)) != 1) {
         break;
       }
     }
   }
 
   /**
-   * put defenses until 1 core is left (used to guarantee factory on next turn)
+   * put defenses until 1 core is left (used to guarantee supportTower on next turn)
    */
   static void save1Core() {
     final Coords[] walls = {new Coords(9,9), new Coords(19,9)};
     final Coords[] turrets = {new Coords(9,8), new Coords(19,8)};
-    Utility.placeTurrets(move, turrets);
-    Utility.placeWalls(move, walls);
+    SpawnUtility.placeTurrets(move, turrets);
+    SpawnUtility.placeWalls(move, walls);
   }
 
   /**
@@ -71,8 +71,8 @@ public class SecondTurn {
   static void fullDefensiveStructures() {
     final Coords[] walls = {new Coords(8,9), new Coords(9,9), new Coords(19,9), new Coords(20,9)};
     final Coords[] turrets = {new Coords(9,8), new Coords(19,8)};
-    Utility.placeTurrets(move, turrets);
-    Utility.placeWalls(move, walls);
+    SpawnUtility.placeTurrets(move, turrets);
+    SpawnUtility.placeWalls(move, walls);
 
     //let's just save it  -> commented out for now
     // fullDefensiveStructures_extraCores(move);
@@ -83,7 +83,7 @@ public class SecondTurn {
     // if we have extra cores (sp)
     final Coords[] extraWall = {new Coords(7,8)};
     if (move.data.p1Stats.cores > 0) {
-      Utility.placeWalls(move, extraWall);
+      SpawnUtility.placeWalls(move, extraWall);
     }
     //if we have one core, just save it
     //at this point, max cores == 4,
@@ -105,7 +105,7 @@ public class SecondTurn {
    */
   static void hailmaryIntersCorner() {
     int bits = (int) move.data.p1Stats.bits;
-    Utility.spawnInterceptors(move, Locations.hailmaryInters, bits);
+    SpawnUtility.spawnInterceptors(move, Locations.hailmaryInters, bits);
   }
 
   /**
@@ -130,7 +130,7 @@ public class SecondTurn {
     }
     final Coords[] hailmaryInters = {bestLocations.get(0)};
     int bits = (int) move.data.p1Stats.bits;
-    Utility.spawnInterceptors(move, hailmaryInters, bits);
+    SpawnUtility.spawnInterceptors(move, hailmaryInters, bits);
     return true;
   }
 
@@ -139,7 +139,7 @@ public class SecondTurn {
    * interceptor hit
    */
   static void defensiveInters() {
-    Utility.spawnInterceptors(move, Locations.spacedInters7, 1);
+    SpawnUtility.spawnInterceptors(move, Locations.spacedInters7, 1);
   }
 
   /**
@@ -242,7 +242,7 @@ public class SecondTurn {
     }
 
     if (bestCoord != null) {
-      Utility.spawnDemolishers(move, new Coords[]{bestCoord}, (int) move.data.p1Stats.bits / 3);
+      SpawnUtility.spawnDemolishers(move, new Coords[]{bestCoord}, (int) move.data.p1Stats.bits / 3);
     }
   }
 }

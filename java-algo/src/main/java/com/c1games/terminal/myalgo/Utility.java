@@ -44,12 +44,12 @@ public class Utility {
     for(FrameData.Events.SpawnEvent spawnEvent : spawnEvents) {
       if (spawnEvent.owner == PlayerId.Player2) {
         if (spawnEvent.spawningUnitType == SUPPORT) {
-          algoState.enemyFactoryCoresInvestment += 9;
+          algoState.enemySupportTowerCoresInvestment += 9;
         }
         else if (spawnEvent.spawningUnitType == UnitType.Upgrade) {
           Coords coords = spawnEvent.spawnLocation;
           if (move.getWallAt(coords).type == SUPPORT) {
-            algoState.enemyFactoryCoresInvestment += 9;
+            algoState.enemySupportTowerCoresInvestment += 9;
           }
         }
       }
@@ -193,7 +193,7 @@ public class Utility {
 
   static void empLineStrategy(GameState move) {
     /*
-    First lets fine the cheapest type of firewall stationary unit. We could hardcode this to FILTER probably
+    First lets fine the cheapest type of structure  stationary unit. We could hardcode this to FILTER probably
     depending on the config but lets demonstrate how to use java-algo features.
      */
     Config.UnitInformation cheapestUnit = null;
@@ -206,7 +206,7 @@ public class Utility {
       }
     }
     if (cheapestUnit == null) {
-      GameIO.debug().println("There are no firewalls?");
+      GameIO.debug().println("There are no structure s?");
     }
 
     for (int x = 27; x>=5; x--) {
@@ -219,124 +219,4 @@ public class Utility {
   }
 
 
-  /**
-   * spawn turrets at the specified locations
-   * @param move    the game state on which to deploy moves
-   * @param locations the locations to spawn them
-   */
-  static int placeTurrets(GameState move, Coords[] locations) {
-    return move.attemptSpawnMultiple(Arrays.asList(locations),TURRET);
-  }
-
-  /**
-   * place walls at the specified locations
-   * @param move    the game state on which to deploy moves
-   * @param locations the locations to place them
-   */
-  static int placeWalls(GameState move, Coords[] locations) {
-    return move.attemptSpawnMultiple(Arrays.asList(locations),WALL);
-  }
-
-  /**
-   * place factories at the specified locations
-   * @param move    the game state on which to deploy moves
-   * @param locations the locations to place them
-   */
-  static int placeSupports(GameState move, Coords[] locations) {
-    return move.attemptSpawnMultiple(Arrays.asList(locations), SUPPORT);
-  }
-
-  /**
-   * apply upgrades at the specified locations
-   * @param move    the game state on which to deploy moves
-   * @param locations the locations to apply them to
-   */
-  static int applyUpgrades(GameState move, Coords[] locations) {
-    return move.attemptUpgradeMultiple(Arrays.asList(locations));
-  }
-
-  /**
-   * removes one tower at the specified location
-   * @param move    the game state on which to deploy moves
-   * @param location the location to remove them from
-   */
-  static int removeBuilding(GameState move, Coords location) {
-    return move.attemptRemoveStructure(location);
-  }
-
-  /**
-   * removes towers at the specified locations
-   * @param move    the game state on which to deploy moves
-   * @param locations the locations to remove them from
-   */
-  static int removeBuildings(GameState move, Coords[] locations) {
-    return move.attemptRemoveStructureMultiple(Arrays.asList(locations));
-  }
-
-  /**
-   * spawn scouts at the specified locations
-   * @param move    the game state on which to deploy moves
-   * @param locations the locations to spawn them
-   */
-  static int spawnScouts(GameState move, Coords[] locations) {
-    return move.attemptSpawnMultiple(Arrays.asList(locations),SCOUT);
-  }
-
-  /**
-   * spawn demolishers at the specified locations
-   * @param move    the game state on which to deploy moves
-   * @param locations the locations to spawn them
-   */
-  static int spawnScouts(GameState move, Coords[] locations, int num) {
-    int count = 0;
-    for (int i = 0; i < num; i ++) {
-      count += move.attemptSpawnMultiple(Arrays.asList(locations),SCOUT);
-    }
-    return count;
-  }
-
-  /**
-   * spawn demolishers at the specified locations
-   * @param move    the game state on which to deploy moves
-   * @param locations the locations to spawn them
-   */
-  static int spawnDemolishers(GameState move, Coords[] locations) {
-    return move.attemptSpawnMultiple(Arrays.asList(locations),DEMOLISHER);
-  }
-
-  /**
-   * spawn demolishers at the specified locations
-   * @param move    the game state on which to deploy moves
-   * @param locations the locations to spawn them
-   */
-  static int spawnDemolishers(GameState move, Coords[] locations, int num) {
-    int count = 0;
-    for (int i = 0; i < num; i ++) {
-      count += move.attemptSpawnMultiple(Arrays.asList(locations),DEMOLISHER);
-    }
-    return count;
-  }
-
-  /**
-   * spawn interceptors at the specified locations
-   * @param move    the game state on which to deploy moves
-   * @param locations the locations to spawn them
-   */
-  static int spawnInterceptors(GameState move, Coords[] locations) {
-    return move.attemptSpawnMultiple(Arrays.asList(locations),INTERCEPTOR);
-  }
-
-  /**
-   * spawn interceptors at the specified locations
-   * @param move    the game state on which to deploy moves
-   * @param locations the locations to spawn them
-   * @param num     number of interceptors to spawn at each location specified
-   */
-  static int spawnInterceptors(GameState move, Coords[] locations, int num) {
-    int count = 0;
-    for (int i = 0; i < num; i ++) {
-      count += move.attemptSpawnMultiple(Arrays.asList(locations),INTERCEPTOR);
-    }
-    return count;
-  }
 }
