@@ -31,6 +31,9 @@ class Locations {
 
   //THE MAIN WALL ======================
   static final Coords[] mainWallCoords = {
+      new Coords(13, 2),
+      new Coords(14, 2),
+
       new Coords(12,3),
       new Coords(15, 3),
 
