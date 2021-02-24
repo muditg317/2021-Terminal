@@ -25,32 +25,26 @@ public class MainStrategy {
     /*
     We need a good heuristic that considers the enemy MP and factories to decide when to put more defenses vs more factories
      */
+    //always set up the essential defenses
+    setUpEssentialDefense();
     float mp = move.data.p1Stats.bits;
+    float sp = move.data.p1Stats.cores;
     int turnNumber = move.data.turnInfo.turnNumber;
-    int enemyMPCapacity = (int) move.data.p2Stats.bits * 5;
-    double enemyMPPercentCapacity = move.data.p2Stats.bits / enemyMPCapacity;
-    int scoutRushDefense = (int) ((2.0 * (move.data.p2Stats.bits) / 5) - (turnNumber / 2));
-    if (enemyMPPercentCapacity < 0.3) {
-      scoutRushDefense = 0;
-    }
-    scoutRushDefense = (int) Math.min(mp, scoutRushDefense);
-    if (turnNumber < 6) {
-      scoutRushDefense = (int) mp;
-    }
 
-    int reducedscoutRushDefense = (int) Math.max(0, scoutRushDefense - move.data.p2Stats.integrity + 1);
+
+    int scoutRushDefense = StrategyUtility.neededScoutRushDefense(move);
+    int reducedScoutRushDefense = (int) Math.max(0, scoutRushDefense - move.data.p2Stats.integrity + 1);
 
     GameIO.debug().println("Turn Number:" + turnNumber);
     GameIO.debug().println("scoutRushDefense:" + scoutRushDefense);
-    GameIO.debug().println("reducedscoutRushDefense: " + reducedscoutRushDefense);
+    GameIO.debug().println("reducedScoutRushDefense: " + reducedScoutRushDefense);
     GameIO.debug().println("Enemy left corner heuristic: " + StrategyUtility.enemyDefenseHeuristic(move, "LEFT"));
     GameIO.debug().println("Enemy right corner heuristic: " + StrategyUtility.enemyDefenseHeuristic(move, "RIGHT"));
 
-
     //
     deleteDamagedStructures();
-    //DECIDE TO BOOM OR NOT HERE.
 
+    //DECIDE TO BOOM OR NOT HERE.==========================
     GameIO.debug().println("BOOM DECISION: ===========");
     int MAX_EXTRAPOLATION_TURNS = Math.min(10, move.data.turnInfo.turnNumber);
     if (algoState.turnsUntilBoom != 0) { //we WILL boom this turn. no need to check.
@@ -63,7 +57,7 @@ public class MainStrategy {
       for (; turns <= MAX_EXTRAPOLATION_TURNS; turns++) {
         AttackBreakdown futureAttack = StrategyUtility.futureAttackThreshold(move, turns);
         float futureAttackThreshold = futureAttack.units.cost;
-        float futureMP = StrategyUtility.extrapolateFutureMP(move, turns, reducedscoutRushDefense);
+        float futureMP = StrategyUtility.extrapolateFutureMP(move, turns, reducedScoutRushDefense);
         GameIO.debug().println("futureAttackThreshold: " + futureAttackThreshold);
         GameIO.debug().println("futureMP: " + futureMP);
         if (futureMP >= futureAttackThreshold) {
@@ -84,8 +78,6 @@ public class MainStrategy {
     GameIO.debug().println("turnsUntilBoom" + algoState.turnsUntilBoom);
 
 
-    //TODO: if buildings die, replace all then upgrade all
-
     //make sure we have enough for boom wall
     int saveCores = 0;
 
@@ -100,14 +92,11 @@ public class MainStrategy {
       }
     }
     GameIO.debug().println("Turn " + turnNumber+ ": with" + saveCores + " saveCores! We currently have " + move.data.p1Stats.cores + "cores!" );
-    int defenseBudget = StrategyUtility.defenseHeuristic(move);//TODO: need to get a bit more factories bc they're always getting more factories than us
+    int defenseBudget = StrategyUtility.neededDefenseSpending(move);
 
     if (defenseBudget > 0) { //we should smartly set up defenses
       defenseBudget = (int) Math.min(defenseBudget, move.data.p1Stats.cores - saveCores);
 
-//      if (move.data.p1Stats.cores > 9 && (move.data.p1Stats.cores - defenseBudget) % 9 >= 7) {
-//        defenseBudget -= 9;
-//      }
       setUpDefenseWithBudget(defenseBudget);
     }
 
@@ -117,7 +106,6 @@ public class MainStrategy {
 //    int prevDamage = algoState.scoredOnLocations.get(algoState.scoredOnLocations.size() - 1).size();
 //    float health = move.data.p1Stats.integrity;
 //    if (health / (health + prevDamage) >= 0.8) {
-    upgradeOrBuildFactoriesWithBudget((int) remainingCores - saveCores);
 //    }
     GameIO.debug().println(saveCores + " saveCores! We currently have " + move.data.p1Stats.cores + "cores!" );
 
@@ -139,14 +127,10 @@ public class MainStrategy {
       GameIO.debug().println("Cores:" + move.data.p1Stats.cores);
       clearBoomPath(boomSide);
       placeBoomLid(boomSide);
-      if (mp >= 106) {
-        SpawnUtility.spawnInterceptors(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 20 : 7, 6)}, 16);
-        SpawnUtility.spawnDemolishers(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 11 : 16, 2)}, 25);
-        SpawnUtility.spawnInterceptors(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 11 : 16, 2)}, 15);
-      } else {
-        SpawnUtility.spawnInterceptors(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 23 : 4, 9)}, numInters);
-        SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 6 : 21, 7)}, (int) move.data.p1Stats.bits);
-      }
+
+      SpawnUtility.spawnInterceptors(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 23 : 4, 9)}, numInters);
+      SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 6 : 21, 7)}, (int) move.data.p1Stats.bits);
+
       SpawnUtility.removeBuilding(move, new Coords(boomSide.equals("RIGHT") ? 6 : 21, 8));
       SpawnUtility.removeBuilding(move, new Coords(3, 12));
       algoState.awaitingBoom = false;
@@ -154,8 +138,8 @@ public class MainStrategy {
     } else { // otherwise do not do the boom, check for it
 
       if (algoState.awaitingBoom) { // we are going to boom
-        spawnDefensiveInters(reducedscoutRushDefense);
-        if (algoState.turnsUntilBoom == 1) {
+        spawnDefensiveInters(reducedScoutRushDefense);
+        if (algoState.turnsUntilBoom == 1) { //prepare to do the boom next turn
           clearBoomPath("LEFT");
           clearBoomPath("RIGHT");
           GameIO.debug().println("clearing path for future BOOM!!");
@@ -166,6 +150,10 @@ public class MainStrategy {
       }
     }
   }
+
+  /**
+   * Marks all damaged structures for deletion.
+   */
   private static void deleteDamagedStructures() {
     List<Unit>[][] allUnits = move.allUnits;
     for (int x = 0; x < allUnits.length; x++) {
@@ -179,18 +167,14 @@ public class MainStrategy {
         if (unit.owner == PlayerId.Player1) { //this is our structure
           double startHealth = unit.unitInformation.startHealth.getAsDouble();
           float enemyMP = move.data.p2Stats.bits;
-          if (enemyMP > move.data.p1Stats.integrity) {
-            if (y == 13 && unit.health < startHealth) {
-              SpawnUtility.removeBuilding(move, new Coords(x, y));
-            }
-          }
-          else if (unit.health * 2 < startHealth) { //thing is damaged
+          if (unit.health < startHealth) { //thing is damaged
             SpawnUtility.removeBuilding(move, new Coords(x, y));
           }
         }
       }
     }
   }
+
   /**
    * returns true if the lid is successfully placed
    * @param boomSide
@@ -277,31 +261,55 @@ public class MainStrategy {
       move.attemptSpawn(rightCoord, Utility.INTERCEPTOR);
     }
   }
-  /**
-   * Spends as much of the budget as it can on supportTower upgrades
-   * @param budget
-   */
-  private static void upgradeOrBuildFactoriesWithBudget(int budget) {
-    upgradeOrBuildFactoriesWithBudget(budget, Locations.supportTowerCoords);
-  }
 
-  private static void upgradeOrBuildFactoriesWithBudget(int budget, Coords[] supportTowerLocations) {
-    //first we want to prioritize upgrading already existing factories
-    Coords lastPlaced = null;
+  /**
+   * Sets up essential defenses (the triangle and some towers)
+   */
+  private static void setUpEssentialDefense() {
+    int budget = (int) move.data.p1Stats.cores; //can use everything to setup essential defense
     int spent = 0;
     try {
-      spent += attemptSpawnIfAffordable(new Coords(13, 0), Utility.SUPPORT, true, budget - spent);
-      spent += attemptSpawnIfAffordable(new Coords(14, 0), Utility.SUPPORT, true, budget - spent);
 
-      for (Coords location : supportTowerLocations) {
-        spent += attemptSpawnIfAffordable(location, Utility.SUPPORT, false, budget - spent);
-        if (!algoState.awaitingBoom) {
-          spent += attemptSpawnIfAffordable(location, Utility.SUPPORT, true, budget - spent);
-        }
-        lastPlaced = location;
+      //Get the core corner turrets down
+      Coords firstLeftTurret = new Coords(3, 13);
+      spent += attemptSpawnIfAffordable(firstLeftTurret, Utility.TURRET, false, budget - spent);
+
+      Coords firstRightTurret = new Coords(24, 13);
+      spent += attemptSpawnIfAffordable(firstRightTurret, Utility.TURRET, false, budget - spent);
+
+      //get the main wall down
+      for (Coords location : Locations.mainWallCoords) {
+        spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
       }
+
+      spent += attemptSpawnIfAffordable(firstLeftTurret, Utility.TURRET, true, budget - spent);
+      spent += attemptSpawnIfAffordable(firstRightTurret, Utility.TURRET, true, budget - spent);
+
+      //get the entrance left turret down
+      Coords leftEntranceTurret = new Coords(4, 11);
+      spent += attemptSpawnIfAffordable(leftEntranceTurret, Utility.TURRET, false, budget - spent);
+
+      //get right wall turrets down
+      Coords rightWallTurret1 = new Coords(25, 13);
+      Coords rightWallTurret2 = new Coords(24, 12);
+      spent += attemptSpawnIfAffordable(rightWallTurret1, Utility.TURRET, false, budget - spent);
+      spent += attemptSpawnIfAffordable(rightWallTurret2, Utility.TURRET, false, budget - spent);
+
+      Coords secondLeftTurret = new Coords(2, 13);
+      spent += attemptSpawnIfAffordable(secondLeftTurret, Utility.TURRET, false, budget - spent);
+
+      // build left corner walls
+      for (Coords location : Locations.leftCornerWalls) {
+        spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
+      }
+
+      // build right corner walls
+      for (Coords location : Locations.rightCornerWalls) {
+        spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
+      }
+
     } catch (InsufficientResourcesException e) {
-      GameIO.debug().println("spent: " + spent + " of " + budget + " || finishedBudget @ LOCATION " + lastPlaced);
+      GameIO.debug().println("spent: " + spent + " of " + budget + " || finishedBudget @ LINE " + e.getStackTrace()[1].getLineNumber());
       return;
     }
   }
@@ -377,11 +385,6 @@ public class MainStrategy {
 
       //MOST DEFENSE DONE=====================
 
-
-      if (move.data.p1Units.support.size() < Locations.supportTowerCoords.length / 2) {
-        throw new InsufficientResourcesException("place factories before extra stuff!");
-      }
-
       for(Coords location : Locations.extraTurretCoords) {
         spent += attemptSpawnIfAffordable(location, Utility.TURRET, false, budget - spent);
         spent += attemptSpawnIfAffordable(location, Utility.TURRET, true, budget - spent);
@@ -448,7 +451,7 @@ public class MainStrategy {
    * @param unitType
    * @param upgrade
    * @param budget
-   * @return
+   * @return the amount of money used
    */
   private static int attemptSpawnIfAffordable(Coords location, UnitType unitType, boolean upgrade, int budget) throws InsufficientResourcesException {
     if (algoState.awaitingBoom && algoState.turnsUntilBoom < 2) {

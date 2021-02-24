@@ -25,15 +25,18 @@ public class SecondTurn {
    * @param move
    */
   static void execute(MyAlgo algoState, GameState move) {
+
+    MainStrategy.execute(algoState, move); //We may not need this SecondTurn anymore...
+
     SecondTurn.algoState = algoState;
     SecondTurn.move = move;
     float enemyMP = move.data.p2Stats.bits;
 
     //mobile strategy
-    defensiveInters();
+    //defensiveInters();
 
     //structure strategy
-    greedySupportTowers();
+    //greedySupportTowers();
   }
 
   /**

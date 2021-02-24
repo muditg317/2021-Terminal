@@ -22,12 +22,8 @@ public class FirstTurn {
     Coords firstRightTurret = new Coords(24, 13);
     SpawnUtility.placeTurrets(move, new Coords[]{firstRightTurret});
     SpawnUtility.applyUpgrades(move, new Coords[]{firstLeftTurret, firstRightTurret});
-    //get the main wall down
+    //get the main wall down (this won't place all main walls down but that's okay).
     SpawnUtility.placeWalls(move, Locations.mainWallCoords);
-
-    //place down left entrance turret
-    Coords leftEntranceTurret = new Coords(4, 11);
-    SpawnUtility.placeTurrets(move, new Coords[]{leftEntranceTurret});
 
     //place corner walls down
 

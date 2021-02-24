@@ -4,10 +4,15 @@ import com.c1games.terminal.algo.Config;
 import com.c1games.terminal.algo.Coords;
 import com.c1games.terminal.algo.PlayerId;
 import com.c1games.terminal.algo.map.GameState;
+import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
+import com.c1games.terminal.algo.pathfinding.IllegalPathStartException;
 import com.c1games.terminal.algo.units.UnitType;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StrategyUtility {
   /**
@@ -140,34 +145,82 @@ public class StrategyUtility {
   }
 
   /**
+   *
+   * @param move
+   * @return the estimated number of inters needed to defend a scout rush this turn given our defenses
+   */
+  static int neededScoutRushDefense(GameState move) {
+    int mp = (int) move.data.p1Stats.bits;
+    int sp = (int) move.data.p1Stats.cores;
+    int turnNumber = move.data.turnInfo.turnNumber;
+    int enemyMPCapacity = (int) move.data.p2Stats.bits * 5;
+    double enemyMPPercentCapacity = move.data.p2Stats.bits / enemyMPCapacity;
+    int neededDefenseSpending = neededDefenseSpending(move);
+    int scoutRushDefense = neededDefenseSpending - sp;
+    if (enemyMPPercentCapacity < 0.5) {
+      scoutRushDefense = 0;
+    }
+
+    scoutRushDefense = Math.max(0, scoutRushDefense);
+    scoutRushDefense = Math.min(mp, scoutRushDefense);
+    return scoutRushDefense;
+  }
+
+  /**
    * Based on the current board state, enemy MP, and our defenses returns the number of cores it thinks we need to spend into defenses
    * @param move  the game state to inspect
    * @return the number of cores we should spend in defenses
    */
-  static int defenseHeuristic(GameState move) {
+  static int neededDefenseSpending(GameState move) {
     float enemyMP = move.data.p2Stats.bits;
     float ourHealth = move.data.p1Stats.integrity;
     float baseMPIncome = move.config.resources.bitsPerRound + move.config.resources.bitGrowthRate * (move.data.turnInfo.turnNumber) / move.config.resources.turnIntervalForBitSchedule;
     float enemyMPIncome = baseMPIncome;
-    float defenseRating = calculateDefenseRating(move);
+    int defenseRating = calculateTotalDefenseDamage(move);
 
 
-    // TODO: These are tunable parameters
-    //we want at least 1 rating per 1 MP they have
-    double enemyAttackRating = 1.7 * enemyMP + (0 * enemyMPIncome) - (ourHealth * 0.1) + 15;
-    // TODO: 15 is the base expected enemy attack even if we see none (like a bias value)
-    return (int) Math.ceil(enemyAttackRating - defenseRating);
+
+    //we want at least 1 rating per 1 MP they have - FOLLOW IS OLD TUNE
+    // double enemyAttackRating = 1.7 * enemyMP + (0 * enemyMPIncome) - (ourHealth * 0.1) + 15;
+
+
+    int maxEnemyScoutRushHealth = maxEnemyScoutRushHealth(move);
+    int possibleRemainingScoutRushHealth = maxEnemyScoutRushHealth - defenseRating;
+    /*
+    We divide by 15
+    since 2 SP (unupgraded) tower deals ~30 dmg
+    and 6 SP tower deals ~ 95 dmg
+    thats about 15 damage per SP
+     */
+    double baseTowerCost = move.config.unitInformation.get(UnitType.Turret.ordinal()).cost1.orElse(2);
+    return (int) (Math.ceil((possibleRemainingScoutRushHealth / 15.0) / baseTowerCost) * baseTowerCost);
   }
 
   /**
-   * Calculates some rating of our defense...
-   * @param move the game state
-   * @return the defensive rating TODO: what's the range
+   * Calculates the maximum total health of the enemy scout rush if based on current shielding capabilities, SP, and enemy MP
+   * @param move
+   * @return the predicted max enemy scout rush health this turn
    */
-  private static float calculateDefenseRating(GameState move) {
+  static int maxEnemyScoutRushHealth(GameState move) {
+    int enemyMP = (int) move.data.p2Stats.bits;
+    double scoutBaseHealth = move.config.unitInformation.get(UnitType.Scout.ordinal()).startHealth.orElse(15);;
+    return (int) (enemyMP * (scoutBaseHealth + potentialEnemyShieldPower(move)));
+  }
 
-   float leftRating = 0;
-   float rightRating = 0;
+  /**
+   * Calculates some rating of our defense by estimating the total amount of damage our defenses can do to scouts rushing through our
+   * left side entrance...
+   * We estimate this by taking all the turrets on the left side of our map and make the following assumptions:
+   * - Upgraded towers will have an average of 7 hits (can hit 7 spots along the scout path)
+   * - Unupgraded towers will have an average of 5 hits
+   * - No towers die to the pings
+   * - All damage rolls over perfectly (no wasted damage on overkill although this is not true)
+   * @param move the game state
+   * @return the defensive rating = the estimated total amount of damage it can do to scouts rushings through
+   */
+  private static int calculateTotalDefenseDamage(GameState move) {
+
+   double totalDamage = 0;
 
     List<Unit>[][] allUnits = move.allUnits;
     for (int x = 0; x < allUnits.length; x++) {
@@ -177,24 +230,23 @@ public class StrategyUtility {
           continue;
         }
         Unit unit = units.get(0);
-        if (unit.owner == PlayerId.Player1) { //this is our structure
-          float unitValue = 0;
-          if (unit.upgraded) {
-            // uses cost[0] to get SP of cost. cost[1] is MP cost (0 for structures)
-            unitValue += unit.unitInformation.upgrade.orElse(new Config.UnitInformation()).cost()[0] * unit.health / unit.unitInformation.upgrade.orElse(new Config.UnitInformation()).startHealth.orElse(100);
-          } else {
-            unitValue += unit.unitInformation.cost()[0] * unit.health / unit.unitInformation.startHealth.orElse(20);
-          }
-          if (x < 13) {
-            leftRating += unitValue;
-          } else {
-            rightRating += unitValue;
+        if (unit.owner == PlayerId.Player1 && unit.type == UnitType.Turret) { //this is our turret
+          if (x <= 13) {
+            double unitTotalDamage = unit.unitInformation.attackDamageWalker.getAsDouble(); //TODO: attackDamageWalker or attackDamageTower??
+            if (unit.upgraded) {
+              unitTotalDamage *= 7;
+            } else {
+              unitTotalDamage *= 5;
+            }
+            totalDamage += unitTotalDamage;
           }
         }
       }
     }
-    return 2 * Math.min(leftRating, rightRating);
+    return (int) totalDamage;
   }
+
+
 
   /**
    * How many of a certain unit type we can afford. Copied and modified from GameState.java
@@ -217,5 +269,196 @@ public class StrategyUtility {
     }
 
     return budget / SpawnUtility.getUnitCost(move, type, upgrade);
+  }
+
+  /**
+   * Calculates the current enemy shield power based on the number of support towers they have down right now and how much shield
+   * they provide
+   * @move the boi
+   * @return the total shield power on the enemy field right now
+   */
+  static double currentEnemyShieldPower(GameState move) {
+    double shieldPower = 0;
+    List<Unit>[][] allUnits = move.allUnits;
+    for (int x = 0; x < allUnits.length; x++) {
+      List<Unit>[] row = allUnits[x];
+      for (int y = 0; y < row.length; y++) {
+        List<Unit> units = row[y];
+        if (units.isEmpty() || move.isInfo(units.get(0).type)) {
+          continue;
+        }
+        // there is a structure here
+        Unit unit = units.get(0);
+        if (unit.owner == PlayerId.Player2) {
+          if (unit.type == Utility.SUPPORT) {
+            Config.UnitInformation info = unit.unitInformation;
+            shieldPower += info.shieldPerUnit.orElse(0);
+            shieldPower += info.shieldBonusPerY.orElse(0) * (27 - y);
+          }
+        }
+      }
+    }
+    return shieldPower;
+  }
+
+  /**
+   * Calculates an estimate of the potential enemy shield power this immediate succeeding attack phase
+   * if they keep all of their current shields and put all of their SP
+   * into support bois (does not calculate an upper bound but a good estimate at 3 shield power per 4 SP)
+   * @param move the boi
+   * @return the potential total shield power the enemy can have next turn
+   */
+  static double potentialEnemyShieldPower(GameState move) {
+    double shieldPower = currentEnemyShieldPower(move);
+    double enemySP = move.data.p2Stats.bits;
+    //apply the conversion of 3 shield power per 4 SP
+    shieldPower += enemySP * 3.0 / 4.0;
+    return shieldPower;
+  }
+
+  /**
+   *
+   * @param move the boi
+   * @return the current SP on the enemy has on the board (what they would get if they refunded everything)
+   */
+  static double enemySPOnBoard(GameState move) {
+    double enemySP = 0;
+    List<Unit>[][] allUnits = move.allUnits;
+    for (int x = 0; x < allUnits.length; x++) {
+      List<Unit>[] row = allUnits[x];
+      for (int y = 0; y < row.length; y++) {
+        List<Unit> units = row[y];
+        if (units.isEmpty() || move.isInfo(units.get(0).type)) {
+          continue;
+        }
+        // there is a structure here
+        Unit unit = units.get(0);
+        if (unit.owner == PlayerId.Player2) {
+          Config.UnitInformation info = unit.unitInformation;
+          double cost = info.cost1.orElse(0);
+          if (unit.upgraded) {
+            enemySP += 0.90 * cost * unit.health / info.startHealth.getAsDouble();
+          } else {
+            enemySP += 0.97 * cost * unit.health / info.startHealth.getAsDouble();
+          }
+        }
+      }
+    }
+    return enemySP;
+  }
+
+  static boolean pathHitsTargetEdge(List<Coords> path, int targetEdge) {
+    Coords[] targetEdgeCoords = MapBounds.EDGE_LISTS[targetEdge];
+    for (Coords coord : path) {
+      for(Coords edgeCoord : targetEdgeCoords){
+        if (coord.equals(edgeCoord)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  /**
+   * finds the optimal hook attack
+   * @param move
+   * @param availableSP
+   * @param availableMP
+   * @return
+   */
+  static HookAttack optimalDemolisherHook(GameState move, double availableSP, double availableMP, int minX, int maxX, int minY, int maxY, float minDamage) {
+    final int xIncrement = 1;
+    final int yIncrement = 1;
+    Map<Utility.Pair<Coords, Integer>, ExpectedDefense> damages = new HashMap<>();
+
+    Config.UnitInformation demolisherInfo = move.config.unitInformation.get(UnitType.Demolisher.ordinal());
+    int numDemolishers = (int) (availableMP / demolisherInfo.cost2.orElse(3));
+
+    if (numDemolishers == 0) {
+      return null;
+    }
+
+
+    double demolisherDamage = demolisherInfo.attackDamageTower.orElse(8);
+//    double totalDemoHealth = numDemolishers * demolisherHealth;
+
+    for (int x = minX; x <= maxX; x = x == maxX ? maxX+1 : Math.min(x+xIncrement,maxX)) {
+      for (int y = minY; y <= maxY; y = y == maxY ? maxY + 1 : Math.min(y + yIncrement, maxY)) {
+        if (y == 11) {
+          continue;
+        }
+        for (int side = 0; side <= 1; side++) {//0: target RIGHT, 1: target LEFT
+          if (!MapBounds.ARENA[x][y]) {
+            continue;
+          }
+          Coords start = new Coords(x, y);
+          List<Coords> path;
+          try {
+            path = move.pathfind(start, side);
+          } catch (IllegalPathStartException e) {
+            continue;
+          }
+
+          List<Coords> neededWalls = new ArrayList<>();
+          for (int wallY = 2; wallY <= y+1; wallY++) {
+            Coords leftWall = new Coords(15-wallY,wallY);
+            if ((side == 1 || wallY != y) && move.getWallAt(leftWall) == null) {
+              neededWalls.add(leftWall);
+            }
+            Coords rightWall = new Coords(12+wallY, wallY);
+            if ((side == 0 || wallY != y) && move.getWallAt(rightWall) == null) {
+              neededWalls.add(rightWall);
+            }
+            if
+          }
+          double supportAmount = availableSP * 3 / 4;
+          double demolisherHealth = demolisherInfo.startHealth.orElse(5) + supportAmount;
+
+          float spTaken = 0;
+          float expectedDamage = 0;
+          for (Coords pathPoint : path) {
+            List<Unit> attackers = move.getAttackers(pathPoint);
+            float damageDoneByTowers = 0;
+            for (Unit attacker : attackers) {
+              if (attacker.owner == PlayerId.Player2) {
+                float towerDamage = (float) attacker.unitInformation.attackDamageWalker.orElse(6);
+                expectedDamage += towerDamage;
+                if (numDemolishers > 0) {
+                  float damageDone = (float) Math.min(numDemolishers * demolisherDamage, attacker.health);
+                  spTaken += (float) (damageDone / attacker.unitInformation.startHealth.orElse(2) * 0.97f);
+                  damageDoneByTowers += towerDamage;
+                  if (damageDoneByTowers > demolisherHealth) {
+                    numDemolishers--;
+                    damageDoneByTowers = 0;
+                  }
+                }
+              }
+            }
+          }
+
+          damages.put(new Utility.Pair<>(start, side), new ExpectedDefense(move, (Coords[]) path.toArray(), spTaken, expectedDamage));
+        }
+      }
+    }
+
+
+    Utility.Pair<Coords, Integer> bestAttack = null;
+    ExpectedDefense bestED = new ExpectedDefense(move, null, minDamage, 0);
+
+    for (Map.Entry<Utility.Pair<Coords, Integer>, ExpectedDefense> entry : damages.entrySet()) {
+      if (entry.getValue().structureHealth > bestED.structureHealth) {
+        bestAttack = entry.getKey();
+        bestED = entry.getValue();
+      }
+    }
+    if (bestAttack == null) {
+      return null;
+    }
+
+
+
+    Coords[] demolisherLocations = new Coords[(int) (availableMP / demolisherInfo.cost2.orElse(3))];
+
+
+    return new HookAttack(move, null,null,new Coords[]{}, new Coords[]{},new Coords[]{}, demolisherLocations, bestED);
   }
 }
