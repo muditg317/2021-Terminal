@@ -40,7 +40,7 @@ public class ScoutRush {
     int rightSurvivingScouts = calculateSurvivingScouts(move, new Coords(13, 0), mp, estimatedScoutHealth);
 
     int bestSurvivingScouts = Math.max(leftSurvivingScouts, rightSurvivingScouts);
-    if (bestSurvivingScouts < /*some threshold*/ mp / 4 && bestSurvivingScouts < move.data.p1Stats.integrity) {
+    if (bestSurvivingScouts < /*some threshold*/ (mp / 2) && bestSurvivingScouts < move.data.p1Stats.integrity) {
       return false; //don't do the ping attack
     }
     //then now, we shall do the attack - EXECUTE!
@@ -61,7 +61,6 @@ public class ScoutRush {
    * @return the number of scouts expected to survive and deal damage to enemy health
    */
   public static int calculateSurvivingScouts(GameState move, Coords start, int numScouts, int scoutHealth) {
-    int totalDamage = 0;
     double currHealth = scoutHealth;
     int side = start.x <= 13 ? MapBounds.EDGE_TOP_RIGHT : MapBounds.EDGE_TOP_LEFT;
     List<Coords> path = move.pathfind(start, side);
