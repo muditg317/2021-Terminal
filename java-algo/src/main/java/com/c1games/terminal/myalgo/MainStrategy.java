@@ -168,7 +168,6 @@ public class MainStrategy {
         Unit unit = units.get(0);
         if (unit.owner == PlayerId.Player1) { //this is our structure
           double startHealth = unit.unitInformation.startHealth.getAsDouble();
-          float enemyMP = move.data.p2Stats.bits;
           if (unit.health < startHealth) { //thing is damaged
             SpawnUtility.removeBuilding(move, new Coords(x, y));
           }
