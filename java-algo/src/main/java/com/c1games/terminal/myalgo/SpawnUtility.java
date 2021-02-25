@@ -138,6 +138,10 @@ public class SpawnUtility {
       return count;
     }
 
+    static int spawnDemolishers(GameState move, Coords location, int num) {
+        return spawnDemolishers(move, new Coords[] {location}, num);
+    }
+
     /**
      * spawn interceptors at the specified locations
      * @param move    the game state on which to deploy moves
@@ -159,6 +163,10 @@ public class SpawnUtility {
         count += move.attemptSpawnMultiple(Arrays.asList(locations), Utility.INTERCEPTOR);
       }
       return count;
+    }
+
+    static int spawnInterceptors(GameState move, Coords location, int num) {
+        return spawnInterceptors(move, new Coords[] {location}, num);
     }
 
     /**
