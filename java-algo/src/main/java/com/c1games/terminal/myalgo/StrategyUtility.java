@@ -344,12 +344,9 @@ public class StrategyUtility {
   }
 
   static boolean pathHitsTargetEdge(List<Coords> path, int targetEdge) {
-    Coords[] targetEdgeCoords = MapBounds.EDGE_LISTS[targetEdge];
     for (Coords coord : path) {
-      for(Coords edgeCoord : targetEdgeCoords){
-        if (coord.equals(edgeCoord)) {
-          return true;
-        }
+      if (MapBounds.IS_ON_EDGE[targetEdge][coord.x][coord.y]) {
+        return true;
       }
     }
     return false;
