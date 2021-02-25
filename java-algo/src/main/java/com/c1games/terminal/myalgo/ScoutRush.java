@@ -40,11 +40,11 @@ public class ScoutRush {
     int rightSurvivingScouts = calculateSurvivingScouts(move, new Coords(13, 0), mp, estimatedScoutHealth);
 
     int bestSurvivingScouts = Math.max(leftSurvivingScouts, rightSurvivingScouts);
-    if (bestSurvivingScouts < /*some threshold*/ (mp / 2) && bestSurvivingScouts < move.data.p1Stats.integrity) {
+    if (bestSurvivingScouts < /*some threshold*/ (mp / 4) + (move.data.p1Stats.integrity / 10) && bestSurvivingScouts < move.data.p1Stats.integrity) {
       return false; //don't do the ping attack
     }
     //then now, we shall do the attack - EXECUTE!
-    Coords startCoord = leftSurvivingScouts > rightSurvivingScouts ? new Coords(14, 0) : new Coords(13, 0);
+    Coords startCoord = leftSurvivingScouts >= rightSurvivingScouts ? new Coords(14, 0) : new Coords(13, 0);
     placeSupports(move);
     SpawnUtility.spawnScouts(move, startCoord, mp);
     return true;
