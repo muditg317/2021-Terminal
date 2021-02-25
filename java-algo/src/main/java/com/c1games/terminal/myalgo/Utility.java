@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.function.Function;
 
 public class Utility {
 
@@ -215,6 +216,14 @@ public class Utility {
 
     for (int i = 0; i<22; i++) {
       move.attemptSpawn(new Coords(24, 10), DEMOLISHER);
+    }
+  }
+
+  public static <T> void printObjs(T[] objs, Function<T, Boolean> cond, Function<T, String> str) {
+    for (T obj : objs) {
+      if (cond.apply(obj)) {
+        GameIO.debug().println(str.apply(obj));
+      }
     }
   }
 

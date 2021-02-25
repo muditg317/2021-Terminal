@@ -10,6 +10,7 @@ import com.c1games.terminal.algo.io.GameLoopDriver;
 import com.c1games.terminal.algo.map.GameState;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 /**

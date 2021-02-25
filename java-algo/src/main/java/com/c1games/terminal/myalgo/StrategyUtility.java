@@ -9,10 +9,7 @@ import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.pathfinding.IllegalPathStartException;
 import com.c1games.terminal.algo.units.UnitType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class StrategyUtility {
   /**
@@ -138,28 +135,6 @@ public class StrategyUtility {
       currentMP += baseMPIncome - expectedBaseCostPerTurn;
     }
     return currentMP;
-  }
-
-  /**
-   *
-   * @param move
-   * @return the estimated number of inters needed to defend a scout rush this turn given our defenses
-   */
-  static int neededScoutRushDefense(GameState move) {
-    int mp = (int) move.data.p1Stats.bits;
-    int sp = (int) move.data.p1Stats.cores;
-    int turnNumber = move.data.turnInfo.turnNumber;
-    int enemyMPCapacity = (int) move.data.p2Stats.bits * 5;
-    double enemyMPPercentCapacity = move.data.p2Stats.bits / enemyMPCapacity;
-    int neededDefenseSpending = neededDefenseSpending(move);
-    int scoutRushDefense = neededDefenseSpending - sp;
-    if (enemyMPPercentCapacity < 0.5) {
-      scoutRushDefense = 0;
-    }
-
-    scoutRushDefense = Math.max(0, scoutRushDefense);
-    scoutRushDefense = Math.min(mp, scoutRushDefense);
-    return scoutRushDefense;
   }
 
   /**
@@ -511,7 +486,8 @@ public class StrategyUtility {
 
 
     Coords[] demolisherLocations = new Coords[(int) (availableMP / demolisherInfo.cost2.orElse(3))];
-
+    Coords demoLoc = new Coords(13 + bestAttack.value, 0);
+    Arrays.fill(demolisherLocations, demoLoc);
 
     return new HookAttack(move, damages.get(bestAttack).key,null,new Coords[]{}, new Coords[]{},new Coords[]{}, demolisherLocations, bestED);
   }
