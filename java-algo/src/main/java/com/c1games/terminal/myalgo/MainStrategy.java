@@ -272,42 +272,44 @@ public class MainStrategy {
     try {
 
       //Get the core corner turrets down
-      Coords firstLeftTurret = new Coords(3, 13);
-      spent += attemptSpawnIfAffordable(firstLeftTurret, Utility.TURRET, false, budget - spent);
+      spent += attemptSpawnIfAffordable(Locations.Essentials.firstLeftTurret, Utility.TURRET, false, budget - spent);
+      spent += attemptSpawnIfAffordable(Locations.Essentials.firstRightTurret, Utility.TURRET, false, budget - spent);
 
-      Coords firstRightTurret = new Coords(24, 13);
-      spent += attemptSpawnIfAffordable(firstRightTurret, Utility.TURRET, false, budget - spent);
+      //get walls in front of them
+      spent += attemptSpawnIfAffordable(Locations.Essentials.firstLeftTurretWall, Utility.WALL, false, budget);
+      spent += attemptSpawnIfAffordable(Locations.Essentials.firstRightTurretWall, Utility.WALL, false, budget);
+
+      //upgrade two corner turrets
+      spent += attemptSpawnIfAffordable(Locations.Essentials.firstLeftTurret, Utility.TURRET, true, budget - spent);
+      spent += attemptSpawnIfAffordable(Locations.Essentials.firstRightTurret, Utility.TURRET, true, budget - spent);
+
+      //upgrade walls in front of them
+      spent += attemptSpawnIfAffordable(Locations.Essentials.firstLeftTurretWall, Utility.WALL, true, budget);
+      spent += attemptSpawnIfAffordable(Locations.Essentials.firstRightTurretWall, Utility.WALL, true, budget);
 
       //get the main wall down
-      for (Coords location : Locations.mainWallCoords) {
+      for (Coords location : Locations.Essentials.mainWallCoords) {
         spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
       }
 
-      spent += attemptSpawnIfAffordable(firstLeftTurret, Utility.TURRET, true, budget - spent);
-      spent += attemptSpawnIfAffordable(firstRightTurret, Utility.TURRET, true, budget - spent);
-
-      //get the entrance left turret down
-      Coords leftEntranceTurret = new Coords(4, 11);
-      spent += attemptSpawnIfAffordable(leftEntranceTurret, Utility.TURRET, false, budget - spent);
-
-      //get right wall turrets down
-      Coords rightWallTurret1 = new Coords(25, 13);
-      Coords rightWallTurret2 = new Coords(24, 12);
-      spent += attemptSpawnIfAffordable(rightWallTurret1, Utility.TURRET, false, budget - spent);
-      spent += attemptSpawnIfAffordable(rightWallTurret2, Utility.TURRET, false, budget - spent);
-
-      Coords secondLeftTurret = new Coords(2, 13);
-      spent += attemptSpawnIfAffordable(secondLeftTurret, Utility.TURRET, false, budget - spent);
-
       // build left corner walls
-      for (Coords location : Locations.leftCornerWalls) {
+      for (Coords location : Locations.Essentials.leftCornerWalls) {
         spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
       }
 
       // build right corner walls
-      for (Coords location : Locations.rightCornerWalls) {
+      for (Coords location : Locations.Essentials.rightCornerWalls) {
         spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
       }
+
+      //get the entrance left turret down
+      Coords leftEntranceTurret = new Coords(5, 10);
+      spent += attemptSpawnIfAffordable(leftEntranceTurret, Utility.TURRET, false, budget - spent);
+
+      Coords secondLeftTurret = new Coords(2, 13);
+      spent += attemptSpawnIfAffordable(secondLeftTurret, Utility.TURRET, false, budget - spent);
+
+
 
     } catch (InsufficientResourcesException e) {
       GameIO.debug().println("spent: " + spent + " of " + budget + " || finishedBudget @ LINE " + e.getStackTrace()[1].getLineNumber());
@@ -321,53 +323,16 @@ public class MainStrategy {
   private static void setUpDefenseWithBudget(int budget) {
     int spent = 0;
     try {
-
-      //Get the core corner turrets down
-      Coords firstLeftTurret = new Coords(3, 13);
-      spent += attemptSpawnIfAffordable(firstLeftTurret, Utility.TURRET, false, budget - spent);
-
-      Coords firstRightTurret = new Coords(24, 13);
-      spent += attemptSpawnIfAffordable(firstRightTurret, Utility.TURRET, false, budget - spent);
-
-      //get the main wall down
-      for (Coords location : Locations.mainWallCoords) {
-        spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
-      }
-
-      spent += attemptSpawnIfAffordable(firstLeftTurret, Utility.TURRET, true, budget - spent);
-      spent += attemptSpawnIfAffordable(firstRightTurret, Utility.TURRET, true, budget - spent);
-
-      //get the entrance left turret down
-      Coords leftEntranceTurret = new Coords(4, 11);
-      spent += attemptSpawnIfAffordable(leftEntranceTurret, Utility.TURRET, false, budget - spent);
-
-      //get right wall turrets down
-      Coords rightWallTurret1 = new Coords(25, 13);
-      Coords rightWallTurret2 = new Coords(24, 12);
-      spent += attemptSpawnIfAffordable(rightWallTurret1, Utility.TURRET, false, budget - spent);
-      spent += attemptSpawnIfAffordable(rightWallTurret2, Utility.TURRET, false, budget - spent);
-
-      Coords secondLeftTurret = new Coords(2, 13);
-      spent += attemptSpawnIfAffordable(secondLeftTurret, Utility.TURRET, false, budget - spent);
-
-      // build left corner walls
-      for (Coords location : Locations.leftCornerWalls) {
-        spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
-      }
-
-      // build right corner walls
-      for (Coords location : Locations.rightCornerWalls) {
-        spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
-      }
-
       //upgrade left entrance towers
+      Coords leftEntranceTurret = new Coords(4, 11);
+
       spent += attemptSpawnIfAffordable(leftEntranceTurret, Utility.TURRET, true, budget - spent);
 
       //upgrade corner walls
-      for (Coords location : Locations.leftCornerWalls) {
+      for (Coords location : Locations.Essentials.leftCornerWalls) {
         spent += attemptSpawnIfAffordable(location, Utility.WALL, true, budget - spent);
       }
-      for (Coords location : Locations.rightCornerWalls) {
+      for (Coords location : Locations.Essentials.rightCornerWalls) {
         spent += attemptSpawnIfAffordable(location, Utility.WALL, true, budget - spent);
       }
 

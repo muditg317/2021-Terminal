@@ -82,24 +82,7 @@ public class SecondTurn {
   }
 
   static void fullDefensiveStructures_extraCores() {
-    //let's just save it  -> commented out for now
-    // if we have extra cores (sp)
-    final Coords[] extraWall = {new Coords(7,8)};
-    if (move.data.p1Stats.cores > 0) {
-      SpawnUtility.placeWalls(move, extraWall);
-    }
-    //if we have one core, just save it
-    //at this point, max cores == 4,
 
-    if (move.data.p1Stats.cores > 1) {
-      //place the middle turret in the wall
-      Coords turretCoord = Locations.mainTurretCoords[Locations.mainTurretCoords.length / 2];
-      move.attemptSpawn(turretCoord, Utility.TURRET);
-      //if we still have enough cores, put a wall infront
-      if (move.data.p1Stats.cores > 0) {
-        move.attemptSpawn(new Coords(turretCoord.x, turretCoord.y + 1), Utility.WALL);
-      }
-    }
   }
 
   /**

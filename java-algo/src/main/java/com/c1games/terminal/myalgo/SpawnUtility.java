@@ -17,6 +17,10 @@ public class SpawnUtility {
       return move.attemptSpawnMultiple(Arrays.asList(locations), Utility.TURRET);
     }
 
+    static boolean placeTurret(GameState move, Coords location) {
+        return move.attemptSpawn(location, Utility.TURRET);
+    }
+
     /**
      * place walls at the specified locations
      * @param move    the game state on which to deploy moves
@@ -24,6 +28,10 @@ public class SpawnUtility {
      */
     static int placeWalls(GameState move, Coords[] locations) {
       return move.attemptSpawnMultiple(Arrays.asList(locations), Utility.WALL);
+    }
+
+    static boolean placeWall(GameState move, Coords location) {
+        return move.attemptSpawn(location, Utility.WALL);
     }
 
     /**

@@ -28,53 +28,60 @@ class Locations {
   };
 
 
+  static class Essentials {
+    static final Coords firstLeftTurret = new Coords(3, 12);
+    static final Coords firstRightTurret = new Coords(24, 12);
+    static final Coords firstLeftTurretWall = new Coords(firstLeftTurret.x, firstLeftTurret.y + 1);
+    static final Coords firstRightTurretWall = new Coords(firstRightTurret.x, firstRightTurret.y + 1);
 
-  //THE MAIN WALL ======================
-  static final Coords[] mainWallCoords = {
-      new Coords(13, 2),
-      new Coords(14, 2),
 
-      new Coords(12,3),
-      new Coords(15, 3),
+    //THE MAIN WALL ======================
+    static final Coords[] mainWallCoords = {
+            new Coords(13, 2),
+            new Coords(14, 2),
 
-      new Coords(11,4),
-      new Coords(16, 4),
+            new Coords(12,3),
+            new Coords(15, 3),
 
-      new Coords(10,5),
-      new Coords(17, 5),
+            new Coords(11,4),
+            new Coords(16, 4),
 
-      new Coords(11,4),
-      new Coords(18, 6),
+            new Coords(10,5),
+            new Coords(17, 5),
 
-      new Coords(9,6),
-      new Coords(19, 7),
+            new Coords(9,6),
+            new Coords(18, 6),
 
-      new Coords(8,7),
-      new Coords(20, 8),
+            new Coords(8,7),
+            new Coords(19, 7),
 
-      new Coords(7,8),
-      new Coords(21, 9),
+            new Coords(7,8),
+            new Coords(20, 8),
 
-      new Coords(6, 9),
-      new Coords(22, 10),
-      new Coords(5, 10),
-      new Coords(23,11),
-  };
+            new Coords(6, 9),
+            new Coords(21, 9),
 
-  static final Coords[] leftCornerWalls = {
-      new Coords(0, 13),
-      new Coords(1, 13),
-  };
+            //new Coords(5, 10),
+            new Coords(22, 10),
 
-  static final Coords[] rightCornerWalls = {
-      new Coords(26, 13),
-      new Coords(27, 13),
-  };
+            new Coords(23,11),
+    };
+    static final Coords[] leftCornerWalls = {
+        new Coords(0, 13),
+        new Coords(1, 13),
+        new Coords(2, 13),
+
+    };
+    static final Coords[] rightCornerWalls = {
+        new Coords(26, 13),
+        new Coords(27, 13),
+        new Coords(25, 13),
+
+    };
+  }
 
 
   static final Coords[] cornerTurrets = {
-      new Coords(2, 13),
-      new Coords(25, 13),
 
       new Coords(5, 11),
       new Coords(24, 13),
@@ -89,22 +96,6 @@ class Locations {
 
   };
 
-  static final Coords[] mainTurretCoords = {
-          new Coords(7, 8),
-          new Coords(8, 8),
-          new Coords(9, 8),
-          new Coords(10, 8),
-          new Coords(11, 8),
-          new Coords(12, 8),
-          new Coords(13, 8),
-          new Coords(14, 8),
-          new Coords(15, 8),
-          new Coords(16, 8),
-          new Coords(17, 8),
-          new Coords(18, 8),
-          new Coords(19, 8),
-          new Coords(20, 8)
-  };
 
   static final Coords[] extraTurretCoords = {
       new Coords(1, 12),
@@ -139,57 +130,6 @@ class Locations {
 
 
   //SUPPORT TOWER LOCATIONS
-
-  static final Coords[] supportTowerCoords = {
-          new Coords(13, 3),
-          new Coords(14, 3),
-
-          new Coords(12, 4),
-          new Coords(13, 4),
-          new Coords(14, 4),
-          new Coords(15, 4),
-
-          new Coords(11, 5),
-          new Coords(12, 5),
-          new Coords(13, 5),
-          new Coords(14, 5),
-          new Coords(15, 5),
-          new Coords(16, 5),
-
-          new Coords(10, 6),
-          new Coords(11, 6),
-          new Coords(12, 6),
-          new Coords(13, 6),
-          new Coords(14, 6),
-          new Coords(15, 6),
-          new Coords(16, 6),
-          new Coords(17, 6),
-
-          new Coords(9, 7),
-          new Coords(10, 7),
-          new Coords(11, 7),
-          new Coords(12, 7),
-          new Coords(13, 7),
-          new Coords(14, 7),
-          new Coords(15, 7),
-          new Coords(16, 7),
-          new Coords(17, 7),
-          new Coords(18, 7),
-
-          new Coords(8, 8),
-          new Coords(9, 8),
-          new Coords(10, 8),
-          new Coords(11, 8),
-          new Coords(12, 8),
-          new Coords(13, 8),
-          new Coords(14, 8),
-          new Coords(15, 8),
-          new Coords(16, 8),
-          new Coords(17, 8),
-          new Coords(18, 8),
-          new Coords(19, 8)
-      //put extra things here
-  };
 
 
   //ENEMY LOCATIONS

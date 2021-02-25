@@ -16,19 +16,21 @@ public class FirstTurn {
     FirstTurn.move = move;
 
     //place buildings
-    //Get the core corner turrets down
-    Coords firstLeftTurret = new Coords(3, 13);
-    SpawnUtility.placeTurrets(move, new Coords[]{firstLeftTurret});
-    Coords firstRightTurret = new Coords(24, 13);
-    SpawnUtility.placeTurrets(move, new Coords[]{firstRightTurret});
-    SpawnUtility.applyUpgrades(move, new Coords[]{firstLeftTurret, firstRightTurret});
+    Coords[] firstTurrets = {Locations.Essentials.firstLeftTurret, Locations.Essentials.firstRightTurret};
+    Coords[] firstWalls = {Locations.Essentials.firstLeftTurretWall, Locations.Essentials.firstRightTurretWall};
+    //Get the core corner turrets downs
+    SpawnUtility.placeTurrets(move, firstTurrets);
+
+    SpawnUtility.applyUpgrades(move, firstTurrets);
+    SpawnUtility.placeWalls(move, firstWalls);
     //get the main wall down (this won't place all main walls down but that's okay).
-    SpawnUtility.placeWalls(move, Locations.mainWallCoords);
+    SpawnUtility.placeWalls(move, Locations.Essentials.mainWallCoords);
 
     //place corner walls down
 
 
     //spawn mobile units - Right now we are doing nothing
+    //Hailmary destructor
     //Utility.spawnInterceptors(move, Locations.spacedInters5, 1);
   }
 }
