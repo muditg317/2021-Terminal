@@ -27,12 +27,22 @@ public class SpawnUtility {
     }
 
     /**
-     * place factories at the specified locations
+     * place supports at the specified locations
      * @param move    the game state on which to deploy moves
      * @param locations the locations to place them
      */
     static int placeSupports(GameState move, Coords[] locations) {
       return move.attemptSpawnMultiple(Arrays.asList(locations), Utility.SUPPORT);
+    }
+
+    /**
+     * Place support at the specified location
+     * @param move
+     * @param location
+     * @return
+     */
+    static boolean placeSupport(GameState move, Coords location) {
+        return move.attemptSpawn(location, Utility.SUPPORT);
     }
 
     /**
@@ -42,6 +52,16 @@ public class SpawnUtility {
      */
     static int applyUpgrades(GameState move, Coords[] locations) {
       return move.attemptUpgradeMultiple(Arrays.asList(locations));
+    }
+
+    /**
+     * Applys an upgrade at the specified location
+     * @param move
+     * @param location
+     * @return
+     */
+    static int applyUpgrade(GameState move, Coords location) {
+        return move.attemptUpgrade(location);
     }
 
     /**
@@ -82,6 +102,10 @@ public class SpawnUtility {
         count += move.attemptSpawnMultiple(Arrays.asList(locations), Utility.SCOUT);
       }
       return count;
+    }
+
+    static int spawnScouts(GameState move, Coords location, int num) {
+        return spawnScouts(move, new Coords[] {location}, num);
     }
 
     /**

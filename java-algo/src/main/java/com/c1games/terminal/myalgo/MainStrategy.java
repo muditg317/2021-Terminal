@@ -146,7 +146,9 @@ public class MainStrategy {
         }
         algoState.turnsUntilBoom--;
       } else {
-        spawnDefensiveInters(scoutRushDefense);
+        if (!ScoutRush.evaluateAndMaybeExecute(move)) {
+          spawnDefensiveInters(scoutRushDefense);
+        }
       }
     }
   }
