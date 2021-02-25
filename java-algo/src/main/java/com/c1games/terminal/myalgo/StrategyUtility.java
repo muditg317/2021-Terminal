@@ -116,11 +116,7 @@ public class StrategyUtility {
       List<Unit> attackers = move.getAttackers(pathPoint);
       for (Unit attacker : attackers) {
         if (attacker.owner == PlayerId.Player2) {
-          if (attacker.upgraded) {
-            effectiveTurretRating += attacker.unitInformation.upgrade.orElse(new Config.UnitInformation()).attackDamageWalker.orElse(20); //TODO fix these values (i think these are damage values of the turret)
-          } else {
-            effectiveTurretRating += attacker.unitInformation.attackDamageWalker.orElse(6);
-          }
+          effectiveTurretRating += attacker.unitInformation.attackDamageWalker.orElse(6);
         }
       }
     }
@@ -368,7 +364,7 @@ public class StrategyUtility {
   static HookAttack optimalDemolisherHook(GameState move, double availableSP, double availableMP, int minX, int maxX, int minY, int maxY, float minDamage) {
     final int xIncrement = 1;
     final int yIncrement = 1;
-    Map<Utility.Pair<Coords, Integer>, ExpectedDefense> damages = new HashMap<>();
+    Map<Utility.Pair<Coords, Integer>, Utility.Pair<Coords[], ExpectedDefense>> damages = new HashMap<>();
 
     Config.UnitInformation demolisherInfo = move.config.unitInformation.get(UnitType.Demolisher.ordinal());
     int numDemolishers = (int) (availableMP / demolisherInfo.cost2.orElse(3));
@@ -383,13 +379,77 @@ public class StrategyUtility {
 
     for (int x = minX; x <= maxX; x = x == maxX ? maxX+1 : Math.min(x+xIncrement,maxX)) {
       for (int y = minY; y <= maxY; y = y == maxY ? maxY + 1 : Math.min(y + yIncrement, maxY)) {
+        if (!MapBounds.ARENA[x][y]) {
+          continue;
+        }
         if (y == 11) {
           continue;
         }
-        for (int side = 0; side <= 1; side++) {//0: target RIGHT, 1: target LEFT
-          if (!MapBounds.ARENA[x][y]) {
+        double wallCost = move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1);
+        int wallsAvailable = (int) (availableSP / wallCost);
+        if (wallsAvailable <= 0) {
+          continue;
+        }
+        // Build list of walls we need to place for the hook
+        List<Coords> neededWalls = new ArrayList<>();
+
+        // Walls of the V
+        for (int wallY = 2; wallY <= 13 && wallsAvailable > 0; ++wallY) {
+          if (wallY == y-1) {
+            wallY++;
+          }
+          Coords leftWall = new Coords(15-wallY,wallY);
+          if (move.getWallAt(leftWall) == null) {
+            neededWalls.add(leftWall);
+            --wallsAvailable;
+          }
+          Coords rightWall = new Coords(12+wallY, wallY);
+          if (move.getWallAt(rightWall) == null) {
+            neededWalls.add(rightWall);
+            --wallsAvailable;
+          }
+        }
+        if (wallsAvailable <= 0) {
+          continue;
+        }
+
+        // Walls in the Corners
+        for (int wallX = 0; wallX <= 1 && wallsAvailable > 0; ++wallX) {
+          Coords leftWall = new Coords(wallX,13);
+          if (move.getWallAt(leftWall) == null) {
+            neededWalls.add(leftWall);
+            --wallsAvailable;
+          }
+          Coords rightWall = new Coords(27-wallX, 13);
+          if (move.getWallAt(rightWall) == null) {
+            neededWalls.add(rightWall);
+            --wallsAvailable;
+          }
+        }
+        if (wallsAvailable <= 0) {
+          continue;
+        }
+        int placedWalls = neededWalls.size();
+        for (int side = 0; side <= 1; ++side) {//0: target RIGHT, 1: target LEFT
+
+          wallsAvailable += neededWalls.size() - placedWalls;
+          neededWalls.subList(placedWalls, neededWalls.size()).clear();
+
+          int topWallStartX = side == 0 ? (12+y) : (15-y);
+          int wallBuildDir = side * 2 - 1;
+
+          // Walls of the actual hook bar
+          for (int wallX = topWallStartX; (side == 0 ? wallX > x : wallX < x) && wallsAvailable > 0; wallX += wallBuildDir) {
+            Coords topWall = new Coords(wallX, y);
+            if (move.getWallAt(topWall) == null) {
+              neededWalls.add(topWall);
+              --wallsAvailable;
+            }
+          }
+          if (wallsAvailable <= 0) {
             continue;
           }
+
           Coords start = new Coords(x, y);
           List<Coords> path;
           try {
@@ -398,19 +458,16 @@ public class StrategyUtility {
             continue;
           }
 
-          List<Coords> neededWalls = new ArrayList<>();
-          for (int wallY = 2; wallY <= y+1; wallY++) {
-            Coords leftWall = new Coords(15-wallY,wallY);
-            if ((side == 1 || wallY != y) && move.getWallAt(leftWall) == null) {
-              neededWalls.add(leftWall);
-            }
-            Coords rightWall = new Coords(12+wallY, wallY);
-            if ((side == 0 || wallY != y) && move.getWallAt(rightWall) == null) {
-              neededWalls.add(rightWall);
-            }
-            if
+          // add the path points along the horizontal travel of the hook path since path planner skips to end of hook
+          List<Coords> initialPath = new ArrayList<>();
+          for (int pathX = topWallStartX + wallBuildDir; side == 0 ? pathX >= x : pathX <= x; pathX += wallBuildDir) {
+            initialPath.add(new Coords(pathX, y-1));
           }
-          double supportAmount = availableSP * 3 / 4;
+          path.addAll(0, initialPath);
+
+          double remainingSP = availableSP - neededWalls.size() * move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1);
+          double supportAmount = remainingSP > move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(4) ? remainingSP * 3 / 4 : 0;
+          supportAmount += move.data.p1Units.support.size() * move.config.unitInformation.get(UnitType.Support.ordinal()).shieldPerUnit.orElse(3);
           double demolisherHealth = demolisherInfo.startHealth.orElse(5) + supportAmount;
 
           float spTaken = 0;
@@ -424,7 +481,7 @@ public class StrategyUtility {
                 expectedDamage += towerDamage;
                 if (numDemolishers > 0) {
                   float damageDone = (float) Math.min(numDemolishers * demolisherDamage, attacker.health);
-                  spTaken += (float) (damageDone / attacker.unitInformation.startHealth.orElse(2) * 0.97f);
+                  spTaken += (float) (damageDone / attacker.unitInformation.startHealth.orElse(2) * attacker.unitInformation.cost1.orElse(2) * 0.97f);
                   damageDoneByTowers += towerDamage;
                   if (damageDoneByTowers > demolisherHealth) {
                     numDemolishers--;
@@ -435,7 +492,7 @@ public class StrategyUtility {
             }
           }
 
-          damages.put(new Utility.Pair<>(start, side), new ExpectedDefense(move, (Coords[]) path.toArray(), spTaken, expectedDamage));
+          damages.put(new Utility.Pair<>(start, side), new Utility.Pair<>((Coords[]) neededWalls.toArray(), new ExpectedDefense(move, (Coords[]) path.toArray(), spTaken, expectedDamage)));
         }
       }
     }
@@ -444,10 +501,10 @@ public class StrategyUtility {
     Utility.Pair<Coords, Integer> bestAttack = null;
     ExpectedDefense bestED = new ExpectedDefense(move, null, minDamage, 0);
 
-    for (Map.Entry<Utility.Pair<Coords, Integer>, ExpectedDefense> entry : damages.entrySet()) {
-      if (entry.getValue().structureHealth > bestED.structureHealth) {
+    for (Map.Entry<Utility.Pair<Coords, Integer>, Utility.Pair<Coords[], ExpectedDefense>> entry : damages.entrySet()) {
+      if (entry.getValue().value.structureHealth > bestED.structureHealth) {
         bestAttack = entry.getKey();
-        bestED = entry.getValue();
+        bestED = entry.getValue().value;
       }
     }
     if (bestAttack == null) {
@@ -459,6 +516,6 @@ public class StrategyUtility {
     Coords[] demolisherLocations = new Coords[(int) (availableMP / demolisherInfo.cost2.orElse(3))];
 
 
-    return new HookAttack(move, null,null,new Coords[]{}, new Coords[]{},new Coords[]{}, demolisherLocations, bestED);
+    return new HookAttack(move, damages.get(bestAttack).key,null,new Coords[]{}, new Coords[]{},new Coords[]{}, demolisherLocations, bestED);
   }
 }

@@ -59,6 +59,6 @@ public class DeadUtility {
     }
 
     scoutRushDefense = (int) Math.min(mp, scoutRushDefense);
-    return scoutRushDefense
+    return scoutRushDefense;
   }
 }
