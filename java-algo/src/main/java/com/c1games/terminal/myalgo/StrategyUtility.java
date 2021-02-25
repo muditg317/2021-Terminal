@@ -138,6 +138,28 @@ public class StrategyUtility {
   }
 
   /**
+   *
+   * @param move
+   * @return the estimated number of inters needed to defend a scout rush this turn given our defenses
+   */
+  static int neededScoutRushDefense(GameState move) {
+    int mp = (int) move.data.p1Stats.bits;
+    int sp = (int) move.data.p1Stats.cores;
+    int turnNumber = move.data.turnInfo.turnNumber;
+    int enemyMPCapacity = (int) move.data.p2Stats.bits * 5;
+    double enemyMPPercentCapacity = move.data.p2Stats.bits / enemyMPCapacity;
+    int neededDefenseSpending = neededDefenseSpending(move);
+    int scoutRushDefense = neededDefenseSpending - sp;
+    if (enemyMPPercentCapacity < 0.5) {
+      scoutRushDefense = 0;
+    }
+
+    scoutRushDefense = Math.max(0, scoutRushDefense);
+    scoutRushDefense = Math.min(mp, scoutRushDefense);
+    return scoutRushDefense;
+  }
+
+  /**
    * Based on the current board state, enemy MP, and our defenses returns the number of cores it thinks we need to spend into defenses
    * @param move  the game state to inspect
    * @return the number of cores we should spend in defenses
