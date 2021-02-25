@@ -187,7 +187,7 @@ public class StrategyUtility {
     thats about 15 damage per SP
      */
     double baseTowerCost = move.config.unitInformation.get(UnitType.Turret.ordinal()).cost1.orElse(2);
-    return (int) (Math.ceil((possibleRemainingScoutRushHealth / 15.0) / baseTowerCost) * baseTowerCost);
+    return (int) (Math.ceil((possibleRemainingScoutRushHealth / 10.0) / baseTowerCost) * baseTowerCost);
   }
 
   /**
