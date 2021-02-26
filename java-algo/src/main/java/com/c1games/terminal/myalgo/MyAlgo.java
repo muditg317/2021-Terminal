@@ -26,6 +26,7 @@ public class MyAlgo implements GameLoop {
   boolean awaitingBoom = false;
   int turnsUntilBoom = -1;
   String boomSide = "";
+  boolean hooking = false;
 
   public static void main(String[] args) {
     new GameLoopDriver(new MyAlgo()).run();

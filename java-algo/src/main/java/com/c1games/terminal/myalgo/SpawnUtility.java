@@ -54,6 +54,15 @@ public class SpawnUtility {
     }
 
     /**
+     * places upgraded supports at the specified locations
+     * @param move    the game state on which to deploy moves
+     * @param locations the locations to place them
+     */
+    static int placeUpgradedSupports(GameState move, Coords[] locations) {
+      return (int) Arrays.stream(locations).filter(coords -> placeSupport(move, coords) && applyUpgrade(move, coords)).count();
+    }
+
+    /**
      * apply upgrades at the specified locations
      * @param move    the game state on which to deploy moves
      * @param locations the locations to apply them to

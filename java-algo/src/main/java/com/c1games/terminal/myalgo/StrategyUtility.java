@@ -38,7 +38,9 @@ public class StrategyUtility {
   static AttackBreakdown futureAttackThreshold(GameState move, int turns) {
     // TODO: FIX ME
     // TODO: apply some scaling if they have more turns available
-    return attackThreshold(move);
+    AttackBreakdown curr = attackThreshold(move);
+    curr.units.scale(1.4f);
+    return curr;
   }
 
   /**
@@ -56,8 +58,8 @@ public class StrategyUtility {
     if (cornerSummary.structureHealth == 0) {
       intersNeeded = 0;
     }
-    intersNeeded = (int) Math.ceil(0.9 * intersNeeded);
-    //intersNeeded = Math.min(intersNeeded, 18);
+    intersNeeded = (int) Math.ceil(1.3 * intersNeeded); // was 0.9
+    intersNeeded = Math.max(intersNeeded, cornerSummary.expectedIntercepterDamage < 1 ? 6 : 3); // use at least some inters
     int scoutsNeeded = (int) Math.ceil(cornerSummary.expectedScoutDamage / 15.0 + enemyHealth);
 
     return new UnitCounts(move, scoutsNeeded, intersNeeded, 0);
@@ -178,7 +180,7 @@ public class StrategyUtility {
 
 
     int maxEnemyScoutRushHealth = maxEnemyScoutRushHealth(move);
-    final int bias_term = 30; //TODO: Tunable
+    final int bias_term = 40; //TODO: Tunable (more means we need more defense as a base)
     int possibleRemainingScoutRushHealth = maxEnemyScoutRushHealth + bias_term - defenseRating;
     /*
     We divide by 15

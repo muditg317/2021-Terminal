@@ -92,7 +92,7 @@ public class MainStrategy {
         saveCores = 0;
       }
     }
-    GameIO.debug().println("Turn " + turnNumber+ ": with" + saveCores + " saveCores! We currently have " + move.data.p1Stats.cores + "cores!" );
+    GameIO.debug().println("Turn " + turnNumber+ ": with " + saveCores + " saveCores! We currently have " + move.data.p1Stats.cores + " SP and " + move.data.p1Stats.bits + " MP!" );
 
     //TODO: Defense spending should be here... This may break the boom save cores thing
 
@@ -144,13 +144,19 @@ public class MainStrategy {
         //update mp
         mp = move.data.p1Stats.bits;
         sp = move.data.p1Stats.cores;
-        HookAttack potentialHookAttack = HookAttack.evaluate(move, mp, sp, 8, 27 - 8, 10, 12, (int) (1.5 * mp));
+        GameIO.debug().println("CHECK FOR HOOK==================");
+        int maxDemos = (int) (mp / move.config.unitInformation.get(UnitType.Demolisher.ordinal()).cost2.orElse(3));
+        float minDamagePerDemo = 5;
+        HookAttack potentialHookAttack = HookAttack.evaluate(move, sp, mp, 8, 27 - 8, 10, 12, maxDemos*minDamagePerDemo);
+        algoState.hooking = potentialHookAttack != null;
         if (potentialHookAttack != null) {
+          GameIO.debug().printf("HOOKING!!!\tx:%d,y:%d,s:%s\n",potentialHookAttack.demolishers[0].x,potentialHookAttack.demolishers[0].y,potentialHookAttack.demolishers[0].x-13 == 0 ? "R" : "L");
           potentialHookAttack.execute(move);
         } else { //hook attack not done
-          fillHookHolesAndMarkForDeletion();
+          fillHookHoles();
           ScoutRush potentialScoutRush = ScoutRush.evaluate(move);
           if (potentialScoutRush != null && Math.random() > 0.1) {
+            setUpEssentialDefense();
             potentialScoutRush.execute(move);
           }
           else {
@@ -159,16 +165,20 @@ public class MainStrategy {
         }
 
       }
+
+      // put up defenses (moved before end of else blck because we were messing up our own booms
+      setUpEssentialDefense();
+
+      int defenseBudget = StrategyUtility.neededDefenseSpending(move);
+      if (defenseBudget > 0) { //we should smartly set up defenses
+        defenseBudget = (int) Math.min(defenseBudget, move.data.p1Stats.cores - saveCores);
+
+        setUpDefenseWithBudget(defenseBudget);
+      }
     } //end large attack if
-    // put up defenses
-    setUpEssentialDefense();
 
-    int defenseBudget = StrategyUtility.neededDefenseSpending(move);
-    if (defenseBudget > 0) { //we should smartly set up defenses
-      defenseBudget = (int) Math.min(defenseBudget, move.data.p1Stats.cores - saveCores);
-
-      setUpDefenseWithBudget(defenseBudget);
-    }
+    // unconditionally make sure that we can hook next round if we want
+    markHookHolesForDeletion();
   }
 
   /**
@@ -282,11 +292,19 @@ public class MainStrategy {
   }
 
   /**
-   * Fills the main wall hook holes and marks for deletion
+   * Fills the main wall hook holes
    */
-  private static void fillHookHolesAndMarkForDeletion() {
+  private static void fillHookHoles() {
     for (Coords location : Locations.Essentials.mainWallHookHoles) {
       SpawnUtility.placeWall(move, location);
+    }
+  }
+
+  /**
+   * Marks the main wall hook holes for deletion
+   */
+  private static void markHookHolesForDeletion() {
+    for (Coords location : Locations.Essentials.mainWallHookHoles) {
       SpawnUtility.removeBuilding(move, location);
     }
   }
@@ -317,7 +335,7 @@ public class MainStrategy {
 
       //get the main wall down
       for (Coords location : Locations.Essentials.mainWallCoords) {
-        if (Locations.Essentials.mainWallHookHoles.contains(location)) {
+        if (algoState.hooking && Locations.Essentials.mainWallHookHoles.contains(location)) {
           continue;
         }
         spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
@@ -479,105 +497,5 @@ public class MainStrategy {
   }
 
 
-  /**
-   * find optimal demolisher line and send demo if present
-   * TODO: doesn't account for killing stuff causing path to change
-   */
-  static Coords potentiallySendDemolishers(int minDamage) {
-    Map<Coords, Float> damages = new HashMap<>();
 
-    for (Coords location : Utility.friendlyEdges) {
-      List<Coords> path;
-      try {
-        path = move.pathfind(location, MapBounds.getEdgeFromStart(location));
-      } catch (IllegalPathStartException e) {
-        continue;
-      }
-      Coords endPoint = path.get(path.size() -1);
-      float demolisherPower = 0;
-      for (Coords pathPoint : path) {
-        List<Unit> attackers = move.getAttackers(pathPoint);
-        int additions = 0;
-        Coords best = null;
-        UnitType bestType = null;
-        float bestPercentage = 0;
-        Coords second = null;
-        UnitType secondType = null;
-        float secondPercentage = 0;
-        for (FrameData.PlayerUnit unit : move.data.p2Units.support) {
-          Coords unitLoc = new Coords(unit.x, unit.y);
-          if (pathPoint.distance(unitLoc) < 4.5) {
-            if (best == null || pathPoint.distance(unitLoc) <= pathPoint.distance(best)) {
-              second = best;
-              secondType = bestType;
-              secondPercentage = bestPercentage;
-              best = unitLoc;
-              bestType = Utility.SUPPORT;
-              bestPercentage = unit.stability / 30;
-            } else if (second == null || pathPoint.distance(unitLoc) <= pathPoint.distance(second)) {
-              second = unitLoc;
-              secondType = Utility.SUPPORT;
-              secondPercentage = unit.stability / 30;
-            }
-          }
-        }
-        for (FrameData.PlayerUnit unit : move.data.p2Units.turret) {
-          Coords unitLoc = new Coords(unit.x, unit.y);
-          if (pathPoint.distance(unitLoc) < 4.5) {
-            if (best == null || pathPoint.distance(unitLoc) <= pathPoint.distance(best)) {
-              second = best;
-              secondType = bestType;
-              secondPercentage = bestPercentage;
-              best = unitLoc;
-              bestType = Utility.TURRET;
-              bestPercentage = unit.stability / 95;
-            } else if (second == null || pathPoint.distance(unitLoc) <= pathPoint.distance(second)) {
-              second = unitLoc;
-              secondType = Utility.TURRET;
-              secondPercentage = unit.stability / 95;
-            }
-          }
-        }
-        for (FrameData.PlayerUnit unit : move.data.p2Units.wall) {
-          Coords unitLoc = new Coords(unit.x, unit.y);
-          if (pathPoint.distance(unitLoc) < 4.5) {
-            if (best == null || pathPoint.distance(unitLoc) <= pathPoint.distance(best)) {
-              second = best;
-              secondType = bestType;
-              secondPercentage = bestPercentage;
-              best = unitLoc;
-              bestType = Utility.WALL;
-              bestPercentage = unit.stability / 150;
-            } else if (second == null || pathPoint.distance(unitLoc) <= pathPoint.distance(second)) {
-              second = unitLoc;
-              secondType = Utility.WALL;
-              secondPercentage = unit.stability / 150;
-            }
-          }
-        }
-        if (best != null) {
-          demolisherPower += bestType == Utility.SUPPORT ? 9 : bestType == Utility.TURRET ? 2 : 1;
-        }
-        if (second != null) {
-          demolisherPower += (1 - bestPercentage) * (bestType == Utility.SUPPORT ? 9 : bestType == Utility.TURRET ? 2 : 1);
-        }
-        if (!attackers.isEmpty()) {
-          break;
-        }
-      }
-//      GameIO.debug().println("Got dmg:" + demolisherPower + " for " + location);
-      damages.put(location, demolisherPower);
-    }
-
-    Coords bestCoord = null;
-    float bestDemolisherDamage = minDamage;
-    for (Map.Entry<Coords, Float> entry : damages.entrySet()) {
-      if (entry.getValue() > bestDemolisherDamage) {
-        bestCoord = entry.getKey();
-        bestDemolisherDamage = entry.getValue();
-      }
-    }
-
-    return bestCoord;
-  }
 }

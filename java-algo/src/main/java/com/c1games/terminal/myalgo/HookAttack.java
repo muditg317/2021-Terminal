@@ -2,6 +2,7 @@ package com.c1games.terminal.myalgo;
 
 import com.c1games.terminal.algo.Config;
 import com.c1games.terminal.algo.Coords;
+import com.c1games.terminal.algo.GameIO;
 import com.c1games.terminal.algo.PlayerId;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.MapBounds;
@@ -41,10 +42,10 @@ public class HookAttack {
    * @param move
    */
   public void execute(GameState move) {
+    SpawnUtility.placeUpgradedSupports(move, Arrays.stream(supportTowers).limit(supportTowers.length - 1).toArray(Coords[]::new));
     SpawnUtility.placeWalls(move, walls);
-    SpawnUtility.placeSupports(move, supportTowers);
+    SpawnUtility.placeUpgradedSupports(move, new Coords[]{supportTowers[supportTowers.length-1]});
     SpawnUtility.placeTurrets(move, turrets);
-    SpawnUtility.applyUpgrades(move, supportTowers);
     if (move.data.p1Stats.cores > 0) {
       List<Coords> wallList = Arrays.asList(walls);
       Collections.reverse(wallList);
@@ -73,7 +74,10 @@ public class HookAttack {
     Config.UnitInformation demolisherInfo = move.config.unitInformation.get(UnitType.Demolisher.ordinal());
     int numDemolishers = (int) (availableMP / demolisherInfo.cost2.orElse(3));
 
+    GameIO.debug().println("================HOOK ANALYSIS========");
+
     if (numDemolishers == 0) {
+      GameIO.debug().println("no demos");
       return null;
     }
 
@@ -87,18 +91,16 @@ public class HookAttack {
         if (!MapBounds.ARENA[x][y]) {
           continue;
         }
-        if (y == 11) {
-          continue;
-        }
         int wallsAvailable = (int) (availableSP / wallCost);
-        if (wallsAvailable < 0) {
-          continue;
-        }
+//        if (wallsAvailable < 0) {
+//          GameIO.debug().printf("x:%d,y:%d. need more walls! sp:%d.\n",x,y,availableSP);
+//          continue;
+//        }
         // Build list of walls we need to place for the hook
         List<Coords> neededWalls = new ArrayList<>();
 
         // Walls of the V
-        for (int wallY = 2; wallY <= 13 && wallsAvailable >= 0; ++wallY) {
+        for (int wallY = 2; wallY <= 13 && wallsAvailable >= 0; wallY++) {
           if (wallY == y-1) {
             wallY++;
           }
@@ -114,11 +116,13 @@ public class HookAttack {
           }
         }
         if (wallsAvailable < 0) {
+//          GameIO.debug().printf("x:%d,y:%d. need more walls! sp:%.2f, walls:%d\n", x, y, availableSP, neededWalls.size());
+//          GameIO.debug().println(neededWalls);
           continue;
         }
 
         // Walls in the Corners
-        for (int wallX = 0; wallX <= 1 && wallsAvailable >= 0; ++wallX) {
+        for (int wallX = 0; wallX <= 1 && wallsAvailable >= 0; wallX++) {
           Coords leftWall = new Coords(wallX,13);
           if (move.getWallAt(leftWall) == null) {
             neededWalls.add(leftWall);
@@ -131,16 +135,34 @@ public class HookAttack {
           }
         }
         if (wallsAvailable < 0) {
+//          GameIO.debug().printf("x:%d,y:%d. need more walls! sp:%.2f, walls:%d\n", x, y, availableSP, neededWalls.size());
+//          GameIO.debug().println(neededWalls);
           continue;
         }
         int placedWalls = neededWalls.size();
-        for (int side = 0; side <= 1; ++side) {//0: target RIGHT, 1: target LEFT
 
+        // Test hooking right or left
+        for (int side = 0; side <= 1; side++) {//0: target RIGHT, 1: target LEFT
+          if (y == 11 && side == 1) {
+            continue;
+          }
           wallsAvailable += neededWalls.size() - placedWalls;
-          neededWalls.subList(placedWalls, neededWalls.size()).clear();
+//          neededWalls = neededWalls.subList(0, placedWalls);
+          neededWalls.subList(placedWalls, neededWalls.size()).clear(); //may be bugged??
+
+          Coords closeGapWall = new Coords(side == 0 ? (16-y) : (y+11), y-1);
+          if (move.getWallAt(closeGapWall) == null) {
+            neededWalls.add(closeGapWall);
+            --wallsAvailable;
+          }
+          if (wallsAvailable < 0) {
+//            GameIO.debug().printf("x:%d,y:%d, %s. need more walls! sp:%.2f, walls:%d\n", x, y, side == 0 ? "R" : "L", availableSP, neededWalls.size());
+//            GameIO.debug().println(neededWalls);
+            continue;
+          }
 
           int topWallStartX = side == 0 ? (12+y) : (15-y);
-          int wallBuildDir = side * 2 - 1;
+          int wallBuildDir = side * 2-1;
 
           // Walls of the actual hook bar
           for (int wallX = topWallStartX; (side == 0 ? wallX > x : wallX < x) && wallsAvailable >= 0; wallX += wallBuildDir) {
@@ -150,7 +172,10 @@ public class HookAttack {
               --wallsAvailable;
             }
           }
+
           if (wallsAvailable < 0) {
+//            GameIO.debug().printf("x:%d,y:%d, %s. need more walls! sp:%.2f, walls:%d\n", x, y, side == 0 ? "R" : "L", availableSP, neededWalls.size());
+//            GameIO.debug().println(neededWalls);
             continue;
           }
 
@@ -159,6 +184,7 @@ public class HookAttack {
           try {
             path = move.pathfind(start, side);
           } catch (IllegalPathStartException e) {
+//            GameIO.debug().printf("x:%d,y:%d. invalid hook exit\n", x, y);
             continue;
           }
 
@@ -191,15 +217,22 @@ public class HookAttack {
                     numDemolishers--;
                     damageDoneByTowers = 0;
                   }
+                  if (MapBounds.IS_ON_EDGE[side][pathPoint.x][pathPoint.y]) {
+                    spTaken += numDemolishers * 1.5;
+                  }
                 }
               }
             }
           }
 
-          damages.put(new Utility.Pair<>(start, side), new Utility.Pair<>(neededWalls, new ExpectedDefense(move, (Coords[]) path.toArray(), spTaken, expectedDamage)));
+          damages.put(new Utility.Pair<>(start, side), new Utility.Pair<>(new ArrayList<>(neededWalls), new ExpectedDefense(move, path.toArray(new Coords[0]), spTaken, expectedDamage)));
         }
       }
     }
+
+    GameIO.debug().println("================DAMAGES========");
+    GameIO.debug().printf("%s: %d options\n", damages.size() > 0 ? "CAN HOOK" : "none", damages.size());
+    GameIO.debug().println("================END HOOK ANALYSIS========");
 
 
     Utility.Pair<Coords, Integer> bestAttack = null;
@@ -212,11 +245,20 @@ public class HookAttack {
       }
     }
     if (bestAttack == null) {
+      GameIO.debug().println("Not doing enough damage!");
+      damages.forEach((key, value) -> GameIO.debug().printf("x:%d,y:%d, %s. damage:%.2f, need:%.2f. path_len: %d: ends:%s\n\t%s\n",
+          key.key.x, key.key.y, key.value == 0 ? "R" : "L",
+          value.value.structureHealth, minDamage,
+          value.value.path.length, value.value.path[value.value.path.length-1].toString(),
+          Arrays.toString(Arrays.stream(value.value.path).limit(15).map(Coords::toString).toArray(String[]::new))));
       return null;
     }
 
     Coords hookLocation = bestAttack.key;
     int side = bestAttack.value;
+
+    GameIO.debug().printf("Will hook: %s,s:%s. expected damage: %.2f\n", hookLocation.toString(), side == 0 ? "R" : "L", bestED.structureHealth);
+
 
     // TODO: compute support locations
     List<Coords> neededWalls = damages.get(bestAttack).key;
@@ -224,50 +266,83 @@ public class HookAttack {
     double supportCost = move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(4);
     double upgradeCost = move.config.unitInformation.get(UnitType.Wall.ordinal()).upgrade.orElse(new Config.UnitInformation()).cost1.orElse(4);
 
+    GameIO.debug().printf("Remaining SP for support: %.2f\n", remainingSP);
+
     int minWallsForProtection = (int) Math.ceil(remainingSP * wallCost / (wallCost+supportCost+upgradeCost)) / 2;
-    minWallsForProtection = Math.max(minWallsForProtection, 3);
+    minWallsForProtection = Math.min(Math.max(minWallsForProtection, 4), 6);
     List<Coords> supportTowers = new ArrayList<>((int) (availableSP / supportCost));
-    int wallY = hookLocation.y - 1;
-    int wallX = side == 0 ? (15 - wallY) : (wallY - 11);
+    int wallY = hookLocation.y - 2;
+    int wallX = side == 0 ? (wallY + 12) : (15 - wallY);
     int wallBuildDir = side * 2 - 1; //-1 for target right, 1 for target left
     int wallXLimit = hookLocation.x - 2 * wallBuildDir;
-    if ((int) Math.signum(wallXLimit - wallX) != wallBuildDir) {
-      int wallsPlaced = 0;
-      while (remainingSP >= supportCost + wallCost && wallsPlaced < minWallsForProtection) {
-        neededWalls.add(new Coords(wallX, wallY));
-        remainingSP -= wallCost;
-        wallX += wallBuildDir;
-        wallsPlaced++;
-      }
-      if (wallsPlaced == 0) {
-        wallXLimit = wallX + wallBuildDir;
-      } else {
-        wallXLimit = wallX + wallsPlaced;
-      }
-    }
-    while (remainingSP >= supportCost + upgradeCost) {
-      Coords supportLoc = new Coords(wallX, wallY);
-      if (move.getWallAt(supportLoc) == null) {
-        supportTowers.add(supportLoc);
-        remainingSP -= supportCost;
-        if (remainingSP >= upgradeCost) {
-          remainingSP -= upgradeCost;
+    GameIO.debug().printf("wallX:%d,wallY:%d,wallBuildDir:%d,wallXLimitL%d\n",wallX,wallY,wallBuildDir,wallXLimit);
+    while (remainingSP >= supportCost) {
+      if ((int) Math.signum(wallXLimit - wallX) != wallBuildDir) {
+        int wallsPlaced = 0;
+        GameIO.debug().print("Not enough space for support!\nextra walls:");
+        while (remainingSP >= supportCost + wallCost && wallsPlaced < minWallsForProtection) {
+          neededWalls.add(new Coords(wallX, wallY));
+          GameIO.debug().printf("<%d, %d>,", wallX,wallY);
+          remainingSP -= wallCost;
+          wallX += wallBuildDir;
+          wallsPlaced++;
+        }
+        if (wallsPlaced == 0) {
+          wallXLimit = wallX + wallBuildDir;
+        } else {
+          wallY--;
+          wallX = side == 0 ? (wallY + 12) : (15 - wallY);
+          wallXLimit = wallX + (wallsPlaced-2) * wallBuildDir;
         }
       }
-      if (wallX == wallXLimit) {
-        wallY--;
-        wallX = side == 0 ? (15 - wallY) : (wallY - 11);
-      } else {
-        wallX += wallBuildDir;
+      GameIO.debug().println("\nReady for supports");
+      GameIO.debug().printf("wallX:%d,wallY:%d,wallBuildDir:%d,wallXLimitL%d\nSupports:",wallX,wallY,wallBuildDir,wallXLimit);
+      while (remainingSP >= supportCost + upgradeCost) {
+        Coords supportLoc = new Coords(wallX, wallY);
+//      if (wallX<0||wallX>=28||wallY<0||wallY>28) {
+//        GameIO.debug().printf("BAD COORDINATE! %s",supportLoc);
+//      } else
+        if (side == 0 ? wallX >= wallXLimit : wallX <= wallXLimit) {
+          GameIO.debug().printf("%s,", supportLoc);
+          if (move.getWallAt(supportLoc) == null) {
+            supportTowers.add(supportLoc);
+            remainingSP -= supportCost;
+            if (remainingSP >= upgradeCost) {
+              remainingSP -= upgradeCost;
+            }
+          }
+        }
+        if (side == 0 ? wallX <= wallXLimit : wallX >= wallXLimit) {
+          wallY--;
+          wallX = side == 0 ? (wallY + 12) : (15 - wallY);
+          if (side == 0 ? wallX < wallXLimit : wallX > wallXLimit) {
+            break;
+          }
+        } else {
+          wallX += wallBuildDir;
+        }
       }
+      if (remainingSP < supportCost + upgradeCost) {
+        break;
+      }
+      wallY += 2;
+      minWallsForProtection = (int) Math.ceil(remainingSP * wallCost / (wallCost+supportCost+upgradeCost)) / 2;
+      minWallsForProtection = Math.min(Math.max(minWallsForProtection, 2), 5);
     }
 
 
-    Coords[] demolisherLocations = new Coords[(int) (availableMP / demolisherInfo.cost2.orElse(3))];
-    Coords demoLoc = new Coords(13 + bestAttack.value, 0);
-    Arrays.fill(demolisherLocations, demoLoc);
+    GameIO.debug().println("\nSupports ready!");
 
-    return new HookAttack(move, neededWalls.toArray(new Coords[0]),supportTowers.toArray(new Coords[0]), new Coords[]{}, new Coords[]{},new Coords[]{}, demolisherLocations, bestED);
+    Coords[] demolisherLocations = new Coords[(int) (availableMP / demolisherInfo.cost2.orElse(3))];
+    Arrays.fill(demolisherLocations, new Coords(13 + bestAttack.value, 0));
+
+    double remainingMP = availableMP - ((int) (availableMP / demolisherInfo.cost2.orElse(3)));
+    Coords[] interceptorLocations = new Coords[(int) Math.max((int) (remainingMP / move.config.unitInformation.get(UnitType.Interceptor.ordinal()).cost2.orElse(1)), (int) move.data.p2Stats.bits / demolisherInfo.cost2.orElse(3))];
+    if (remainingMP > 0) {
+      Arrays.fill(interceptorLocations, new Coords(side == 0 ? (hookLocation.y+13) : (13-hookLocation.y), hookLocation.y - 1));
+    }
+
+    return new HookAttack(move, neededWalls.toArray(new Coords[0]),supportTowers.toArray(new Coords[0]), new Coords[]{}, new Coords[]{}, interceptorLocations, demolisherLocations, bestED);
   }
 
 

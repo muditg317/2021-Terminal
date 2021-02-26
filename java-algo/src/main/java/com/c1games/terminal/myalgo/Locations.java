@@ -74,6 +74,8 @@ class Locations {
 
     static final Set<Coords> mainWallHookHoles = new HashSet<Coords>(
         Arrays.asList(
+            new Coords(7,8),
+            new Coords(20, 8),
             new Coords(6,9),
             new Coords(21, 9),
             new Coords(22, 10),

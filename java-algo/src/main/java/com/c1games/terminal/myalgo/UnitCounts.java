@@ -23,4 +23,11 @@ public class UnitCounts {
   public String toString() {
     return String.format("Scouts: %d, Inters: %d, Demos: %d. Cost: %d",numScouts,numInterceptors,numDemolishers,cost);
   }
+
+  public void scale(float f) {
+    this.numScouts *= f;
+    this.numInterceptors *= f;
+    this.numDemolishers *= f;
+    this.cost *= f;
+  }
 }

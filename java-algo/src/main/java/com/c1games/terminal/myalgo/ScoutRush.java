@@ -60,7 +60,7 @@ public class ScoutRush {
     rightSr.calculateSurvivingScouts(move);
 
     ScoutRush bestSr = leftSr.expectedDamage >= rightSr.expectedDamage ? leftSr : rightSr;
-    if (bestSr.expectedDamage < /*some threshold*/ (mp / 4) + (move.data.p1Stats.integrity / 10) && bestSr.expectedDamage < move.data.p1Stats.integrity) {
+    if (bestSr.expectedDamage < /*some threshold*/ (mp / 4) + (move.data.p2Stats.integrity / 10) && bestSr.expectedDamage < move.data.p1Stats.integrity) {
       return null; //don't do the ping attack
     }
     //then now, we shall do the attack - EXECUTE!
