@@ -78,10 +78,11 @@ public class MainStrategy {
     /*
     For now let's just focus on defending and bomb attacking
      */
+    Boom.debugPrint();
 
-    GameIO.debug().println("awaitingBoom:" + Boom.awaitingBoom);
-    GameIO.debug().println("turnsUntilBoom" + Boom.turnsUntilBoom);
-
+    //update mp
+    mp = move.data.p1Stats.bits;
+    sp = move.data.p1Stats.cores;
 
     if (Boom.awaitingBoom && Boom.turnsUntilBoom == 0) { // DO THE BOOM
       Boom.execute(move);
@@ -96,9 +97,7 @@ public class MainStrategy {
         }
         Boom.turnsUntilBoom--;
       } else {
-        //update mp
-        mp = move.data.p1Stats.bits;
-        sp = move.data.p1Stats.cores;
+
         GameIO.debug().println("CHECK FOR HOOK==================");
         int maxDemos = (int) (mp / move.config.unitInformation.get(UnitType.Demolisher.ordinal()).cost2.orElse(3));
         float minDamagePerDemo = 5;

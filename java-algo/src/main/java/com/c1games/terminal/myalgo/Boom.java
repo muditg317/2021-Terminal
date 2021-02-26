@@ -127,4 +127,9 @@ public class Boom {
     }
     return alreadyReady;
   }
+
+  static void debugPrint() {
+    GameIO.debug().println("awaitingBoom:" + Boom.awaitingBoom);
+    GameIO.debug().println("turnsUntilBoom" + Boom.turnsUntilBoom);
+  }
 }
