@@ -243,7 +243,7 @@ public class MainStrategy {
 
       //get the main wall down
       for (Coords location : Locations.Essentials.mainWallCoords) {
-        if (algoState.hooking && Locations.Essentials.mainWallHookHoles.contains(location)) {
+        if (/*algoState.hooking && */ Locations.Essentials.mainWallHookHoles.contains(location)) {
           continue;
         }
         spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
