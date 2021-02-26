@@ -125,8 +125,8 @@ class Locations {
   };
 
   static final Coords[] bottomEntranceTurrets = {
-      new Coords(5, 10),
-      new Coords(5, 10),
+      new Coords(6, 10),
+      new Coords(6, 10),
       new Coords(6, 10),
       new Coords(7, 10),
       new Coords(8, 10),

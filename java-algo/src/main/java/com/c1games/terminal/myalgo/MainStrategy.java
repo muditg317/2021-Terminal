@@ -119,8 +119,8 @@ public class MainStrategy {
     GameIO.debug().println("turnsUntilBoom" + algoState.turnsUntilBoom);
 
     AttackBreakdown attackData = StrategyUtility.attackThreshold(move);
-    String boomSide = (String) attackData.location;
-    UnitCounts attackUnits = (UnitCounts) attackData.units;
+    String boomSide = attackData.location;
+    UnitCounts attackUnits = attackData.units;
     int attackPoints = attackUnits.cost;
     int numInters = attackUnits.numInterceptors;
     if (algoState.awaitingBoom && algoState.turnsUntilBoom == 0) { // DO THE BOOM
@@ -147,7 +147,11 @@ public class MainStrategy {
         }
         algoState.turnsUntilBoom--;
       } else {
-        if (!ScoutRush.evaluateAndMaybeExecute(move)) {
+        ScoutRush potentialSr = ScoutRush.evaluate();
+        if (potentialSr.expectedDamage > 5 /* some other threshold */) {
+          potentialSr.execute();
+        }
+        else {
           spawnDefensiveInters(scoutRushDefense);
         }
       }
