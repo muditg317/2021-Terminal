@@ -8,13 +8,11 @@ import com.c1games.terminal.algo.units.UnitType;
 import java.util.List;
 public class ScoutRush {
   private static final Coords[] UPGRADED_SUPPORT_LOCATIONS = {
-          new Coords(6, 10),
-          //new Coords(7, 10),
-          //new Coords(8, 10),
+
 
           new Coords(7, 9),
-          new Coords(8, 9),
-          new Coords(9, 9),
+//          new Coords(8, 9),
+//          new Coords(9, 9),
 
           new Coords(8, 8),
           new Coords(9, 8),
