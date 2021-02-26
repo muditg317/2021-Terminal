@@ -149,7 +149,7 @@ public class MainStrategy {
       } else {
         ScoutRush potentialSr = ScoutRush.evaluate();
         if (potentialSr.expectedDamage > 5 /* some other threshold */) {
-          potentialSr.execute();
+          potentialSr.execute(move);
         }
         else {
           spawnDefensiveInters(scoutRushDefense);
