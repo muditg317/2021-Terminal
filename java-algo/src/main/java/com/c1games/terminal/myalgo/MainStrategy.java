@@ -104,6 +104,9 @@ public class MainStrategy {
 //    }
     GameIO.debug().println(saveCores + " saveCores! We currently have " + move.data.p1Stats.cores + "cores!" );
 
+
+    int defenseBudget = StrategyUtility.neededDefenseSpending(move);
+    int attackSpBudget = (int) (sp - defenseBudget);
     //Attack
     /*
     For now let's just focus on defending and bomb attacking
@@ -147,8 +150,8 @@ public class MainStrategy {
         GameIO.debug().println("CHECK FOR HOOK==================");
         int maxDemos = (int) (mp / move.config.unitInformation.get(UnitType.Demolisher.ordinal()).cost2.orElse(3));
         float minDamagePerDemo = 5;
-        HookAttack lowerHookAttack = HookAttack.evaluate(move, sp, mp - (move.data.p2Stats.bits > 5 ? (move.data.p2Stats.bits > 12 ? 2 : 1) : 0), 8, 27 - 8, 10, 12, maxDemos*minDamagePerDemo);
-        HookAttack upperHookAttack = HookAttack.evaluate(move, sp, mp - (move.data.p2Stats.bits > 5 ? (move.data.p2Stats.bits > 12 ? 2 : 1) : 0), 9, 27 - 9, 13, 13, maxDemos*minDamagePerDemo);
+        HookAttack lowerHookAttack = HookAttack.evaluate(move, attackSpBudget, mp - (move.data.p2Stats.bits > 5 ? (move.data.p2Stats.bits > 12 ? 2 : 1) : 0), 8, 27 - 8, 10, 12, maxDemos*minDamagePerDemo);
+        HookAttack upperHookAttack = HookAttack.evaluate(move, attackSpBudget, mp - (move.data.p2Stats.bits > 5 ? (move.data.p2Stats.bits > 12 ? 2 : 1) : 0), 9, 27 - 9, 13, 13, maxDemos*minDamagePerDemo);
         HookAttack potentialHookAttack = null;
         if (lowerHookAttack != null) {
           potentialHookAttack = lowerHookAttack;
@@ -162,7 +165,7 @@ public class MainStrategy {
           potentialHookAttack.execute(move);
         } else { //hook attack not done
           fillHookHoles();
-          ScoutRush potentialScoutRush = ScoutRush.evaluate(move);
+          ScoutRush potentialScoutRush = ScoutRush.evaluate(move, attackSpBudget);
           if (potentialScoutRush != null && Math.random() > 0.1) {
             setUpEssentialDefense();
             potentialScoutRush.execute(move);
@@ -176,7 +179,7 @@ public class MainStrategy {
       // put up defenses (moved before end of else blck because we were messing up our own booms
       setUpEssentialDefense();
 
-      int defenseBudget = StrategyUtility.neededDefenseSpending(move);
+
       if (defenseBudget > 0) { //we should smartly set up defenses
         defenseBudget = (int) Math.min(defenseBudget, move.data.p1Stats.cores - saveCores);
 
