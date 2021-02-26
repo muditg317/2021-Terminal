@@ -58,9 +58,13 @@ public class StrategyUtility {
     if (cornerSummary.structureHealth == 0) {
       intersNeeded = 0;
     }
-    intersNeeded = (int) Math.ceil(1.3 * intersNeeded); // was 0.9
-    intersNeeded = Math.max(intersNeeded, cornerSummary.expectedIntercepterDamage < 1 ? 6 : 3); // use at least some inters
-    int scoutsNeeded = (int) Math.ceil(cornerSummary.expectedScoutDamage / 15.0 + enemyHealth);
+    intersNeeded = (int) Math.ceil(0.9 * intersNeeded);
+    //intersNeeded = Math.max(intersNeeded, cornerSummary.expectedIntercepterDamage < 1 ? 6 : 3); // use at least some inters
+    int scoutBaseHealth = (int) move.config.unitInformation.get(UnitType.Interceptor.ordinal()).startHealth.orElse(15);
+    int expectedShielding = (int) (move.data.p1Stats.cores * 3.0 / 4.0);
+    int scoutHealth = scoutBaseHealth + expectedShielding;
+    int minimumDamage = (int) Math.min(enemyHealth, enemyHealth / 10 + 5);
+    int scoutsNeeded = (int) Math.ceil(cornerSummary.expectedScoutDamage / 2 / scoutHealth + minimumDamage);
 
     return new UnitCounts(move, scoutsNeeded, intersNeeded, 0);
   }
@@ -133,7 +137,7 @@ public class StrategyUtility {
     for(int i = 0; i < turns; i++) {
       float baseMPIncome = move.config.resources.bitsPerRound + move.config.resources.bitGrowthRate * (move.data.turnInfo.turnNumber + i) / move.config.resources.turnIntervalForBitSchedule;
       currentMP *= (1 - move.config.resources.bitDecayPerRound);
-      currentMP -= currentMP%0.01;
+      //currentMP -= currentMP%0.01; //TODO: What was this line doing? I commented it out for now...
       currentMP += baseMPIncome - expectedBaseCostPerTurn;
     }
     return currentMP;
