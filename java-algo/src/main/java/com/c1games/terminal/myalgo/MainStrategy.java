@@ -482,16 +482,16 @@ public class MainStrategy {
 
     } catch (InsufficientResourcesException e) {
       GameIO.debug().println("spent: " + spent + " of " + budget + " || finishedBudget @ LINE " + e.getStackTrace()[1].getLineNumber());
-      return;
     } finally {
       // place the two cap walls and upgrade them if we have the available budget
       //place top line cap
       try {
         spent -= SAVE_AMOUNT;
         Coords lastTopTurretLocation = DefenseUtility.findRightMostTurret(move, Locations.topEntranceTurrets);
+        Coords topWallCap = null;
+        if (lastTopTurretLocation != null) {
+          topWallCap = new Coords(lastTopTurretLocation.x + 1, lastTopTurretLocation.y);
 
-        Coords topWallCap = new Coords(lastTopTurretLocation.x + 1, lastTopTurretLocation.y);
-        if (topWallCap != null) {
           spent += attemptSpawnIfAffordable(topWallCap, Utility.WALL, false, budget - spent);
           SpawnUtility.removeBuilding(move, topWallCap);
           GameIO.debug().print(String.format("topWallCap: (%s, %s)", topWallCap.x, topWallCap.y));
@@ -499,8 +499,10 @@ public class MainStrategy {
 
 
         //at this point, only the first bottom turret should be down...
-        Coords bottomWallCap = DefenseUtility.findRightMostTurret(move, Locations.bottomEntranceTurrets);
-        if (bottomWallCap != null) {
+        Coords lastBottomTurretLocation = DefenseUtility.findRightMostTurret(move, Locations.bottomEntranceTurrets);
+        Coords bottomWallCap = null;
+        if (lastBottomTurretLocation != null) {
+          bottomWallCap = new Coords(lastBottomTurretLocation.x + 1, lastBottomTurretLocation.y);
           spent += attemptSpawnIfAffordable(bottomWallCap, Utility.WALL, false, budget - spent);
           SpawnUtility.removeBuilding(move, bottomWallCap);
           GameIO.debug().print(String.format("bottomWallCap: (%s, %s)", bottomWallCap.x, bottomWallCap.y));
