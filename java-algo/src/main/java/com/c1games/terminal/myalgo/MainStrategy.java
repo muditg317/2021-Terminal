@@ -39,8 +39,8 @@ public class MainStrategy {
     GameIO.debug().println("Turn Number:" + turnNumber);
     GameIO.debug().println("scoutRushDefense:" + scoutRushDefense);
     GameIO.debug().println("reducedScoutRushDefense: " + reducedScoutRushDefense);
-    GameIO.debug().println("Enemy left corner heuristic: " + StrategyUtility.enemyDefenseHeuristic(move, "LEFT"));
-    GameIO.debug().println("Enemy right corner heuristic: " + StrategyUtility.enemyDefenseHeuristic(move, "RIGHT"));
+    GameIO.debug().println("Enemy left corner heuristic: " + Boom.enemyDefenseHeuristic(move, "LEFT"));
+    GameIO.debug().println("Enemy right corner heuristic: " + Boom.enemyDefenseHeuristic(move, "RIGHT"));
 
 
 
