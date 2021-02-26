@@ -420,6 +420,13 @@ public class MainStrategy {
         spent += attemptSpawnIfAffordable(bottomTowerLocation, Utility.TURRET, true, budget - spent);
         spent += attemptSpawnIfAffordable(topTowerLocation, Utility.TURRET, true, budget - spent);
         spent += attemptSpawnIfAffordable(topWallLocation, Utility.WALL, true, budget - spent);
+
+        if (i == 3) { //TODO: this is beyond jank but i (mudit) thought it was needed and its 5am so i not gonna refactor
+          spent += attemptSpawnIfAffordable(new Coords(2,12), Utility.TURRET, false, budget - spent);
+          spent += attemptSpawnIfAffordable(new Coords(1,12), Utility.TURRET, false, budget - spent);
+          spent += attemptSpawnIfAffordable(new Coords(2,12), Utility.TURRET, true, budget - spent);
+          spent += attemptSpawnIfAffordable(new Coords(1,12), Utility.TURRET, true, budget - spent);
+        }
       }
 
 

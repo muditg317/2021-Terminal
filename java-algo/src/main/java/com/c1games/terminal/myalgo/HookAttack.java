@@ -11,6 +11,7 @@ import com.c1games.terminal.algo.pathfinding.IllegalPathStartException;
 import com.c1games.terminal.algo.units.UnitType;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class HookAttack {
   Coords[] walls;
@@ -42,9 +43,10 @@ public class HookAttack {
    * @param move
    */
   public void execute(GameState move) {
-    SpawnUtility.placeUpgradedSupports(move, Arrays.stream(supportTowers).limit(supportTowers.length/2).toArray(Coords[]::new));
     SpawnUtility.placeWalls(move, walls);
-    SpawnUtility.placeUpgradedSupports(move, Arrays.stream(supportTowers).skip(supportTowers.length/2-1).toArray(Coords[]::new));
+    SpawnUtility.placeUpgradedSupports(move, supportTowers);
+//    SpawnUtility.placeUpgradedSupports(move, Arrays.stream(supportTowers).limit(supportTowers.length/2).toArray(Coords[]::new));
+//    SpawnUtility.placeUpgradedSupports(move, Arrays.stream(supportTowers).skip(supportTowers.length/2-1).toArray(Coords[]::new));
     SpawnUtility.placeTurrets(move, turrets);
     if (move.data.p1Stats.cores > 0) {
       List<Coords> wallList = Arrays.asList(walls);
@@ -325,6 +327,10 @@ public class HookAttack {
       if (remainingSP < supportCost + upgradeCost) {
         break;
       }
+      int initial = neededWalls.size();
+      neededWalls = neededWalls.stream().filter(coords -> !supportTowers.contains(coords)).collect(Collectors.toList());
+      int after = neededWalls.size();
+      remainingSP += (initial - after) * wallCost;
       wallY += 2;
       minWallsForProtection = (int) Math.ceil(remainingSP * wallCost / (wallCost+supportCost+upgradeCost)) / 2;
       minWallsForProtection = Math.min(Math.max(minWallsForProtection, 2), 5);
