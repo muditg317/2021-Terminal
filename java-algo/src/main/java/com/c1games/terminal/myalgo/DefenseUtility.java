@@ -2,6 +2,7 @@ package com.c1games.terminal.myalgo;
 
 import com.c1games.terminal.algo.Coords;
 import com.c1games.terminal.algo.map.GameState;
+import com.c1games.terminal.algo.map.Unit;
 
 public class DefenseUtility {
 
@@ -16,7 +17,8 @@ public class DefenseUtility {
   static Coords findRightMostTurret(GameState move, Coords[] spots) {
     Coords lastTurretLocation = new Coords(spots[0].x - 1, spots[0].y);
     for(Coords location : spots) {
-      if (move.getWallAt(location).type == Utility.TURRET) {
+      Unit unit = move.getWallAt(location);
+      if (unit != null && move.getWallAt(location).type == Utility.TURRET) {
         lastTurretLocation = location;
       } else {
         break;
