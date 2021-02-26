@@ -147,8 +147,8 @@ public class MainStrategy {
         }
         algoState.turnsUntilBoom--;
       } else {
-        ScoutRush potentialSr = ScoutRush.evaluate();
-        if (potentialSr.expectedDamage > 5 /* some other threshold */) {
+        ScoutRush potentialSr = ScoutRush.evaluate(move);
+        if (potentialSr != null && potentialSr.expectedDamage > 5 /* some other threshold */) {
           potentialSr.execute(move);
         }
         else {
