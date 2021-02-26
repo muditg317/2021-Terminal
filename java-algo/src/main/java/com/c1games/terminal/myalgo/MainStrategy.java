@@ -130,7 +130,7 @@ public class MainStrategy {
       SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 6 : 21, 7)}, (int) move.data.p1Stats.bits);
 
       SpawnUtility.removeBuilding(move, new Coords(boomSide.equals("RIGHT") ? 6 : 21, 8));
-      SpawnUtility.removeBuilding(move, new Coords(3, 12));
+      SpawnUtility.removeBuilding(move, new Coords(4, 11));
       algoState.awaitingBoom = false;
       algoState.turnsUntilBoom = -99;
     } else { // otherwise do not do the boom, check for it
