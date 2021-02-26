@@ -147,7 +147,15 @@ public class MainStrategy {
         GameIO.debug().println("CHECK FOR HOOK==================");
         int maxDemos = (int) (mp / move.config.unitInformation.get(UnitType.Demolisher.ordinal()).cost2.orElse(3));
         float minDamagePerDemo = 5;
-        HookAttack potentialHookAttack = HookAttack.evaluate(move, sp, mp - (move.data.p2Stats.bits > 5 ? (move.data.p2Stats.bits > 12 ? 2 : 1) : 0), 8, 27 - 8, 10, 12, maxDemos*minDamagePerDemo);
+        HookAttack lowerHookAttack = HookAttack.evaluate(move, sp, mp - (move.data.p2Stats.bits > 5 ? (move.data.p2Stats.bits > 12 ? 2 : 1) : 0), 8, 27 - 8, 10, 12, maxDemos*minDamagePerDemo);
+        HookAttack upperHookAttack = HookAttack.evaluate(move, sp, mp - (move.data.p2Stats.bits > 5 ? (move.data.p2Stats.bits > 12 ? 2 : 1) : 0), 9, 27 - 9, 13, 13, maxDemos*minDamagePerDemo);
+        HookAttack potentialHookAttack = null;
+        if (lowerHookAttack != null) {
+          potentialHookAttack = lowerHookAttack;
+        }
+        if (upperHookAttack != null && (lowerHookAttack == null || upperHookAttack.expectedDefense.structureHealth > lowerHookAttack.expectedDefense.structureHealth)) {
+          potentialHookAttack = upperHookAttack;
+        }
         algoState.hooking = potentialHookAttack != null;
         if (potentialHookAttack != null) {
           GameIO.debug().printf("HOOKING!!!\tx:%d,y:%d,s:%s\n",potentialHookAttack.demolishers[0].x,potentialHookAttack.demolishers[0].y,potentialHookAttack.demolishers[0].x-13 == 0 ? "R" : "L");

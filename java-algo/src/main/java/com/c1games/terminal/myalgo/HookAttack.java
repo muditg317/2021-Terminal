@@ -228,8 +228,9 @@ public class HookAttack {
               }
             }
           }
-
-          damages.put(new Utility.Pair<>(start, side), new Utility.Pair<>(new ArrayList<>(neededWalls), new ExpectedDefense(move, path.toArray(new Coords[0]), spTaken, expectedDamage)));
+          if (spTaken > minDamage) { // ignore result if it doesn't help
+            damages.put(new Utility.Pair<>(start, side), new Utility.Pair<>(new ArrayList<>(neededWalls), new ExpectedDefense(move, path.toArray(new Coords[0]), spTaken, expectedDamage)));
+          }
         }
       }
     }
@@ -280,6 +281,7 @@ public class HookAttack {
     int wallBuildDir = side * 2 - 1; //-1 for target right, 1 for target left
     int wallXLimit = hookLocation.x - 2 * wallBuildDir;
     GameIO.debug().printf("wallX:%d,wallY:%d,wallBuildDir:%d,wallXLimitL%d\n",wallX,wallY,wallBuildDir,wallXLimit);
+    int lastWallForSupports = neededWalls.size();
     while (remainingSP >= supportCost) {
       int supportPlaced = 0;
       if ((int) Math.signum(wallXLimit - wallX) != wallBuildDir) {
@@ -312,6 +314,7 @@ public class HookAttack {
           if (move.getWallAt(supportLoc) == null) {
             supportTowers.add(supportLoc);
             supportPlaced++;
+            lastWallForSupports = neededWalls.size();
             remainingSP -= supportCost;
             if (remainingSP >= upgradeCost) {
               remainingSP -= upgradeCost;
@@ -331,6 +334,9 @@ public class HookAttack {
       if (remainingSP < supportCost + upgradeCost) {
         break;
       }
+      if (wallY < 4) {
+        break;
+      }
       if (supportPlaced == 0) {
         break;
       }
@@ -343,6 +349,8 @@ public class HookAttack {
       minWallsForProtection = Math.min(Math.max(minWallsForProtection, 2), 5);
     }
 
+    try {neededWalls.subList(lastWallForSupports+1, neededWalls.size()).clear();}
+    catch (Exception ignored) {}
 
     GameIO.debug().println("\nSupports ready!");
 
