@@ -24,7 +24,6 @@ public class MainStrategy {
     We need a good heuristic that considers the enemy MP and factories to decide when to put more defenses vs more factories
      */
     //always set up the essential defenses
-    setUpEssentialDefense();
 
     deleteDamagedStructures();
 
@@ -48,6 +47,7 @@ public class MainStrategy {
     //DECIDE TO BOOM OR NOT HERE.==========================
     Boom.evaluate(move, reducedScoutRushDefense);
 
+    setUpEssentialDefense();
 
     //make sure we have enough for boom wall
     int saveCores = 0;
