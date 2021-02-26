@@ -86,7 +86,7 @@ public class ScoutRush {
    */
   public int calculateSurvivingScouts(GameState move) {
     double currHealth = scoutHealth;
-    int scoutsRemaining = numScouts;
+    int scoutsRemaining = numScouts; // used to just change numScouts which seems wrong
     List<Coords> path = move.pathfind(startCoord, targetSide);
     if (!StrategyUtility.pathHitsTargetEdge(path, targetSide)) { //this explodes ;(
       return 0;
@@ -106,7 +106,7 @@ public class ScoutRush {
       }
     }
     this.expectedDamage = scoutsRemaining;
-    return scoutsRemaining; // you were screwing up the numScouts value which is why we always sent less scouts than we actually had
+    return scoutsRemaining; // TODO: were you intentionally changing the numScouts value which is why we always sent less scouts than we actually had
   }
 
   /**
