@@ -301,5 +301,5 @@ class Locations {
 
 
 
-  }
+  };
 }
