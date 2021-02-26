@@ -24,6 +24,8 @@ public class MainStrategy {
     We need a good heuristic that considers the enemy MP and factories to decide when to put more defenses vs more factories
      */
     //always set up the essential defenses
+    setUpEssentialDefense();
+
     deleteDamagedStructures();
 
 
@@ -130,7 +132,6 @@ public class MainStrategy {
       }
 
       // put up defenses (moved before end of else blck because we were messing up our own booms
-      setUpEssentialDefense();
 
 
       if (defenseBudget > 0) { //we should smartly set up defenses
