@@ -2,6 +2,7 @@ package com.c1games.terminal.myalgo;
 
 import com.c1games.terminal.algo.Config;
 import com.c1games.terminal.algo.Coords;
+import com.c1games.terminal.algo.GameIO;
 import com.c1games.terminal.algo.PlayerId;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.MapBounds;
@@ -55,6 +56,8 @@ public class StrategyUtility {
 
     ExpectedDefense cornerSummary = enemyCornerSummary(move, side);
     int intersNeeded = (int) Math.ceil((cornerSummary.structureHealth + cornerSummary.expectedIntercepterDamage) / move.config.unitInformation.get(UnitType.Interceptor.ordinal()).startHealth.orElse(40));
+    GameIO.debug().println(String.format("cornerSummary structureHealth: %s\n cornerSummary expectedDamage: %s\n",
+        cornerSummary.structureHealth, cornerSummary.expectedIntercepterDamage));
     if (cornerSummary.structureHealth == 0) { //TODO: Errors if the wall was deleted and put back since sends no inters.. need past history of deleted stuff/past stuff
       intersNeeded = 0;
     }
@@ -124,6 +127,8 @@ public class StrategyUtility {
         }
       }
     }
+    GameIO.debug().println(String.format("enemyCornerSummary:  Side: %s\nEffective Wall Health: %s \nDamage taken: %d\n",
+        side,effectiveWallHealth, effectiveTurretRating));
     return new ExpectedDefense(move, path, effectiveWallHealth, effectiveTurretRating);
   }
 
