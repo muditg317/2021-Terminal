@@ -92,16 +92,12 @@ public class Boom {
           toPlace.add(toClose);
         }
       } else {
-        SpawnUtility.placeTurrets(move, new Coords[]{toClose});
+        SpawnUtility.placeWalls(move, new Coords[]{toClose});
       }
     }
-    final int[] numFactories = {(int) ((move.data.p1Stats.bits - toPlace.size()) / 9)};
-    toPlace.stream().sorted(new Comparator<Coords>() {
-      @Override
-      public int compare(Coords o1, Coords o2) {
-        return o1.y - o2.y;
-      }
-    }).forEach(location -> {
+    final int[] numFactories = {0}; //TODO: I'm a bit confused about this legacy code... going to just make it place walls
+    //final int[] numFactories = {(int) ((move.data.p1Stats.bits - toPlace.size()) / 9)};
+    toPlace.stream().sorted((o1, o2) -> o1.y - o2.y).forEach(location -> {
       if (numFactories[0] > 0 && location.y < 11) {
         SpawnUtility.placeSupports(move, new Coords[]{location});
         numFactories[0]--;
@@ -109,6 +105,10 @@ public class Boom {
         SpawnUtility.placeWalls(move, new Coords[]{location});
       }
     });
+
+    //now put down supports
+    SpawnUtility.placeSupports(move, Locations.safeSupportLocations);
+    SpawnUtility.removeBuildings(move, Locations.safeSupportLocations);
     return true;
   }
 

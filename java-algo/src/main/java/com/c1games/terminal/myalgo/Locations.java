@@ -273,4 +273,33 @@ class Locations {
         new Coords(24, 12),
         new Coords(25, 13)
   };
+
+  static final Coords[] safeSupportLocations = {
+      new Coords(13, 3),
+      new Coords(14, 3),
+
+      new Coords(12, 4),
+      new Coords(13, 4),
+      new Coords(14, 4),
+      new Coords(15, 4),
+
+      new Coords(11, 5),
+      new Coords(12, 5),
+      new Coords(13, 5),
+      new Coords(14, 5),
+      new Coords(15, 5),
+      new Coords(16, 5),
+
+      new Coords(10, 6),
+      new Coords(11, 6),
+      new Coords(12, 6),
+     // new Coords(13, 6), //these don't reach the path if unupgraded
+      //new Coords(14, 6),
+      new Coords(15, 6),
+      new Coords(16, 6),
+      new Coords(17, 6),
+
+
+
+  }
 }
