@@ -123,6 +123,7 @@ class Locations {
   };
 
   static final Coords[] topEntranceWalls = {
+      new Coords(3, 13),
       new Coords(4, 13),
       new Coords(5, 13), //this will be the turret boi
       new Coords(6, 13),
@@ -131,6 +132,7 @@ class Locations {
   };
 
   static final Coords[] topEntranceTurrets = {
+      new Coords(3 ,12),
       new Coords(4, 12),
       new Coords(5, 12),
       new Coords(6, 12),
@@ -139,8 +141,9 @@ class Locations {
   };
 
   static final Coords[] bottomEntranceTurrets = {
-      new Coords(6, 10),
-      new Coords(6, 10),
+      new Coords(5, 10),
+      new Coords(5, 10),
+      new Coords(5, 10),
       new Coords(6, 10),
       new Coords(7, 10),
       new Coords(8, 10),

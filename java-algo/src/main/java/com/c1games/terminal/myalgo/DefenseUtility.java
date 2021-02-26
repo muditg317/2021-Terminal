@@ -12,10 +12,10 @@ public class DefenseUtility {
    * If the first element in spots is not a turret, it will return (spots.x - 1, spots.y)
    * @param move
    * @param spots
-   * @return
+   * @return the right most turret. Null if there are no turrets.
    */
   static Coords findRightMostTurret(GameState move, Coords[] spots) {
-    Coords lastTurretLocation = new Coords(spots[0].x - 1, spots[0].y);
+    Coords lastTurretLocation = null;
     for(Coords location : spots) {
       Unit unit = move.getWallAt(location);
       if (unit != null && move.getWallAt(location).type == Utility.TURRET) {
@@ -27,4 +27,6 @@ public class DefenseUtility {
 
     return lastTurretLocation;
   }
+
+
 }
