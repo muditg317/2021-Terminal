@@ -237,7 +237,6 @@ class Locations {
           new Coords(23,10),
           new Coords(24,10),
           new Coords(24,11),
-          new Coords(24,12),
           new Coords(25,11),
           new Coords(25,12),
           new Coords(26,12),
