@@ -158,8 +158,7 @@ public class MainStrategy {
           if (potentialScoutRush != null && Math.random() > 0.1) {
             setUpEssentialDefense();
             potentialScoutRush.execute(move);
-          }
-          else {
+          } else {
             spawnDefensiveInters(scoutRushDefense);
           }
         }

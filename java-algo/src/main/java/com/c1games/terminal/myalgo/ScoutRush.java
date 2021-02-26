@@ -60,7 +60,7 @@ public class ScoutRush {
     rightSr.calculateSurvivingScouts(move);
 
     ScoutRush bestSr = leftSr.expectedDamage >= rightSr.expectedDamage ? leftSr : rightSr;
-    if (bestSr.expectedDamage < /*some threshold TODO: i bumped this to 3 from 4 */ (mp / 3) + (move.data.p2Stats.integrity / 10) && /*  TODO: alex why do we ensure that it does less damage than our health?? seems weird */bestSr.expectedDamage < move.data.p1Stats.integrity) {
+    if (bestSr.expectedDamage < /*some threshold TODO: i bumped this to 3 from 4 (put it back to test something) */ (mp / 4) + (move.data.p2Stats.integrity / 10) && /*  TODO: alex why do we ensure that it does less damage than our health?? seems weird */bestSr.expectedDamage < move.data.p1Stats.integrity) {
       return null; //don't do the ping attack
     }
     //then now, we shall do the attack - EXECUTE!
@@ -86,6 +86,7 @@ public class ScoutRush {
    */
   public int calculateSurvivingScouts(GameState move) {
     double currHealth = scoutHealth;
+    int scoutsRemaining = numScouts;
     List<Coords> path = move.pathfind(startCoord, targetSide);
     if (!StrategyUtility.pathHitsTargetEdge(path, targetSide)) { //this explodes ;(
       return 0;
@@ -96,16 +97,16 @@ public class ScoutRush {
         double attackerDamage = attacker.unitInformation.attackDamageWalker.orElse(0);
         currHealth -= attackerDamage;
         if (currHealth <= 0) {
-          numScouts--;
+          scoutsRemaining--;
           currHealth = scoutHealth;
-          if (numScouts == 0) { //break early
+          if (scoutsRemaining == 0) { //break early
             return 0;
           }
         }
       }
     }
-    this.expectedDamage = numScouts;
-    return numScouts;
+    this.expectedDamage = scoutsRemaining;
+    return scoutsRemaining; // you were screwing up the numScouts value which is why we always sent less scouts than we actually had
   }
 
   /**
