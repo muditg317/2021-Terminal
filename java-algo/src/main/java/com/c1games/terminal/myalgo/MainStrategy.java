@@ -86,6 +86,7 @@ public class MainStrategy {
 
     if (Boom.awaitingBoom && Boom.turnsUntilBoom == 0) { // DO THE BOOM
       Boom.execute(move);
+      fillHookHoles();
     } else { // otherwise do not do the boom, check for it
 
       if (Boom.awaitingBoom) { // we are going to boom
@@ -96,6 +97,7 @@ public class MainStrategy {
           GameIO.debug().println("clearing path for future BOOM!!");
         }
         Boom.turnsUntilBoom--;
+        fillHookHoles();
       } else {
 
         GameIO.debug().println("CHECK FOR HOOK==================");

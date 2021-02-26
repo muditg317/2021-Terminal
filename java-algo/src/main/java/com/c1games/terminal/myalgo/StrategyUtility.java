@@ -58,6 +58,7 @@ public class StrategyUtility {
     if (cornerSummary.structureHealth == 0) { //TODO: Errors if the wall was deleted and put back since sends no inters.. need past history of deleted stuff/past stuff
       intersNeeded = 0;
     }
+    //TODO: ITS NOT SENDING ENOUGH INTERS?? :(
     intersNeeded = (int) Math.ceil(intersNeeded);
     intersNeeded = Math.max(intersNeeded, cornerSummary.expectedIntercepterDamage < 1 ? 6 : 3); // use at least some inters
     int scoutBaseHealth = (int) move.config.unitInformation.get(UnitType.Interceptor.ordinal()).startHealth.orElse(15);
