@@ -59,7 +59,7 @@ public class StrategyUtility {
       intersNeeded = 0;
     }
     intersNeeded = (int) Math.ceil(0.9 * intersNeeded);
-    //intersNeeded = Math.max(intersNeeded, cornerSummary.expectedIntercepterDamage < 1 ? 6 : 3); // use at least some inters
+    intersNeeded = Math.max(intersNeeded, cornerSummary.expectedIntercepterDamage < 1 ? 6 : 3); // use at least some inters
     int scoutBaseHealth = (int) move.config.unitInformation.get(UnitType.Interceptor.ordinal()).startHealth.orElse(15);
     int expectedShielding = (int) (move.data.p1Stats.cores * 3.0 / 4.0);
     int scoutHealth = scoutBaseHealth + expectedShielding;
