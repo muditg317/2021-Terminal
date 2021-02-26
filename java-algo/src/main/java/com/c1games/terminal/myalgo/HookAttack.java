@@ -42,9 +42,9 @@ public class HookAttack {
    * @param move
    */
   public void execute(GameState move) {
-    SpawnUtility.placeUpgradedSupports(move, Arrays.stream(supportTowers).limit(supportTowers.length - 1).toArray(Coords[]::new));
+    SpawnUtility.placeUpgradedSupports(move, Arrays.stream(supportTowers).limit(supportTowers.length - 2).toArray(Coords[]::new));
     SpawnUtility.placeWalls(move, walls);
-    SpawnUtility.placeUpgradedSupports(move, new Coords[]{supportTowers[supportTowers.length-1]});
+    SpawnUtility.placeUpgradedSupports(move, Arrays.stream(supportTowers).skip(supportTowers.length - 3).toArray(Coords[]::new));
     SpawnUtility.placeTurrets(move, turrets);
     if (move.data.p1Stats.cores > 0) {
       List<Coords> wallList = Arrays.asList(walls);
