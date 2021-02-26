@@ -432,7 +432,7 @@ public class HookAttack {
       Arrays.fill(interceptorLocations, new Coords(side == 0 ? (hookLocation.y+13) : (13-hookLocation.y), hookLocation.y - 1));
     }
 
-    return new HookAttack(move, neededWalls.toArray(new Coords[0]),neededSupport.toArray(new Coords[0]), new Coords[]{}, new Coords[]{}, interceptorLocations, demolisherLocations, bestED, side, hookLocation);
+    return new HookAttack(move, neededWalls.toArray(new Coords[0]),neededSupport.toArray(new Coords[0]), neededTurrets.toArray(new Coords[0]), new Coords[]{}, interceptorLocations, demolisherLocations, bestED, side, hookLocation);
   }
 
 
