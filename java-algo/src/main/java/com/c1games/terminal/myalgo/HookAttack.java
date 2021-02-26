@@ -49,11 +49,12 @@ public class HookAttack {
    */
   public void execute(GameState move) {
     SpawnUtility.placeWalls(move, walls);
+    SpawnUtility.placeTurrets(move, turrets);
     SpawnUtility.placeSupports(move, supportTowers);
 //    SpawnUtility.placeUpgradedSupports(move, Arrays.stream(supportTowers).limit(supportTowers.length < 2 ? (supportTowers.length) : (supportTowers.length-2)).toArray(Coords[]::new));
 //    SpawnUtility.placeWalls(move, supportTowers); // done to fill in any holes we left
 //    SpawnUtility.placeUpgradedSupports(move, Arrays.stream(supportTowers).skip(supportTowers.length <= 2 ? (0) : (supportTowers.length-3)).toArray(Coords[]::new));
-    SpawnUtility.placeTurrets(move, turrets);
+
     if (move.data.p1Stats.cores > 0) {
       int turretY = location.y - 2;
       int turretX = side == 0 ? (turretY + 11) : (16 - turretY);
