@@ -187,7 +187,7 @@ public class Boom {
 
     ExpectedDefense cornerSummary = enemyCornerSummary(move, side);
     int scoutDamage = (int) move.config.unitInformation.get(UnitType.Scout.ordinal()).attackDamageTower.orElse(2);
-    int scoutBaseHealth = (int) move.config.unitInformation.get(UnitType.Interceptor.ordinal()).startHealth.orElse(15);
+    int scoutBaseHealth = (int) move.config.unitInformation.get(UnitType.Scout.ordinal()).startHealth.orElse(15);
     int expectedShielding = (int) (move.data.p1Stats.cores * 3.0 / 4.0);
     int scoutHealth = scoutBaseHealth + expectedShielding;
 
