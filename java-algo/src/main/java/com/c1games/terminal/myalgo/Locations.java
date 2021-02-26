@@ -34,48 +34,50 @@ class Locations {
     static final Coords firstLeftTurretWall = new Coords(firstLeftTurret.x, firstLeftTurret.y + 1);
     static final Coords firstRightTurretWall = new Coords(firstRightTurret.x, firstRightTurret.y + 1);
 
+    static final Coords leftEntranceTurret = new Coords(5, 10);
 
     //THE MAIN WALL ======================
     static final Coords[] mainWallCoords = {
-            new Coords(13, 2),
-            new Coords(14, 2),
+        new Coords(13, 2),
+        new Coords(14, 2),
 
-            new Coords(12,3),
-            new Coords(15, 3),
+        new Coords(12,3),
+        new Coords(15, 3),
 
-            new Coords(11,4),
-            new Coords(16, 4),
+        new Coords(11,4),
+        new Coords(16, 4),
 
-            new Coords(10,5),
-            new Coords(17, 5),
+        new Coords(10,5),
+        new Coords(17, 5),
 
-            new Coords(9,6),
-            new Coords(18, 6),
+        new Coords(9,6),
+        new Coords(18, 6),
 
-            new Coords(8,7),
-            new Coords(19, 7),
+        new Coords(8,7),
+        new Coords(19, 7),
 
-            new Coords(7,8),
-            new Coords(20, 8),
+        new Coords(7,8),
+        new Coords(20, 8),
 
-            new Coords(6, 9),
-            new Coords(21, 9),
+        new Coords(6, 9),
+        new Coords(21, 9),
 
-            //new Coords(5, 10),
-            new Coords(22, 10),
+        //new Coords(5, 10),
+        new Coords(22, 10),
 
-            new Coords(23,11),
+        new Coords(23,11),
     };
     static final Coords[] leftCornerWalls = {
-        new Coords(0, 13),
-        new Coords(1, 13),
         new Coords(2, 13),
+        new Coords(1, 13),
+        new Coords(0, 13),
+
 
     };
     static final Coords[] rightCornerWalls = {
+        new Coords(25, 13),
         new Coords(26, 13),
         new Coords(27, 13),
-        new Coords(25, 13),
 
     };
   }
@@ -95,6 +97,42 @@ class Locations {
       new Coords(24, 12)
 
   };
+
+  static final Coords[] rightTurrets = {
+      new Coords(25, 12),
+      new Coords(26, 12),
+  };
+
+  static final Coords[] initialTopEntranceTurrets = {
+      new Coords(4, 12),
+      new Coords(5, 12),
+  };
+
+  static final Coords[] topEntranceWalls = {
+      new Coords(4, 13),
+      new Coords(5, 13), //this will be the turret boi
+      new Coords(6, 13),
+      new Coords(7, 13),
+      new Coords(8, 13)
+  };
+
+  static final Coords[] topEntranceTurrets = {
+      new Coords(4, 12),
+      new Coords(5, 12),
+      new Coords(6, 12),
+      new Coords(7, 12),
+      new Coords(8, 12),
+  };
+
+  static final Coords[] bottomEntranceTurrets = {
+      new Coords(5, 10),
+      new Coords(5, 10),
+      new Coords(6, 10),
+      new Coords(7, 10),
+      new Coords(8, 10),
+  };
+
+
 
 
   static final Coords[] extraTurretCoords = {

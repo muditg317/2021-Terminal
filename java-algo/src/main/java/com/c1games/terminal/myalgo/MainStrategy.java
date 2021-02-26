@@ -292,22 +292,22 @@ public class MainStrategy {
         spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
       }
 
-      // build left corner walls
-      for (Coords location : Locations.Essentials.leftCornerWalls) {
+      //build left and right corner walls one by one (one left one right)
+      int totalCornerWalls =  Locations.Essentials.leftCornerWalls.length + Locations.Essentials.rightCornerWalls.length;
+      for (int i = 0; i < totalCornerWalls; i++) {
+        Coords location;
+        if (i % 2 == 0) {
+          location = Locations.Essentials.leftCornerWalls[i / 2];
+        } else {
+          location = Locations.Essentials.rightCornerWalls[i / 2];
+        }
         spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
       }
 
-      // build right corner walls
-      for (Coords location : Locations.Essentials.rightCornerWalls) {
-        spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
-      }
 
       //get the entrance left turret down
-      Coords leftEntranceTurret = new Coords(5, 10);
-      spent += attemptSpawnIfAffordable(leftEntranceTurret, Utility.TURRET, false, budget - spent);
+      spent += attemptSpawnIfAffordable(Locations.Essentials.leftEntranceTurret, Utility.TURRET, false, budget - spent);
 
-      Coords secondLeftTurret = new Coords(2, 13);
-      spent += attemptSpawnIfAffordable(secondLeftTurret, Utility.TURRET, false, budget - spent);
 
 
 
@@ -321,12 +321,24 @@ public class MainStrategy {
    * @param budget
    */
   private static void setUpDefenseWithBudget(int budget) {
-    int spent = 0;
+    final int SAVE_AMOUNT = 2;
+    int spent = SAVE_AMOUNT; //save 2 for the cap walls
     try {
       //upgrade left entrance towers
-      Coords leftEntranceTurret = new Coords(4, 11);
+      Coords leftEntranceTurret = Locations.Essentials.leftEntranceTurret;
 
       spent += attemptSpawnIfAffordable(leftEntranceTurret, Utility.TURRET, true, budget - spent);
+
+      for (int i = 0; i < Locations.initialTopEntranceTurrets.length; i++) {
+        Coords towerLocation = Locations.initialTopEntranceTurrets[i];
+        Coords topWallLocation = Locations.topEntranceWalls[i];
+
+
+        spent += attemptSpawnIfAffordable(towerLocation, Utility.TURRET, false, budget - spent);
+        spent += attemptSpawnIfAffordable(topWallLocation, Utility.WALL, false, budget - spent);
+        spent += attemptSpawnIfAffordable(towerLocation, Utility.TURRET, true, budget - spent);
+      }
+
 
       //upgrade corner walls
       for (Coords location : Locations.Essentials.leftCornerWalls) {
@@ -336,78 +348,70 @@ public class MainStrategy {
         spent += attemptSpawnIfAffordable(location, Utility.WALL, true, budget - spent);
       }
 
-      //place all turrets and upgrade
-      for(Coords location : Locations.cornerTurrets) {
+      //place right turrets down
+      for (Coords location : Locations.rightTurrets) {
         spent += attemptSpawnIfAffordable(location, Utility.TURRET, false, budget - spent);
         spent += attemptSpawnIfAffordable(location, Utility.TURRET, true, budget - spent);
       }
 
-      //add left entrance wall
-      Coords leftEntranceWall = new Coords(6, 11);
-      spent += attemptSpawnIfAffordable(leftEntranceWall, Utility.TURRET, false, budget - spent);
-      spent += attemptSpawnIfAffordable(leftEntranceWall, Utility.TURRET, true, budget - spent);
+      //continue placing entrance turrets and upgrade top entrance walls
+      for (int i = 0; i < Locations.topEntranceTurrets.length; i++) {
+        //TODO: Make the wall at 5,13 turn into a turret eventually... (how do i do this??)
+        Coords topTowerLocation = Locations.topEntranceTurrets[i];
+        Coords topWallLocation = Locations.topEntranceWalls[i];
+        Coords bottomTowerLocation = Locations.bottomEntranceTurrets[i];
+
+        spent += attemptSpawnIfAffordable(topTowerLocation, Utility.TURRET, false, budget - spent);
+        spent += attemptSpawnIfAffordable(topWallLocation, Utility.WALL, false, budget - spent);
+        spent += attemptSpawnIfAffordable(bottomTowerLocation, Utility.TURRET, false, budget - spent);
+        spent += attemptSpawnIfAffordable(bottomTowerLocation, Utility.TURRET, true, budget - spent);
+        spent += attemptSpawnIfAffordable(topTowerLocation, Utility.TURRET, true, budget - spent);
+        spent += attemptSpawnIfAffordable(topWallLocation, Utility.WALL, true, budget - spent);
+      }
+
+
 
 
 
       //MOST DEFENSE DONE=====================
 
-      for(Coords location : Locations.extraTurretCoords) {
-        spent += attemptSpawnIfAffordable(location, Utility.TURRET, false, budget - spent);
-        spent += attemptSpawnIfAffordable(location, Utility.TURRET, true, budget - spent);
-      }
-
-      for(Coords location : Locations.extraWallCoords) {
-        spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
-        spent += attemptSpawnIfAffordable(location, Utility.WALL, true, budget - spent);
-      }
-
-//      for(Coords location : Locations.finalExtraTurretCoords) {
-//        spent += attemptSpawnIfAffordable(location, Utility.TURRET, false, budget - spent);
-//        spent += attemptSpawnIfAffordable(location, Utility.TURRET, true, budget - spent);
-//      }
-
-
-//
-//      // EXTRA LAYER OF TOWER DUUDES
-//      for(Coords location : Locations.mainTurretCoords) {
-//        Coords newLocation = new Coords(location.x, location.y - 1);
-//        spent += attemptSpawnIfAffordable(newLocation, Utility.TURRET, false, budget - spent);
-//        spent += attemptSpawnIfAffordable(newLocation, Utility.TURRET, true, budget - spent);
-//      }
-//
-//      //well i guess now we just win ;D
-////      for(Coords location : Locations.mainTurretCoords) {
-////        Coords newLocation = new Coords(location.x, location.y + 2);
-////        spent += attemptSpawnIfAffordable(newLocation, Utility.TURRET, false, budget - spent);
-////        spent += attemptSpawnIfAffordable(newLocation, Utility.TURRET, true, budget - spent);
-////      }
-//
-//      for(Coords location : Locations.mainTurretCoords) {
-//        Coords newLocation = new Coords(location.x, location.y + 3);
-//        spent += attemptSpawnIfAffordable(newLocation, Utility.TURRET, false, budget - spent);
-//        spent += attemptSpawnIfAffordable(newLocation, Utility.TURRET, true, budget - spent);
-//      }
-//
-//      for(Coords location : Locations.finalExtraTurretCoords) {
+//      for(Coords location : Locations.extraTurretCoords) {
 //        spent += attemptSpawnIfAffordable(location, Utility.TURRET, false, budget - spent);
 //        spent += attemptSpawnIfAffordable(location, Utility.TURRET, true, budget - spent);
 //      }
 //
-//      for(Coords location : Locations.mainTurretCoords) {
-//        Coords newLocation = new Coords(location.x, location.y + 4);
-//        spent += attemptSpawnIfAffordable(newLocation, Utility.WALL, false, budget - spent);
-//        spent += attemptSpawnIfAffordable(newLocation, Utility.WALL, true, budget - spent);
+//      for(Coords location : Locations.extraWallCoords) {
+//        spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
+//        spent += attemptSpawnIfAffordable(location, Utility.WALL, true, budget - spent);
 //      }
-//
-//      for(Coords location : Locations.mainTurretCoords) {
-//        Coords newLocation = new Coords(location.x, location.y + 5);
-//        spent += attemptSpawnIfAffordable(newLocation, Utility.TURRET, false, budget - spent);
-//        spent += attemptSpawnIfAffordable(newLocation, Utility.TURRET, true, budget - spent);
-//      }
+
 
     } catch (InsufficientResourcesException e) {
       GameIO.debug().println("spent: " + spent + " of " + budget + " || finishedBudget @ LINE " + e.getStackTrace()[1].getLineNumber());
       return;
+    } finally {
+      // place the two cap walls and upgrade them if we have the available budget
+      //place top line cap
+      try {
+        spent -= SAVE_AMOUNT;
+        Coords lastTopTurretLocation = DefenseUtility.findRightMostTurret(move, Locations.topEntranceTurrets);
+
+        Coords topWallCap = new Coords(lastTopTurretLocation.x + 1, lastTopTurretLocation.y);
+        spent += attemptSpawnIfAffordable(topWallCap, Utility.WALL, false, budget - spent);
+        SpawnUtility.removeBuilding(move, topWallCap);
+
+        //at this point, only the first bottom turret should be down...
+        Coords bottomWallCap = DefenseUtility.findRightMostTurret(move, Locations.bottomEntranceTurrets);
+        spent += attemptSpawnIfAffordable(bottomWallCap, Utility.WALL, false, budget - spent);
+        SpawnUtility.removeBuilding(move, bottomWallCap);
+
+        // now if we have done everything possible we should have budget left over to upgrade these caps...
+        spent += attemptSpawnIfAffordable(topWallCap, Utility.WALL, true, budget - spent);
+        spent += attemptSpawnIfAffordable(bottomWallCap, Utility.WALL, true, budget - spent);
+
+      } catch(InsufficientResourcesException e) {
+        return;
+      }
     }
   }
 

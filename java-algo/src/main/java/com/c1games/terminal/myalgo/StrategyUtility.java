@@ -178,7 +178,7 @@ public class StrategyUtility {
 
 
     int maxEnemyScoutRushHealth = maxEnemyScoutRushHealth(move);
-    final int bias_term = 15; //TODO: Tunable
+    final int bias_term = 30; //TODO: Tunable
     int possibleRemainingScoutRushHealth = maxEnemyScoutRushHealth + bias_term - defenseRating;
     /*
     We divide by 15
