@@ -277,6 +277,13 @@ public class HookAttack {
     minWallsForProtection = Math.min(Math.max(minWallsForProtection, 4), 6);
     List<Coords> supportTowers = new ArrayList<>((int) (availableSP / supportCost));
     int wallY = hookLocation.y - 2;
+
+    if (hookLocation.y == 13) {
+      int finalWallY = wallY;
+      neededWalls = neededWalls.stream().filter(coords -> coords.y != finalWallY).collect(Collectors.toList());
+      wallY--;
+    }
+
     int wallX = side == 0 ? (wallY + 12) : (15 - wallY);
     int wallBuildDir = side * 2 - 1; //-1 for target right, 1 for target left
     int wallXLimit = hookLocation.x - 2 * wallBuildDir;
