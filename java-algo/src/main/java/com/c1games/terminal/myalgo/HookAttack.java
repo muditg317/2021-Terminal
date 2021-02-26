@@ -62,8 +62,13 @@ public class HookAttack {
       double turretCost = move.config.unitInformation.get(UnitType.Turret.ordinal()).cost1.orElse(2);
       while (move.data.p1Stats.cores > turretCost) {
         SpawnUtility.placeTurret(move, new Coords(turretX,turretY));
+        SpawnUtility.removeBuilding(move, new Coords(turretX,turretY));
         SpawnUtility.placeWall(move, new Coords(turretX+wallBuildDir,turretY));
+        SpawnUtility.removeBuilding(move, new Coords(turretX+wallBuildDir,turretY));
         turretX += 2 * wallBuildDir;
+        if (side == 0 ? (turretX <= 16-turretY) : (turretX >= turretY+11)) {
+          break;
+        }
       }
 //      List<Coords> wallList = Arrays.asList(walls);
 //      Collections.reverse(wallList);
@@ -307,8 +312,8 @@ public class HookAttack {
       if (move.getWallAt(turretPos) == null) {
         neededTurrets.add(turretPos);
         remainingSP -= turretCost;
-        nextTurretX -= TURRET_SPACING * wallBuildDir;
       }
+      nextTurretX -= TURRET_SPACING * wallBuildDir;
     }
     int lengthBefore = neededWalls.size();
     neededWalls = neededWalls.stream().filter(coords -> !neededTurrets.contains(coords)).collect(Collectors.toList());
@@ -329,7 +334,6 @@ public class HookAttack {
     lengthBefore = neededWalls.size();
     neededWalls = neededWalls.stream().filter(coords -> !neededSupport.contains(coords)).collect(Collectors.toList());
     remainingSP += (lengthBefore - neededWalls.size()) * wallCost;
-
 
 
 
