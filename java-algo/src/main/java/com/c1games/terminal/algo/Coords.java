@@ -1,5 +1,7 @@
 package com.c1games.terminal.algo;
 
+import com.c1games.terminal.algo.map.MapBounds;
+
 import java.util.List;
 
 /**
@@ -30,5 +32,15 @@ public class Coords {
 
     public float distance(Coords other) {
         return (float)Math.sqrt(((x - other.x) * (x - other.x)) + ((y - other.y) * (y - other.y)));
+    }
+
+    @Override
+    public int hashCode() {
+        return x + y * MapBounds.BOARD_SIZE;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Coords && ((Coords) obj).x == x && ((Coords) obj).y == y;
     }
 }

@@ -2,6 +2,10 @@ package com.c1games.terminal.myalgo;
 
 import com.c1games.terminal.algo.Coords;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Holds the hard coded locations of stuff for our algorithm.
  */
@@ -67,6 +71,14 @@ class Locations {
 
         new Coords(23,11),
     };
+
+    static final Set<Coords> mainWallHookHoles = new HashSet<Coords>(
+        Arrays.asList(
+            new Coords(6,9),
+            new Coords(21, 9),
+            new Coords(22, 10),
+            new Coords(23,11)));
+
     static final Coords[] leftCornerWalls = {
         new Coords(2, 13),
         new Coords(1, 13),

@@ -27,7 +27,7 @@ public class MainStrategy {
      */
     //always set up the essential defenses
     deleteDamagedStructures();
-    setUpEssentialDefense();
+
 
     float mp = move.data.p1Stats.bits;
     float sp = move.data.p1Stats.cores;
@@ -47,7 +47,7 @@ public class MainStrategy {
 
     //DECIDE TO BOOM OR NOT HERE.==========================
     GameIO.debug().println("BOOM DECISION: ===========");
-    int MAX_EXTRAPOLATION_TURNS = Math.min(10, move.data.turnInfo.turnNumber);
+    int MAX_EXTRAPOLATION_TURNS = Math.min(5, move.data.turnInfo.turnNumber / 5);
     if (algoState.turnsUntilBoom != 0) { //we WILL boom this turn. no need to check.
       boolean shouldStillBoom = false;
       int turns = 1;
@@ -93,14 +93,8 @@ public class MainStrategy {
       }
     }
     GameIO.debug().println("Turn " + turnNumber+ ": with" + saveCores + " saveCores! We currently have " + move.data.p1Stats.cores + "cores!" );
-    int defenseBudget = StrategyUtility.neededDefenseSpending(move);
 
-    if (defenseBudget > 0) { //we should smartly set up defenses
-      defenseBudget = (int) Math.min(defenseBudget, move.data.p1Stats.cores - saveCores);
-
-      setUpDefenseWithBudget(defenseBudget);
-    }
-
+    //TODO: Defense spending should be here... This may break the boom save cores thing
 
 
     float remainingCores = move.data.p1Stats.cores;
@@ -147,14 +141,33 @@ public class MainStrategy {
         }
         algoState.turnsUntilBoom--;
       } else {
-        ScoutRush potentialSr = ScoutRush.evaluate(move);
-        if (potentialSr != null && potentialSr.expectedDamage > 5 /* some other threshold */) {
-          potentialSr.execute(move);
+        //update mp
+        mp = move.data.p1Stats.bits;
+        sp = move.data.p1Stats.cores;
+        HookAttack potentialHookAttack = HookAttack.evaluate(move, mp, sp, 8, 27 - 8, 10, 12, (int) (1.5 * mp));
+        if (potentialHookAttack != null) {
+          potentialHookAttack.execute(move);
+        } else { //hook attack not done
+          fillHookHolesAndMarkForDeletion();
+          ScoutRush potentialScoutRush = ScoutRush.evaluate(move);
+          if (potentialScoutRush != null && Math.random() > 0.1) {
+            potentialScoutRush.execute(move);
+          }
+          else {
+            spawnDefensiveInters(scoutRushDefense);
+          }
         }
-        else {
-          spawnDefensiveInters(scoutRushDefense);
-        }
+
       }
+    } //end large attack if
+    // put up defenses
+    setUpEssentialDefense();
+
+    int defenseBudget = StrategyUtility.neededDefenseSpending(move);
+    if (defenseBudget > 0) { //we should smartly set up defenses
+      defenseBudget = (int) Math.min(defenseBudget, move.data.p1Stats.cores - saveCores);
+
+      setUpDefenseWithBudget(defenseBudget);
     }
   }
 
@@ -269,6 +282,16 @@ public class MainStrategy {
   }
 
   /**
+   * Fills the main wall hook holes and marks for deletion
+   */
+  private static void fillHookHolesAndMarkForDeletion() {
+    for (Coords location : Locations.Essentials.mainWallHookHoles) {
+      SpawnUtility.placeWall(move, location);
+      SpawnUtility.removeBuilding(move, location);
+    }
+  }
+
+  /**
    * Sets up essential defenses (the triangle and some towers)
    */
   private static void setUpEssentialDefense() {
@@ -294,7 +317,11 @@ public class MainStrategy {
 
       //get the main wall down
       for (Coords location : Locations.Essentials.mainWallCoords) {
+        if (Locations.Essentials.mainWallHookHoles.contains(location)) {
+          continue;
+        }
         spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
+
       }
 
       //build left and right corner walls one by one (one left one right)

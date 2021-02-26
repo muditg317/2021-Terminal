@@ -68,8 +68,8 @@ public class SpawnUtility {
      * @param location
      * @return
      */
-    static int applyUpgrade(GameState move, Coords location) {
-        return move.attemptUpgrade(location);
+    static boolean applyUpgrade(GameState move, Coords location) {
+        return move.attemptUpgrade(location) == 1;
     }
 
     /**

@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 public class SimBoard {
   final static double ROOT2 = 1.41421356237;
   final static int yPosXWidth = 7;
-  final static int maxYPosX = 3;
+  final static int maxYPosX = 4;
   final static int yNegXWidth = 7;
-  final static int maxYNegX = 3;
+  final static int maxYNegX = 4;
   final static int numBuckets = (maxYNegX+1) * (maxYPosX+1);
 
   HashMap<Integer, HashSet<SimUnit>> buckets;
