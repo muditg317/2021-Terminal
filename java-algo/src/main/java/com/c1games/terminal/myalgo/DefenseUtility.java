@@ -24,6 +24,7 @@ public class DefenseUtility {
         break;
       }
     }
+
     return lastTurretLocation;
   }
 }
