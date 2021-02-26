@@ -59,13 +59,16 @@ public class Boom {
     String boomSide = attackData.location;
     UnitCounts attackUnits = attackData.units;
     int attackPoints = attackUnits.cost;
-    int numInters = attackUnits.numInterceptors;
+    int numInters = attackUnits.numInterceptors; //these are actuall scouts lul
     GameIO.debug().println("Going to boom right now");
     GameIO.debug().println("Cores:" + move.data.p1Stats.cores);
     Boom.clearBoomPath(move, boomSide);
     Boom.placeBoomLid(move, boomSide);
 
-    SpawnUtility.spawnInterceptors(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 23 : 4, 9)}, numInters);
+//    SpawnUtility.spawnInterceptors(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 23 : 4, 9)}, numInters);
+//    SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 6 : 21, 7)}, (int) move.data.p1Stats.bits);
+
+    SpawnUtility.spawnInterceptors(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 7 : 20, 6)}, numInters);
     SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 6 : 21, 7)}, (int) move.data.p1Stats.bits);
 
     SpawnUtility.removeBuilding(move, new Coords(boomSide.equals("RIGHT") ? 6 : 21, 8));
@@ -147,8 +150,14 @@ public class Boom {
     UnitCounts rightUnitCounts = enemyDefenseHeuristic(move, "RIGHT");
     int rightCost = rightUnitCounts.cost;
 
+    int enemyHealth = (int) move.data.p2Stats.integrity;
+    int minDamage = Math.min(10, enemyHealth);
+
+
     String weakerSide = leftCost < rightCost ? "LEFT" : "RIGHT";
     UnitCounts correctUnitCounts = leftCost < rightCost ? leftUnitCounts : rightUnitCounts;
+    correctUnitCounts.numScouts = minDamage;
+    correctUnitCounts.cost += minDamage;
     return new AttackBreakdown(weakerSide, correctUnitCounts);
   }
 
@@ -170,28 +179,25 @@ public class Boom {
    * Guess of how strong their corner defense is on a certain side
    * @param move the game state to inspect
    * @param side which side we want to measure
-   * @return UnitCounts with the number of scouts, interceptors, and demolishers needed
+   * @return UnitCounts with the number of scouts needed to only breach their wall
    */
   static UnitCounts enemyDefenseHeuristic(GameState move, String side) {
     int enemyHealth = (int) move.data.p2Stats.integrity; //min amount we need to hit them by
     //walls only matter in a few locations -> we include turret healths since they are "walls"
 
     ExpectedDefense cornerSummary = enemyCornerSummary(move, side);
-    int intersNeeded = (int) Math.ceil((cornerSummary.structureHealth + cornerSummary.expectedIntercepterDamage) / move.config.unitInformation.get(UnitType.Interceptor.ordinal()).startHealth.orElse(40));
-    GameIO.debug().println(String.format("cornerSummary structureHealth: %s\n cornerSummary expectedDamage: %s\n",
-        cornerSummary.structureHealth, cornerSummary.expectedIntercepterDamage));
-    if (cornerSummary.structureHealth == 0) {
-      intersNeeded = 0;
-    }
-    intersNeeded = (int) Math.ceil(intersNeeded);
-    intersNeeded = Math.max(intersNeeded, cornerSummary.expectedIntercepterDamage < 1 ? 6 : 3); // use at least some inters
+    int scoutDamage = (int) move.config.unitInformation.get(UnitType.Scout.ordinal()).attackDamageTower.orElse(2);
     int scoutBaseHealth = (int) move.config.unitInformation.get(UnitType.Interceptor.ordinal()).startHealth.orElse(15);
     int expectedShielding = (int) (move.data.p1Stats.cores * 3.0 / 4.0);
     int scoutHealth = scoutBaseHealth + expectedShielding;
-    int minimumDamage = (int) Math.min(enemyHealth, enemyHealth / 10 + 5);
-    int scoutsNeeded = (int) Math.ceil(cornerSummary.expectedScoutDamage / 2 / scoutHealth + minimumDamage);
 
-    return new UnitCounts(move, scoutsNeeded, intersNeeded, 0);
+    int estScoutsKilled = (int) Math.ceil(cornerSummary.expectedScoutDamage / scoutHealth);
+    int survivingScoutsNeeded = (int) cornerSummary.structureHealth / (scoutBaseHealth + 2 * scoutDamage);
+    int boomScoutsNeeded = estScoutsKilled + survivingScoutsNeeded;
+    GameIO.debug().println(String.format("cornerSummary structureHealth: %s\n cornerSummary expectedDamage: %s\n",
+        cornerSummary.structureHealth, cornerSummary.expectedIntercepterDamage));
+  //TODO: Fix boomScoutsNeeded. right now it is numInterceptors since i am too lazy :D
+    return new UnitCounts(move, 0, boomScoutsNeeded, 0);
   }
 
   /**
