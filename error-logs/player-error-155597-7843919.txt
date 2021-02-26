@@ -1,0 +1,225 @@
+SAPlayer 1 algo_0: Configuring your custom java algo strategy...
+SAPlayer 1 algo_0: Set random seed to: 1565972402003618723
+SAPlayer 1 algo_0: Performing turn 0 of your custom algo strategy
+SAPlayer 1 algo_0: Performing turn 1 of your custom algo strategy
+SAPlayer 1 algo_0: Turn Number:1
+SAPlayer 1 algo_0: scoutRushDefense:0
+SAPlayer 1 algo_0: reducedScoutRushDefense: 0
+SAPlayer 1 algo_0: Enemy left corner heuristic: Scouts: 39, Inters: 6, Demos: 0. Cost: 45
+SAPlayer 1 algo_0: Enemy right corner heuristic: Scouts: 39, Inters: 6, Demos: 0. Cost: 45
+SAPlayer 1 algo_0: BOOM DECISION: ===========
+SAPlayer 1 algo_0: awaitingBoom:false
+SAPlayer 1 algo_0: turnsUntilBoom-1
+SAPlayer 1 algo_0: Turn 1: with 0 saveCores! We currently have 6.0 SP and 4.8 MP!
+SAPlayer 1 algo_0: 0 saveCores! We currently have 6.0cores!
+SAPlayer 1 algo_0: awaitingBoom:false
+SAPlayer 1 algo_0: turnsUntilBoom-1
+SAPlayer 1 algo_0: CHECK FOR HOOK==================
+SAPlayer 1 algo_0: ================HOOK ANALYSIS========
+SAPlayer 1 algo_0: ================DAMAGES========
+SAPlayer 1 algo_0: none: 0 options
+SAPlayer 1 algo_0: ================END HOOK ANALYSIS========
+SAPlayer 1 algo_0: Not doing enough damage!
+SAPlayer 1 algo_0: ================HOOK ANALYSIS========
+SAPlayer 1 algo_0: ================DAMAGES========
+SAPlayer 1 algo_0: none: 0 options
+SAPlayer 1 algo_0: ================END HOOK ANALYSIS========
+SAPlayer 1 algo_0: Not doing enough damage!
+SAPlayer 1 algo_0: spent: 4 of 4 || finishedBudget @ LINE 348
+SAPlayer 1 algo_0: Performing turn 2 of your custom algo strategy
+SAPlayer 1 algo_0: null
+SAPlayer 1 algo_0: 
+SAPlayer 1 algo_0: scoutRushDefense:0
+SAPlayer 1 algo_0: reducedScoutRushDefense: 0
+SAPlayer 1 algo_0: Enemy left corner heuristic: Scouts: 39, Inters: 6, Demos: 0. Cost: 45
+SAPlayer 1 algo_0: Enemy right corner heuristic: Scouts: 39, Inters: 6, Demos: 0. Cost: 45
+SAPlayer 1 algo_0: BOOM DECISION: ===========
+SAPlayer 1 algo_0: awaitingBoom:false
+SAPlayer 1 algo_0: turnsUntilBoom-1
+SAPlayer 1 algo_0: Turn 2: with 0 saveCores! We currently have 11.0 SP and 7.6 MP!
+SAPlayer 1 algo_0: 0 saveCores! We currently have 11.0cores!
+SAPlayer 1 algo_0: awaitingBoom:false
+SAPlayer 1 algo_0: turnsUntilBoom-1
+SAPlayer 1 algo_0: CHECK FOR HOOK==================
+SAPlayer 1 algo_0: ================HOOK ANALYSIS========
+SAPlayer 1 algo_0: ================DAMAGES========
+SAPlayer 1 algo_0: none: 0 options
+SAPlayer 1 algo_0: ================END HOOK ANALYSIS========
+SAPlayer 1 algo_0: Not doing enough damage!
+SAPlayer 1 algo_0: ================HOOK ANALYSIS========
+SAPlayer 1 algo_0: ================DAMAGES========
+SAPlayer 1 algo_0: none: 0 options
+SAPlayer 1 algo_0: ================END HOOK ANALYSIS========
+SAPlayer 1 algo_0: Not doing enough damage!
+SAPlayer 1 algo_0: spent: 5 of 5 || finishedBudget @ LINE 361
+SAPlayer 1 algo_0: spent: 0 of 0 || finishedBudget @ LINE 328
+SAPlayer 1 algo_0: Performing turn 3 of your custom algo strategy
+SAPlayer 1 algo_0: Turn Number:3
+SAPlayer 1 algo_0: scoutRushDefense:0
+SAPlayer 1 algo_0: reducedScoutRushDefense: 0
+SAPlayer 1 algo_0: Enemy left corner heuristic: Scouts: 32, Inters: 6, Demos: 0. Cost: 38
+SAPlayer 1 algo_0: Enemy right corner heuristic: Scouts: 32, Inters: 6, Demos: 0. Cost: 38
+SAPlayer 1 algo_0: BOOM DECISION: ===========
+SAPlayer 1 algo_0: awaitingBoom:false
+SAPlayer 1 algo_0: turnsUntilBoom-1
+SAPlayer 1 algo_0: Turn 3: with 0 saveCores! We currently have 16.2 SP and 4.5 MP!
+SAPlayer 1 algo_0: 0 saveCores! We currently have 16.2cores!
+SAPlayer 1 algo_0: awaitingBoom:false
+SAPlayer 1 algo_0: turnsUntilBoom-1
+SAPlayer 1 algo_0: CHECK FOR HOOK==================
+SAPlayer 1 algo_0: ================HOOK ANALYSIS========
+SAPlayer 1 algo_0: ================DAMAGES========
+SAPlayer 1 algo_0: none: 0 options
+SAPlayer 1 algo_0: ================END HOOK ANALYSIS========
+SAPlayer 1 algo_0: Not doing enough damage!
+SAPlayer 1 algo_0: ================HOOK ANALYSIS========
+SAPlayer 1 algo_0: ================DAMAGES========
+SAPlayer 1 algo_0: none: 0 options
+SAPlayer 1 algo_0: ================END HOOK ANALYSIS========
+SAPlayer 1 algo_0: Not doing enough damage!
+SAPlayer 1 algo_0: spent: 7 of 10 || finishedBudget @ LINE 337
+SAPlayer 1 algo_0: Performing turn 4 of your custom algo strategy
+SAPlayer 1 algo_0: Turn Number:4
+SAPlayer 1 algo_0: scoutRushDefense:0
+SAPlayer 1 algo_0: reducedScoutRushDefense: 0
+SAPlayer 1 algo_0: Enemy left corner heuristic: Scouts: 32, Inters: 6, Demos: 0. Cost: 38
+SAPlayer 1 algo_0: Enemy right corner heuristic: Scouts: 32, Inters: 6, Demos: 0. Cost: 38
+SAPlayer 1 algo_0: BOOM DECISION: ===========
+SAPlayer 1 algo_0: awaitingBoom:false
+SAPlayer 1 algo_0: turnsUntilBoom-1
+SAPlayer 1 algo_0: Turn 4: with 0 saveCores! We currently have 18.1 SP and 7.4 MP!
+SAPlayer 1 algo_0: 0 saveCores! We currently have 18.1cores!
+SAPlayer 1 algo_0: awaitingBoom:false
+SAPlayer 1 algo_0: turnsUntilBoom-1
+SAPlayer 1 algo_0: CHECK FOR HOOK==================
+SAPlayer 1 algo_0: ================HOOK ANALYSIS========
+SAPlayer 1 algo_0: ================DAMAGES========
+SAPlayer 1 algo_0: none: 0 options
+SAPlayer 1 algo_0: ================END HOOK ANALYSIS========
+SAPlayer 1 algo_0: Not doing enough damage!
+SAPlayer 1 algo_0: ================HOOK ANALYSIS========
+SAPlayer 1 algo_0: ================DAMAGES========
+SAPlayer 1 algo_0: none: 0 options
+SAPlayer 1 algo_0: ================END HOOK ANALYSIS========
+SAPlayer 1 algo_0: Not doing enough damage!
+SAPlayer 1 algo_0: spent: 11 of 12 || finishedBudget @ LINE 366
+SAPlayer 1 algo_0: spent: 0 of 1 || finishedBudget @ LINE 328
+SAPlayer 1 algo_0: spent: 2 of 1 || finishedBudget @ LINE 390
+SAPlayer 1 algo_0: Performing turn 5 of your custom algo strategy
+SAPlayer 1 algo_0: Turn Number:5
+SAPlayer 1 algo_0: scoutRushDefense:0
+SAPlayer 1 algo_0: reducedScoutRushDefense: 0
+SAPlayer 1 algo_0: Enemy left corner heuristic: Scouts: 27, Inters: 6, Demos: 0. Cost: 33
+SAPlayer 1 algo_0: Enemy right corner heuristic: Scouts: 27, Inters: 6, Demos: 0. Cost: 33
+SAPlayer 1 algo_0: BOOM DECISION: ===========
+SAPlayer 1 algo_0: futureAttackThreshold: 46.0
+SAPlayer 1 algo_0: futureMP: 7.7200003
+SAPlayer 1 algo_0: awaitingBoom:false
+SAPlayer 1 algo_0: turnsUntilBoom-1
+SAPlayer 1 algo_0: Turn 5: with 0 saveCores! We currently have 17.1 SP and 4.3 MP!
+SAPlayer 1 algo_0: 0 saveCores! We currently have 17.1cores!
+SAPlayer 1 algo_0: awaitingBoom:false
+SAPlayer 1 algo_0: turnsUntilBoom-1
+SAPlayer 1 algo_0: CHECK FOR HOOK==================
+SAPlayer 1 algo_0: ================HOOK ANALYSIS========
+SAPlayer 1 algo_0: ================DAMAGES========
+SAPlayer 1 algo_0: none: 0 options
+SAPlayer 1 algo_0: ================END HOOK ANALYSIS========
+SAPlayer 1 algo_0: Not doing enough damage!
+SAPlayer 1 algo_0: ================HOOK ANALYSIS========
+SAPlayer 1 algo_0: ================DAMAGES========
+SAPlayer 1 algo_0: none: 0 options
+SAPlayer 1 algo_0: ================END HOOK ANALYSIS========
+SAPlayer 1 algo_0: Not doing enough damage!
+SAPlayer 1 algo_0: spent: 9 of 9 || finishedBudget @ LINE 399
+SAPlayer 1 algo_0: Performing turn 6 of your custom algo strategy
+SAPlayer 1 algo_0: Turn Number:6
+SAPlayer 1 algo_0: scoutRushDefense:0
+SAPlayer 1 algo_0: reducedScoutRushDefense: 0
+SAPlayer 1 algo_0: Enemy left corner heuristic: Scouts: 27, Inters: 6, Demos: 0. Cost: 33
+SAPlayer 1 algo_0: Enemy right corner heuristic: Scouts: 27, Inters: 6, Demos: 0. Cost: 33
+SAPlayer 1 algo_0: BOOM DECISION: ===========
+SAPlayer 1 algo_0: futureAttackThreshold: 46.0
+SAPlayer 1 algo_0: futureMP: 9.99
+SAPlayer 1 algo_0: awaitingBoom:false
+SAPlayer 1 algo_0: turnsUntilBoom-1
+SAPlayer 1 algo_0: Turn 6: with 0 saveCores! We currently have 18.5 SP and 7.2 MP!
+SAPlayer 1 algo_0: 0 saveCores! We currently have 18.5cores!
+SAPlayer 1 algo_0: awaitingBoom:false
+SAPlayer 1 algo_0: turnsUntilBoom-1
+SAPlayer 1 algo_0: CHECK FOR HOOK==================
+SAPlayer 1 algo_0: ================HOOK ANALYSIS========
+SAPlayer 1 algo_0: ================DAMAGES========
+SAPlayer 1 algo_0: none: 0 options
+SAPlayer 1 algo_0: ================END HOOK ANALYSIS========
+SAPlayer 1 algo_0: Not doing enough damage!
+SAPlayer 1 algo_0: ================HOOK ANALYSIS========
+SAPlayer 1 algo_0: ================DAMAGES========
+SAPlayer 1 algo_0: none: 0 options
+SAPlayer 1 algo_0: ================END HOOK ANALYSIS========
+SAPlayer 1 algo_0: Not doing enough damage!
+SAPlayer 1 algo_0: spent: 0 of 1 || finishedBudget @ LINE 328
+SAPlayer 1 algo_0: spent: 2 of 1 || finishedBudget @ LINE 390
+SAPlayer 1 algo_0: Performing turn 7 of your custom algo strategy
+SAPlayer 1 algo_0: Turn Number:7
+SAPlayer 1 algo_0: scoutRushDefense:0
+SAPlayer 1 algo_0: reducedScoutRushDefense: 0
+SAPlayer 1 algo_0: Enemy left corner heuristic: Scouts: 20, Inters: 6, Demos: 0. Cost: 26
+SAPlayer 1 algo_0: Enemy right corner heuristic: Scouts: 20, Inters: 6, Demos: 0. Cost: 26
+SAPlayer 1 algo_0: BOOM DECISION: ===========
+SAPlayer 1 algo_0: futureAttackThreshold: 36.0
+SAPlayer 1 algo_0: futureMP: 7.84
+SAPlayer 1 algo_0: awaitingBoom:false
+SAPlayer 1 algo_0: turnsUntilBoom-1
+SAPlayer 1 algo_0: Turn 7: with 0 saveCores! We currently have 27.7 SP and 4.2 MP!
+SAPlayer 1 algo_0: 0 saveCores! We currently have 27.7cores!
+SAPlayer 1 algo_0: awaitingBoom:false
+SAPlayer 1 algo_0: turnsUntilBoom-1
+SAPlayer 1 algo_0: CHECK FOR HOOK==================
+SAPlayer 1 algo_0: ================HOOK ANALYSIS========
+SAPlayer 1 algo_0: no demos
+SAPlayer 1 algo_0: ================HOOK ANALYSIS========
+SAPlayer 1 algo_0: no demos
+SAPlayer 1 algo_0: spent: 0 of 3 || finishedBudget @ LINE 336
+SAPlayer 1 algo_0: spent: 2 of 3 || finishedBudget @ LINE 390
+SAPlayer 1 algo_0: Performing turn 8 of your custom algo strategy
+SAPlayer 1 algo_0: Turn Number:8
+SAPlayer 1 algo_0: scoutRushDefense:0
+SAPlayer 1 algo_0: reducedScoutRushDefense: 0
+SAPlayer 1 algo_0: Enemy left corner heuristic: Scouts: 20, Inters: 6, Demos: 0. Cost: 26
+SAPlayer 1 algo_0: Enemy right corner heuristic: Scouts: 20, Inters: 6, Demos: 0. Cost: 26
+SAPlayer 1 algo_0: BOOM DECISION: ===========
+SAPlayer 1 algo_0: futureAttackThreshold: 36.0
+SAPlayer 1 algo_0: futureMP: 7.9400005
+SAPlayer 1 algo_0: awaitingBoom:false
+SAPlayer 1 algo_0: turnsUntilBoom-1
+SAPlayer 1 algo_0: Turn 8: with 0 saveCores! We currently have 32.8 SP and 4.2 MP!
+SAPlayer 1 algo_0: 0 saveCores! We currently have 32.8cores!
+SAPlayer 1 algo_0: awaitingBoom:false
+SAPlayer 1 algo_0: turnsUntilBoom-1
+SAPlayer 1 algo_0: CHECK FOR HOOK==================
+SAPlayer 1 algo_0: ================HOOK ANALYSIS========
+SAPlayer 1 algo_0: ================DAMAGES========
+SAPlayer 1 algo_0: none: 0 options
+SAPlayer 1 algo_0: ================END HOOK ANALYSIS========
+SAPlayer 1 algo_0: Not doing enough damage!
+SAPlayer 1 algo_0: ================HOOK ANALYSIS========
+SAPlayer 1 algo_0: ================DAMAGES========
+SAPlayer 1 algo_0: CAN HOOK: 9 options
+SAPlayer 1 algo_0: ================END HOOK ANALYSIS========
+SAPlayer 1 algo_0: Will hook: <10, 13>,s:R. expected damage: 7.24
+SAPlayer 1 algo_0: Remaining SP for support: 8.80
+SAPlayer 1 algo_0: wallX:23,wallY:11,wallBuildDir:-1,wallXLimitL12
+SAPlayer 1 algo_0: 
+SAPlayer 1 algo_0: Ready for supports
+SAPlayer 1 algo_0: wallX:23,wallY:11,wallBuildDir:-1,wallXLimitL12
+SAPlayer 1 algo_0: Supports:<23, 11>,<22, 11>,
+SAPlayer 1 algo_0: Supports ready!
+SAPlayer 1 algo_0: HOOKING!!!	x:13,y:0,s:R
+SAPlayer 1 algo_0: Exception in thread "main" java.lang.IllegalArgumentException: -1
+SAPlayer 1 algo_0: 	at java.base/java.util.stream.ReferencePipeline.skip(ReferencePipeline.java:476)
+SAPlayer 1 algo_0: 	at com.c1games.terminal.myalgo.HookAttack.execute(HookAttack.java:50)
+SAPlayer 1 algo_0: 	at com.c1games.terminal.myalgo.MainStrategy.execute(MainStrategy.java:162)
+SAPlayer 1 algo_0: 	at com.c1games.terminal.myalgo.MyAlgo.onTurn(MyAlgo.java:61)
+SAPlayer 1 algo_0: 	at com.c1games.terminal.algo.io.GameLoopDriver.run(GameLoopDriver.java:35)
+SAPlayer 1 algo_0: 	at com.c1games.terminal.myalgo.MyAlgo.main(MyAlgo.java:32)

@@ -47,7 +47,7 @@ public class MainStrategy {
 
     //DECIDE TO BOOM OR NOT HERE.==========================
     GameIO.debug().println("BOOM DECISION: ===========");
-    int MAX_EXTRAPOLATION_TURNS = Math.min(5, move.data.turnInfo.turnNumber / 5);
+    int MAX_EXTRAPOLATION_TURNS = Math.min(3, move.data.turnInfo.turnNumber / 5);
     if (algoState.turnsUntilBoom != 0) { //we WILL boom this turn. no need to check.
       boolean shouldStillBoom = false;
       int turns = 1;
