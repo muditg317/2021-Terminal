@@ -26,7 +26,9 @@ public class MainStrategy {
     We need a good heuristic that considers the enemy MP and factories to decide when to put more defenses vs more factories
      */
     //always set up the essential defenses
+    deleteDamagedStructures();
     setUpEssentialDefense();
+
     float mp = move.data.p1Stats.bits;
     float sp = move.data.p1Stats.cores;
     int turnNumber = move.data.turnInfo.turnNumber;
@@ -41,8 +43,7 @@ public class MainStrategy {
     GameIO.debug().println("Enemy left corner heuristic: " + StrategyUtility.enemyDefenseHeuristic(move, "LEFT"));
     GameIO.debug().println("Enemy right corner heuristic: " + StrategyUtility.enemyDefenseHeuristic(move, "RIGHT"));
 
-    //
-    deleteDamagedStructures();
+
 
     //DECIDE TO BOOM OR NOT HERE.==========================
     GameIO.debug().println("BOOM DECISION: ===========");
@@ -321,6 +322,9 @@ public class MainStrategy {
    * @param budget
    */
   private static void setUpDefenseWithBudget(int budget) {
+    if(budget <= 0) {
+      return;
+    }
     final int SAVE_AMOUNT = 2;
     int spent = SAVE_AMOUNT; //save 2 for the cap walls
     try {
