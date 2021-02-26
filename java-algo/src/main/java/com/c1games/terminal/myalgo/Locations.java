@@ -123,6 +123,7 @@ class Locations {
   };
 
   static final Coords[] topEntranceWalls = {
+      new Coords(3, 13),
       new Coords(4, 13),
       new Coords(5, 13), //this will be the turret boi
       new Coords(6, 13),
@@ -131,6 +132,7 @@ class Locations {
   };
 
   static final Coords[] topEntranceTurrets = {
+      new Coords(3 ,12),
       new Coords(4, 12),
       new Coords(5, 12),
       new Coords(6, 12),
@@ -139,8 +141,9 @@ class Locations {
   };
 
   static final Coords[] bottomEntranceTurrets = {
-      new Coords(6, 10),
-      new Coords(6, 10),
+      new Coords(5, 10),
+      new Coords(5, 10),
+      new Coords(5, 10),
       new Coords(6, 10),
       new Coords(7, 10),
       new Coords(8, 10),
@@ -269,5 +272,34 @@ class Locations {
         new Coords(23, 11),
         new Coords(24, 12),
         new Coords(25, 13)
+  };
+
+  static final Coords[] safeSupportLocations = {
+      new Coords(13, 3),
+      new Coords(14, 3),
+
+      new Coords(12, 4),
+      new Coords(13, 4),
+      new Coords(14, 4),
+      new Coords(15, 4),
+
+      new Coords(11, 5),
+      new Coords(12, 5),
+      new Coords(13, 5),
+      new Coords(14, 5),
+      new Coords(15, 5),
+      new Coords(16, 5),
+
+      new Coords(10, 6),
+      new Coords(11, 6),
+      new Coords(12, 6),
+     // new Coords(13, 6), //these don't reach the path if unupgraded
+      //new Coords(14, 6),
+      new Coords(15, 6),
+      new Coords(16, 6),
+      new Coords(17, 6),
+
+
+
   };
 }

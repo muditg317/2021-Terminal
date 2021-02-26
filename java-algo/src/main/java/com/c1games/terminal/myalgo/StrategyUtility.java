@@ -2,6 +2,7 @@ package com.c1games.terminal.myalgo;
 
 import com.c1games.terminal.algo.Config;
 import com.c1games.terminal.algo.Coords;
+import com.c1games.terminal.algo.GameIO;
 import com.c1games.terminal.algo.PlayerId;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.MapBounds;
@@ -55,12 +56,19 @@ public class StrategyUtility {
 
     ExpectedDefense cornerSummary = enemyCornerSummary(move, side);
     int intersNeeded = (int) Math.ceil((cornerSummary.structureHealth + cornerSummary.expectedIntercepterDamage) / move.config.unitInformation.get(UnitType.Interceptor.ordinal()).startHealth.orElse(40));
-    if (cornerSummary.structureHealth == 0) {
+    GameIO.debug().println(String.format("cornerSummary structureHealth: %s\n cornerSummary expectedDamage: %s\n",
+        cornerSummary.structureHealth, cornerSummary.expectedIntercepterDamage));
+    if (cornerSummary.structureHealth == 0) { //TODO: Errors if the wall was deleted and put back since sends no inters.. need past history of deleted stuff/past stuff
       intersNeeded = 0;
     }
-    intersNeeded = (int) Math.ceil(1.3 * intersNeeded); // was 0.9
+    //TODO: ITS NOT SENDING ENOUGH INTERS?? :(
+    intersNeeded = (int) Math.ceil(intersNeeded);
     intersNeeded = Math.max(intersNeeded, cornerSummary.expectedIntercepterDamage < 1 ? 6 : 3); // use at least some inters
-    int scoutsNeeded = (int) Math.ceil(cornerSummary.expectedScoutDamage / 15.0 + enemyHealth);
+    int scoutBaseHealth = (int) move.config.unitInformation.get(UnitType.Interceptor.ordinal()).startHealth.orElse(15);
+    int expectedShielding = (int) (move.data.p1Stats.cores * 3.0 / 4.0);
+    int scoutHealth = scoutBaseHealth + expectedShielding;
+    int minimumDamage = (int) Math.min(enemyHealth, enemyHealth / 10 + 5);
+    int scoutsNeeded = (int) Math.ceil(cornerSummary.expectedScoutDamage / 2 / scoutHealth + minimumDamage);
 
     return new UnitCounts(move, scoutsNeeded, intersNeeded, 0);
   }
@@ -119,6 +127,8 @@ public class StrategyUtility {
         }
       }
     }
+    GameIO.debug().println(String.format("enemyCornerSummary:  Side: %s\nEffective Wall Health: %s \nDamage taken: %d\n",
+        side,effectiveWallHealth, effectiveTurretRating));
     return new ExpectedDefense(move, path, effectiveWallHealth, effectiveTurretRating);
   }
 
@@ -133,7 +143,7 @@ public class StrategyUtility {
     for(int i = 0; i < turns; i++) {
       float baseMPIncome = move.config.resources.bitsPerRound + move.config.resources.bitGrowthRate * (move.data.turnInfo.turnNumber + i) / move.config.resources.turnIntervalForBitSchedule;
       currentMP *= (1 - move.config.resources.bitDecayPerRound);
-      currentMP -= currentMP%0.01;
+      //currentMP -= currentMP%0.01; //TODO: What was this line doing? I commented it out for now...
       currentMP += baseMPIncome - expectedBaseCostPerTurn;
     }
     return currentMP;

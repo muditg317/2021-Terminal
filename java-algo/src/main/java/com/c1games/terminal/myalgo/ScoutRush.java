@@ -34,9 +34,11 @@ public class ScoutRush {
   int numScouts;
   int scoutHealth;
   int targetSide;
+  int spBudget;
 
-  public ScoutRush(Coords startCoord, int numScouts, int scoutHealth) {
+  public ScoutRush(Coords startCoord, int spBudget, int numScouts, int scoutHealth) {
     this.startCoord = startCoord;
+    this.spBudget = spBudget;
     this.numScouts = numScouts;
     this.scoutHealth = scoutHealth;
     this.targetSide = startCoord.x <= 13 ? MapBounds.EDGE_TOP_RIGHT : MapBounds.EDGE_TOP_LEFT;
@@ -49,18 +51,17 @@ public class ScoutRush {
    * @param move
    * @return the better scoutrush. Null if BAD.
    */
-  public static ScoutRush evaluate(GameState move) {
+  public static ScoutRush evaluate(GameState move, int spBudget) {
     int mp = (int) move.data.p1Stats.bits;
-    int sp = (int) move.data.p1Stats.cores;
     double scoutBaseHealth = move.config.unitInformation.get(UnitType.Scout.ordinal()).startHealth.orElse(15);;
-    int estimatedScoutHealth = (int) (scoutBaseHealth + (sp * 3.0 / 4.0));
-    ScoutRush leftSr = new ScoutRush(new Coords(14, 0), mp, estimatedScoutHealth);
-    ScoutRush rightSr = new ScoutRush(new Coords(13, 0), mp, estimatedScoutHealth);
+    int estimatedScoutHealth = (int) (scoutBaseHealth + (spBudget * 3.0 / 4.0));
+    ScoutRush leftSr = new ScoutRush(new Coords(14, 0), spBudget, mp, estimatedScoutHealth);
+    ScoutRush rightSr = new ScoutRush(new Coords(13, 0), spBudget, mp, estimatedScoutHealth);
     leftSr.calculateSurvivingScouts(move); //targeting the left side
     rightSr.calculateSurvivingScouts(move);
 
     ScoutRush bestSr = leftSr.expectedDamage >= rightSr.expectedDamage ? leftSr : rightSr;
-    if (bestSr.expectedDamage < /*some threshold TODO: i bumped this to 3 from 4 (put it back to test something) */ (mp / 4) + (move.data.p2Stats.integrity / 10) && /*  TODO: alex why do we ensure that it does less damage than our health?? seems weird */bestSr.expectedDamage < move.data.p1Stats.integrity) {
+    if (bestSr.expectedDamage < /*some threshold TODO: i bumped this to 3 from 4 (put it back to test something) */ (mp / 4) + (move.data.p2Stats.integrity / 10) + 3 && bestSr.expectedDamage < move.data.p2Stats.integrity) {
       return null; //don't do the ping attack
     }
     //then now, we shall do the attack - EXECUTE!
@@ -113,24 +114,28 @@ public class ScoutRush {
    * Uses ALL SP to place supports and marks them for immediate deletion.
    * @param move
    */
-  private static void placeSupports(GameState move) {
-    int sp = (int) move.data.p1Stats.cores;
-    for (int i = 0; i < UPGRADED_SUPPORT_LOCATIONS.length && sp >= 8; i++) {
+  private void placeSupports(GameState move) {
+
+    for (int i = 0; i < UPGRADED_SUPPORT_LOCATIONS.length && spBudget >= 8; i++) {
       Coords location = UPGRADED_SUPPORT_LOCATIONS[i];
       if (i < 3) {
         //place the wall down
         Coords wallLocation = new Coords(location.x, location.y + 1);
         SpawnUtility.placeWall(move, wallLocation);
         SpawnUtility.removeBuilding(move, wallLocation);
+        spBudget--;
+      }
+      if (spBudget < 8) {
+        break;
       }
       SpawnUtility.placeSupport(move, location);
       SpawnUtility.applyUpgrade(move, location);
       SpawnUtility.removeBuilding(move, location);
       //update sp
-      sp = (int) move.data.p1Stats.cores;
+      spBudget -= 8;
     }
     //at this point we can only afford one or 0 supports (this may or may not place)
-    if (SpawnUtility.placeSupport(move, UNUPGRADED_SUPPORT_LOCATION)) { //placed
+    if (spBudget >= 4 && SpawnUtility.placeSupport(move, UNUPGRADED_SUPPORT_LOCATION)) { //placed
       SpawnUtility.removeBuilding(move, UNUPGRADED_SUPPORT_LOCATION);
     }
   }
