@@ -23,8 +23,8 @@ public class ExpectedDefense {
   public ExpectedDefense(GameState move, Coords[] path, float structureHealth, float expectedDamage) {
     this.path = path;
     this.structureHealth = structureHealth;
-    this.expectedScoutDamage = expectedDamage * move.config.unitInformation.get(UnitType.Scout.ordinal()).speed.orElse(1);
-    this.expectedDemolisherDamage = expectedDamage * move.config.unitInformation.get(UnitType.Demolisher.ordinal()).speed.orElse(2);
-    this.expectedIntercepterDamage = expectedDamage * move.config.unitInformation.get(UnitType.Interceptor.ordinal()).speed.orElse(4);
+    this.expectedScoutDamage = expectedDamage * (1 / move.config.unitInformation.get(UnitType.Scout.ordinal()).speed.orElse(1));
+    this.expectedDemolisherDamage = expectedDamage * (1 / move.config.unitInformation.get(UnitType.Demolisher.ordinal()).speed.orElse(2));
+    this.expectedIntercepterDamage = expectedDamage * (1 / move.config.unitInformation.get(UnitType.Interceptor.ordinal()).speed.orElse(4));
   }
 }
