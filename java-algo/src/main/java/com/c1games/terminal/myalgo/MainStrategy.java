@@ -36,7 +36,7 @@ public class MainStrategy {
     We need a good heuristic that considers the enemy MP and factories to decide when to put more defenses vs more factories
      */
     //always set up the essential defenses
-
+    MyAlgo.lastAttack = null;
     deleteDamagedStructures();
 
 
@@ -140,12 +140,14 @@ public class MainStrategy {
     if (potentialHookAttack != null) {
       GameIO.debug().printf("HOOKING!!!\tx:%d,y:%d,s:%s\n",potentialHookAttack.demolishers[0].x,potentialHookAttack.demolishers[0].y,potentialHookAttack.demolishers[0].x-13 == 0 ? "R" : "L");
       potentialHookAttack.execute(move);
+      MyAlgo.lastAttack = potentialHookAttack;
     } else { //hook attack not done
-      DemolisherRun potentialDemolisherRun = DemolisherRun.evaluate(move, mp, maxDemos*minDamagePerDemo);
+      DemolisherRun potentialDemolisherRun = DemolisherRun.evaluate(move, mp, maxDemos * minDamagePerDemo);
       algoState.hooking = potentialDemolisherRun != null;
       if (potentialDemolisherRun != null) {
         GameIO.debug().printf("DEMO RUN!\tat:%s\t damage:%.2f\n",potentialDemolisherRun.demolisherLocation, potentialDemolisherRun.expectedDefense.structureHealth);
         potentialDemolisherRun.execute(move);
+        MyAlgo.lastAttack = potentialDemolisherRun;
       } else {
         GameIO.debug().println("Fill in hook holes");
         fillHookHoles();
@@ -154,6 +156,7 @@ public class MainStrategy {
           GameIO.debug().println("Ping rush!");
           setUpEssentialDefense();
           potentialScoutRush.execute(move);
+          MyAlgo.lastAttack = potentialScoutRush;
         } else {
           if (move.data.p1Stats.bits > StrategyUtility.mpCapacity(move, move.data.turnInfo.turnNumber) * 0.8) {
             defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores - saveCores);
@@ -177,6 +180,15 @@ public class MainStrategy {
     // put up defenses (moved before end of else blck because we were messing up our own booms
     defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores - saveCores);
     setUpDefenseWithBudget(defenseBudget, move.data.p1Stats.cores);
+  }
+
+  /**
+   * Decides the best attack and returns it. Nullable
+   * If null, best attack not decided
+   * @return
+   */
+  private static Attack chooseAttack() {
+    return null;
   }
 
   /**
