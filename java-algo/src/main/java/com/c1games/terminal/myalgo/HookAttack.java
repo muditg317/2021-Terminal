@@ -297,17 +297,17 @@ public class HookAttack {
                 expectedDamage += damageToDemos;
               }
             }
-            if (needToRepath) {
-              List<Coords> newPath;
-              try {
-                newPath = testState.pathfind(pathPoint, targetEdge);
-              } catch (IllegalPathStartException e) {
-//            GameIO.debug().printf("x:%d,y:%d. invalid hook exit\n", x, y);
-                continue;
-              }
-              path.subList(p, path.size()).clear();
-              path.addAll(newPath);
-            }
+//            if (needToRepath) {
+//              List<Coords> newPath;
+//              try {
+//                newPath = testState.pathfind(pathPoint, targetEdge);
+//              } catch (IllegalPathStartException e) {
+////            GameIO.debug().printf("x:%d,y:%d. invalid hook exit\n", x, y);
+//                continue;
+//              }
+//              path.subList(p, path.size()).clear();
+//              path.addAll(newPath);
+//            }
           }
           if (spTaken >= minDamage) { // ignore result if it doesn't help
             damages.put(new Utility.Pair<>(start, side), new Utility.Pair<>(new ArrayList<>(neededWalls), new ExpectedDefense(move, path.toArray(new Coords[0]), spTaken, expectedDamage)));
