@@ -131,7 +131,7 @@ public class MainStrategy {
               setUpEssentialDefense();
               potentialScoutRush.execute(move);
             } else {
-              spawnDefensiveInters(reducedScoutRushDefense);
+              spawnDefensiveInters(Math.min(Math.max(4, reducedScoutRushDefense), scoutRushDefense));
             }
           }
         }

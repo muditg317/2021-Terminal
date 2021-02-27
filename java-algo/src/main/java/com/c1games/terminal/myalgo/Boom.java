@@ -95,10 +95,10 @@ public class Boom {
 //    SpawnUtility.spawnInterceptors(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 23 : 4, 9)}, numInters);
 //    SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 6 : 21, 7)}, (int) move.data.p1Stats.bits);
 
-    SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 7 : 20, 6)}, numInters);
-    SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 6 : 21, 7)}, (int) move.data.p1Stats.bits);
+    SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 14 : 13, 0)}, numInters);
+    SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 12 : 15, 1)}, (int) move.data.p1Stats.bits);
 
-    SpawnUtility.removeBuilding(move, new Coords(boomSide.equals("RIGHT") ? 6 : 21, 8));
+    SpawnUtility.removeBuilding(move, new Coords(boomSide.equals("RIGHT") ? 12 : 15, 2));
     SpawnUtility.removeBuilding(move, new Coords(4, 11));
     Boom.awaitingBoom = false;
     Boom.turnsUntilBoom = -99;
@@ -128,19 +128,19 @@ public class Boom {
         SpawnUtility.placeWalls(move, new Coords[]{toClose});
       }
     }
-    final int[] numFactories = {0}; //TODO: I'm a bit confused about this legacy code... going to just make it place walls
-    //final int[] numFactories = {(int) ((move.data.p1Stats.bits - toPlace.size()) / 9)};
-    toPlace.stream().sorted((o1, o2) -> o1.y - o2.y).forEach(location -> {
-      if (numFactories[0] > 0 && location.y < 11) {
-        SpawnUtility.placeSupports(move, new Coords[]{location});
-        numFactories[0]--;
-      } else {
-        SpawnUtility.placeWalls(move, new Coords[]{location});
-      }
-    });
+//    final int[] numFactories = {0}; //TODO: I'm a bit confused about this legacy code... going to just make it place walls
+//    //final int[] numFactories = {(int) ((move.data.p1Stats.bits - toPlace.size()) / 9)};
+//    toPlace.stream().sorted((o1, o2) -> o1.y - o2.y).forEach(location -> {
+//      if (numFactories[0] > 0 && location.y < 11) {
+//        SpawnUtility.placeSupports(move, new Coords[]{location});
+//        numFactories[0]--;
+//      } else {
+//        SpawnUtility.placeWalls(move, new Coords[]{location});
+//      }
+//    });
 
     double supportCost = move.config.unitInformation.get(UnitType.Support.ordinal()).cost1.orElse(4);
-    int affordableSupports = (int) (move.data.p1Stats.bits / supportCost);
+    int affordableSupports = (int) (move.data.p1Stats.cores / supportCost);
     List<Coords> neededSupports = Arrays.asList(Locations.safeSupportLocations);
     int maxY = neededSupports.stream().limit(affordableSupports).mapToInt(coords -> coords.y).max().orElse(0);
     List<Coords> defensiveWalls = new ArrayList<>();
@@ -154,7 +154,7 @@ public class Boom {
       }
       int neededWalls = defensiveWalls.size();
       double expectedWallCost = neededWalls * move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1);
-      while (wallY > 3 && expectedWallCost > (move.data.p1Stats.bits - affordableSupports * supportCost)) {
+      while (wallY > 3 && expectedWallCost > (move.data.p1Stats.cores - affordableSupports * supportCost)) {
         int finalMaxY = maxY;
         neededSupports = neededSupports.stream().filter(coords -> coords.y < finalMaxY).collect(Collectors.toList());
         maxY = neededSupports.stream().limit(affordableSupports).mapToInt(coords -> coords.y).max().orElse(0);
