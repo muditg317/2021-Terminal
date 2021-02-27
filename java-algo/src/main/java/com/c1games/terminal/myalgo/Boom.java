@@ -43,6 +43,10 @@ public class Boom {
   int expectedDamage;
 
   static void evaluate(GameState move, int expectedMpSpentPerTurn) {
+    if (Boom.awaitingBoom && Boom.turnsUntilBoom == 0) {
+      awaitingBoom = false;
+      turnsUntilBoom = -99;
+    }
     GameIO.debug().println("BOOM DECISION: ===========");
     float mp = move.data.p1Stats.bits;
     int MAX_EXTRAPOLATION_TURNS = Math.min(3, move.data.turnInfo.turnNumber / 5);
@@ -78,7 +82,7 @@ public class Boom {
   }
 
   /**
-   * Does the Boom and sets awaitingBoom to false and turnsUntilBoom to -99
+   * Does the Boom. Does not set awaitingBoom and turnsUntilBoom.
    * @return True if executed, false if not
    */
   static boolean execute(GameState move) {
@@ -100,8 +104,8 @@ public class Boom {
 
     SpawnUtility.removeBuilding(move, new Coords(boomSide.equals("RIGHT") ? 12 : 15, 2));
     SpawnUtility.removeBuilding(move, new Coords(4, 11));
-    Boom.awaitingBoom = false;
-    Boom.turnsUntilBoom = -99;
+//    Boom.awaitingBoom = false;
+//    Boom.turnsUntilBoom = -99;
     return true;
   }
 
@@ -144,9 +148,9 @@ public class Boom {
     GameIO.debug().printf("Booming with %d support towers\n", affordableSupports);
     List<Coords> neededSupports = Arrays.asList(Locations.safeSupportLocations);
     int maxY = neededSupports.stream().limit(affordableSupports).mapToInt(coords -> coords.y).max().orElse(0);
-    GameIO.debug().printf("max Y: %d",maxY);
+    GameIO.debug().printf("max Y: %d\n",maxY);
     List<Coords> defensiveWalls = new ArrayList<>();
-    if (affordableSupports > 0 && maxY >= 3) { // place protective walls over the supports
+    if (neededSupports.size() > 0 && maxY >= 3) { // place protective walls over the supports
       int wallY = maxY + 1;
       for (int x = 15-wallY; x <= (wallY+12); x++) {
         Coords wallPos = new Coords(x, wallY);
@@ -154,14 +158,15 @@ public class Boom {
           defensiveWalls.add(wallPos);
         }
       }
-      GameIO.debug().printf("Need walls: %s",defensiveWalls);
+      GameIO.debug().printf("Need walls: %s\n",defensiveWalls);
       int neededWalls = defensiveWalls.size();
       double expectedWallCost = neededWalls * move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1);
-      while (wallY > 3 && expectedWallCost > (move.data.p1Stats.cores - affordableSupports * supportCost)) {
-        GameIO.debug().printf("Not enough SP for wall! SP: %.2f, support cost: %.2f, wall cost: %.2f",move.data.p1Stats.cores, affordableSupports*supportCost, expectedWallCost);
+      while (wallY > 3 && expectedWallCost > (move.data.p1Stats.cores - neededSupports.size() * supportCost)) {
+        GameIO.debug().printf("Not enough SP for wall! SP: %.2f, support cost: %.2f, wall cost: %.2f\n",move.data.p1Stats.cores, neededSupports.size()*supportCost, expectedWallCost);
         int finalMaxY = maxY;
         neededSupports = neededSupports.stream().filter(coords -> coords.y < finalMaxY).collect(Collectors.toList());
-        maxY = neededSupports.stream().limit(affordableSupports).mapToInt(coords -> coords.y).max().orElse(0);
+        maxY = neededSupports.stream().mapToInt(coords -> coords.y).max().orElse(0);
+        GameIO.debug().printf("new Max Y: %d\n",maxY);
         wallY = maxY + 1;
         defensiveWalls = new ArrayList<>();
         for (int x = 15-wallY; x <= (wallY+12); x++) {

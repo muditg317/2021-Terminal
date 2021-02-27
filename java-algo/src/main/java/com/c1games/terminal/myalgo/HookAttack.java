@@ -50,6 +50,7 @@ public class HookAttack {
   public void execute(GameState move) {
     SpawnUtility.placeWalls(move, walls);
     SpawnUtility.placeTurrets(move, turrets);
+    SpawnUtility.placeWalls(move, turrets);
     SpawnUtility.placeSupports(move, supportTowers);
 //    SpawnUtility.placeUpgradedSupports(move, Arrays.stream(supportTowers).limit(supportTowers.length < 2 ? (supportTowers.length) : (supportTowers.length-2)).toArray(Coords[]::new));
 //    SpawnUtility.placeWalls(move, supportTowers); // done to fill in any holes we left
@@ -184,13 +185,26 @@ public class HookAttack {
             continue;
           }
           wallsAvailable += neededWalls.size() - placedWalls;
-//          neededWalls = neededWalls.subList(0, placedWalls);
-          neededWalls.subList(placedWalls, neededWalls.size()).clear(); //may be bugged??
+          neededWalls.subList(placedWalls, neededWalls.size()).clear();
 
-          Coords closeGapWall = new Coords(side == 0 ? (16-y) : (y+11), y-1);
-          if (move.getWallAt(closeGapWall) == null) {
-            neededWalls.add(closeGapWall);
-            --wallsAvailable;
+
+          int topWallStartX = side == 0 ? (12+y) : (15-y);
+          int wallBuildDir = side * 2-1;
+
+          // place walls on the opposite end of our hook
+          List<Coords> closeGapWalls = new ArrayList<>();
+          closeGapWalls.add(new Coords(side == 0 ? (16-y) : (y+11), y-1));
+          if (side == 0 ? (x <= 16-y) : (x >= y+11)) {
+            Coords currentWall = closeGapWalls.get(0);
+            closeGapWalls.add(new Coords(currentWall.x, currentWall.y));
+            closeGapWalls.get(0).x -= wallBuildDir;
+            closeGapWalls.get(0).y--;
+          }
+          for (Coords closeGapWall : closeGapWalls) {
+            if (move.getWallAt(closeGapWall) == null) {
+              neededWalls.add(closeGapWall);
+              --wallsAvailable;
+            }
           }
           if (wallsAvailable < 0) {
 //            GameIO.debug().printf("x:%d,y:%d, %s. need more walls! sp:%.2f, walls:%d\n", x, y, side == 0 ? "R" : "L", availableSP, neededWalls.size());
@@ -198,8 +212,6 @@ public class HookAttack {
             continue;
           }
 
-          int topWallStartX = side == 0 ? (12+y) : (15-y);
-          int wallBuildDir = side * 2-1;
 
           // Walls of the actual hook bar
           for (int wallX = topWallStartX; (side == 0 ? wallX > x : wallX < x) && wallsAvailable >= 0; wallX += wallBuildDir) {
@@ -209,7 +221,6 @@ public class HookAttack {
               --wallsAvailable;
             }
           }
-
           if (wallsAvailable < 0) {
 //            GameIO.debug().printf("x:%d,y:%d, %s. need more walls! sp:%.2f, walls:%d\n", x, y, side == 0 ? "R" : "L", availableSP, neededWalls.size());
 //            GameIO.debug().println(neededWalls);
