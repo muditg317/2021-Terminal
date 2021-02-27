@@ -131,7 +131,7 @@ public class MainStrategy {
               setUpEssentialDefense();
               potentialScoutRush.execute(move);
             } else {
-              spawnDefensiveInters(scoutRushDefense);
+              spawnDefensiveInters(reducedScoutRushDefense);
             }
           }
         }
@@ -294,14 +294,14 @@ public class MainStrategy {
       spent = placeBudgetedDefenseHelper(spent, budget, false);
 
     } catch (InsufficientResourcesException e) {
-      spent += (move.data.p1Stats.cores - initialSP);
+      spent += (initialSP - move.data.p1Stats.cores);
       GameIO.debug().println("spent: " + spent + " of " + budget + " || finishedBudget @ LINE " + e.getStackTrace()[1].getLineNumber());
       initialSP = move.data.p1Stats.cores;
       try {
         spent = placeBudgetedDefenseHelper(spent, totalAllowedSpending, true);
       } catch (InsufficientResourcesException e2) {
-        spent += (move.data.p1Stats.cores - initialSP);
-        GameIO.debug().println("spent an extra: " + (move.data.p1Stats.cores - initialSP) + " of " + totalAllowedSpending + " || finishedBudget @ LINE " + e.getStackTrace()[1].getLineNumber());
+        spent += (initialSP - move.data.p1Stats.cores);
+        GameIO.debug().println("spent an extra: " + (initialSP - move.data.p1Stats.cores) + " of " + totalAllowedSpending + " || finishedBudget @ LINE " + e.getStackTrace()[1].getLineNumber());
       }
     } finally {
       // place the two cap walls and upgrade them if we have the available budget

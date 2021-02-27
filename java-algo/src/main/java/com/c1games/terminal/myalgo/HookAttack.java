@@ -314,7 +314,7 @@ public class HookAttack {
               path.addAll(newPath);
             }
           }
-          if (spTaken >= minDamage) { // ignore result if it doesn't help
+          if (spTaken >= minDamage/10) { // ignore result if it doesn't help
             damages.put(new Utility.Pair<>(start, side), new Utility.Pair<>(new ArrayList<>(neededWalls), new ExpectedDefense(move, path.toArray(new Coords[0]), spTaken, expectedDamage)));
           }
         }
