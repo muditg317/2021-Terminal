@@ -95,7 +95,7 @@ public class Boom {
 //    SpawnUtility.spawnInterceptors(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 23 : 4, 9)}, numInters);
 //    SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 6 : 21, 7)}, (int) move.data.p1Stats.bits);
 
-    SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 14 : 13, 0)}, numInters);
+    SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 14 : 13, 0)}, Math.max(numInters, 3));
     SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 12 : 15, 1)}, (int) move.data.p1Stats.bits);
 
     SpawnUtility.removeBuilding(move, new Coords(boomSide.equals("RIGHT") ? 12 : 15, 2));

@@ -87,6 +87,9 @@ public class MainStrategy {
     if (Boom.awaitingBoom && Boom.turnsUntilBoom == 0) { // DO THE BOOM
       Boom.execute(move);
       fillHookHoles();
+
+      defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores);
+      setUpDefenseWithBudget(defenseBudget, move.data.p1Stats.cores);
     } else { // otherwise do not do the boom, check for it
 
       if (Boom.awaitingBoom) { // we are going to boom
@@ -375,9 +378,11 @@ public class MainStrategy {
 
 
       //place right turrets down
-      for (Coords location : Locations.rightTurrets) {
-        spent += (int) spawnMethod.invoke(null, location, Utility.TURRET, false, budget - spent);
-        //spent += (int) spawnMethod.invoke(null, location, Utility.TURRET, true, budget - spent);
+      if (!Boom.awaitingBoom || Boom.turnsUntilBoom != 0) {
+        for (Coords location : Locations.rightTurrets) {
+          spent += (int) spawnMethod.invoke(null, location, Utility.TURRET, false, budget - spent);
+          //spent += (int) spawnMethod.invoke(null, location, Utility.TURRET, true, budget - spent);
+        }
       }
 
       //continue placing entrance turrets and upgrade top entrance walls
@@ -395,10 +400,12 @@ public class MainStrategy {
         //spent += (int) spawnMethod.invoke(null, topWallLocation, Utility.WALL, true, budget - spent);
 
         if (i == 3) { //TODO: this is beyond jank but i (mudit) thought it was needed and its 5am so i not gonna refactor
-          spent += (int) spawnMethod.invoke(null, new Coords(2, 12), Utility.TURRET, false, budget - spent);
-          spent += (int) spawnMethod.invoke(null, new Coords(1, 12), Utility.TURRET, false, budget - spent);
-          //spent += (int) spawnMethod.invoke(null, new Coords(2,12), Utility.TURRET, true, budget - spent);
-          //spent += (int) spawnMethod.invoke(null, new Coords(1,12), Utility.TURRET, true, budget - spent);
+          if (!Boom.awaitingBoom || Boom.turnsUntilBoom != 0) {
+            spent += (int) spawnMethod.invoke(null, new Coords(2, 12), Utility.TURRET, false, budget - spent);
+            spent += (int) spawnMethod.invoke(null, new Coords(1, 12), Utility.TURRET, false, budget - spent);
+            //spent += (int) spawnMethod.invoke(null, new Coords(2,12), Utility.TURRET, true, budget - spent);
+            //spent += (int) spawnMethod.invoke(null, new Coords(1,12), Utility.TURRET, true, budget - spent);
+          }
         }
       }
       //prevent right side damage
