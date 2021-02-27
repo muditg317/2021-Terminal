@@ -47,6 +47,9 @@ public class Boom {
       awaitingBoom = false;
       turnsUntilBoom = -99;
     }
+    if (Boom.awaitingBoom) {
+      Boom.turnsUntilBoom--;
+    }
     GameIO.debug().println("BOOM DECISION: ===========");
     float mp = move.data.p1Stats.bits;
     int MAX_EXTRAPOLATION_TURNS = Math.min(3, move.data.turnInfo.turnNumber / 5);
@@ -93,8 +96,14 @@ public class Boom {
     int numInters = attackUnits.numInterceptors; //these are actuall scouts lul
     GameIO.debug().println("Going to boom right now");
     GameIO.debug().println("Cores:" + move.data.p1Stats.cores);
-    Boom.clearBoomPath(move, boomSide);
-    Boom.placeBoomLid(move, boomSide);
+    if (!Boom.clearBoomPath(move, boomSide)) {
+      GameIO.debug().println("BOOM PATH BLOCKED!!");
+      return false;
+    }
+    if (!Boom.placeBoomLid(move, boomSide)) {
+      GameIO.debug().println("BOOM LID NOT FINISHED!!");
+      return false;
+    }
 
 //    SpawnUtility.spawnInterceptors(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 23 : 4, 9)}, numInters);
 //    SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 6 : 21, 7)}, (int) move.data.p1Stats.bits);
@@ -190,7 +199,11 @@ public class Boom {
     Coords[] supportArray = neededSupports.toArray(new Coords[0]);
     SpawnUtility.placeSupports(move, supportArray);
     SpawnUtility.removeBuildings(move, supportArray);
-    return true;
+
+    return Arrays.stream(Locations.boomLid_right)
+        .noneMatch(closeLocation -> move.getWallAt(new Coords(
+            boomSide.equals("RIGHT") ? closeLocation.x : (27 - closeLocation.x),
+            closeLocation.y)) == null);
   }
 
   /**

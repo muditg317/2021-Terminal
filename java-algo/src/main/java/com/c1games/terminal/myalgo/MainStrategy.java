@@ -14,13 +14,23 @@ import java.util.*;
 public class MainStrategy {
   private static MyAlgo algoState;
   private static GameState move;
+
+  static void execute(MyAlgo algoState, GameState move) {
+    MainStrategy.algoState = algoState;
+    MainStrategy.move = move;
+
+    executeHelper();
+
+    // do unconditional things
+    // unconditionally make sure that we can hook next round if we want
+    markHookHolesForDeletion();
+  }
+
   /**
    * Places the two factories, turret, and wall as first turn
    * @param move the game state dude bruh
    */
-  static void execute(MyAlgo algoState, GameState move) {
-    MainStrategy.algoState = algoState;
-    MainStrategy.move = move;
+  static void executeHelper() {
     // Defenses
     /*
     We need a good heuristic that considers the enemy MP and factories to decide when to put more defenses vs more factories
@@ -85,72 +95,88 @@ public class MainStrategy {
     sp = move.data.p1Stats.cores;
 
     if (Boom.awaitingBoom && Boom.turnsUntilBoom == 0) { // DO THE BOOM
-      Boom.execute(move);
+      if (Boom.execute(move)) {
+        fillHookHoles();
+
+        defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores);
+        setUpDefenseWithBudget(defenseBudget, move.data.p1Stats.cores);
+        return;
+      }
+    }
+    // otherwise do not do the boom, check for it
+
+    if (Boom.awaitingBoom) { // we are going to boom
+      spawnDefensiveInters(reducedScoutRushDefense);
+      if (Boom.turnsUntilBoom == 1) { //prepare to do the boom next turn
+        Boom.clearBoomPath(move, "LEFT");
+        Boom.clearBoomPath(move, "RIGHT");
+        GameIO.debug().println("clearing path for future BOOM!!");
+      }
       fillHookHoles();
 
-      defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores);
-      setUpDefenseWithBudget(defenseBudget, move.data.p1Stats.cores);
-    } else { // otherwise do not do the boom, check for it
-
-      if (Boom.awaitingBoom) { // we are going to boom
-        spawnDefensiveInters(reducedScoutRushDefense);
-        if (Boom.turnsUntilBoom == 1) { //prepare to do the boom next turn
-          Boom.clearBoomPath(move, "LEFT");
-          Boom.clearBoomPath(move, "RIGHT");
-          GameIO.debug().println("clearing path for future BOOM!!");
-        }
-        Boom.turnsUntilBoom--;
-        fillHookHoles();
-      } else {
-
-        GameIO.debug().println("CHECK FOR HOOK==================");
-        int maxDemos = (int) (mp / move.config.unitInformation.get(UnitType.Demolisher.ordinal()).cost2.orElse(3));
-        float minDamagePerDemo = 4;//5 TODO: CHANGE BACK TO 5!!
-        HookAttack lowerHookAttack = HookAttack.evaluate(move, attackSpBudget, mp - (move.data.p2Stats.bits > 5 ? (move.data.p2Stats.bits > 12 ? 2 : 1) : 0), 6, 27 - 6, 10, 12, maxDemos*minDamagePerDemo);
-        HookAttack upperHookAttack = HookAttack.evaluate(move, attackSpBudget, mp - (move.data.p2Stats.bits > 5 ? (move.data.p2Stats.bits > 12 ? 2 : 1) : 0), 9, 27 - 9, 13, 13, maxDemos*minDamagePerDemo);
-        HookAttack potentialHookAttack = null;
-        if (lowerHookAttack != null) {
-          potentialHookAttack = lowerHookAttack;
-        }
-        if (upperHookAttack != null && (lowerHookAttack == null || upperHookAttack.expectedDefense.structureHealth > lowerHookAttack.expectedDefense.structureHealth)) {
-          potentialHookAttack = upperHookAttack;
-        }
-        algoState.hooking = potentialHookAttack != null;
-        if (potentialHookAttack != null) {
-          GameIO.debug().printf("HOOKING!!!\tx:%d,y:%d,s:%s\n",potentialHookAttack.demolishers[0].x,potentialHookAttack.demolishers[0].y,potentialHookAttack.demolishers[0].x-13 == 0 ? "R" : "L");
-          potentialHookAttack.execute(move);
-        } else { //hook attack not done
-          DemolisherRun potentialDemolisherRun = DemolisherRun.evaluate(move, mp, maxDemos*minDamagePerDemo);
-          algoState.hooking = potentialDemolisherRun != null;
-          if (potentialDemolisherRun != null) {
-            GameIO.debug().printf("DEMO RUN!\tat:%s\t damage:%.2f\n",potentialDemolisherRun.demolisherLocation, potentialDemolisherRun.expectedDefense.structureHealth);
-            potentialDemolisherRun.execute(move);
-          } else {
-            GameIO.debug().println("Fill in hook holes");
-            fillHookHoles();
-            ScoutRush potentialScoutRush = ScoutRush.evaluate(move, attackSpBudget);
-            if (potentialScoutRush != null && Math.random() > 0.1) {
-              GameIO.debug().println("Ping rush!");
-              setUpEssentialDefense();
-              potentialScoutRush.execute(move);
-            } else {
-              GameIO.debug().println("Spawn defensive inters!");
-              spawnDefensiveInters(Math.min(Math.max(4, reducedScoutRushDefense), Math.max(scoutRushDefense, (int) (move.data.p2Stats.bits / 5))));
-            }
-          }
-        }
-
-      }
-
       // put up defenses (moved before end of else blck because we were messing up our own booms
-
-
       defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores - saveCores);
       setUpDefenseWithBudget(defenseBudget, move.data.p1Stats.cores);
-    } //end large attack if
+      return;
+    }
 
-    // unconditionally make sure that we can hook next round if we want
-    markHookHolesForDeletion();
+    GameIO.debug().println("CHECK FOR HOOK==================");
+    int maxDemos = (int) (mp / move.config.unitInformation.get(UnitType.Demolisher.ordinal()).cost2.orElse(3));
+    double enemySP = StrategyUtility.enemySPOnBoard(move);
+    float minDamagePerDemo = (float) (enemySP * 0.2);//5 TODO: CHANGE BACK TO 5!!
+//        if (maxDemos < 2) {
+//          minDamagePerDemo *= 1.5;
+//        }
+    HookAttack lowerHookAttack = HookAttack.evaluate(move, attackSpBudget, mp - (move.data.p2Stats.bits > 5 ? (move.data.p2Stats.bits > 12 ? 2 : 1) : 0), 6, 27 - 6, 10, 12, maxDemos*minDamagePerDemo);
+    HookAttack upperHookAttack = HookAttack.evaluate(move, attackSpBudget, mp - (move.data.p2Stats.bits > 5 ? (move.data.p2Stats.bits > 12 ? 2 : 1) : 0), 9, 27 - 9, 13, 13, maxDemos*minDamagePerDemo);
+    HookAttack potentialHookAttack = null;
+    if (lowerHookAttack != null) {
+      potentialHookAttack = lowerHookAttack;
+    }
+    if (upperHookAttack != null && (lowerHookAttack == null || upperHookAttack.expectedDefense.structureHealth > lowerHookAttack.expectedDefense.structureHealth)) {
+      potentialHookAttack = upperHookAttack;
+    }
+    algoState.hooking = potentialHookAttack != null;
+    if (potentialHookAttack != null) {
+      GameIO.debug().printf("HOOKING!!!\tx:%d,y:%d,s:%s\n",potentialHookAttack.demolishers[0].x,potentialHookAttack.demolishers[0].y,potentialHookAttack.demolishers[0].x-13 == 0 ? "R" : "L");
+      potentialHookAttack.execute(move);
+    } else { //hook attack not done
+      DemolisherRun potentialDemolisherRun = DemolisherRun.evaluate(move, mp, maxDemos*minDamagePerDemo);
+      algoState.hooking = potentialDemolisherRun != null;
+      if (potentialDemolisherRun != null) {
+        GameIO.debug().printf("DEMO RUN!\tat:%s\t damage:%.2f\n",potentialDemolisherRun.demolisherLocation, potentialDemolisherRun.expectedDefense.structureHealth);
+        potentialDemolisherRun.execute(move);
+      } else {
+        GameIO.debug().println("Fill in hook holes");
+        fillHookHoles();
+        ScoutRush potentialScoutRush = ScoutRush.evaluate(move, attackSpBudget);
+        if (potentialScoutRush != null && Math.random() > 0.1) {
+          GameIO.debug().println("Ping rush!");
+          setUpEssentialDefense();
+          potentialScoutRush.execute(move);
+        } else {
+          if (move.data.p1Stats.bits > StrategyUtility.mpCapacity(move, move.data.turnInfo.turnNumber) * 0.8) {
+            defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores - saveCores);
+            setUpDefenseWithBudget(defenseBudget, move.data.p1Stats.cores);
+            potentialDemolisherRun = DemolisherRun.evaluate(move, move.data.p1Stats.bits, 0);
+            algoState.hooking = potentialDemolisherRun != null;
+            if (potentialDemolisherRun != null) {
+              GameIO.debug().printf("fallback demo run!\tat:%s\t damage:%.2f\n", potentialDemolisherRun.demolisherLocation, potentialDemolisherRun.expectedDefense.structureHealth);
+              potentialDemolisherRun.execute(move);
+            } else {
+              GameIO.debug().println("Spawn defensive inters!");
+              spawnDefensiveInters(scoutRushDefense);
+            }
+          } else {
+            GameIO.debug().println("Spawn defensive inters!");
+            spawnDefensiveInters(scoutRushDefense);
+          }
+        }
+      }
+    }
+    // put up defenses (moved before end of else blck because we were messing up our own booms
+    defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores - saveCores);
+    setUpDefenseWithBudget(defenseBudget, move.data.p1Stats.cores);
   }
 
   /**
@@ -168,7 +194,7 @@ public class MainStrategy {
         Unit unit = units.get(0);
         if (unit.owner == PlayerId.Player1) { //this is our structure
           double startHealth = unit.unitInformation.startHealth.getAsDouble();
-          if (unit.health < startHealth) { //thing is damaged
+          if (unit.health < (startHealth * (unit.type == UnitType.Turret && unit.upgraded ? 0.5 : 1))) { //thing is damaged
             SpawnUtility.removeBuilding(move, new Coords(x, y));
           }
         }
@@ -516,20 +542,27 @@ public class MainStrategy {
    * @return the amount of money used
    */
   public static int attemptSpawnIfAffordable(Coords location, UnitType unitType, boolean upgrade, double budget) throws InsufficientResourcesException {
+    boolean markForDeletion = false;
     if (Boom.awaitingBoom && Boom.turnsUntilBoom < 2) {
       //GameIO.debug().println("Prevented spawn at" +location);
       for (Coords openLocation : Locations.boomPath_right) {
         if ((openLocation.x == location.x || (27 - openLocation.x) == location.x) && openLocation.y == location.y) {
-          return 0;
+          markForDeletion = true;
         }
       }
     }
+
     if (StrategyUtility.numAffordableWithBudget(move, unitType, upgrade, budget) > 0) {
+      int spent = 0;
       if (upgrade) {
-        return move.attemptUpgrade(location) == 1 ? SpawnUtility.getUnitCost(move, unitType, true) : 0;
+        spent = move.attemptUpgrade(location) == 1 ? SpawnUtility.getUnitCost(move, unitType, true) : 0;
       } else {
-        return move.attemptSpawn(location, unitType) ? SpawnUtility.getUnitCost(move, unitType, upgrade) : 0;
+        spent = move.attemptSpawn(location, unitType) ? SpawnUtility.getUnitCost(move, unitType, upgrade) : 0;
       }
+      if (markForDeletion && spent > 0) {
+        SpawnUtility.removeBuilding(move, location);
+      }
+      return spent;
     }
     throw new InsufficientResourcesException("outta money bruh");
 
@@ -544,13 +577,13 @@ public class MainStrategy {
    * @return the amount of money used
    */
   public static int attemptSpawnAndDelete(Coords location, UnitType unitType, boolean upgrade, double budget) throws InsufficientResourcesException {
+    if (upgrade == true) {
+      return 0;
+    }
     int spent = attemptSpawnIfAffordable(location, unitType, upgrade, budget);
     if (spent > 0) {
       SpawnUtility.removeBuilding(move, location);
     }
     return spent;
   }
-
-
-
 }

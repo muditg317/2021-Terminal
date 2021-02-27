@@ -8,11 +8,9 @@ import com.c1games.terminal.algo.PlayerId;
 import com.c1games.terminal.algo.io.GameLoop;
 import com.c1games.terminal.algo.io.GameLoopDriver;
 import com.c1games.terminal.algo.map.GameState;
+import com.c1games.terminal.algo.map.Unit;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Turtle Algo:
@@ -24,6 +22,7 @@ public class MyAlgo implements GameLoop {
   final Random rand = new Random();
   //ArrayList<ArrayList<Coords>> scoredOnLocations = new ArrayList<>();
   static HashMap<Coords, Integer> scoredOnLocations = new HashMap<>();
+  static Attack lastAttack = null;
   int enemySupportTowerCoresInvestment = 0;
   //boolean awaitingBoom = false;
   //int turnsUntilBoom = -1;
@@ -77,10 +76,34 @@ public class MyAlgo implements GameLoop {
       if (breach.unitOwner != PlayerId.Player1) {
         //scoredOnLocations.get(scoredOnLocations.size() - 1).add(breach.coords);
         scoredOnLocations.put(breach.coords, scoredOnLocations.getOrDefault(breach.coords, 0) + 1);
+        scoredOnLocations.forEach((key, value) -> GameIO.debug().printf("We got scored on at %s %d times.\n",
+            key, value));
       }
     }
+    //evaluate our attacks
+    if (lastAttack instanceof ScoutRush) {
+      ScoutRush sr = (ScoutRush) lastAttack;
+      int lastDamage = 0;
+      for (FrameData.Events.BreachEvent breach : move.data.events.breach) {
+        if (breach.unitOwner == PlayerId.Player1) {
+          lastDamage++;
+        }
+      }
+      GameIO.debug().printf("SR: Expected Damage was %d: Actual damage was: %d\n", sr.expectedDamage, lastDamage);
+      sr.learn(lastDamage);
+    } else if (lastAttack instanceof DemolisherRun || lastAttack instanceof HookAttack) {
+      int actualSpDamage = 0;
+      for (FrameData.Events.DamageEvent damage : move.data.events.damage) {
+        Unit attacked = move.getWallAt(damage.coords);
 
-    Utility.trackEnemyCoresInvestedInFactories(this, move);
+        if (attacked != null && damage.unitOwner == PlayerId.Player2) {
+          double damageDone = damage.damage;
+          damageDone = Math.min(damageDone, attacked.health);
+          actualSpDamage += Utility.damageToSp(attacked, damageDone);
+        }
+      }
+      lastAttack.learn(actualSpDamage);
+    }
   }
 
 }

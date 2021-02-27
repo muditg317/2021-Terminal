@@ -15,6 +15,12 @@ import static com.c1games.terminal.algo.map.GameState.TowerUnitCategory;
 
 public class StrategyUtility {
 
+  static double mpCapacity(GameState move, int turnNumber) {
+    float baseMPIncome = move.config.resources.bitsPerRound + move.config.resources.bitGrowthRate * turnNumber / move.config.resources.turnIntervalForBitSchedule;
+    double mpCapacity = baseMPIncome * 4;
+    return mpCapacity;
+  }
+
   /**
    *
    * @param move
@@ -24,8 +30,7 @@ public class StrategyUtility {
     int mp = (int) move.data.p1Stats.bits;
     int sp = (int) move.data.p1Stats.cores;
     int turnNumber = move.data.turnInfo.turnNumber;
-    float baseMPIncome = move.config.resources.bitsPerRound + move.config.resources.bitGrowthRate * turnNumber / move.config.resources.turnIntervalForBitSchedule;
-    int enemyMPCapacity = (int) (baseMPIncome * 4);
+    double enemyMPCapacity = mpCapacity(move, turnNumber);
     double enemyMPPercentCapacity = move.data.p2Stats.bits / enemyMPCapacity;
     if (enemyMPPercentCapacity < 0.7) {
       return 0; //dont do it
@@ -37,6 +42,7 @@ public class StrategyUtility {
     }
 
     scoutRushDefense = Math.min(Math.max(scoutRushDefense, 0), mp);
+    scoutRushDefense = 0; //just doing this for now.
     return scoutRushDefense;
   }
 

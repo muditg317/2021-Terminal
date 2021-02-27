@@ -17,6 +17,27 @@ import java.util.Map;
 public class DeadUtility {
 
   /**
+   * Updates the instance variable recording the number of cores that the enemy has invested into factories
+   * @param move
+   * @return the number of cores that were ever invested
+   */
+  static void trackEnemyCoresInvestedInFactories(MyAlgo algoState, GameState move) {
+    List<FrameData.Events.SpawnEvent> spawnEvents = move.data.events.spawn;
+    for(FrameData.Events.SpawnEvent spawnEvent : spawnEvents) {
+      if (spawnEvent.owner == PlayerId.Player2) {
+        if (spawnEvent.spawningUnitType == SUPPORT) {
+          algoState.enemySupportTowerCoresInvestment += 9;
+        }
+        else if (spawnEvent.spawningUnitType == UnitType.Upgrade) {
+          Coords coords = spawnEvent.spawnLocation;
+          if (move.getWallAt(coords).type == SUPPORT) {
+            algoState.enemySupportTowerCoresInvestment += 9;
+          }
+        }
+      }
+    }
+  }
+  /**
    * Calculates some rating of our defense..
    * Cuts the board in half and counts the total SP value of the structures on the left and right side and then
    * returns the value of the lowest side

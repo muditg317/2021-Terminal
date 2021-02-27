@@ -4,9 +4,10 @@ import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.units.UnitType;
+import com.c1games.terminal.algo.GameIO;
 
 import java.util.List;
-public class ScoutRush {
+public class ScoutRush extends Attack {
   private static final Coords[] UPGRADED_SUPPORT_LOCATIONS = {
 
 
@@ -27,6 +28,8 @@ public class ScoutRush {
       new Coords(12, 6),
   }; //TODO: Optimize this list or maybe even make a more risky layout
   private static final Coords UNUPGRADED_SUPPORT_LOCATION = new Coords(13, 3);
+
+  static double onlineAdjustment = 1; //online learning parameter
 
 
   Coords startCoord;
@@ -65,6 +68,7 @@ public class ScoutRush {
       return null; //don't do the ping attack
     }
     //then now, we shall do the attack - EXECUTE!
+    decayLearning();
 
     return bestSr;
   }
@@ -106,8 +110,8 @@ public class ScoutRush {
         }
       }
     }
-    this.expectedDamage = scoutsRemaining;
-    return scoutsRemaining; // TODO: were you intentionally changing the numScouts value which is why we always sent less scouts than we actually had
+    this.expectedDamage = (int) (onlineAdjustment * scoutsRemaining);
+    return this.expectedDamage;
   }
 
   /**
@@ -140,6 +144,17 @@ public class ScoutRush {
     }
   }
 
+  /**
+   * Given the actual damage, adjust the onlineAdjustment parameter
+   * @param actualDamage the actual damage done by this scout rush
+   */
+  public void learn(double actualDamage) {
+    onlineAdjustment = actualDamage / expectedDamage;
+    GameIO.debug().printf("SR: The onlineAdjustment value is now %.2f\n", onlineAdjustment);
+  }
 
+  public static void decayLearning() {
+    onlineAdjustment = (onlineAdjustment + 1) / 2.0;
+  }
 
 }

@@ -13,7 +13,9 @@ import com.c1games.terminal.algo.units.UnitType;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class HookAttack {
+public class HookAttack extends Attack {
+  static double onlineAdjustment = 1;
+
   Coords[] walls;
   Coords[] supportTowers;
   Coords[] turrets;
@@ -83,12 +85,8 @@ public class HookAttack {
     }
     SpawnUtility.spawnDemolishers(move, demolishers, 1);
     SpawnUtility.spawnScouts(move, scouts, 1);
-    SpawnUtility.spawnInterceptors(move, interceptors, 1);
-    SpawnUtility.spawnInterceptors(move, interceptors, (int) move.data.p1Stats.bits);
-    if (move.data.p1Stats.bits > 0) {
-      GameIO.debug().printf("%.2f bits remaining! Can't afford anything", move.data.p1Stats.bits);
-      SpawnUtility.spawnInterceptors(move, new Coords[]{new Coords(side == 0 ? (location.y+13) : (14-location.y), location.y - 1)}, (int) move.data.p1Stats.bits);
-    }
+    SpawnUtility.spawnInterceptors(move, interceptors, 2);
+//    SpawnUtility.spawnInterceptors(move, interceptors, (int) move.data.p1Stats.bits);
     SpawnUtility.removeBuildings(move, walls);
     SpawnUtility.removeBuildings(move, supportTowers);
     SpawnUtility.removeBuildings(move, turrets);
@@ -307,7 +305,7 @@ public class HookAttack {
                       }
                     }
                     float damageDone = initialTowerHealth - attacker.health;
-                    spTaken += (float) (damageDone / attacker.unitInformation.startHealth.orElse(2) * attacker.unitInformation.cost1.orElse(2) * 0.97f);
+                    spTaken += (float) Utility.damageToSp(attacker, damageDone);
                   }
 
                   if (demolisherHealths.size() > 0) {
@@ -329,7 +327,7 @@ public class HookAttack {
               }
             }
             if (needToRepath) {
-              GameIO.debug().printf("REPATHING!for:%s,%s,at:%s\n",start,side==0?"R":"L",pathPoint);
+//              GameIO.debug().printf("REPATHING!for:%s,%s,at:%s\n",start,side==0?"R":"L",pathPoint);
               List<Coords> newPath;
               try {
                 newPath = testState.pathfind(pathPoint, targetEdge);
@@ -341,7 +339,8 @@ public class HookAttack {
               path.addAll(newPath);
             }
           }
-          if (spTaken >= minDamage/10) { // ignore result if it doesn't help TODO: delete /10
+          spTaken *= onlineAdjustment;
+          if (spTaken >= minDamage) { // ignore result if it doesn't help
             damages.put(new Utility.Pair<>(start, side), new Utility.Pair<>(new ArrayList<>(neededWalls), new ExpectedDefense(move, path.toArray(new Coords[0]), spTaken, expectedDamage)));
           }
         }
@@ -519,13 +518,21 @@ public class HookAttack {
     Coords[] demolisherLocations = new Coords[(int) (availableMP / demolisherInfo.cost2.orElse(3))];
     Arrays.fill(demolisherLocations, new Coords(13 + bestAttack.value, 0));
 
-    double remainingMP = availableMP - ((int) (availableMP / demolisherInfo.cost2.orElse(3)));
-    Coords[] interceptorLocations = new Coords[1]; // (int) Math.max((int) (remainingMP / move.config.unitInformation.get(UnitType.Interceptor.ordinal()).cost2.orElse(1)), (int) (move.data.p2Stats.bits / demolisherInfo.cost2.orElse(3)))];
-//    if (remainingMP > 0) {
+//    double remainingMP = availableMP - ((int) (availableMP / demolisherInfo.cost2.orElse(3)));
+    Coords[] interceptorLocations = new Coords[1];
     int interY = hookLocation.y == 13 ? 11 : hookLocation.y - 1;
     Arrays.fill(interceptorLocations, new Coords(side == 0 ? (interY+14) : (13-interY), interY));
-//    }
 
+    decayLearning();
     return new HookAttack(move, neededWalls.toArray(new Coords[0]),neededSupport.toArray(new Coords[0]), neededTurrets.toArray(new Coords[0]), new Coords[]{}, interceptorLocations, demolisherLocations, bestED, side, hookLocation);
   }
+
+  public void learn(double actualSpDamage) {
+    onlineAdjustment = actualSpDamage / this.expectedDefense.structureHealth;
+  }
+
+  public static void decayLearning() {
+    onlineAdjustment = (onlineAdjustment + 1) / 2.0;
+  }
+
 }

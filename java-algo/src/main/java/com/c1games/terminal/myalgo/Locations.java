@@ -202,20 +202,9 @@ class Locations {
   };
 
   static final Coords[] boomPath_right = {
-          new Coords(6,7),
-          new Coords(7,7),
-          new Coords(7,6),
-          new Coords(8,6),
-          new Coords(8,5),
-          new Coords(9,5),
-          new Coords(9,4),
-          new Coords(10,4),
-          new Coords(10,3),
-          new Coords(11,3),
-          new Coords(11,2),
-          new Coords(12,2),
           new Coords(12,1),
           new Coords(13,1),
+          new Coords(14,0),
           new Coords(14,1),
           new Coords(15,1),
           new Coords(15,2),

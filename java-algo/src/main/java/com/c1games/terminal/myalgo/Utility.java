@@ -35,27 +35,7 @@ public class Utility {
     friendlyEdges.addAll(Arrays.asList(MapBounds.EDGE_LISTS[MapBounds.EDGE_BOTTOM_RIGHT]));
   }
 
-  /**
-   * Updates the instance variable recording the number of cores that the enemy has invested into factories
-   * @param move
-   * @return the number of cores that were ever invested
-   */
-  static void trackEnemyCoresInvestedInFactories(MyAlgo algoState, GameState move) {
-    List<FrameData.Events.SpawnEvent> spawnEvents = move.data.events.spawn;
-    for(FrameData.Events.SpawnEvent spawnEvent : spawnEvents) {
-      if (spawnEvent.owner == PlayerId.Player2) {
-        if (spawnEvent.spawningUnitType == SUPPORT) {
-          algoState.enemySupportTowerCoresInvestment += 9;
-        }
-        else if (spawnEvent.spawningUnitType == UnitType.Upgrade) {
-          Coords coords = spawnEvent.spawnLocation;
-          if (move.getWallAt(coords).type == SUPPORT) {
-            algoState.enemySupportTowerCoresInvestment += 9;
-          }
-        }
-      }
-    }
-  }
+
 
 
   /**
@@ -178,7 +158,16 @@ public class Utility {
     return count;
   }
 
+  /**
+   * Calculates the
+   * @param unit
+   * @param damageDone
+   * @return
+   */
+  static double damageToSp(Unit unit, double damageDone) {
+    return (float) (damageDone / unit.unitInformation.startHealth.orElse(2) * unit.unitInformation.cost1.orElse(2) * (unit.upgraded ? 0.97f : 0.90f));
 
+  }
 
   static void empLineStrategy(GameState move) {
     /*

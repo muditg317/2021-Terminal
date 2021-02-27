@@ -13,7 +13,9 @@ import com.c1games.terminal.algo.units.UnitType;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class DemolisherRun {
+public class DemolisherRun extends Attack {
+  static double onlineAdjustment = 1;
+
   Coords demolisherLocation;
   int numDemolishers;
 
@@ -134,7 +136,7 @@ public class DemolisherRun {
                   }
                 }
                 float damageDone = initialTowerHealth - attacker.health;
-                spTaken += (float) (damageDone / attacker.unitInformation.startHealth.orElse(2) * attacker.unitInformation.cost1.orElse(2) * 0.97f);
+                spTaken += (float) Utility.damageToSp(attacker, damageDone);
               }
 
               if (demolisherHealths.size() > 0) {
@@ -156,7 +158,7 @@ public class DemolisherRun {
           }
         }
         if (needToRepath) {
-          GameIO.debug().printf("REPATHING!for:%s,at:%s\n",start,pathPoint);
+//          GameIO.debug().printf("REPATHING!for:%s,at:%s\n",start,pathPoint);
           List<Coords> newPath;
           try {
             newPath = testState.pathfind(pathPoint, targetEdge);
@@ -168,7 +170,8 @@ public class DemolisherRun {
           path.addAll(newPath);
         }
       }
-      if (spTaken >= minDamage/10) { // ignore result if it doesn't help TODO: delete /10
+      spTaken *= onlineAdjustment;
+      if (spTaken >= minDamage) { // ignore result if it doesn't help
         damages.put(start, new ExpectedDefense(move, path.toArray(new Coords[0]), spTaken, expectedDamage));
       }
     }
@@ -201,8 +204,16 @@ public class DemolisherRun {
     Coords hookLocation = bestAttack;
 
     GameIO.debug().printf("Will run demo: %s. expected damage: %.2f\n", hookLocation.toString(), bestED.structureHealth);
-
+    decayLearning();
     return new DemolisherRun(move, hookLocation, bestED, (int) (availableMP / demolisherInfo.cost2.orElse(3)));
+  }
+
+  public void learn(double actualSpDamage) {
+    onlineAdjustment = actualSpDamage / this.expectedDefense.structureHealth;
+  }
+
+  public static void decayLearning() {
+    onlineAdjustment = (onlineAdjustment + 1) / 2.0;
   }
 
 

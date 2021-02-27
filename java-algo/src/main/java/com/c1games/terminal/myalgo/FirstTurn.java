@@ -31,7 +31,7 @@ public class FirstTurn {
 
     //spawn mobile units - Right now we are doing nothing
     //Hailmary destructor
-    SpawnUtility.spawnDemolishers(move, new Coords(4, 9), 1);
+//    SpawnUtility.spawnDemolishers(move, new Coords(4, 9), 1);
     //Utility.spawnInterceptors(move, Locations.spacedInters5, 1);
   }
 }

@@ -1,6 +1,7 @@
 package com.c1games.terminal.myalgo;
 
 import com.c1games.terminal.algo.Coords;
+import com.c1games.terminal.algo.GameIO;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.Unit;
 
@@ -44,6 +45,7 @@ public class DefenseUtility {
     for (Coords loc : cornerLocations) {
       totalCornerHits += MyAlgo.scoredOnLocations.getOrDefault(loc, 0);
     }
+    GameIO.debug().printf("cornerHasBeenHit is %d\n", totalCornerHits);
     return totalCornerHits > 0;
   }
 
