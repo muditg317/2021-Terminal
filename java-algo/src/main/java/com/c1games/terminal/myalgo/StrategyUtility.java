@@ -7,7 +7,6 @@ import com.c1games.terminal.algo.PlayerId;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
-import com.c1games.terminal.algo.pathfinding.IllegalPathStartException;
 import com.c1games.terminal.algo.units.UnitType;
 
 import java.util.*;
@@ -25,16 +24,16 @@ public class StrategyUtility {
     int mp = (int) move.data.p1Stats.bits;
     int sp = (int) move.data.p1Stats.cores;
     int turnNumber = move.data.turnInfo.turnNumber;
-    int enemyMPCapacity = (int) move.data.p2Stats.bits * 5;
+    float baseMPIncome = move.config.resources.bitsPerRound + move.config.resources.bitGrowthRate * turnNumber / move.config.resources.turnIntervalForBitSchedule;
+    int enemyMPCapacity = (int) (baseMPIncome * 4);
     double enemyMPPercentCapacity = move.data.p2Stats.bits / enemyMPCapacity;
     int neededDefenseSpending = neededDefenseSpending(move);
     int scoutRushDefense = neededDefenseSpending - sp;
-    if (enemyMPPercentCapacity < 0.3) {
+    if (move.data.p2Stats.bits < 2 * move.config.unitInformation.get(UnitType.Demolisher.ordinal()).cost2.orElse(3)) {
       scoutRushDefense = 0;
     }
 
-    scoutRushDefense = Math.max(0, scoutRushDefense);
-    scoutRushDefense = Math.min(mp, scoutRushDefense);
+    scoutRushDefense = Math.min(Math.max(scoutRushDefense, 0), mp);
     return scoutRushDefense;
   }
 
@@ -130,7 +129,7 @@ public class StrategyUtility {
    * @param budget   the MP we have available
    * @return the number of units we can spawn
    */
-  static int numAffordableWithBudget(GameState move, UnitType type, boolean upgrade, int budget) {
+  static double numAffordableWithBudget(GameState move, UnitType type, boolean upgrade, double budget) {
     if (type == UnitType.Remove) {
       throw new IllegalArgumentException("Cannot query number affordable of remove unit type use removeFirewall");
     }

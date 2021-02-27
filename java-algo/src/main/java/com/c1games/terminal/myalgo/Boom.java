@@ -10,7 +10,11 @@ import com.c1games.terminal.algo.units.UnitType;
 import jdk.jshell.spi.ExecutionControl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
+import java.util.stream.Collectors;
 
 public class Boom {
   private static final Coords[] leftPath = {
@@ -135,9 +139,46 @@ public class Boom {
       }
     });
 
+    double supportCost = move.config.unitInformation.get(UnitType.Support.ordinal()).cost1.orElse(4);
+    int affordableSupports = (int) (move.data.p1Stats.bits / supportCost);
+    List<Coords> neededSupports = Arrays.asList(Locations.safeSupportLocations);
+    int maxY = neededSupports.stream().limit(affordableSupports).mapToInt(coords -> coords.y).max().orElse(0);
+    List<Coords> defensiveWalls = new ArrayList<>();
+    if (affordableSupports > 0 && maxY >= 3) { // place protective walls over the supports
+      int wallY = maxY + 1;
+      for (int x = 15-wallY; x <= (wallY+12); x++) {
+        Coords wallPos = new Coords(x, wallY);
+        if (move.getWallAt(wallPos) == null) {
+          defensiveWalls.add(wallPos);
+        }
+      }
+      int neededWalls = defensiveWalls.size();
+      double expectedWallCost = neededWalls * move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1);
+      while (wallY > 3 && expectedWallCost > (move.data.p1Stats.bits - affordableSupports * supportCost)) {
+        int finalMaxY = maxY;
+        neededSupports = neededSupports.stream().filter(coords -> coords.y < finalMaxY).collect(Collectors.toList());
+        maxY = neededSupports.stream().limit(affordableSupports).mapToInt(coords -> coords.y).max().orElse(0);
+        wallY = maxY + 1;
+        defensiveWalls = new ArrayList<>();
+        for (int x = 15-wallY; x <= (wallY+12); x++) {
+          Coords wallPos = new Coords(x, wallY);
+          if (move.getWallAt(wallPos) == null) {
+            defensiveWalls.add(wallPos);
+          }
+        }
+        neededWalls = defensiveWalls.size();
+        expectedWallCost = neededWalls * move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1);
+      }
+    }
+
+    //place walls to protect the supports
+    Coords[] wallArray = defensiveWalls.toArray(new Coords[0]);
+    SpawnUtility.placeWalls(move, wallArray);
+    SpawnUtility.removeBuildings(move, wallArray);
     //now put down supports
-    SpawnUtility.placeSupports(move, Locations.safeSupportLocations);
-    SpawnUtility.removeBuildings(move, Locations.safeSupportLocations);
+    Coords[] supportArray = neededSupports.toArray(new Coords[0]);
+    SpawnUtility.placeSupports(move, supportArray);
+    SpawnUtility.removeBuildings(move, supportArray);
     return true;
   }
 
@@ -195,7 +236,7 @@ public class Boom {
     // TODO: FIX ME
     // TODO: apply some scaling if they have more turns available
     AttackBreakdown curr = attackThreshold(move);
-    curr.units.scale(1.4f);
+    curr.units.scale(1.2f);
     return curr;
   }
 

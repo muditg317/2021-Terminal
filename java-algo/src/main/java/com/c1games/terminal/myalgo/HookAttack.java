@@ -57,6 +57,9 @@ public class HookAttack {
 
     if (move.data.p1Stats.cores > 0) {
       int turretY = location.y - 2;
+      if (location.y == 13) {
+        turretY--;
+      }
       int turretX = side == 0 ? (turretY + 11) : (16 - turretY);
       int wallBuildDir = side * 2 - 1; //-1 for target right, 1 for target left
       double turretCost = move.config.unitInformation.get(UnitType.Turret.ordinal()).cost1.orElse(2);
@@ -490,13 +493,11 @@ public class HookAttack {
     Arrays.fill(demolisherLocations, new Coords(13 + bestAttack.value, 0));
 
     double remainingMP = availableMP - ((int) (availableMP / demolisherInfo.cost2.orElse(3)));
-    Coords[] interceptorLocations = new Coords[(int) Math.max((int) (remainingMP / move.config.unitInformation.get(UnitType.Interceptor.ordinal()).cost2.orElse(1)), (int) (move.data.p2Stats.bits / demolisherInfo.cost2.orElse(3)))];
-    if (remainingMP > 0) {
-      Arrays.fill(interceptorLocations, new Coords(side == 0 ? (hookLocation.y+13) : (13-hookLocation.y), hookLocation.y - 1));
-    }
+    Coords[] interceptorLocations = new Coords[1]; // (int) Math.max((int) (remainingMP / move.config.unitInformation.get(UnitType.Interceptor.ordinal()).cost2.orElse(1)), (int) (move.data.p2Stats.bits / demolisherInfo.cost2.orElse(3)))];
+//    if (remainingMP > 0) {
+    Arrays.fill(interceptorLocations, new Coords(side == 0 ? (hookLocation.y+13) : (13-hookLocation.y), hookLocation.y - 1));
+//    }
 
     return new HookAttack(move, neededWalls.toArray(new Coords[0]),neededSupport.toArray(new Coords[0]), neededTurrets.toArray(new Coords[0]), new Coords[]{}, interceptorLocations, demolisherLocations, bestED, side, hookLocation);
   }
-
-
 }

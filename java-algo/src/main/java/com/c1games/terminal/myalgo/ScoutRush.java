@@ -34,9 +34,9 @@ public class ScoutRush {
   int numScouts;
   int scoutHealth;
   int targetSide;
-  int spBudget;
+  double spBudget;
 
-  public ScoutRush(Coords startCoord, int spBudget, int numScouts, int scoutHealth) {
+  public ScoutRush(Coords startCoord, double spBudget, int numScouts, int scoutHealth) {
     this.startCoord = startCoord;
     this.spBudget = spBudget;
     this.numScouts = numScouts;
@@ -51,7 +51,7 @@ public class ScoutRush {
    * @param move
    * @return the better scoutrush. Null if BAD.
    */
-  public static ScoutRush evaluate(GameState move, int spBudget) {
+  public static ScoutRush evaluate(GameState move, double spBudget) {
     int mp = (int) move.data.p1Stats.bits;
     double scoutBaseHealth = move.config.unitInformation.get(UnitType.Scout.ordinal()).startHealth.orElse(15);;
     int estimatedScoutHealth = (int) (scoutBaseHealth + (spBudget * 3.0 / 4.0));
