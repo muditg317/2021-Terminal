@@ -176,13 +176,7 @@ public class MainStrategy {
     }
   }
 
-  private static int calculateHitsSinceTurns(int turns) {
-    int hits = 0;
-    for (int i = algoState.scoredOnLocations.size() - turns; i >= 0 && i < algoState.scoredOnLocations.size(); i++) {
-      hits += algoState.scoredOnLocations.get(i).size();
-    }
-    return hits;
-  }
+
 
   /**
    * Spawns defensive inters in front of the wall
@@ -243,8 +237,8 @@ public class MainStrategy {
 
       //upgrade two corner turrets
       spent += attemptSpawnIfAffordable(Locations.Essentials.firstLeftTurret, Utility.TURRET, true, budget - spent);
-      spent += attemptSpawnIfAffordable(Locations.Essentials.firstRightTurret, Utility.TURRET, true, budget - spent);
-
+      //spent += attemptSpawnIfAffordable(Locations.Essentials.firstRightTurret, Utility.TURRET, true, budget - spent);
+      //TODO: Let's hold off on upgrading the right turret for now...
       //upgrade walls in front of them
 //      spent += attemptSpawnIfAffordable(Locations.Essentials.firstLeftTurretWall, Utility.WALL, true, budget);
 //      spent += attemptSpawnIfAffordable(Locations.Essentials.firstRightTurretWall, Utility.WALL, true, budget);
@@ -366,24 +360,30 @@ public class MainStrategy {
         //spent += (int) spawnMethod.invoke(null, towerLocation, Utility.TURRET, true, budget - spent);
       }
 
-      //upgrade corner 2 walls
-      for (int i = Locations.Essentials.leftCornerWalls.length - 1; i > 0; i--) {
-        Coords location = Locations.Essentials.leftCornerWalls[i];
-        spent += (int) spawnMethod.invoke(null, location, Utility.WALL, true, budget - spent);
-      }
-      for (int i = Locations.Essentials.rightCornerWalls.length - 1; i > 0; i--) {
-        Coords location = Locations.Essentials.rightCornerWalls[i];
-        spent += (int) spawnMethod.invoke(null, location, Utility.WALL, true, budget - spent);
-      }
+      //upgrade corner 2 walls ONLY IF WE HAVE BEEN HIT IN THE CORNER BEFORE
+      boolean cornerHasBeenHit = DefenseUtility.cornerHasBeenHit(move);
+      if (cornerHasBeenHit) {
+        for (int i = Locations.Essentials.leftCornerWalls.length - 1; i > 0; i--) {
+          Coords location = Locations.Essentials.leftCornerWalls[i];
+          spent += (int) spawnMethod.invoke(null, location, Utility.WALL, true, budget - spent);
+        }
+        for (int i = Locations.Essentials.rightCornerWalls.length - 1; i > 0; i--) {
+          Coords location = Locations.Essentials.rightCornerWalls[i];
+          spent += (int) spawnMethod.invoke(null, location, Utility.WALL, true, budget - spent);
+        }
 
-
-      //place right turrets down
-      if (!Boom.awaitingBoom || Boom.turnsUntilBoom != 0) {
-        for (Coords location : Locations.rightTurrets) {
-          spent += (int) spawnMethod.invoke(null, location, Utility.TURRET, false, budget - spent);
-          //spent += (int) spawnMethod.invoke(null, location, Utility.TURRET, true, budget - spent);
+        //place right turrets down (don't really need right turrets unless they be hittin the corners)
+        if (!Boom.awaitingBoom || Boom.turnsUntilBoom != 0) {
+          for (Coords location : Locations.rightTurrets) {
+            spent += (int) spawnMethod.invoke(null, location, Utility.TURRET, false, budget - spent);
+            //spent += (int) spawnMethod.invoke(null, location, Utility.TURRET, true, budget - spent);
+          }
         }
       }
+
+
+
+
 
       //continue placing entrance turrets and upgrade top entrance walls
       for (int i = 0; i < Locations.topEntranceTurrets.length; i++) {
@@ -427,9 +427,12 @@ public class MainStrategy {
       }
 
       //upgrade right turrets
-      for (Coords location : Locations.rightTurrets) {
-        spent += (int) spawnMethod.invoke(null, location, Utility.TURRET, true, budget - spent);
+      if (cornerHasBeenHit) {
+        for (Coords location : Locations.rightTurrets) {
+          spent += (int) spawnMethod.invoke(null, location, Utility.TURRET, true, budget - spent);
+        }
       }
+
 
       //upgrade left entrance towers
       for (Coords location : Locations.topEntranceTurrets) {
@@ -522,28 +525,11 @@ public class MainStrategy {
    * @return the amount of money used
    */
   public static int attemptSpawnAndDelete(Coords location, UnitType unitType, boolean upgrade, double budget) throws InsufficientResourcesException {
-    if (Boom.awaitingBoom && Boom.turnsUntilBoom < 2) {
-      //GameIO.debug().println("Prevented spawn at" +location);
-      for (Coords openLocation : Locations.boomPath_right) {
-        if ((openLocation.x == location.x || (27 - openLocation.x) == location.x) && openLocation.y == location.y) {
-          return 0;
-        }
-      }
+    int spent = attemptSpawnIfAffordable(location, unitType, upgrade, budget);
+    if (spent > 0) {
+      SpawnUtility.removeBuilding(move, location);
     }
-    if (StrategyUtility.numAffordableWithBudget(move, unitType, upgrade, budget) > 0) {
-      int spent = 0;
-      if (upgrade) {
-        spent = move.attemptUpgrade(location) == 1 ? SpawnUtility.getUnitCost(move, unitType, true) : 0;
-      } else {
-        spent = move.attemptSpawn(location, unitType) ? SpawnUtility.getUnitCost(move, unitType, upgrade) : 0;
-      }
-      if (spent > 0) {
-        SpawnUtility.removeBuilding(move, location);
-      }
-      return spent;
-    }
-    throw new InsufficientResourcesException("outta money bruh");
-
+    return spent;
   }
 
 

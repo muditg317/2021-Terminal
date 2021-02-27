@@ -28,5 +28,23 @@ public class DefenseUtility {
     return lastTurretLocation;
   }
 
+  /**
+   * Returns whether or not we have been hit in either corner this game. Requires MyAlgo.scoredOnLocations to work correctly.
+   * @param move
+   * @return
+   */
+  static boolean cornerHasBeenHit(GameState move) {
+    final Coords[] cornerLocations = {
+        new Coords(0, 13),
+        new Coords(1, 12),
+        new Coords(27, 13),
+        new Coords(26, 12)
+    };
+    int totalCornerHits = 0;
+    for (Coords loc : cornerLocations) {
+      totalCornerHits += MyAlgo.scoredOnLocations.getOrDefault(loc, 0);
+    }
+    return totalCornerHits > 0;
+  }
 
 }

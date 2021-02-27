@@ -27,8 +27,11 @@ public class StrategyUtility {
     float baseMPIncome = move.config.resources.bitsPerRound + move.config.resources.bitGrowthRate * turnNumber / move.config.resources.turnIntervalForBitSchedule;
     int enemyMPCapacity = (int) (baseMPIncome * 4);
     double enemyMPPercentCapacity = move.data.p2Stats.bits / enemyMPCapacity;
+    if (enemyMPPercentCapacity < 0.7) {
+      return 0; //dont do it
+    }
     int neededDefenseSpending = neededDefenseSpending(move);
-    int scoutRushDefense = (neededDefenseSpending - sp) / 2; // TODO: i added /2 because inters do more damage than turrets (spending is based on turrets)
+    int scoutRushDefense = (neededDefenseSpending - sp) / 10; // TODO: i added /2 because inters do more damage than turrets (spending is based on turrets)
     if (move.data.p2Stats.bits < 2 * move.config.unitInformation.get(UnitType.Demolisher.ordinal()).cost2.orElse(3)) {
       scoutRushDefense = 0;
     }

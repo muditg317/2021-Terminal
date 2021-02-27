@@ -179,18 +179,6 @@ public class Utility {
   }
 
 
-  /**
-   * Build defenses reactively based on where we got scored on
-   */
-  static void buildReactiveDefenses(MyAlgo algoState, GameState move) {
-    for (int i = algoState.scoredOnLocations.size() - 1; i > 0; i--) {
-      ArrayList<Coords> locations = algoState.scoredOnLocations.get(i);
-      for (Coords loc : locations) {
-        // Build 1 space above the breach location so that it doesn't block our spawn locations
-        move.attemptSpawn(new Coords(loc.x, loc.y + 1), Utility.TURRET);
-      }
-    }
-  }
 
   static void empLineStrategy(GameState move) {
     /*

@@ -9,6 +9,7 @@ import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.pathfinding.IllegalPathStartException;
 import com.c1games.terminal.algo.units.UnitType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +68,30 @@ public class DeadUtility {
 
     scoutRushDefense = (int) Math.min(mp, scoutRushDefense);
     return scoutRushDefense;
+  }
+
+
+  /**
+   * Build defenses reactively based on where we got scored on
+   */
+  static void buildReactiveDefenses(MyAlgo algoState, GameState move) {
+    /*
+    for (int i = algoState.scoredOnLocations.size() - 1; i > 0; i--) {
+      ArrayList<Coords> locations = algoState.scoredOnLocations.get(i);
+      for (Coords loc : locations) {
+        // Build 1 space above the breach location so that it doesn't block our spawn locations
+        move.attemptSpawn(new Coords(loc.x, loc.y + 1), Utility.TURRET);
+      }
+    }
+    */
+  }
+  private static int calculateHitsSinceTurns(int turns) {
+    /*int hits = 0;
+    for (int i = algoState.scoredOnLocations.size() - turns; i >= 0 && i < algoState.scoredOnLocations.size(); i++) {
+      hits += algoState.scoredOnLocations.get(i).size();
+    }
+    return hits; */
+    return 0;
   }
 
   /**

@@ -10,6 +10,7 @@ import com.c1games.terminal.algo.io.GameLoopDriver;
 import com.c1games.terminal.algo.map.GameState;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 
@@ -21,7 +22,8 @@ public class MyAlgo implements GameLoop {
   final static int NUM_EARLY_GAME_TURNS = 5;
 
   final Random rand = new Random();
-  ArrayList<ArrayList<Coords>> scoredOnLocations = new ArrayList<>();
+  //ArrayList<ArrayList<Coords>> scoredOnLocations = new ArrayList<>();
+  static HashMap<Coords, Integer> scoredOnLocations = new HashMap<>();
   int enemySupportTowerCoresInvestment = 0;
   //boolean awaitingBoom = false;
   //int turnsUntilBoom = -1;
@@ -62,7 +64,7 @@ public class MyAlgo implements GameLoop {
 //      GameIO.debug().println("finishing main turn with bits: " + move.data.p1Stats.bits);
     }
 
-    scoredOnLocations.add(new ArrayList<Coords>());
+    //scoredOnLocations.add(new ArrayList<Coords>());
   }
 
   /**
@@ -73,7 +75,8 @@ public class MyAlgo implements GameLoop {
     // Save locations that the enemy scored on against us to reactively build defenses
     for (FrameData.Events.BreachEvent breach : move.data.events.breach) {
       if (breach.unitOwner != PlayerId.Player1) {
-        scoredOnLocations.get(scoredOnLocations.size() - 1).add(breach.coords);
+        //scoredOnLocations.get(scoredOnLocations.size() - 1).add(breach.coords);
+        scoredOnLocations.put(breach.coords, scoredOnLocations.getOrDefault(breach.coords, 0) + 1);
       }
     }
 
