@@ -7,13 +7,36 @@ import com.c1games.terminal.algo.map.CanSpawn;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.units.UnitType;
+import jdk.jshell.spi.ExecutionControl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Boom {
+  private static final Coords[] leftPath = {
+      new Coords(3, 11),
+      new Coords(2, 11),
+      new Coords(2, 12),
+      new Coords(1, 12),
+      new Coords(1, 13),
+      new Coords(1, 14),
+      new Coords(0 ,14)
+  };
+  private static final Coords[] rightPath = {
+      new Coords(24, 11),
+      new Coords(25, 11),
+      new Coords(25, 12),
+      new Coords(26, 12),
+      new Coords(26, 13),
+      new Coords(26, 14),
+      new Coords(27 ,14)
+  };
   public static boolean awaitingBoom = false;
   public static int turnsUntilBoom = -1;
+
+  int boomScouts;
+  int followingScouts;
+  int expectedDamage;
 
   static void evaluate(GameState move, int expectedMpSpentPerTurn) {
     GameIO.debug().println("BOOM DECISION: ===========");
@@ -77,6 +100,7 @@ public class Boom {
     Boom.turnsUntilBoom = -99;
     return true;
   }
+
   /**
    * returns true if the lid is successfully placed
    * @param boomSide
@@ -200,6 +224,10 @@ public class Boom {
     return new UnitCounts(move, 0, boomScoutsNeeded, 0);
   }
 
+  private static Boom simulateBoom(GameState move, String side, int availableMp) {
+    return null;
+  }
+
   /**
    * Returns an array of the wall value and the turret value
    * Wall Value = return[0] = sum of the building healths in the corner with some discounts for edge walls
@@ -226,24 +254,7 @@ public class Boom {
     float wall2Health = move.getWallAt(new Coords(x2, 14)) != null ? move.getWallAt(new Coords(x2, 14)).health : 0;
     effectiveWallHealth = (int) Math.max(wall1Health, wall2Health);
 
-    final Coords[] leftPath = {
-        new Coords(3, 11),
-        new Coords(2, 11),
-        new Coords(2, 12),
-        new Coords(1, 12),
-        new Coords(1, 13),
-        new Coords(1, 14),
-        new Coords(0 ,14)
-    };
-    final Coords[] rightPath = {
-        new Coords(24, 11),
-        new Coords(25, 11),
-        new Coords(25, 12),
-        new Coords(26, 12),
-        new Coords(26, 13),
-        new Coords(26, 14),
-        new Coords(27 ,14)
-    };
+
     Coords[] path = side.equals("RIGHT") ? rightPath : leftPath;
     int effectiveTurretRating = 0; //how much damage we will take in total moving at 1 coord per tick
     for (Coords pathPoint : path) {
