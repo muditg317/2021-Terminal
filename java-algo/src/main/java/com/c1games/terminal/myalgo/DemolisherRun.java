@@ -122,16 +122,18 @@ public class DemolisherRun {
             float damageDone = initialTowerHealth - attacker.health;
             spTaken += (float) (damageDone / attacker.unitInformation.startHealth.orElse(2) * attacker.unitInformation.cost1.orElse(2) * 0.97f);
 
-            double initialDemoHealth = demolisherHealths.get(demolisherHealths.size() - 1);
-            double towerDamage = attacker.unitInformation.attackDamageWalker.orElse(attacker.upgraded ? 20 : 6);
-            demolisherHealths.set(demolisherHealths.size() - 1, Math.max(0, initialDemoHealth - towerDamage));
-            double afterDemoHealth = demolisherHealths.get(demolisherHealths.size() - 1);
-            double damageToDemos = initialDemoHealth - afterDemoHealth;
-            if (afterDemoHealth == 0) {
-              demolishersRemaining--;
-              demolisherHealths.remove(demolisherHealths.size() - 1);
+            if (demolisherHealths.size() > 0) {
+              double initialDemoHealth = demolisherHealths.get(demolisherHealths.size() - 1);
+              double towerDamage = attacker.unitInformation.attackDamageWalker.orElse(attacker.upgraded ? 20 : 6);
+              demolisherHealths.set(demolisherHealths.size() - 1, Math.max(0, initialDemoHealth - towerDamage));
+              double afterDemoHealth = demolisherHealths.get(demolisherHealths.size() - 1);
+              double damageToDemos = initialDemoHealth - afterDemoHealth;
+              if (afterDemoHealth == 0) {
+                demolishersRemaining--;
+                demolisherHealths.remove(demolisherHealths.size() - 1);
+              }
+              expectedDamage += damageToDemos;
             }
-            expectedDamage += damageToDemos;
           }
         }
         if (needToRepath) {
