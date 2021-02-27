@@ -9,7 +9,7 @@ import com.c1games.terminal.algo.units.UnitType;
  */
 public class Unit {
     public final UnitType type;
-    public final float health;
+    public float health;
     public final String id;
     public final PlayerId owner;
     public final Config.UnitInformation unitInformation;

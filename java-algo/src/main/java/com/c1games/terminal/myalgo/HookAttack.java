@@ -115,6 +115,9 @@ public class HookAttack {
         if (!MapBounds.ARENA[x][y]) {
           continue;
         }
+        if (x < 15-y || x > y+12) {
+          continue;
+        }
         int wallsAvailable = (int) (availableSP / wallCost);
 //        if (wallsAvailable < 0) {
 //          GameIO.debug().printf("x:%d,y:%d. need more walls! sp:%d.\n",x,y,availableSP);
@@ -204,9 +207,10 @@ public class HookAttack {
           }
 
           Coords start = new Coords(x, y);
+          int targetEdge = side;
           List<Coords> path;
           try {
-            path = move.pathfind(start, side);
+            path = move.pathfind(start, targetEdge);
           } catch (IllegalPathStartException e) {
 //            GameIO.debug().printf("x:%d,y:%d. invalid hook exit\n", x, y);
             continue;
@@ -226,34 +230,86 @@ public class HookAttack {
 
           double remainingSP = availableSP - neededWalls.size() * wallCost;
           double supportAmount = remainingSP > move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(4) ? remainingSP * 3 / 4 : 0;
-          supportAmount += move.data.p1Units.support.size() * move.config.unitInformation.get(UnitType.Support.ordinal()).shieldPerUnit.orElse(3);
+//          supportAmount += move.data.p1Units.support.size() * move.config.unitInformation.get(UnitType.Support.ordinal()).shieldPerUnit.orElse(3);
+
+          GameState testState = new GameState(move.config, move.data);
+          for (int _x = 0; _x < MapBounds.BOARD_SIZE; _x++) {
+            for (int _y = 0; _y < MapBounds.BOARD_SIZE; _y++) {
+              testState.allUnits[_x][_y] = move.allUnits[_x][_y].stream().map(unit -> {
+                Unit newUnit = new Unit(unit.type, unit.health, unit.id, unit.owner, move.config);
+                if (unit.upgraded) newUnit.upgrade();
+                return newUnit;
+              }).collect(Collectors.toList());
+            }
+          }
+
+          int demolishersRemaining = numDemolishers;
           double demolisherHealth = demolisherInfo.startHealth.orElse(5) + supportAmount;
+          List<Double> demolisherHealths = new ArrayList<>(demolishersRemaining);
+          for (int d = 0; d < demolishersRemaining; d++) {
+            demolisherHealths.add(demolisherHealth);
+          }
 
           float spTaken = 0;
           float expectedDamage = 0;
-          for (Coords pathPoint : path) {
-            List<Unit> attackers = move.getAttackers(pathPoint);
-            float damageDoneByTowers = 0;
+          for (int p = 0; p < path.size() && p < 100; p++) {
+            Coords pathPoint = path.get(p);
+            Map<Unit, Coords> attackersLocations = StrategyUtility.getAttackerLocations(testState, pathPoint);
+            List<Unit> attackers = new ArrayList<>(attackersLocations.keySet());
+            attackers.sort(new Comparator<Unit>() {
+              @Override
+              public int compare(Unit o1, Unit o2) {
+                return (int) Math.signum(pathPoint.distance(attackersLocations.get(o2)) - pathPoint.distance(attackersLocations.get(o1)));
+              }
+            });
+            boolean needToRepath = false;
+            int numDemolishersToAttack = demolishersRemaining;
             for (Unit attacker : attackers) {
-              if (attacker.owner == PlayerId.Player2) {
-                float towerDamage = (float) attacker.unitInformation.attackDamageWalker.orElse(6);
-                expectedDamage += towerDamage;
-                if (numDemolishers > 0) {
-                  float damageDone = (float) Math.min(numDemolishers * demolisherDamage, attacker.health);
-                  spTaken += (float) (damageDone / attacker.unitInformation.startHealth.orElse(2) * attacker.unitInformation.cost1.orElse(2) * 0.97f);
-                  damageDoneByTowers += towerDamage;
-                  if (damageDoneByTowers > demolisherHealth) {
-                    numDemolishers--;
-                    damageDoneByTowers = 0;
-                  }
-                  if (MapBounds.IS_ON_EDGE[side][pathPoint.x][pathPoint.y]) {
-                    spTaken += numDemolishers * 1.5;
+              if (attacker.owner == PlayerId.Player1) {
+                if (attacker.type == UnitType.Support) {
+                  double shieldAmount = attacker.unitInformation.shieldPerUnit.orElse(attacker.upgraded ? 5 : 3) + (attacker.upgraded ? (attacker.unitInformation.shieldBonusPerY.orElse(0.3) * attackersLocations.get(attacker).y) : 0);
+                  for (int d = 0; d < demolishersRemaining; d++) {
+                    demolisherHealths.set(d, demolisherHealths.get(d) + shieldAmount);
                   }
                 }
+              } else {
+                float initialTowerHealth = attacker.health;
+                while (numDemolishersToAttack > 0 && attacker.health > 0) {
+                  attacker.health -= demolisherDamage;
+                  numDemolishersToAttack--;
+                  if (attacker.health <= 0) {
+                    needToRepath = true;
+                    break;
+                  }
+                }
+                float damageDone = initialTowerHealth - attacker.health;
+                spTaken += (float) (damageDone / attacker.unitInformation.startHealth.orElse(2) * attacker.unitInformation.cost1.orElse(2) * 0.97f);
+
+                double initialDemoHealth = demolisherHealths.get(demolisherHealths.size() - 1);
+                double towerDamage = attacker.unitInformation.attackDamageWalker.orElse(attacker.upgraded ? 20 : 6);
+                demolisherHealths.set(demolisherHealths.size() - 1, Math.max(0, initialDemoHealth - towerDamage));
+                double afterDemoHealth = demolisherHealths.get(demolisherHealths.size() - 1);
+                double damageToDemos = initialDemoHealth - afterDemoHealth;
+                if (afterDemoHealth == 0) {
+                  demolishersRemaining--;
+                  demolisherHealths.remove(demolisherHealths.size() - 1);
+                }
+                expectedDamage += damageToDemos;
               }
             }
+            if (needToRepath) {
+              List<Coords> newPath;
+              try {
+                newPath = testState.pathfind(pathPoint, targetEdge);
+              } catch (IllegalPathStartException e) {
+//            GameIO.debug().printf("x:%d,y:%d. invalid hook exit\n", x, y);
+                continue;
+              }
+              path.subList(p, path.size()).clear();
+              path.addAll(newPath);
+            }
           }
-          if (spTaken > minDamage) { // ignore result if it doesn't help
+          if (spTaken >= minDamage) { // ignore result if it doesn't help
             damages.put(new Utility.Pair<>(start, side), new Utility.Pair<>(new ArrayList<>(neededWalls), new ExpectedDefense(move, path.toArray(new Coords[0]), spTaken, expectedDamage)));
           }
         }

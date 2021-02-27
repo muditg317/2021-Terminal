@@ -105,7 +105,7 @@ public class MainStrategy {
         GameIO.debug().println("CHECK FOR HOOK==================");
         int maxDemos = (int) (mp / move.config.unitInformation.get(UnitType.Demolisher.ordinal()).cost2.orElse(3));
         float minDamagePerDemo = 5;
-        HookAttack lowerHookAttack = HookAttack.evaluate(move, attackSpBudget, mp - (move.data.p2Stats.bits > 5 ? (move.data.p2Stats.bits > 12 ? 2 : 1) : 0), 8, 27 - 8, 10, 12, maxDemos*minDamagePerDemo);
+        HookAttack lowerHookAttack = HookAttack.evaluate(move, attackSpBudget, mp - (move.data.p2Stats.bits > 5 ? (move.data.p2Stats.bits > 12 ? 2 : 1) : 0), 6, 27 - 6, 10, 12, maxDemos*minDamagePerDemo);
         HookAttack upperHookAttack = HookAttack.evaluate(move, attackSpBudget, mp - (move.data.p2Stats.bits > 5 ? (move.data.p2Stats.bits > 12 ? 2 : 1) : 0), 9, 27 - 9, 13, 13, maxDemos*minDamagePerDemo);
         HookAttack potentialHookAttack = null;
         if (lowerHookAttack != null) {
@@ -298,11 +298,11 @@ public class MainStrategy {
       }
 
       //upgrade corner 2 walls
-      for (int i = 0; i < 2; i++) {
+      for (int i = Locations.Essentials.leftCornerWalls.length - 1; i > 0; i--) {
         Coords location = Locations.Essentials.leftCornerWalls[i];
         spent += attemptSpawnIfAffordable(location, Utility.WALL, true, budget - spent);
       }
-      for (int i = 0; i < 2; i++) {
+      for (int i = Locations.Essentials.rightCornerWalls.length - 1; i > 0; i--) {
         Coords location = Locations.Essentials.rightCornerWalls[i];
         spent += attemptSpawnIfAffordable(location, Utility.WALL, true, budget - spent);
       }
@@ -335,6 +335,14 @@ public class MainStrategy {
           //spent += attemptSpawnIfAffordable(new Coords(1,12), Utility.TURRET, true, budget - spent);
         }
       }
+      //prevent right side damage
+      Coords extraRightTower = new Coords(23, 13);
+      Coords extraRightWall = new Coords(22, 13);
+      spent += attemptSpawnIfAffordable(extraRightTower, Utility.TURRET, false, budget - spent);
+      spent += attemptSpawnIfAffordable(extraRightTower, Utility.TURRET, true, budget - spent);
+      spent += attemptSpawnIfAffordable(extraRightWall, Utility.WALL, false, budget - spent);
+      spent += attemptSpawnIfAffordable(extraRightWall, Utility.WALL, true, budget - spent);
+
 
       //NOW WE DO ALL THE UPGRADES
       //upgrade all corner walls
@@ -364,6 +372,22 @@ public class MainStrategy {
       for (Coords location : Locations.topEntranceWalls) {
         spent += attemptSpawnIfAffordable(location, Utility.WALL, true, budget - spent);
       }
+
+      //upgrade all walls above a certain y
+      final int topY = 13;
+      final int bottomY = 8;
+      for(int y = topY; y >= bottomY; y--) {
+        for(int x = 0; x <=27; x++) {
+          Coords location = new Coords(x,y);
+          Unit wall = move.getWallAt(location);
+          if (move.getWallAt(location) != null && wall.type == Utility.WALL) {
+            spent += attemptSpawnIfAffordable(location, Utility.WALL, true, budget - spent);
+          }
+        }
+      }
+
+
+
 
 
 

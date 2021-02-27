@@ -12,6 +12,8 @@ import com.c1games.terminal.algo.units.UnitType;
 
 import java.util.*;
 
+import static com.c1games.terminal.algo.map.GameState.TowerUnitCategory;
+
 public class StrategyUtility {
 
   /**
@@ -27,7 +29,7 @@ public class StrategyUtility {
     double enemyMPPercentCapacity = move.data.p2Stats.bits / enemyMPCapacity;
     int neededDefenseSpending = neededDefenseSpending(move);
     int scoutRushDefense = neededDefenseSpending - sp;
-    if (enemyMPPercentCapacity < 0.5) {
+    if (enemyMPPercentCapacity < 0.3) {
       scoutRushDefense = 0;
     }
 
@@ -64,7 +66,8 @@ public class StrategyUtility {
     thats about 15 damage per SP
      */
     double baseTowerCost = move.config.unitInformation.get(UnitType.Turret.ordinal()).cost1.orElse(2);
-    return (int) (Math.ceil((possibleRemainingScoutRushHealth / 10.0) / baseTowerCost) * baseTowerCost);
+    int scalingFactor = move.data.turnInfo.turnNumber / 5; //scale with the number of turns
+    return (int) (Math.ceil((possibleRemainingScoutRushHealth / 10.0) / baseTowerCost) * baseTowerCost) + scalingFactor;
   }
 
   /**
@@ -182,8 +185,8 @@ public class StrategyUtility {
   static double potentialEnemyShieldPower(GameState move) {
     double shieldPower = currentEnemyShieldPower(move);
     double enemySP = move.data.p2Stats.bits;
-    //apply the conversion of 3 shield power per 4 SP
-    shieldPower += enemySP * 3.0 / 4.0;
+    //apply the conversion of 1 to 1 assuming as average
+    shieldPower += enemySP;
     return shieldPower;
   }
 
@@ -225,5 +228,46 @@ public class StrategyUtility {
       }
     }
     return false;
+  }
+
+  /**
+   * copied and modified from game state
+   * @param move
+   * @param coords
+   * @return
+   */
+  static Map<Unit, Coords> getAttackerLocations(GameState move, Coords coords) {
+    Map<Unit, Coords> attackers = new HashMap<>();
+    if (!MapBounds.inArena(coords)) {
+      GameIO.debug().println("Checking attackers out of bounds! " + coords);
+    }
+
+    float maxRange = 0;
+    float maxGetHit = 0;
+    for (Config.UnitInformation uinfo : move.config.unitInformation) {
+      if (uinfo.unitCategory.orElse(999) == TowerUnitCategory && uinfo.attackRange.orElse(0) > maxRange) {
+        maxRange = (float) uinfo.attackRange.getAsDouble();
+      }
+      if (uinfo.getHitRadius.orElse(0) > maxGetHit) {
+        maxGetHit = (float)uinfo.getHitRadius.getAsDouble();
+      }
+    }
+
+    int max = (int)Math.ceil(maxRange);
+
+    for (int x = coords.x - max; x <= coords.x + max; x++) {
+      for (int y = coords.y - max; y <= coords.y + max; y++) {
+        Coords c = new Coords(x,y);
+        if (MapBounds.inArena(c)) {
+          Unit unit = move.getWallAt(c);
+          if (unit != null && unit.owner == PlayerId.Player2 && unit.unitInformation.attackRange.isPresent()
+              && c.distance(coords) <= unit.unitInformation.attackRange.orElse(0) + maxGetHit) {
+            attackers.put(unit, c);
+          }
+        }
+      }
+    }
+
+    return attackers;
   }
 }
