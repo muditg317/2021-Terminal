@@ -197,7 +197,7 @@ public class MainStrategy {
     if (move.canSpawn(rightCoord, Utility.INTERCEPTOR, 1) != CanSpawn.Yes) {
       rightCoord = new Coords(24, 10);
     }
-    int left = (int) Math.ceil(num / 2);
+    int left = (int) Math.ceil(num / 2.0);
     int right = num - left;
     for (int i = 0; i < left; i++) {
       move.attemptSpawn(leftCoord, Utility.INTERCEPTOR);
