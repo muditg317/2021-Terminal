@@ -286,7 +286,7 @@ public class MainStrategy {
    */
   private static void setUpDefenseWithBudget(double budget, double totalAllowedSpending) {
     GameIO.debug().printf("Set up defenses!\tBudget: %.2f\tMax spending: %.2f\n", budget, totalAllowedSpending);
-    if(budget <= 0) {
+    if(budget <= 0 && totalAllowedSpending <= 0) {
       return;
     }
     final int SAVE_AMOUNT = 2;
