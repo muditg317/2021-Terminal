@@ -28,7 +28,7 @@ public class StrategyUtility {
     int enemyMPCapacity = (int) (baseMPIncome * 4);
     double enemyMPPercentCapacity = move.data.p2Stats.bits / enemyMPCapacity;
     int neededDefenseSpending = neededDefenseSpending(move);
-    int scoutRushDefense = neededDefenseSpending - sp;
+    int scoutRushDefense = (neededDefenseSpending - sp) / 2; // TODO: i added /2 because inters do more damage than turrets (spending is based on turrets)
     if (move.data.p2Stats.bits < 2 * move.config.unitInformation.get(UnitType.Demolisher.ordinal()).cost2.orElse(3)) {
       scoutRushDefense = 0;
     }
@@ -64,9 +64,9 @@ public class StrategyUtility {
     and 6 SP tower deals ~ 95 dmg
     thats about 15 damage per SP
      */
-    double baseTowerCost = move.config.unitInformation.get(UnitType.Turret.ordinal()).cost1.orElse(2);
+    double turretCost = move.config.unitInformation.get(UnitType.Turret.ordinal()).cost1.orElse(2);
     int scalingFactor = move.data.turnInfo.turnNumber / 5; //scale with the number of turns
-    return (int) (Math.ceil((possibleRemainingScoutRushHealth / 10.0) / baseTowerCost) * baseTowerCost) + scalingFactor;
+    return (int) (Math.ceil((possibleRemainingScoutRushHealth / 10.0) / turretCost) * turretCost) + scalingFactor;
   }
 
   /**
@@ -235,7 +235,7 @@ public class StrategyUtility {
    * @param coords
    * @return
    */
-  static Map<Unit, Coords> getTowerLocations(GameState move, Coords coords) {
+  static Map<Unit, Coords> getTowerLocations(GameState move, Coords coords, double walkerRange) {
     Map<Unit, Coords> attackers = new HashMap<>();
     if (!MapBounds.inArena(coords)) {
       GameIO.debug().println("Checking attackers out of bounds! " + coords);
@@ -259,7 +259,8 @@ public class StrategyUtility {
         Coords c = new Coords(x,y);
         if (MapBounds.inArena(c)) {
           Unit unit = move.getWallAt(c);
-          if (unit != null && (c.distance(coords) <= unit.unitInformation.attackRange.orElse(0) + maxGetHit || c.distance(coords) <= unit.unitInformation.shieldRange.orElse(0) + maxGetHit)) {
+          double distance = c.distance(coords);
+          if (unit != null && (distance < walkerRange || distance <= unit.unitInformation.attackRange.orElse(0) + maxGetHit || distance <= unit.unitInformation.shieldRange.orElse(0) + maxGetHit)) {
             attackers.put(unit, c);
           }
         }

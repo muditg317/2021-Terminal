@@ -33,6 +33,17 @@ public class DemolisherRun {
    */
   public void execute(GameState move) {
     SpawnUtility.spawnDemolishers(move, demolisherLocation, numDemolishers);
+    for (int wallY = 2; wallY <= 13; wallY++) {
+      Coords leftWall = new Coords(15-wallY,wallY);
+      if (demolisherLocation.x > 13 || wallY < demolisherLocation.y) {
+        if (SpawnUtility.placeWall(move, leftWall)) SpawnUtility.removeBuilding(move, leftWall);
+      }
+      Coords rightWall = new Coords(12+wallY, wallY);
+      if (demolisherLocation.x < 14 || wallY < demolisherLocation.y) {
+        if (SpawnUtility.placeWall(move, rightWall)) SpawnUtility.removeBuilding(move, rightWall);
+      }
+    }
+    SpawnUtility.spawnInterceptors(move, demolisherLocation, (int) move.data.p1Stats.bits);
   }
 
   /**
@@ -90,7 +101,7 @@ public class DemolisherRun {
       float expectedDamage = 0;
       for (int p = 0; p < path.size() && p < 100; p++) {
         Coords pathPoint = path.get(p);
-        Map<Unit, Coords> attackersLocations = StrategyUtility.getTowerLocations(testState, pathPoint);
+        Map<Unit, Coords> attackersLocations = StrategyUtility.getTowerLocations(testState, pathPoint, demolisherInfo.attackRange.orElse(4.5));
         List<Unit> attackers = new ArrayList<>(attackersLocations.keySet());
         attackers.sort(new Comparator<Unit>() {
           @Override
@@ -127,15 +138,17 @@ public class DemolisherRun {
               }
 
               if (demolisherHealths.size() > 0) {
-                double initialDemoHealth = demolisherHealths.get(demolisherHealths.size() - 1);
-                double towerDamage = attacker.unitInformation.attackDamageWalker.orElse(0);
-                demolisherHealths.set(demolisherHealths.size() - 1, Math.max(0, initialDemoHealth - towerDamage));
-                double afterDemoHealth = demolisherHealths.get(demolisherHealths.size() - 1);
-                double damageToDemos = initialDemoHealth - afterDemoHealth;
-                if (afterDemoHealth == 0) {
-                  demolisherHealths.remove(demolisherHealths.size() - 1);
+                if (attackersLocations.get(attacker).distance(pathPoint) <= attacker.unitInformation.attackRange.orElse(attacker.upgraded ? 3.5 : 2.5)) {
+                  double initialDemoHealth = demolisherHealths.get(demolisherHealths.size() - 1);
+                  double towerDamage = attacker.unitInformation.attackDamageWalker.orElse(0);
+                  demolisherHealths.set(demolisherHealths.size() - 1, Math.max(0, initialDemoHealth - towerDamage));
+                  double afterDemoHealth = demolisherHealths.get(demolisherHealths.size() - 1);
+                  double damageToDemos = initialDemoHealth - afterDemoHealth;
+                  if (afterDemoHealth == 0) {
+                    demolisherHealths.remove(demolisherHealths.size() - 1);
+                  }
+                  expectedDamage += damageToDemos;
                 }
-                expectedDamage += damageToDemos;
               } else {
                 break;
               }
@@ -143,6 +156,7 @@ public class DemolisherRun {
           }
         }
         if (needToRepath) {
+          GameIO.debug().printf("REPATHING!for:%s,at:%s\n",start,pathPoint);
           List<Coords> newPath;
           try {
             newPath = testState.pathfind(pathPoint, targetEdge);

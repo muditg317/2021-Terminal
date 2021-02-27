@@ -86,8 +86,8 @@ public class SpawnUtility {
      * @param move    the game state on which to deploy moves
      * @param location the location to remove them from
      */
-    static int removeBuilding(GameState move, Coords location) {
-      return move.attemptRemoveStructure(location);
+    static boolean removeBuilding(GameState move, Coords location) {
+      return move.attemptRemoveStructure(location) > 0;
     }
 
     /**

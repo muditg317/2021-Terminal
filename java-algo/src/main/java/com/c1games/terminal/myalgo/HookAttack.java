@@ -68,6 +68,9 @@ public class HookAttack {
         SpawnUtility.removeBuilding(move, new Coords(turretX,turretY));
         SpawnUtility.placeWall(move, new Coords(turretX+wallBuildDir,turretY));
         SpawnUtility.removeBuilding(move, new Coords(turretX+wallBuildDir,turretY));
+        if (move.data.p1Stats.cores > 10) {
+          SpawnUtility.applyUpgrade(move, new Coords(turretX,turretY));
+        }
         turretX += 2 * wallBuildDir;
         if (side == 0 ? (turretX <= 16-turretY) : (turretX >= turretY+11)) {
           break;
@@ -81,6 +84,10 @@ public class HookAttack {
     SpawnUtility.spawnScouts(move, scouts, 1);
     SpawnUtility.spawnInterceptors(move, interceptors, 1);
     SpawnUtility.spawnInterceptors(move, interceptors, (int) move.data.p1Stats.bits);
+    if (move.data.p1Stats.bits > 0) {
+      GameIO.debug().printf("%.2f bits remaining! Can't afford anything", move.data.p1Stats.bits);
+      SpawnUtility.spawnInterceptors(move, new Coords[]{new Coords(side == 0 ? (location.y+13) : (14-location.y), location.y - 1)}, (int) move.data.p1Stats.bits);
+    }
     SpawnUtility.removeBuildings(move, walls);
     SpawnUtility.removeBuildings(move, supportTowers);
     SpawnUtility.removeBuildings(move, turrets);
@@ -256,7 +263,7 @@ public class HookAttack {
           float expectedDamage = 0;
           for (int p = 0; p < path.size() && p < 100; p++) {
             Coords pathPoint = path.get(p);
-            Map<Unit, Coords> attackersLocations = StrategyUtility.getTowerLocations(testState, pathPoint);
+            Map<Unit, Coords> attackersLocations = StrategyUtility.getTowerLocations(testState, pathPoint, demolisherInfo.attackRange.orElse(4.5));
             List<Unit> attackers = new ArrayList<>(attackersLocations.keySet());
             attackers.sort(new Comparator<Unit>() {
               @Override
@@ -293,15 +300,17 @@ public class HookAttack {
                   }
 
                   if (demolisherHealths.size() > 0) {
-                    double initialDemoHealth = demolisherHealths.get(demolisherHealths.size() - 1);
-                    double towerDamage = attacker.unitInformation.attackDamageWalker.orElse(0);
-                    demolisherHealths.set(demolisherHealths.size() - 1, Math.max(0, initialDemoHealth - towerDamage));
-                    double afterDemoHealth = demolisherHealths.get(demolisherHealths.size() - 1);
-                    double damageToDemos = initialDemoHealth - afterDemoHealth;
-                    if (afterDemoHealth == 0) {
-                      demolisherHealths.remove(demolisherHealths.size() - 1);
+                    if (attackersLocations.get(attacker).distance(pathPoint) <= attacker.unitInformation.attackRange.orElse(attacker.upgraded ? 3.5 : 2.5)) {
+                      double initialDemoHealth = demolisherHealths.get(demolisherHealths.size() - 1);
+                      double towerDamage = attacker.unitInformation.attackDamageWalker.orElse(0);
+                      demolisherHealths.set(demolisherHealths.size() - 1, Math.max(0, initialDemoHealth - towerDamage));
+                      double afterDemoHealth = demolisherHealths.get(demolisherHealths.size() - 1);
+                      double damageToDemos = initialDemoHealth - afterDemoHealth;
+                      if (afterDemoHealth == 0) {
+                        demolisherHealths.remove(demolisherHealths.size() - 1);
+                      }
+                      expectedDamage += damageToDemos;
                     }
-                    expectedDamage += damageToDemos;
                   } else {
                     break;
                   }
@@ -309,7 +318,7 @@ public class HookAttack {
               }
             }
             if (needToRepath) {
-//              GameIO.debug().printf("REPATHING!for:%s,at:%s\n",start,pathPoint);
+              GameIO.debug().printf("REPATHING!for:%s,%s,at:%s\n",start,side==0?"R":"L",pathPoint);
               List<Coords> newPath;
               try {
                 newPath = testState.pathfind(pathPoint, targetEdge);
@@ -372,7 +381,7 @@ public class HookAttack {
 
     GameIO.debug().printf("Remaining SP for defense/support: %.2f\n", remainingSP);
 
-    final int TURRET_SPACING = 3;
+    final int TURRET_SPACING = 4;
     List<Coords> neededTurrets = new ArrayList<>((int) (remainingSP / turretCost));
     int nextTurretX = hookLocation.x - 2*wallBuildDir;
     while (remainingSP > turretCost && (side == 0 ? nextTurretX <= (hookLocation.y+12) : nextTurretX >= (15- hookLocation.y))) {
@@ -502,7 +511,8 @@ public class HookAttack {
     double remainingMP = availableMP - ((int) (availableMP / demolisherInfo.cost2.orElse(3)));
     Coords[] interceptorLocations = new Coords[1]; // (int) Math.max((int) (remainingMP / move.config.unitInformation.get(UnitType.Interceptor.ordinal()).cost2.orElse(1)), (int) (move.data.p2Stats.bits / demolisherInfo.cost2.orElse(3)))];
 //    if (remainingMP > 0) {
-    Arrays.fill(interceptorLocations, new Coords(side == 0 ? (hookLocation.y+14) : (13-hookLocation.y), hookLocation.y - 1));
+    int interY = hookLocation.y == 13 ? 11 : hookLocation.y - 1;
+    Arrays.fill(interceptorLocations, new Coords(side == 0 ? (interY+14) : (13-interY), interY));
 //    }
 
     return new HookAttack(move, neededWalls.toArray(new Coords[0]),neededSupport.toArray(new Coords[0]), neededTurrets.toArray(new Coords[0]), new Coords[]{}, interceptorLocations, demolisherLocations, bestED, side, hookLocation);

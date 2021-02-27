@@ -57,8 +57,8 @@ public class Boom {
         AttackBreakdown futureAttack = futureAttackThreshold(move, turns);
         float futureAttackThreshold = futureAttack.units.cost;
         float futureMP = extrapolateFutureMP(move, turns, expectedMpSpentPerTurn);
-        GameIO.debug().println("futureAttackThreshold: " + futureAttackThreshold);
-        GameIO.debug().println("futureMP: " + futureMP);
+//        GameIO.debug().println("futureAttackThreshold: " + futureAttackThreshold);
+//        GameIO.debug().println("futureMP: " + futureMP);
         if (futureMP >= futureAttackThreshold) {
           GameIO.debug().println("about to boom..." + mp + " / " + futureAttackThreshold + " reached -- expecting: " + futureMP +" in " + turns +" turns ||| started turn with: " + mp);
           Boom.awaitingBoom = true;
@@ -128,21 +128,23 @@ public class Boom {
         SpawnUtility.placeWalls(move, new Coords[]{toClose});
       }
     }
-//    final int[] numFactories = {0}; //TODO: I'm a bit confused about this legacy code... going to just make it place walls
-//    //final int[] numFactories = {(int) ((move.data.p1Stats.bits - toPlace.size()) / 9)};
-//    toPlace.stream().sorted((o1, o2) -> o1.y - o2.y).forEach(location -> {
-//      if (numFactories[0] > 0 && location.y < 11) {
-//        SpawnUtility.placeSupports(move, new Coords[]{location});
-//        numFactories[0]--;
-//      } else {
-//        SpawnUtility.placeWalls(move, new Coords[]{location});
-//      }
-//    });
+    final int[] numFactories = {0}; //TODO: I'm a bit confused about this legacy code... going to just make it place walls
+    //final int[] numFactories = {(int) ((move.data.p1Stats.bits - toPlace.size()) / 9)};
+    toPlace.stream().sorted((o1, o2) -> o1.y - o2.y).forEach(location -> {
+      if (numFactories[0] > 0 && location.y < 11) {
+        SpawnUtility.placeSupports(move, new Coords[]{location});
+        numFactories[0]--;
+      } else {
+        SpawnUtility.placeWalls(move, new Coords[]{location});
+      }
+    });
 
     double supportCost = move.config.unitInformation.get(UnitType.Support.ordinal()).cost1.orElse(4);
     int affordableSupports = (int) (move.data.p1Stats.cores / supportCost);
+    GameIO.debug().printf("Booming with %d support towers\n", affordableSupports);
     List<Coords> neededSupports = Arrays.asList(Locations.safeSupportLocations);
     int maxY = neededSupports.stream().limit(affordableSupports).mapToInt(coords -> coords.y).max().orElse(0);
+    GameIO.debug().printf("max Y: %d",maxY);
     List<Coords> defensiveWalls = new ArrayList<>();
     if (affordableSupports > 0 && maxY >= 3) { // place protective walls over the supports
       int wallY = maxY + 1;
@@ -152,9 +154,11 @@ public class Boom {
           defensiveWalls.add(wallPos);
         }
       }
+      GameIO.debug().printf("Need walls: %s",defensiveWalls);
       int neededWalls = defensiveWalls.size();
       double expectedWallCost = neededWalls * move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1);
       while (wallY > 3 && expectedWallCost > (move.data.p1Stats.cores - affordableSupports * supportCost)) {
+        GameIO.debug().printf("Not enough SP for wall! SP: %.2f, support cost: %.2f, wall cost: %.2f",move.data.p1Stats.cores, affordableSupports*supportCost, expectedWallCost);
         int finalMaxY = maxY;
         neededSupports = neededSupports.stream().filter(coords -> coords.y < finalMaxY).collect(Collectors.toList());
         maxY = neededSupports.stream().limit(affordableSupports).mapToInt(coords -> coords.y).max().orElse(0);
@@ -170,6 +174,8 @@ public class Boom {
         expectedWallCost = neededWalls * move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1);
       }
     }
+    GameIO.debug().println(defensiveWalls);
+    GameIO.debug().println(neededSupports);
 
     //place walls to protect the supports
     Coords[] wallArray = defensiveWalls.toArray(new Coords[0]);
@@ -193,14 +199,14 @@ public class Boom {
       Coords openLocation = Locations.boomPath_right[i];
       int x = side.equals("RIGHT") ? openLocation.x : (27 - openLocation.x);
       Coords toOpen = new Coords(x, openLocation.y);
-      alreadyReady = SpawnUtility.removeBuilding(move, toOpen) == 0 && alreadyReady;
+      alreadyReady = !SpawnUtility.removeBuilding(move, toOpen) && alreadyReady;
     }
     return alreadyReady;
   }
 
   static void debugPrint() {
-    GameIO.debug().println("awaitingBoom:" + Boom.awaitingBoom);
-    GameIO.debug().println("turnsUntilBoom" + Boom.turnsUntilBoom);
+    GameIO.debug().println("awaitingBoom:\t" + Boom.awaitingBoom);
+    GameIO.debug().println("turnsUntilBoom:\t" + Boom.turnsUntilBoom);
   }
 
   /**
@@ -259,9 +265,9 @@ public class Boom {
     int estScoutsKilled = (int) Math.ceil(cornerSummary.expectedScoutDamage / scoutHealth);
     int survivingScoutsNeeded = (int) cornerSummary.structureHealth / (scoutBaseHealth + 2 * scoutDamage);
     int boomScoutsNeeded = estScoutsKilled + survivingScoutsNeeded;
-    GameIO.debug().println(String.format("cornerSummary structureHealth: %s\n cornerSummary expectedDamage: %s\n",
-        cornerSummary.structureHealth, cornerSummary.expectedIntercepterDamage));
-  //TODO: Fix boomScoutsNeeded. right now it is numInterceptors since i am too lazy :D
+//    GameIO.debug().println(String.format("cornerSummary structureHealth: %s\n cornerSummary expectedDamage: %s\n",
+//        cornerSummary.structureHealth, cornerSummary.expectedIntercepterDamage));
+  //TODO: Fix boomScoenutsNeeded. right now it is numInterceptors since i am too lazy :D
     return new UnitCounts(move, 0, boomScoutsNeeded, 0);
   }
 
@@ -306,8 +312,8 @@ public class Boom {
         }
       }
     }
-    GameIO.debug().println(String.format("enemyCornerSummary:  Side: %s\nEffective Wall Health: %s \nDamage taken: %d\n",
-        side,effectiveWallHealth, effectiveTurretRating));
+//    GameIO.debug().println(String.format("enemyCornerSummary:  Side: %s\nEffective Wall Health: %s \nDamage taken: %d\n",
+//        side,effectiveWallHealth, effectiveTurretRating));
     return new ExpectedDefense(move, path, effectiveWallHealth, effectiveTurretRating);
   }
 
