@@ -80,10 +80,9 @@ public class DemolisherRun {
         }
       }
 
-      int demolishersRemaining = numDemolishers;
       double demolisherHealth = demolisherInfo.startHealth.orElse(5);
-      List<Double> demolisherHealths = new ArrayList<>(demolishersRemaining);
-      for (int d = 0; d < demolishersRemaining; d++) {
+      List<Double> demolisherHealths = new ArrayList<>(numDemolishers);
+      for (int d = 0; d < numDemolishers; d++) {
         demolisherHealths.add(demolisherHealth);
       }
 
@@ -91,7 +90,7 @@ public class DemolisherRun {
       float expectedDamage = 0;
       for (int p = 0; p < path.size() && p < 100; p++) {
         Coords pathPoint = path.get(p);
-        Map<Unit, Coords> attackersLocations = StrategyUtility.getAttackerLocations(testState, pathPoint);
+        Map<Unit, Coords> attackersLocations = StrategyUtility.getTowerLocations(testState, pathPoint);
         List<Unit> attackers = new ArrayList<>(attackersLocations.keySet());
         attackers.sort(new Comparator<Unit>() {
           @Override
@@ -100,42 +99,45 @@ public class DemolisherRun {
           }
         });
         boolean needToRepath = false;
-        int numDemolishersToAttack = demolishersRemaining;
+        int numDemolishersToAttack = demolisherHealths.size();
         for (int frame = 0; frame < (1/demolisherInfo.speed.orElse(0.5)); frame++) { //run each path point twice since demolishers move every 2 frames
           for (Unit attacker : attackers) {
             if (attacker.owner == PlayerId.Player1) {
               if (attacker.type == UnitType.Support) {
                 if (frame == 0) {
                   double shieldAmount = attacker.unitInformation.shieldPerUnit.orElse(attacker.upgraded ? 5 : 3) + (attacker.upgraded ? (attacker.unitInformation.shieldBonusPerY.orElse(0.3) * attackersLocations.get(attacker).y) : 0);
-                  for (int d = 0; d < demolishersRemaining; d++) {
+                  for (int d = 0; d < demolisherHealths.size(); d++) {
                     demolisherHealths.set(d, demolisherHealths.get(d) + shieldAmount);
                   }
                 }
               }
             } else {
-              float initialTowerHealth = attacker.health;
-              while (numDemolishersToAttack > 0 && attacker.health > 0) {
-                attacker.health -= demolisherDamage;
-                numDemolishersToAttack--;
-                if (attacker.health <= 0) {
-                  needToRepath = true;
-                  break;
+              if (attackersLocations.get(attacker).distance(pathPoint) <= demolisherInfo.attackRange.orElse(4.5)) {
+                float initialTowerHealth = attacker.health;
+                while (numDemolishersToAttack > 0 && attacker.health > 0) {
+                  attacker.health -= demolisherDamage;
+                  numDemolishersToAttack--;
+                  if (attacker.health <= 0) {
+                    needToRepath = true;
+                    break;
+                  }
                 }
+                float damageDone = initialTowerHealth - attacker.health;
+                spTaken += (float) (damageDone / attacker.unitInformation.startHealth.orElse(2) * attacker.unitInformation.cost1.orElse(2) * 0.97f);
               }
-              float damageDone = initialTowerHealth - attacker.health;
-              spTaken += (float) (damageDone / attacker.unitInformation.startHealth.orElse(2) * attacker.unitInformation.cost1.orElse(2) * 0.97f);
 
               if (demolisherHealths.size() > 0) {
                 double initialDemoHealth = demolisherHealths.get(demolisherHealths.size() - 1);
-                double towerDamage = attacker.unitInformation.attackDamageWalker.orElse(attacker.upgraded ? 20 : 6);
+                double towerDamage = attacker.unitInformation.attackDamageWalker.orElse(0);
                 demolisherHealths.set(demolisherHealths.size() - 1, Math.max(0, initialDemoHealth - towerDamage));
                 double afterDemoHealth = demolisherHealths.get(demolisherHealths.size() - 1);
                 double damageToDemos = initialDemoHealth - afterDemoHealth;
                 if (afterDemoHealth == 0) {
-                  demolishersRemaining--;
                   demolisherHealths.remove(demolisherHealths.size() - 1);
                 }
                 expectedDamage += damageToDemos;
+              } else {
+                break;
               }
             }
           }

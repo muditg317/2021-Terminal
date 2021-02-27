@@ -235,7 +235,7 @@ public class StrategyUtility {
    * @param coords
    * @return
    */
-  static Map<Unit, Coords> getAttackerLocations(GameState move, Coords coords) {
+  static Map<Unit, Coords> getTowerLocations(GameState move, Coords coords) {
     Map<Unit, Coords> attackers = new HashMap<>();
     if (!MapBounds.inArena(coords)) {
       GameIO.debug().println("Checking attackers out of bounds! " + coords);
@@ -244,11 +244,11 @@ public class StrategyUtility {
     float maxRange = 0;
     float maxGetHit = 0;
     for (Config.UnitInformation uinfo : move.config.unitInformation) {
-      if (uinfo.unitCategory.orElse(999) == TowerUnitCategory && uinfo.attackRange.orElse(0) > maxRange) {
-        maxRange = (float) uinfo.attackRange.getAsDouble();
+      if (uinfo.unitCategory.orElse(999) == TowerUnitCategory && (uinfo.attackRange.orElse(0) > maxRange || uinfo.shieldRange.orElse(0) > maxRange)) {
+        maxRange = (float) Math.max(uinfo.attackRange.orElse(0), uinfo.shieldRange.orElse(0));
       }
       if (uinfo.getHitRadius.orElse(0) > maxGetHit) {
-        maxGetHit = (float)uinfo.getHitRadius.getAsDouble();
+        maxGetHit = (float)uinfo.getHitRadius.orElse(0);
       }
     }
 
@@ -259,8 +259,7 @@ public class StrategyUtility {
         Coords c = new Coords(x,y);
         if (MapBounds.inArena(c)) {
           Unit unit = move.getWallAt(c);
-          if (unit != null && unit.owner == PlayerId.Player2 && unit.unitInformation.attackRange.isPresent()
-              && c.distance(coords) <= unit.unitInformation.attackRange.orElse(0) + maxGetHit) {
+          if (unit != null && (c.distance(coords) <= unit.unitInformation.attackRange.orElse(0) + maxGetHit || c.distance(coords) <= unit.unitInformation.shieldRange.orElse(0) + maxGetHit)) {
             attackers.put(unit, c);
           }
         }

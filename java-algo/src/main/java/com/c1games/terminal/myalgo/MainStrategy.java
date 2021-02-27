@@ -50,17 +50,14 @@ public class MainStrategy {
     setUpEssentialDefense();
 
     //make sure we have enough for boom wall
-    int saveCores = 0;
+    double saveCores = 0;
 
     if (Boom.awaitingBoom) {
-      int ourSPIncome = 5;
-      int growthByBoom = Boom.turnsUntilBoom * ourSPIncome;
+      float ourSPIncome = move.config.resources.bitsPerRound + move.config.resources.bitGrowthRate * turnNumber / move.config.resources.turnIntervalForBitSchedule;
+      float growthByBoom = Boom.turnsUntilBoom * ourSPIncome;
       //we need ATLEAST 25 by the time we boom with all walls and a few turrets at the end
       saveCores = Math.max(0, 25 - growthByBoom);
-      saveCores = (int) Math.min(move.data.p1Stats.cores, saveCores);
-      if (saveCores < 0) {
-        saveCores = 0;
-      }
+      saveCores = Math.min(Math.max(move.data.p1Stats.cores, 0), saveCores);
     }
     GameIO.debug().println("Turn " + turnNumber+ ": with " + saveCores + " saveCores! We currently have " + move.data.p1Stats.cores + " SP and " + move.data.p1Stats.bits + " MP!" );
 
