@@ -1,19 +1,16 @@
 package com.c1games.terminal.myalgo;
 
+import com.c1games.terminal.algo.Config;
 import com.c1games.terminal.algo.Coords;
 import com.c1games.terminal.algo.GameIO;
 import com.c1games.terminal.algo.PlayerId;
-import com.c1games.terminal.algo.map.CanSpawn;
 import com.c1games.terminal.algo.map.GameState;
+import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
+import com.c1games.terminal.algo.pathfinding.IllegalPathStartException;
 import com.c1games.terminal.algo.units.UnitType;
-import jdk.jshell.spi.ExecutionControl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Boom {
@@ -37,10 +34,35 @@ public class Boom {
   };
   public static boolean awaitingBoom = false;
   public static int turnsUntilBoom = -1;
+  public static Side side;
+  private static AttackBreakdown attack;
 
-  int boomScouts;
-  int followingScouts;
+  static double onlineAdjustment = 1;
+
+  Side sideToBoom;
+  int bombUnits;
+  UnitType bombType;
+  int followerUnits;
   int expectedDamage;
+
+  public Boom(Side sideToBoom, int bombUnits, UnitType bombType, int followerUnits) {
+    this.sideToBoom = sideToBoom;
+    this.bombUnits = bombUnits;
+    this.bombType = bombType;
+    this.followerUnits = followerUnits;
+  }
+
+  Coords getBombStart() {
+    return this.bombType == UnitType.Interceptor
+        ? new Coords(this.sideToBoom == Side.RIGHT ? 23 : 27 - 23, 9)
+        : new Coords(this.sideToBoom == Side.RIGHT ? 10 : 27 - 10, 3);
+  }
+
+  Coords getFollowerStart() {
+    return this.bombType == UnitType.Interceptor
+        ? new Coords(this.sideToBoom == Side.RIGHT ? 6 : 27 - 6, 7)
+        : new Coords(this.sideToBoom == Side.RIGHT ? 9 : 27 - 9, 4);
+  }
 
   static void evaluate(GameState move, int expectedMpSpentPerTurn) {
     if (Boom.awaitingBoom && Boom.turnsUntilBoom == 0) {
@@ -62,6 +84,7 @@ public class Boom {
       }
       for (; turns <= MAX_EXTRAPOLATION_TURNS; turns++) {
         AttackBreakdown futureAttack = futureAttackThreshold(move, turns);
+        Boom.side = futureAttack.side;
         float futureAttackThreshold = futureAttack.units.cost;
         float futureMP = extrapolateFutureMP(move, turns, expectedMpSpentPerTurn);
 //        GameIO.debug().println("futureAttackThreshold: " + futureAttackThreshold);
@@ -79,7 +102,14 @@ public class Boom {
         Boom.awaitingBoom = false;
         Boom.turnsUntilBoom = -1;
       }
-    } //end boom decision
+    } else { //booming this turn
+      AttackBreakdown attack = attackThreshold(move);
+      Boom.attack = attack;
+      Boom.side = attack.side;
+
+    }
+    //end boom decision
+
     Boom.debugPrint();
   }
 
@@ -88,9 +118,8 @@ public class Boom {
    * @return True if executed, false if not
    */
   static boolean execute(GameState move) {
-    AttackBreakdown attackData = attackThreshold(move);
-    String boomSide = attackData.location;
-    UnitCounts attackUnits = attackData.units;
+    Side boomSide = Boom.side;
+    UnitCounts attackUnits = attack.units;
     int attackPoints = attackUnits.cost;
     int numInters = attackUnits.numInterceptors; //these are actuall scouts lul
     GameIO.debug().println("Going to boom right now");
@@ -104,13 +133,13 @@ public class Boom {
       return false;
     }
 
-//    SpawnUtility.spawnInterceptors(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 23 : 4, 9)}, numInters);
-//    SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 6 : 21, 7)}, (int) move.data.p1Stats.bits);
+//    SpawnUtility.spawnInterceptors(move, new Coords[]{new Coords(boomSide.equals(Side.RIGHT) ? 23 : 4, 9)}, numInters);
+//    SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals(Side.RIGHT) ? 6 : 21, 7)}, (int) move.data.p1Stats.bits);
 
-    SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 14 : 13, 0)}, Math.max(numInters, 3));
-    SpawnUtility.spawnScouts(move, new Coords[]{new Coords(boomSide.equals("RIGHT") ? 12 : 15, 1)}, (int) move.data.p1Stats.bits);
+    SpawnUtility.spawnScouts(move, new Coords(boomSide == Side.RIGHT ? 10 : 27 - 10, 3), Math.max(numInters, 3));
+    SpawnUtility.spawnScouts(move, new Coords(boomSide == Side.RIGHT ? 9 : 27 - 9, 4), (int) move.data.p1Stats.bits);
 
-    SpawnUtility.removeBuilding(move, new Coords(boomSide.equals("RIGHT") ? 12 : 15, 2));
+    SpawnUtility.removeBuilding(move, new Coords(boomSide == Side.RIGHT ? 9 : 27 - 9, 5));
     SpawnUtility.removeBuilding(move, new Coords(4, 11));
 //    Boom.awaitingBoom = false;
 //    Boom.turnsUntilBoom = -99;
@@ -122,35 +151,18 @@ public class Boom {
    * @param boomSide
    * @return
    */
-  static boolean placeBoomLid(GameState move, String boomSide) {
-    List<Coords> toPlace = new ArrayList<>();
-    for (int i = 0; i < Locations.boomLid_right.length; i++) {
-      Coords closeLocation = Locations.boomLid_right[i];
-      int x = boomSide.equals("RIGHT") ? closeLocation.x : (27 - closeLocation.x);
-      Coords toClose = new Coords(x, closeLocation.y);
-      if (toClose.y < 8) {
-        if (move.canSpawn(toClose, Utility.WALL, 1) == CanSpawn.Yes) {
-          toPlace.add(toClose);
-        }
-      } else if (toClose.y == 13) {
-        if (move.canSpawn(toClose, Utility.WALL, 1) == CanSpawn.Yes) {
-          toPlace.add(toClose);
-        }
-      } else {
-        SpawnUtility.placeWalls(move, new Coords[]{toClose});
-      }
-    }
-    final int[] numFactories = {0}; //TODO: I'm a bit confused about this legacy code... going to just make it place walls
-    //final int[] numFactories = {(int) ((move.data.p1Stats.bits - toPlace.size()) / 9)};
-    toPlace.stream().sorted((o1, o2) -> o1.y - o2.y).forEach(location -> {
-      if (numFactories[0] > 0 && location.y < 11) {
-        SpawnUtility.placeSupports(move, new Coords[]{location});
-        numFactories[0]--;
-      } else {
-        SpawnUtility.placeWalls(move, new Coords[]{location});
-      }
-    });
+  static boolean placeBoomLid(GameState move, Side boomSide) {
+    List<Coords> toPlace = Arrays.stream(Locations.boomLid_right)
+        .map(coords -> new Coords(boomSide == Side.RIGHT ? coords.x : (27 - coords.x), coords.y))
+        .filter(coords -> move.getWallAt(coords) == null)
+        .collect(Collectors.toList());
+    // check if we have anough sp to fill the lid
+    if (move.data.p1Stats.bits < toPlace.size() * move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1)) return false;
 
+    // place the lid
+    toPlace.forEach(coords -> SpawnUtility.placeWall(move, coords));
+
+    // try placing shields
     double supportCost = move.config.unitInformation.get(UnitType.Support.ordinal()).cost1.orElse(4);
     int affordableSupports = (int) (move.data.p1Stats.cores / supportCost);
     GameIO.debug().printf("Booming with %d support towers\n", affordableSupports);
@@ -201,7 +213,7 @@ public class Boom {
 
     return Arrays.stream(Locations.boomLid_right)
         .noneMatch(closeLocation -> move.getWallAt(new Coords(
-            boomSide.equals("RIGHT") ? closeLocation.x : (27 - closeLocation.x),
+            boomSide.equals(Side.RIGHT) ? closeLocation.x : (27 - closeLocation.x),
             closeLocation.y)) == null);
   }
 
@@ -210,12 +222,12 @@ public class Boom {
    * @param side the side which to hit
    * @return whether the path was already clear
    */
-  static boolean clearBoomPath(GameState move, String side) {
+  static boolean clearBoomPath(GameState move, Side side) {
     boolean alreadyReady = true;
     for (int i = 0; i < Locations.boomPath_right.length; i++) {
       Coords openLocation = Locations.boomPath_right[i];
       if (openLocation.y > 13) continue;
-      int x = side.equals("RIGHT") ? openLocation.x : (27 - openLocation.x);
+      int x = side == Side.RIGHT ? openLocation.x : (27 - openLocation.x);
       Coords toOpen = new Coords(x, openLocation.y);
       boolean wasReady = alreadyReady;
       alreadyReady = !SpawnUtility.removeBuilding(move, toOpen) && alreadyReady;
@@ -233,22 +245,22 @@ public class Boom {
   }
 
   /**
-   * Returns the weaker side ("LEFT", "RIGHT") and the num of estimated bits needed to break the wall
+   * Returns the weaker side (Side.LEFT, Side.RIGHT) and the num of estimated bits needed to break the wall
    * @param move  the game state for which we're predicting
    * @return AttackBreakdown with where to attack and the related units needed
    */
   static AttackBreakdown attackThreshold(GameState move) {
-    UnitCounts leftUnitCounts = enemyDefenseHeuristic(move, "LEFT");
+    UnitCounts leftUnitCounts = enemyDefenseHeuristic(move, Side.LEFT);
     int leftCost = leftUnitCounts.cost;
 
-    UnitCounts rightUnitCounts = enemyDefenseHeuristic(move, "RIGHT");
+    UnitCounts rightUnitCounts = enemyDefenseHeuristic(move, Side.RIGHT);
     int rightCost = rightUnitCounts.cost;
 
     int enemyHealth = (int) move.data.p2Stats.integrity;
     int minDamage = Math.min(10, enemyHealth);
 
 
-    String weakerSide = leftCost < rightCost ? "LEFT" : "RIGHT";
+    Side weakerSide = leftCost < rightCost ? Side.LEFT : Side.RIGHT;
     UnitCounts correctUnitCounts = leftCost < rightCost ? leftUnitCounts : rightUnitCounts;
     correctUnitCounts.numScouts = minDamage;
     correctUnitCounts.cost += minDamage;
@@ -275,7 +287,7 @@ public class Boom {
    * @param side which side we want to measure
    * @return UnitCounts with the number of scouts needed to only breach their wall
    */
-  static UnitCounts enemyDefenseHeuristic(GameState move, String side) {
+  static UnitCounts enemyDefenseHeuristic(GameState move, Side side) {
     int enemyHealth = (int) move.data.p2Stats.integrity; //min amount we need to hit them by
     //walls only matter in a few locations -> we include turret healths since they are "walls"
 
@@ -290,12 +302,370 @@ public class Boom {
     int boomScoutsNeeded = estScoutsKilled + survivingScoutsNeeded;
 //    GameIO.debug().println(String.format("cornerSummary structureHealth: %s\n cornerSummary expectedDamage: %s\n",
 //        cornerSummary.structureHealth, cornerSummary.expectedIntercepterDamage));
-  //TODO: Fix boomScoenutsNeeded. right now it is numInterceptors since i am too lazy :D
+  //TODO: Fix boomScoutsNeeded. right now it is numInterceptors since i am too lazy :D
     return new UnitCounts(move, 0, boomScoutsNeeded, 0);
   }
 
-  private static Boom simulateBoom(GameState move, String side, int availableMp) {
-    return null;
+  static Boom bestBoom(GameState move, double availableMP, double minDamage) {
+    double interCost = move.config.unitInformation.get(UnitType.Interceptor.ordinal()).cost2.orElse(1);
+    double scoutCost = move.config.unitInformation.get(UnitType.Interceptor.ordinal()).cost2.orElse(1);
+
+    GameIO.debug().println("====EVALUATING BOOM====");
+
+    Map<Boom, Double> damages = new HashMap<>();
+    for (Side side : Side.values()) {
+      GameState testState = Utility.duplicateState(move);
+
+      placeBoomLid(testState, side);
+      clearBoomPath(testState, side);
+      
+      for (int bombMP = 1; bombMP < availableMP; bombMP++) {
+        int interBomb = (int) (bombMP / interCost);
+        int scoutsFollowInter = (int) ((availableMP - (interBomb*interCost)) / scoutCost);
+        Boom interBombBoom = new Boom(side, interBomb, UnitType.Interceptor, scoutsFollowInter);
+        double interBoomDamage = interBombBoom.simulateDamage(testState);
+        if (interBoomDamage > minDamage/2) {
+          damages.put(interBombBoom, interBoomDamage);
+        }
+
+        int scoutBomb = (int) (bombMP / scoutCost);
+        int scoutsFollowScout = (int) ((availableMP - (scoutBomb*scoutCost)) / scoutCost);
+        Boom scoutBombBoom = new Boom(side, scoutBomb, UnitType.Scout, scoutsFollowScout);
+        double scoutBoomDamage = scoutBombBoom.simulateDamage(testState);
+        if (scoutBoomDamage > minDamage/2) {
+          damages.put(scoutBombBoom, scoutBoomDamage);
+        }
+      }
+    }
+    
+    Boom bestBoom = null;
+    double bestDamage = minDamage / 2;
+    for (Map.Entry<Boom, Double> entry : damages.entrySet()) {
+      if (entry.getValue() > bestDamage) {
+        bestBoom = entry.getKey();
+        bestDamage = entry.getValue();
+      }
+    }
+    if (bestBoom == null || bestDamage < minDamage) {
+      GameIO.debug().println("Not doing enough damage!");
+      damages.forEach((key, value) -> GameIO.debug().printf("%s, %s bomb. %d bombers, %d followers. damage:%.2f, need:%.2f\n",
+          key.sideToBoom.toString(), key.bombType.toString(),
+          key.bombUnits, key.followerUnits,
+          value, minDamage));
+      if (bestBoom != null) {
+        GameIO.debug().printf("Current best hook: %s, %s bomb. %d bombers, %d followers. damage:%.2f out of %.2f\n",
+            bestBoom.sideToBoom.toString(), bestBoom.bombType.toString(),
+            bestBoom.bombUnits, bestBoom.followerUnits,
+            bestDamage, minDamage);
+      }
+      return null;
+    }
+
+    GameIO.debug().printf("Current best hook: %s, %s bomb. %d bombers, %d followers. damage:%.2f out of %.2f\n",
+        bestBoom.sideToBoom.toString(), bestBoom.bombType.toString(),
+        bestBoom.bombUnits, bestBoom.followerUnits,
+        bestDamage, minDamage);
+    
+    return bestBoom;
+  }
+
+  private double simulateDamage(GameState state) {
+    GameState boomState = Utility.duplicateState(state);
+
+    placeBoomLid(boomState, this.sideToBoom);
+    clearBoomPath(boomState, this.sideToBoom);
+
+
+    Coords bombStart = getBombStart();
+    List<Coords> bombPath;
+    int bombTargetEdge = (this.sideToBoom == Side.RIGHT && this.bombType == UnitType.Scout) ? MapBounds.EDGE_TOP_RIGHT : MapBounds.EDGE_BOTTOM_LEFT;
+    try {
+      bombPath = boomState.pathfind(bombStart, bombTargetEdge);
+    } catch (IllegalPathStartException e) {
+//            GameIO.debug().printf("x:%d,y:%d. invalid hook exit\n", x, y);
+      return 0;
+    }
+
+    Coords followerStart = getFollowerStart();
+    List<Coords> followerPath;
+    int followerTargetEdge = this.sideToBoom == Side.RIGHT ? MapBounds.EDGE_TOP_RIGHT : MapBounds.EDGE_BOTTOM_LEFT;
+    try {
+      followerPath = boomState.pathfind(followerStart, followerTargetEdge);
+    } catch (IllegalPathStartException e) {
+//            GameIO.debug().printf("x:%d,y:%d. invalid hook exit\n", x, y);
+      return 0;
+    }
+
+    Config.UnitInformation bombInfo = boomState.config.unitInformation.get(this.bombType.ordinal());
+    Config.UnitInformation followerInfo = boomState.config.unitInformation.get(UnitType.Scout.ordinal());
+    double bombDamage = bombInfo.attackDamageTower.orElse(this.bombType == UnitType.Interceptor ? 0 : 2);
+    double followerDamage = followerInfo.attackDamageTower.orElse(2);
+
+    double bombHealth = bombInfo.startHealth.orElse(5);
+    List<Double> bombHealths = new ArrayList<>(this.bombUnits);
+    List<Set<Unit>> bombShielders = new ArrayList<>(this.bombUnits);
+    for (int d = 0; d < this.bombUnits; d++) {
+      bombHealths.add(bombHealth);
+      bombShielders.add(new HashSet<>(boomState.data.p1Units.support.size()));
+    }
+
+    double followerHealth = followerInfo.startHealth.orElse(5);
+    List<Double> followerHealths = new ArrayList<>(this.followerUnits);
+    List<Set<Unit>> followerShielders = new ArrayList<>(this.followerUnits);
+    for (int d = 0; d < this.followerUnits; d++) {
+      followerHealths.add(followerHealth);
+      followerShielders.add(new HashSet<>(boomState.data.p1Units.support.size()));
+    }
+
+    float damageToBase = 0;
+    float spTaken = 0;
+    int p;
+    for (p = 0; p < Math.min(bombPath.size(), followerPath.size()) && p < 100; p++) {
+      Coords bombPathPoint = bombPath.get(p);
+      Map<Unit, Coords> bombAttackerLocations = StrategyUtility.getTowerLocations(boomState, bombPathPoint, bombInfo.attackRange.orElse(this.bombType == UnitType.Interceptor ? 0 : 3.5));
+      List<Unit> bombAttackers = new ArrayList<>(bombAttackerLocations.keySet());
+      bombAttackers.sort((o1, o2) -> (int) Math.signum(bombPathPoint.distance(bombAttackerLocations.get(o2)) - bombPathPoint.distance(bombAttackerLocations.get(o1))));
+
+      Coords followerPathPoint = followerPath.get(p);
+      Map<Unit, Coords> followerAttackerLocations = StrategyUtility.getTowerLocations(boomState, followerPathPoint, followerInfo.attackRange.orElse(3.5));
+      List<Unit> followerAttackers = new ArrayList<>(followerAttackerLocations.keySet());
+      followerAttackers.sort((o1, o2) -> (int) Math.signum(followerPathPoint.distance(followerAttackerLocations.get(o2)) - followerPathPoint.distance(followerAttackerLocations.get(o1))));
+
+      // apply shielding first!
+      for (Unit attacker : bombAttackers) {
+        if (attacker.owner == PlayerId.Player1) {
+          if (attacker.type == UnitType.Support) {
+            double shieldAmount = attacker.unitInformation.shieldPerUnit.orElse(attacker.upgraded ? 5 : 3) + (attacker.upgraded ? (attacker.unitInformation.shieldBonusPerY.orElse(0.3) * bombAttackerLocations.get(attacker).y) : 0);
+            for (int d = 0; d < bombHealths.size(); d++) {
+              if (!bombShielders.get(d).contains(attacker)) {
+                bombHealths.set(d, bombHealths.get(d) + shieldAmount);
+                bombShielders.get(d).add(attacker);
+              }
+            }
+          }
+        }
+      }
+      for (Unit attacker : followerAttackers) {
+        if (attacker.owner == PlayerId.Player1) {
+          if (attacker.type == UnitType.Support) {
+            double shieldAmount = attacker.unitInformation.shieldPerUnit.orElse(attacker.upgraded ? 5 : 3) + (attacker.upgraded ? (attacker.unitInformation.shieldBonusPerY.orElse(0.3) * followerAttackerLocations.get(attacker).y) : 0);
+            for (int d = 0; d < followerHealths.size(); d++) {
+              if (!followerShielders.get(d).contains(attacker)) {
+                followerHealths.set(d, followerHealths.get(d) + shieldAmount);
+                followerShielders.get(d).add(attacker);
+              }
+            }
+          }
+        }
+      }
+
+      // evaluate attacks
+      boolean needToRepath = false;
+      int numBombsToAttack = bombHealths.size();
+      int numFollowersToAttack = followerHealths.size();
+      for (int frame = 0; frame < (1/bombInfo.speed.orElse(this.bombType == UnitType.Interceptor ? 0.25 : 1)); frame++) { //run each path point 4 times since inters move every 4 frames
+        for (Unit attacker : bombAttackers) {
+          if (attacker.owner == PlayerId.Player2) {
+            if (bombAttackerLocations.get(attacker).distance(bombPathPoint) <= bombInfo.attackRange.orElse(this.bombType == UnitType.Interceptor ? 0 : 3.5)) {
+              float initialTowerHealth = attacker.health;
+              while (numBombsToAttack > 0 && attacker.health > 0) {
+                attacker.health -= bombDamage;
+                numBombsToAttack--;
+                if (attacker.health <= 0) {
+                  needToRepath = true;
+                  break;
+                }
+              }
+              float damageDone = initialTowerHealth - attacker.health;
+              spTaken += (float) Utility.damageToSp(attacker, damageDone);
+            }
+
+            if (bombHealths.size() > 0) {
+              if (bombAttackerLocations.get(attacker).distance(bombPathPoint) <= attacker.unitInformation.attackRange.orElse(attacker.upgraded ? 3.5 : 2.5)) {
+                double initialBombHealth = bombHealths.get(bombHealths.size() - 1);
+                double towerDamage = attacker.unitInformation.attackDamageWalker.orElse(0);
+                bombHealths.set(bombHealths.size() - 1, Math.max(0, initialBombHealth - towerDamage));
+                double afterHealth = bombHealths.get(bombHealths.size() - 1);
+                double damageToBombers = initialBombHealth - afterHealth;
+                if (afterHealth == 0) {
+                  bombHealths.remove(bombHealths.size() - 1);
+                }
+              }
+            } else {
+              break;
+            }
+          }
+        }
+        if (frame < (1/followerInfo.speed.orElse(1))) { //simulate followers (scouts) only on turn 0
+          for (Unit attacker : followerAttackers) {
+            if (attacker.owner == PlayerId.Player2) {
+              if (followerAttackerLocations.get(attacker).distance(followerPathPoint) <= followerInfo.attackRange.orElse(3.5)) {
+                float initialTowerHealth = attacker.health;
+                while (numFollowersToAttack > 0 && attacker.health > 0) {
+                  attacker.health -= followerDamage;
+                  numFollowersToAttack--;
+                  if (attacker.health <= 0) {
+                    needToRepath = true;
+                    break;
+                  }
+                }
+                float damageDone = initialTowerHealth - attacker.health;
+                spTaken += (float) Utility.damageToSp(attacker, damageDone);
+              }
+
+              if (followerHealths.size() > 0) {
+                if (followerAttackerLocations.get(attacker).distance(followerPathPoint) <= attacker.unitInformation.attackRange.orElse(attacker.upgraded ? 3.5 : 2.5)) {
+                  double initialFollowerHealth = followerHealths.get(followerHealths.size() - 1);
+                  double towerDamage = attacker.unitInformation.attackDamageWalker.orElse(0);
+                  followerHealths.set(followerHealths.size() - 1, Math.max(0, initialFollowerHealth - towerDamage));
+                  double afterHealth = followerHealths.get(followerHealths.size() - 1);
+                  double damageToFollowers = initialFollowerHealth - afterHealth;
+                  if (afterHealth == 0) {
+                    followerHealths.remove(followerHealths.size() - 1);
+                  }
+                }
+              } else {
+                break;
+              }
+            }
+          }
+        }
+      }
+      if (needToRepath) {
+//          GameIO.debug().printf("REPATHING!for:%s,at:%s\n",bombStart,pathPoint);
+        List<Coords> newBombPath;
+        try {
+          newBombPath = boomState.pathfind(bombPathPoint, bombTargetEdge);
+        } catch (IllegalPathStartException e) {
+//            GameIO.debug().printf("x:%d,y:%d. invalid path point for boom\n", x, y);
+          continue;
+        }
+        bombPath.subList(p, bombPath.size()).clear();
+        bombPath.addAll(newBombPath);
+
+        List<Coords> newFollowerPath;
+        try {
+          newFollowerPath = boomState.pathfind(followerPathPoint, followerTargetEdge);
+        } catch (IllegalPathStartException e) {
+//            GameIO.debug().printf("x:%d,y:%d. invalid path point for boom\n", x, y);
+          continue;
+        }
+        followerPath.subList(p, followerPath.size()).clear();
+        followerPath.addAll(newFollowerPath);
+      }
+    }
+    Coords bombEndpoint = bombPath.get(bombPath.size()-1);
+    if (!MapBounds.IS_ON_EDGE[bombTargetEdge][bombEndpoint.x][bombEndpoint.y]) {
+      for (int x = Math.max(0, bombEndpoint.x-1); x <= Math.min(MapBounds.BOARD_SIZE-1, bombEndpoint.x+1); x++) {
+        for (int y = Math.max(0, bombEndpoint.y-1); y <= Math.min(MapBounds.BOARD_SIZE-1, bombEndpoint.y+1); y++) {
+          List<Unit> towers = boomState.allUnits[x][y];
+          spTaken += (float) towers.stream().mapToDouble(towerUnit -> {
+            if (towerUnit.owner == PlayerId.Player2) {
+              float initialHealth = towerUnit.health;
+              towerUnit.health -= bombHealth;
+              towerUnit.health = Math.max(towerUnit.health, 0);
+              float damageDone = initialHealth - towerUnit.health;
+              return Utility.damageToSp(towerUnit, damageDone);
+            }
+            return 0;
+          }).sum();
+        }
+      }
+    } else {
+      damageToBase += bombHealths.size();
+    }
+    for (; p < followerPath.size() && p < 100; p++) {
+      Coords followerPathPoint = followerPath.get(p);
+      Map<Unit, Coords> followerAttackerLocations = StrategyUtility.getTowerLocations(boomState, followerPathPoint, followerInfo.attackRange.orElse(3.5));
+      List<Unit> followerAttackers = new ArrayList<>(followerAttackerLocations.keySet());
+      followerAttackers.sort((o1, o2) -> (int) Math.signum(followerPathPoint.distance(followerAttackerLocations.get(o2)) - followerPathPoint.distance(followerAttackerLocations.get(o1))));
+
+      // apply shielding first!
+      for (Unit attacker : followerAttackers) {
+        if (attacker.owner == PlayerId.Player1) {
+          if (attacker.type == UnitType.Support) {
+            double shieldAmount = attacker.unitInformation.shieldPerUnit.orElse(attacker.upgraded ? 5 : 3) + (attacker.upgraded ? (attacker.unitInformation.shieldBonusPerY.orElse(0.3) * followerAttackerLocations.get(attacker).y) : 0);
+            for (int d = 0; d < followerHealths.size(); d++) {
+              if (!followerShielders.get(d).contains(attacker)) {
+                followerHealths.set(d, followerHealths.get(d) + shieldAmount);
+                followerShielders.get(d).add(attacker);
+              }
+            }
+          }
+        }
+      }
+
+      // evaluate attacks
+      boolean needToRepath = false;
+      int numFollowersToAttack = followerHealths.size();
+      for (int frame = 0; frame < (1/followerInfo.speed.orElse(1)); frame++) { //run each path point 4 times since inters move every 4 frames
+        for (Unit attacker : followerAttackers) {
+          if (attacker.owner == PlayerId.Player2) {
+            if (followerAttackerLocations.get(attacker).distance(followerPathPoint) <= followerInfo.attackRange.orElse(3.5)) {
+              float initialTowerHealth = attacker.health;
+              while (numFollowersToAttack > 0 && attacker.health > 0) {
+                attacker.health -= followerDamage;
+                numFollowersToAttack--;
+                if (attacker.health <= 0) {
+                  needToRepath = true;
+                  break;
+                }
+              }
+              float damageDone = initialTowerHealth - attacker.health;
+              spTaken += (float) Utility.damageToSp(attacker, damageDone);
+            }
+
+            if (followerHealths.size() > 0) {
+              if (followerAttackerLocations.get(attacker).distance(followerPathPoint) <= attacker.unitInformation.attackRange.orElse(attacker.upgraded ? 3.5 : 2.5)) {
+                double initialFollowerHealth = followerHealths.get(followerHealths.size() - 1);
+                double towerDamage = attacker.unitInformation.attackDamageWalker.orElse(0);
+                followerHealths.set(followerHealths.size() - 1, Math.max(0, initialFollowerHealth - towerDamage));
+                double afterHealth = followerHealths.get(followerHealths.size() - 1);
+                double damageToFollowers = initialFollowerHealth - afterHealth;
+                if (afterHealth == 0) {
+                  followerHealths.remove(followerHealths.size() - 1);
+                }
+              }
+            } else {
+              break;
+            }
+          }
+        }
+      }
+      if (needToRepath) {
+        List<Coords> newFollowerPath;
+        try {
+          newFollowerPath = boomState.pathfind(followerPathPoint, followerTargetEdge);
+        } catch (IllegalPathStartException e) {
+//            GameIO.debug().printf("x:%d,y:%d. invalid path point for boom\n", x, y);
+          continue;
+        }
+        followerPath.subList(p, followerPath.size()).clear();
+        followerPath.addAll(newFollowerPath);
+      }
+    }
+    Coords followerEndpoint = followerPath.get(followerPath.size()-1);
+    if (!MapBounds.IS_ON_EDGE[followerTargetEdge][followerEndpoint.x][followerEndpoint.y]) {
+      for (int x = Math.max(0, followerEndpoint.x-1); x <= Math.min(MapBounds.BOARD_SIZE-1, followerEndpoint.x+1); x++) {
+        for (int y = Math.max(0, followerEndpoint.y-1); y <= Math.min(MapBounds.BOARD_SIZE-1, followerEndpoint.y+1); y++) {
+          List<Unit> towers = boomState.allUnits[x][y];
+          spTaken += (float) towers.stream().mapToDouble(towerUnit -> {
+            if (towerUnit.owner == PlayerId.Player2) {
+              float initialHealth = towerUnit.health;
+              towerUnit.health -= followerHealth;
+              towerUnit.health = Math.max(towerUnit.health, 0);
+              float damageDone = initialHealth - towerUnit.health;
+              return Utility.damageToSp(towerUnit, damageDone);
+            }
+            return 0;
+          }).sum();
+        }
+      }
+    } else {
+      damageToBase += followerHealths.size();
+    }
+    damageToBase *= onlineAdjustment;
+    return damageToBase;
   }
 
   /**
@@ -305,27 +675,27 @@ public class Boom {
    * @param side the side we are inspecting
    * @return Expected Defense for the path we will take
    */
-  private static ExpectedDefense enemyCornerSummary(GameState move, String side) {
+  private static ExpectedDefense enemyCornerSummary(GameState move, Side side) {
     int effectiveWallHealth;
     //walls only matter in a few locations
     int x;
 //    effectiveWallHealth += move.getWallAt(new Coords(x, 14)).health;
-//    x = side.equals("RIGHT") ? 26 : 1;
+//    x = side.equals(Side.RIGHT) ? 26 : 1;
 //    effectiveWallHealth += move.getWallAt(new Coords(x, 14)).health;
 //    //these walls are discounted since they are worth less
 //    effectiveWallHealth += 0.5 * move.getWallAt(new Coords(x, 15)).health;
-//    x = side.equals("RIGHT") ? 25 : 2;
+//    x = side.equals(Side.RIGHT) ? 25 : 2;
 //    effectiveWallHealth += 0.5 * move.getWallAt(new Coords(x, 13)).health;
 
     //in the case we use interceptors to bomb then only two walls really matters....
-    x = side.equals("RIGHT") ? 27 : 0;
-    int x2= side.equals("RIGHT") ? 26 : 1;
+    x = side.equals(Side.RIGHT) ? 27 : 0;
+    int x2= side.equals(Side.RIGHT) ? 26 : 1;
     float wall1Health = move.getWallAt(new Coords(x, 14)) != null ? move.getWallAt(new Coords(x, 14)).health : 0;
     float wall2Health = move.getWallAt(new Coords(x2, 14)) != null ? move.getWallAt(new Coords(x2, 14)).health : 0;
     effectiveWallHealth = (int) Math.max(wall1Health, wall2Health);
 
 
-    Coords[] path = side.equals("RIGHT") ? rightPath : leftPath;
+    Coords[] path = side.equals(Side.RIGHT) ? rightPath : leftPath;
     int effectiveTurretRating = 0; //how much damage we will take in total moving at 1 coord per tick
     for (Coords pathPoint : path) {
       List<Unit> attackers = move.getAttackers(pathPoint);

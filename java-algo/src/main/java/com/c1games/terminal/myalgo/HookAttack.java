@@ -374,8 +374,14 @@ public class HookAttack extends Attack {
     Coords hookLocation = bestAttack.key;
     int side = bestAttack.value;
 
-    GameIO.debug().printf("Will hook: %s,s:%s. expected damage: %.2f\n", hookLocation.toString(), side == 0 ? "R" : "L", bestED.structureHealth);
-
+    GameIO.debug().printf("Current best hook: %s, %s. damage: %.2f out of %.2f. path_len: %d. ends:%s\n\tPath: ",
+        bestAttack.key, bestAttack.value == 0 ? "R" : "L",
+        bestED.structureHealth, minDamage,
+        bestED.path.length, bestED.path[bestED.path.length-1].toString());
+    Arrays.stream(bestED.path).forEach(coords -> {
+      GameIO.debug().printf("%s, ",coords);
+    });
+    GameIO.debug().println();
 
 
     List<Coords> neededWalls = damages.get(bestAttack).key;
@@ -522,7 +528,7 @@ public class HookAttack extends Attack {
 
 //    double remainingMP = availableMP - ((int) (availableMP / demolisherInfo.cost2.orElse(3)));
     Coords[] interceptorLocations = new Coords[1];
-    int interY = hookLocation.y == 13 ? 11 : hookLocation.y - 1;
+    int interY = hookLocation.y - 3;
     Arrays.fill(interceptorLocations, new Coords(side == 0 ? (interY+14) : (13-interY), interY));
 
     decayLearning();

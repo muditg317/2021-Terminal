@@ -54,16 +54,16 @@ public class MainStrategy {
 
     GameIO.debug().println("scoutRushDefense:" + scoutRushDefense);
     GameIO.debug().println("reducedScoutRushDefense: " + reducedScoutRushDefense);
-    GameIO.debug().println("Enemy left corner heuristic: " + Boom.enemyDefenseHeuristic(move, "LEFT"));
-    GameIO.debug().println("Enemy right corner heuristic: " + Boom.enemyDefenseHeuristic(move, "RIGHT"));
+    GameIO.debug().println("Enemy left corner heuristic: " + Boom.enemyDefenseHeuristic(move, Side.LEFT));
+    GameIO.debug().println("Enemy right corner heuristic: " + Boom.enemyDefenseHeuristic(move, Side.RIGHT));
 
 
 
     //DECIDE TO BOOM OR NOT HERE.==========================
-    Boom.evaluate(move, reducedScoutRushDefense);
+    Boom.evaluate(predictedEnemyBaseLayout, reducedScoutRushDefense);
 
-    setUpEssentialDefense(move);
-    setUpEssentialDefense(predictedEnemyBaseLayout);
+    setUpEssentialDefense(move, move.data.p1Stats.cores - Locations.Essentials.mainWallHookHoles.size() * move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1));
+    setUpEssentialDefense(predictedEnemyBaseLayout, predictedEnemyBaseLayout.data.p1Stats.cores - Locations.Essentials.mainWallHookHoles.size() * predictedEnemyBaseLayout.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1));
 
     //make sure we have enough for boom wall
     double saveCores = 0;
@@ -96,8 +96,9 @@ public class MainStrategy {
 
     if (Boom.awaitingBoom && Boom.turnsUntilBoom == 0) { // DO THE BOOM
       if (Boom.execute(move)) {
-        fillHookHoles(move);
+//        fillHookHoles(move); //done by the Boom execution
 
+        setUpEssentialDefense(move, move.data.p1Stats.cores);
         defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores);
         setUpDefenseWithBudget(move, defenseBudget, move.data.p1Stats.cores);
         return;
@@ -108,13 +109,14 @@ public class MainStrategy {
     if (Boom.awaitingBoom) { // we are going to boom
       spawnDefensiveInters(reducedScoutRushDefense);
       if (Boom.turnsUntilBoom == 1) { //prepare to do the boom next turn
-        Boom.clearBoomPath(move, "LEFT");
-        Boom.clearBoomPath(move, "RIGHT");
+        Boom.clearBoomPath(move, Side.LEFT);
+        Boom.clearBoomPath(move, Side.RIGHT);
         GameIO.debug().println("clearing path for future BOOM!!");
       }
       fillHookHoles(move);
 
-      // put up defenses (moved before end of else blck because we were messing up our own booms
+      // put up defenses
+      setUpEssentialDefense(move, move.data.p1Stats.cores);
       defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores - saveCores);
       setUpDefenseWithBudget(move, defenseBudget, move.data.p1Stats.cores);
       return;
@@ -131,7 +133,8 @@ public class MainStrategy {
       GameIO.debug().println("Spawn defensive inters!");
       spawnDefensiveInters(scoutRushDefense);
     }
-    // put up defenses (moved before end of else blck because we were messing up our own booms
+    // put up defenses
+    setUpEssentialDefense(move, move.data.p1Stats.cores);
     defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores - saveCores);
     setUpDefenseWithBudget(move, defenseBudget, move.data.p1Stats.cores);
   }
@@ -172,27 +175,51 @@ public class MainStrategy {
       potentialAttacks.add(potentialDemolisherRun);
     }
 
-    //we didnt hook attack or demolisher run
-    GameIO.debug().println("Fill in hook holes");
-
     GameState defendedState = Utility.duplicateState(move);
     setUpDefenseWithBudget(defendedState, defenseSPBudget, defenseSPBudget);
     double scoutRushSPBudet = attackSpBudget - fillHookHoles(defendedState);
 
 
     ScoutRush potentialScoutRush = ScoutRush.evaluate(defendedState, scoutRushSPBudet);
-    if (potentialScoutRush != null && Math.random() > 0.1) {
+    if (potentialScoutRush != null) {
       GameIO.debug().printf("SENDING SCOUT RUSH!\n\tSpBudget:%.2f\tNumScouts:%d\tScoutHealth: %d\n\tExpected Damage:%d\tOnline Adjustment:%.2f\n",
           potentialScoutRush.spBudget, potentialScoutRush.numScouts, potentialScoutRush.scoutHealth, potentialScoutRush.expectedDamage, ScoutRush.onlineAdjustment);
       potentialAttacks.add(potentialScoutRush);
     }
 
 
-    if (move.data.p1Stats.bits > StrategyUtility.mpCapacity(move, move.data.turnInfo.turnNumber) * 0.8) {
-      potentialDemolisherRun = DemolisherRun.evaluate(predictedEnemyBaseLayout, move.data.p1Stats.bits, 0);
+    if (potentialAttacks.isEmpty() && move.data.p1Stats.bits > StrategyUtility.mpCapacity(move, move.data.turnInfo.turnNumber) * 0.8) {
+      lowerHookAttack = HookAttack.evaluate(predictedEnemyBaseLayout, attackSpBudget, mp - (move.data.p2Stats.bits > 5 ? (move.data.p2Stats.bits > 12 ? 2 : 1) : 0), 6, 27 - 6, 10, 12, 0);
+      upperHookAttack = HookAttack.evaluate(predictedEnemyBaseLayout, attackSpBudget, mp - (move.data.p2Stats.bits > 5 ? (move.data.p2Stats.bits > 12 ? 2 : 1) : 0), 9, 27 - 9, 13, 13, 0);
+      potentialHookAttack = null;
+      if (lowerHookAttack != null) {
+        potentialHookAttack = lowerHookAttack;
+      }
+      if (upperHookAttack != null && (lowerHookAttack == null || upperHookAttack.expectedDefense.structureHealth > lowerHookAttack.expectedDefense.structureHealth)) {
+        potentialHookAttack = upperHookAttack;
+      }
+
+      if (potentialHookAttack != null) {
+        GameIO.debug().printf("fall back hook::\n\tx:%d,y:%d,s:%s\n",potentialHookAttack.demolishers[0].x,potentialHookAttack.demolishers[0].y,potentialHookAttack.demolishers[0].x-13 == 0 ? "R" : "L");
+        potentialAttacks.add(potentialHookAttack);
+      }
+
+      potentialDemolisherRun = DemolisherRun.evaluate(predictedEnemyBaseLayout, mp, 0);
       if (potentialDemolisherRun != null) {
-        GameIO.debug().printf("fallback demo run!\tat:%s\t damage:%.2f\n", potentialDemolisherRun.demolisherLocation, potentialDemolisherRun.expectedDefense.structureHealth);
+        GameIO.debug().printf("fallback demo run::\n\tat:%s\t damage:%.2f\n", potentialDemolisherRun.demolisherLocation, potentialDemolisherRun.expectedDefense.structureHealth);
         potentialAttacks.add(potentialDemolisherRun);
+      }
+
+
+      defendedState = Utility.duplicateState(move);
+      setUpDefenseWithBudget(defendedState, defenseSPBudget, defenseSPBudget);
+      scoutRushSPBudet = attackSpBudget - fillHookHoles(defendedState);
+
+      potentialScoutRush = ScoutRush.evaluate(defendedState, scoutRushSPBudet);
+      if (potentialScoutRush != null) {
+        GameIO.debug().printf("fallback scout rush::\n\tSpBudget:%.2f\tNumScouts:%d\tScoutHealth: %d\n\tExpected Damage:%d\tOnline Adjustment:%.2f\n",
+            potentialScoutRush.spBudget, potentialScoutRush.numScouts, potentialScoutRush.scoutHealth, potentialScoutRush.expectedDamage, ScoutRush.onlineAdjustment);
+        potentialAttacks.add(potentialScoutRush);
       }
     }
     if (potentialAttacks.isEmpty()) return null;
@@ -282,9 +309,9 @@ public class MainStrategy {
   /**
    * Sets up essential defenses (the triangle and some towers)
    */
-  private static void setUpEssentialDefense(GameState move) {
-    int budget = (int) move.data.p1Stats.cores; //can use everything to setup essential defense
-    int spent = 0;
+  private static void setUpEssentialDefense(GameState move, double budget) {
+//    int budget = (int) move.data.p1Stats.cores; //can use everything to setup essential defense
+    double spent = 0;
     try {
 
       //Get the core corner turrets down
@@ -345,7 +372,7 @@ public class MainStrategy {
           spent += attemptSpawnIfAffordable(move, loc, Utility.TURRET, false, budget - spent);
         }
 
-        if (cornerDamage > 5) { //larger threshold to upgrade these towers
+        if (cornerDamage > 6) { //larger threshold to upgrade these towers
           for (Coords loc : Locations.cornerTurrets) {
             spent += attemptSpawnIfAffordable(move, loc, Utility.TURRET, true, budget - spent);
           }
@@ -591,18 +618,26 @@ public class MainStrategy {
     if (algoState.lastAttack != null && algoState.lastAttack.clearLocations.contains(location)) {
       return 0;
     }
-
-    if (Boom.awaitingBoom && Boom.turnsUntilBoom < 2) {
-      //GameIO.debug().println("Prevented spawn at" +location);
-      for (Coords openLocation : Locations.boomPath_right) {
-        if ((openLocation.x == location.x || (27 - openLocation.x) == location.x) && openLocation.y == location.y) {
-          if (Boom.turnsUntilBoom == 0) {
+    if (Boom.awaitingBoom) {
+      if (Boom.turnsUntilBoom == 0) {
+        for (Coords openLocation : Locations.boomPath_right) {
+          Coords adjustedLoc = new Coords(Boom.side == Side.RIGHT ? openLocation.x : 27 - openLocation.x, openLocation.y);
+          if (location.equals(adjustedLoc)) {
             return 0;
           }
-          markForDeletion = true; // turnsUntilBoom == 1
+        }
+      }
+      else if (Boom.turnsUntilBoom < 2) {
+        //GameIO.debug().println("Prevented spawn at" +location);
+        for (Coords openLocation : Locations.boomPath_right) {
+          if ((openLocation.x == location.x || (27 - openLocation.x) == location.x) && openLocation.y == location.y) {
+
+            markForDeletion = true; // turnsUntilBoom == 1
+          }
         }
       }
     }
+
 
 
     if (StrategyUtility.numAffordableWithBudget(gameState, unitType, upgrade, budget) > 0) {

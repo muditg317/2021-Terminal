@@ -253,3 +253,1782 @@ SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .
 SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
 SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . . . .        
 SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . o . .    
+SAPlayer 1 algo-target:        . . x . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Performing turn 3 of your custom algo strategy
+SAPlayer 1 algo-target: PREDICTED GAME STATE=========
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:        . . x . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Turn 3: We currently have 10.2 SP and 7.0 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 3, Demos: 0. Cost: 3
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 7, Demos: 0. Cost: 7
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 10.2 cores!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 0.20	MP: 6.00	minDamage:6.36
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 0.20	MP: 6.00	minDamage:6.36
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: MP: 7.00	minDamage:6.36
+SAPlayer 1 algo-target: DEMO RUN Online Adjustment: 1.41
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: CAN DEMO: 2 options
+SAPlayer 1 algo-target: x:4,y:9. damage:12.37, need:6.36. path_len: 29: ends:<21, 20>
+SAPlayer 1 algo-target: 	[<4, 9>, <4, 10>, <4, 11>, <5, 11>, <5, 12>, <6, 12>, <6, 13>, <7, 13>, <7, 14>, <8, 14>, <8, 15>, <9, 15>, <9, 16>, <10, 16>, <10, 17>]
+SAPlayer 1 algo-target: x:23,y:9. damage:8.70, need:6.36. path_len: 29: ends:<6, 20>
+SAPlayer 1 algo-target: 	[<23, 9>, <23, 10>, <22, 10>, <22, 11>, <21, 11>, <21, 12>, <20, 12>, <20, 13>, <19, 13>, <19, 14>, <18, 14>, <18, 15>, <17, 15>, <17, 16>, <16, 16>]
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Will run demo: <4, 9>. expected damage: 12.37
+SAPlayer 1 algo-target: DEMO RUN!	at:<4, 9>	 damage:12.37
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Set up defenses!	Budget: 10.00	Max spending: 10.00
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 8 of 8.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: BEST SCOUT RUSH EVALUATION==========
+SAPlayer 1 algo-target: 	SpBudget:0.20	NumScouts:7	ScoutHealth: 15
+SAPlayer 1 algo-target: 	Expected Damage:7	Online Adjustment:1.00
+SAPlayer 1 algo-target: Set up defenses!	Budget: 4.20	Max spending: 4.20
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 3 of 2.1999998092651367 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (5, 12)
+SAPlayer 1 algo-target: bottomWallCap: (6, 10)
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  o o o o o o . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:    . . X x . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . o . .    
+SAPlayer 1 algo-target:        . . x . . . . . . . . . . . . . . . . o . .      
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Performing turn 4 of your custom algo strategy
+SAPlayer 1 algo-target: PREDICTED GAME STATE=========
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  o o o o o . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:    . . X x . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:        . . x . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Turn 4: We currently have 15.2 SP and 4.0 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 3, Demos: 0. Cost: 3
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 7, Demos: 0. Cost: 7
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 15.2 cores!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 1.20	MP: 3.00	minDamage:4.10
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 1.20	MP: 3.00	minDamage:4.10
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: MP: 4.00	minDamage:4.10
+SAPlayer 1 algo-target: DEMO RUN Online Adjustment: 1.04
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: CAN DEMO: 4 options
+SAPlayer 1 algo-target: x:4,y:9. damage:4.18, need:4.10. path_len: 29: ends:<21, 20>
+SAPlayer 1 algo-target: 	[<4, 9>, <4, 10>, <4, 11>, <5, 11>, <5, 12>, <6, 12>, <6, 13>, <7, 13>, <7, 14>, <8, 14>, <8, 15>, <9, 15>, <9, 16>, <10, 16>, <10, 17>]
+SAPlayer 1 algo-target: x:23,y:9. damage:3.20, need:4.10. path_len: 29: ends:<6, 20>
+SAPlayer 1 algo-target: 	[<23, 9>, <23, 10>, <22, 10>, <22, 11>, <21, 11>, <21, 12>, <20, 12>, <20, 13>, <19, 13>, <19, 14>, <18, 14>, <18, 15>, <17, 15>, <17, 16>, <16, 16>]
+SAPlayer 1 algo-target: x:2,y:11. damage:4.66, need:4.10. path_len: 29: ends:<21, 20>
+SAPlayer 1 algo-target: 	[<2, 11>, <3, 11>, <4, 11>, <5, 11>, <5, 12>, <6, 12>, <6, 13>, <7, 13>, <7, 14>, <8, 14>, <8, 15>, <9, 15>, <9, 16>, <10, 16>, <10, 17>]
+SAPlayer 1 algo-target: x:3,y:10. damage:4.30, need:4.10. path_len: 29: ends:<21, 20>
+SAPlayer 1 algo-target: 	[<3, 10>, <3, 11>, <4, 11>, <5, 11>, <5, 12>, <6, 12>, <6, 13>, <7, 13>, <7, 14>, <8, 14>, <8, 15>, <9, 15>, <9, 16>, <10, 16>, <10, 17>]
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Will run demo: <2, 11>. expected damage: 4.66
+SAPlayer 1 algo-target: DEMO RUN!	at:<2, 11>	 damage:4.66
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Set up defenses!	Budget: 14.00	Max spending: 14.00
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 13 of 12.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: BEST SCOUT RUSH EVALUATION==========
+SAPlayer 1 algo-target: 	SpBudget:1.20	NumScouts:4	ScoutHealth: 15
+SAPlayer 1 algo-target: 	Expected Damage:4	Online Adjustment:1.00
+SAPlayer 1 algo-target: Set up defenses!	Budget: 9.20	Max spending: 9.20
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 9 of 7.199999809265137 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (5, 12)
+SAPlayer 1 algo-target: bottomWallCap: (8, 10)
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . . . . . . . . .                  
+SAPlayer 1 algo-target:                  . . . . . . . . . . . .                
+SAPlayer 1 algo-target:                . . . . . . . . . . . . . .              
+SAPlayer 1 algo-target:              . . . . . . . . . . . . . . . .            
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . x . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  o o . o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  o o o o o o . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:    . . X x . . x x . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . o . .    
+SAPlayer 1 algo-target:        . . x x x . . . . . . . . . . . . . . o . .      
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Performing turn 5 of your custom algo strategy
+SAPlayer 1 algo-target: PREDICTED GAME STATE=========
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . . . . . . . . .                  
+SAPlayer 1 algo-target:                  . . . . . . . . . . . .                
+SAPlayer 1 algo-target:                . . . . . . . . . . . . . .              
+SAPlayer 1 algo-target:              . . . . . . . . . . . . . . . .            
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  o o . o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  o o o o o o . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:    . . X x . . x x . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:        . . x x x . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Turn 5: We currently have 13.2 SP and 4.0 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 3, Demos: 0. Cost: 3
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 7, Demos: 0. Cost: 7
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 13.2 cores!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 6.20	MP: 2.00	minDamage:3.83
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: no demos
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 6.20	MP: 2.00	minDamage:3.83
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: no demos
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: MP: 4.00	minDamage:3.83
+SAPlayer 1 algo-target: DEMO RUN Online Adjustment: 1.08
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: CAN DEMO: 4 options
+SAPlayer 1 algo-target: x:4,y:9. damage:4.08, need:3.83. path_len: 29: ends:<17, 24>
+SAPlayer 1 algo-target: 	[<4, 9>, <4, 10>, <4, 11>, <5, 11>, <5, 12>, <6, 12>, <6, 13>, <7, 13>, <7, 14>, <8, 14>, <8, 15>, <9, 15>, <9, 16>, <10, 16>, <10, 17>]
+SAPlayer 1 algo-target: x:23,y:9. damage:2.69, need:3.83. path_len: 29: ends:<9, 23>
+SAPlayer 1 algo-target: 	[<23, 9>, <23, 10>, <22, 10>, <22, 11>, <21, 11>, <21, 12>, <20, 12>, <20, 13>, <19, 13>, <19, 14>, <18, 14>, <18, 15>, <17, 15>, <17, 16>, <16, 16>]
+SAPlayer 1 algo-target: x:2,y:11. damage:4.58, need:3.83. path_len: 29: ends:<17, 24>
+SAPlayer 1 algo-target: 	[<2, 11>, <3, 11>, <4, 11>, <5, 11>, <5, 12>, <6, 12>, <6, 13>, <7, 13>, <7, 14>, <8, 14>, <8, 15>, <9, 15>, <9, 16>, <10, 16>, <10, 17>]
+SAPlayer 1 algo-target: x:3,y:10. damage:4.20, need:3.83. path_len: 29: ends:<17, 24>
+SAPlayer 1 algo-target: 	[<3, 10>, <3, 11>, <4, 11>, <5, 11>, <5, 12>, <6, 12>, <6, 13>, <7, 13>, <7, 14>, <8, 14>, <8, 15>, <9, 15>, <9, 16>, <10, 16>, <10, 17>]
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Will run demo: <2, 11>. expected damage: 4.58
+SAPlayer 1 algo-target: DEMO RUN!	at:<2, 11>	 damage:4.58
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Set up defenses!	Budget: 7.00	Max spending: 7.00
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 5 of 5.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent an extra: 6.0 of 5.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: BEST SCOUT RUSH EVALUATION==========
+SAPlayer 1 algo-target: 	SpBudget:4.20	NumScouts:4	ScoutHealth: 18
+SAPlayer 1 algo-target: 	Expected Damage:4	Online Adjustment:1.00
+SAPlayer 1 algo-target: Set up defenses!	Budget: 7.00	Max spending: 7.20
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 5 of 5.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (5, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o . . .                      
+SAPlayer 1 algo-target:                      . . o . . . . .                    
+SAPlayer 1 algo-target:                    . . . . . . . . . .                  
+SAPlayer 1 algo-target:                  . . . . . . . . . . . .                
+SAPlayer 1 algo-target:                . . . . . . . . . . . . . .              
+SAPlayer 1 algo-target:              . . . . . . . . . . . . . . . .            
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . x . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  o o . o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  o o o o o o . . o . . . . . . . . . . . . . o x o o o o
+SAPlayer 1 algo-target:    . . X x . . x x . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . o . .    
+SAPlayer 1 algo-target:        . . x x x x o . . . . . . . . . . . . o . .      
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Performing turn 6 of your custom algo strategy
+SAPlayer 1 algo-target: PREDICTED GAME STATE=========
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o . . .                      
+SAPlayer 1 algo-target:                      . . o . . . . .                    
+SAPlayer 1 algo-target:                    . . . . . . . . . .                  
+SAPlayer 1 algo-target:                  . . . . . . . . . . . .                
+SAPlayer 1 algo-target:                . . . . . . . . . . . . . .              
+SAPlayer 1 algo-target:              . . . . . . . . . . . . . . . .            
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . x . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  o o . o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  o o o o o o . . o . . . . . . . . . . . . . . x o o o o
+SAPlayer 1 algo-target:    . . X x . . x x . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:        . . x x x x o . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Turn 6: We currently have 14.2 SP and 4.0 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 3, Demos: 0. Cost: 3
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 7, Demos: 0. Cost: 7
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 14.2 cores!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 7.20	MP: 2.00	minDamage:3.57
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: no demos
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 7.20	MP: 2.00	minDamage:3.57
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: no demos
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: MP: 4.00	minDamage:3.57
+SAPlayer 1 algo-target: DEMO RUN Online Adjustment: 1.06
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: CAN DEMO: 5 options
+SAPlayer 1 algo-target: x:4,y:9. damage:3.44, need:3.57. path_len: 29: ends:<17, 24>
+SAPlayer 1 algo-target: 	[<4, 9>, <4, 10>, <4, 11>, <5, 11>, <5, 12>, <6, 12>, <6, 13>, <7, 13>, <7, 14>, <8, 14>, <8, 15>, <9, 15>, <9, 16>, <10, 16>, <10, 17>]
+SAPlayer 1 algo-target: x:1,y:12. damage:4.20, need:3.57. path_len: 31: ends:<17, 24>
+SAPlayer 1 algo-target: 	[<1, 12>, <2, 12>, <2, 11>, <3, 11>, <4, 11>, <5, 11>, <5, 12>, <6, 12>, <6, 13>, <7, 13>, <7, 14>, <8, 14>, <8, 15>, <9, 15>, <9, 16>]
+SAPlayer 1 algo-target: x:23,y:9. damage:3.03, need:3.57. path_len: 29: ends:<9, 23>
+SAPlayer 1 algo-target: 	[<23, 9>, <23, 10>, <22, 10>, <22, 11>, <21, 11>, <21, 12>, <20, 12>, <20, 13>, <19, 13>, <19, 14>, <18, 14>, <18, 15>, <17, 15>, <17, 16>, <16, 16>]
+SAPlayer 1 algo-target: x:2,y:11. damage:3.57, need:3.57. path_len: 29: ends:<17, 24>
+SAPlayer 1 algo-target: 	[<2, 11>, <3, 11>, <4, 11>, <5, 11>, <5, 12>, <6, 12>, <6, 13>, <7, 13>, <7, 14>, <8, 14>, <8, 15>, <9, 15>, <9, 16>, <10, 16>, <10, 17>]
+SAPlayer 1 algo-target: x:3,y:10. damage:3.44, need:3.57. path_len: 29: ends:<17, 24>
+SAPlayer 1 algo-target: 	[<3, 10>, <3, 11>, <4, 11>, <5, 11>, <5, 12>, <6, 12>, <6, 13>, <7, 13>, <7, 14>, <8, 14>, <8, 15>, <9, 15>, <9, 16>, <10, 16>, <10, 17>]
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Will run demo: <1, 12>. expected damage: 4.20
+SAPlayer 1 algo-target: DEMO RUN!	at:<1, 12>	 damage:4.20
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Set up defenses!	Budget: 7.00	Max spending: 7.00
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 5 of 5.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: BEST SCOUT RUSH EVALUATION==========
+SAPlayer 1 algo-target: 	SpBudget:1.20	NumScouts:4	ScoutHealth: 15
+SAPlayer 1 algo-target: 	Expected Damage:4	Online Adjustment:1.00
+SAPlayer 1 algo-target: Set up defenses!	Budget: 7.00	Max spending: 8.20
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 5 of 5.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (5, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . . . . .                      
+SAPlayer 1 algo-target:                      . . . . . . . .                    
+SAPlayer 1 algo-target:                    . . . . . . . . . .                  
+SAPlayer 1 algo-target:                  . . . . . . . . . . . .                
+SAPlayer 1 algo-target:                . . . . . . . . . . . . . .              
+SAPlayer 1 algo-target:              . . . . . . . . . . . . . . . .            
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  o . . o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  o o o o o o . . o . . . . . . . . . . . . . o X o o o o
+SAPlayer 1 algo-target:    . . X x . . x x . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . o . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . o . .      
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Performing turn 7 of your custom algo strategy
+SAPlayer 1 algo-target: PREDICTED GAME STATE=========
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . . . . .                      
+SAPlayer 1 algo-target:                      . . . . . . . .                    
+SAPlayer 1 algo-target:                    . . . . . . . . . .                  
+SAPlayer 1 algo-target:                  . . . . . . . . . . . .                
+SAPlayer 1 algo-target:                . . . . . . . . . . . . . .              
+SAPlayer 1 algo-target:              . . . . . . . . . . . . . . . .            
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  o . . o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  o o o o o o . . o . . . . . . . . . . . . . o X o o o o
+SAPlayer 1 algo-target:    . . X x . . x x . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Turn 7: We currently have 12.2 SP and 4.0 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 7, Demos: 0. Cost: 7
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 12.2 cores!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 1.20	MP: 2.00	minDamage:4.39
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: no demos
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 1.20	MP: 2.00	minDamage:4.39
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: no demos
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: MP: 4.00	minDamage:4.39
+SAPlayer 1 algo-target: DEMO RUN Online Adjustment: 0.06
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Set up defenses!	Budget: 11.00	Max spending: 11.00
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 10 of 9.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: BEST SCOUT RUSH EVALUATION==========
+SAPlayer 1 algo-target: 	SpBudget:0.20	NumScouts:4	ScoutHealth: 15
+SAPlayer 1 algo-target: 	Expected Damage:1	Online Adjustment:1.00
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 6.20	Max spending: 6.20
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 5 of 4.199999809265137 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . . . . . . o . .                  
+SAPlayer 1 algo-target:                  . . . . . . . . . . . .                
+SAPlayer 1 algo-target:                . . . . . . . . . . . . . .              
+SAPlayer 1 algo-target:              . . . . . . . . . . . . . . . .            
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  o . . o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target: 
+SAPlayer 1 algo-target:    . . X x x x x x . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . o . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . o . .      
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Performing turn 8 of your custom algo strategy
+SAPlayer 1 algo-target: PREDICTED GAME STATE=========
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . . . . . . o . .                  
+SAPlayer 1 algo-target:                  . . . . . . . . . . . .                
+SAPlayer 1 algo-target:                . . . . . . . . . . . . . .              
+SAPlayer 1 algo-target:              . . . . . . . . . . . . . . . .            
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  o . . o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  o o o o o o o . o . . . . . . . . . . . . . o X o o o o
+SAPlayer 1 algo-target:    . . X x x x x x . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Turn 8: We currently have 12.2 SP and 7.0 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 4, Demos: 0. Cost: 4
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 7, Demos: 0. Cost: 7
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 12.2 cores!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 5.20	MP: 5.00	minDamage:5.35
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 5.20	MP: 5.00	minDamage:5.35
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: MP: 7.00	minDamage:5.35
+SAPlayer 1 algo-target: DEMO RUN Online Adjustment: 0.06
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Set up defenses!	Budget: 7.00	Max spending: 7.00
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 1 of 1.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: BEST SCOUT RUSH EVALUATION==========
+SAPlayer 1 algo-target: 	SpBudget:-0.80	NumScouts:7	ScoutHealth: 15
+SAPlayer 1 algo-target: 	Expected Damage:7	Online Adjustment:1.00
+SAPlayer 1 algo-target: SENDING SCOUT RUSH!
+SAPlayer 1 algo-target: 	SpBudget:-0.80	NumScouts:7	ScoutHealth: 15
+SAPlayer 1 algo-target: 	Expected Damage:7	Online Adjustment:1.00
+SAPlayer 1 algo-target: Set up defenses!	Budget: 6.20	Max spending: 6.20
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 1 of 0.19999980926513672 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . . . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  . . . o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  o o o o o o o o o . . . . . . . . . . . . . o X o o o o
+SAPlayer 1 algo-target:    . . X x x x x x O . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . o . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . o . .      
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: 
+SAPlayer 1 algo-target: SR: Expected Damage was 7: Actual damage was: 7.00
+SAPlayer 1 algo-target: SR: The onlineAdjustment value is now 1.00
+SAPlayer 1 algo-target: PREDICTED GAME STATE=========
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . . . . . . . . . . . . . . .            
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  . . . o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  o o o o o o o o o . . . . . . . . . . . . . o X o o o o
+SAPlayer 1 algo-target:    . . X x x x x x . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Turn 9: We currently have 22.9 SP and 4.0 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 3, Demos: 0. Cost: 3
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 22.9 cores!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 15.90	MP: 2.00	minDamage:5.94
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: no demos
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 15.90	MP: 2.00	minDamage:5.94
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: no demos
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: MP: 4.00	minDamage:5.94
+SAPlayer 1 algo-target: DEMO RUN Online Adjustment: 0.06
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Set up defenses!	Budget: 7.00	Max spending: 7.00
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 2 of 1.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: BEST SCOUT RUSH EVALUATION==========
+SAPlayer 1 algo-target: 	SpBudget:9.90	NumScouts:4	ScoutHealth: 22
+SAPlayer 1 algo-target: 	Expected Damage:4	Online Adjustment:1.00
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 7.00	Max spending: 16.90
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 2 of 1.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  o o o o o o o o o . . . . . . . . . . . . . O X o o o o
+SAPlayer 1 algo-target:    . . X x x x x x O . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . o . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . o . .      
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Performing turn 10 of your custom algo strategy
+SAPlayer 1 algo-target: PREDICTED GAME STATE=========
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  o o o o o o o o o . . . . . . . . . . . . . O X o o o o
+SAPlayer 1 algo-target:    . . X x x x x x . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Turn 10: We currently have 25.6 SP and 8.0 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 25.6 cores!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 9.60	MP: 6.00	minDamage:6.91
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: CAN HOOK: 5 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: x:9,y:12, L. damage:5.16, need:6.91. path_len: 18: ends:<5, 19>
+SAPlayer 1 algo-target: x:10,y:12, L. damage:5.16, need:6.91. path_len: 20: ends:<5, 19>
+SAPlayer 1 algo-target: x:11,y:12, L. damage:5.16, need:6.91. path_len: 22: ends:<5, 19>
+SAPlayer 1 algo-target: x:12,y:12, L. damage:4.02, need:6.91. path_len: 24: ends:<5, 19>
+SAPlayer 1 algo-target: x:13,y:10, L. damage:3.75, need:6.91. path_len: 26: ends:<5, 19>
+SAPlayer 1 algo-target: Current best hook: <9, 12>, L. damage: 5.16 out of 6.91. path_len: 18. ends:<5, 19>
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 9.60	MP: 6.00	minDamage:6.91
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: MP: 8.00	minDamage:6.91
+SAPlayer 1 algo-target: DEMO RUN Online Adjustment: 0.06
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Set up defenses!	Budget: 16.00	Max spending: 16.00
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 10 of 10.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: BEST SCOUT RUSH EVALUATION==========
+SAPlayer 1 algo-target: 	SpBudget:3.60	NumScouts:8	ScoutHealth: 15
+SAPlayer 1 algo-target: 	Expected Damage:8	Online Adjustment:1.00
+SAPlayer 1 algo-target: SENDING SCOUT RUSH!
+SAPlayer 1 algo-target: 	SpBudget:3.60	NumScouts:8	ScoutHealth: 15
+SAPlayer 1 algo-target: 	Expected Damage:8	Online Adjustment:1.00
+SAPlayer 1 algo-target: Set up defenses!	Budget: 16.00	Max spending: 19.60
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 10 of 10.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . x . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  O O O o o o o o o . . . . . . . . . . . . . O X o O O o
+SAPlayer 1 algo-target:    . . X x x x x x O . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . o . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . o . .      
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Performing turn 11 of your custom algo strategy
+SAPlayer 1 algo-target: SR: Expected Damage was 8: Actual damage was: 8.00
+SAPlayer 1 algo-target: 
+SAPlayer 1 algo-target: PREDICTED GAME STATE=========
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . x . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  O O O o o o o o o . . . . . . . . . . . . . O X o O O o
+SAPlayer 1 algo-target:    . . X x x x x x . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Turn 11: We currently have 28.3 SP and 5.0 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 28.3 cores!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 8.30	MP: 3.00	minDamage:7.47
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 8.30	MP: 3.00	minDamage:7.47
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: MP: 5.00	minDamage:7.47
+SAPlayer 1 algo-target: DEMO RUN Online Adjustment: 0.06
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Set up defenses!	Budget: 20.00	Max spending: 20.00
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 14 of 14.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: BEST SCOUT RUSH EVALUATION==========
+SAPlayer 1 algo-target: 	SpBudget:2.30	NumScouts:5	ScoutHealth: 15
+SAPlayer 1 algo-target: 	Expected Damage:5	Online Adjustment:1.00
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 20.00	Max spending: 22.30
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 14 of 14.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:        . . o . . . . . . . . . . . . . . . . x . .      
+SAPlayer 1 algo-target:      . . o . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  O O O o o o o o o . . . . . . . . . . . . . O X o O O O
+SAPlayer 1 algo-target:    . . X X X X x x O . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . o . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . o . .      
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Performing turn 12 of your custom algo strategy
+SAPlayer 1 algo-target: PREDICTED GAME STATE=========
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:        . . . . . . . . . . . . . . . . . . . x . .      
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  O O O o o o o o o . . . . . . . . . . . . . . X o O O O
+SAPlayer 1 algo-target:    . . X X X X x x . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Turn 12: We currently have 17.9 SP and 8.8 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 17.9 cores!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 17.90	MP: 7.80	minDamage:8.46
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: CAN HOOK: 4 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: x:9,y:12, L. damage:4.47, need:8.46. path_len: 18: ends:<4, 18>
+SAPlayer 1 algo-target: x:20,y:12, L. damage:6.45, need:8.46. path_len: 40: ends:<6, 20>
+SAPlayer 1 algo-target: x:10,y:12, L. damage:4.47, need:8.46. path_len: 20: ends:<4, 18>
+SAPlayer 1 algo-target: x:12,y:12, L. damage:4.26, need:8.46. path_len: 24: ends:<6, 20>
+SAPlayer 1 algo-target: Current best hook: <20, 12>, L. damage: 6.45 out of 8.46. path_len: 40. ends:<6, 20>
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 17.90	MP: 7.80	minDamage:8.46
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: MP: 8.80	minDamage:8.46
+SAPlayer 1 algo-target: DEMO RUN Online Adjustment: 0.06
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 0.00
+SAPlayer 1 algo-target: BEST SCOUT RUSH EVALUATION==========
+SAPlayer 1 algo-target: 	SpBudget:11.90	NumScouts:8	ScoutHealth: 22
+SAPlayer 1 algo-target: 	Expected Damage:8	Online Adjustment:1.00
+SAPlayer 1 algo-target: SENDING SCOUT RUSH!
+SAPlayer 1 algo-target: 	SpBudget:11.90	NumScouts:8	ScoutHealth: 22
+SAPlayer 1 algo-target: 	Expected Damage:8	Online Adjustment:1.00
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 2.90
+SAPlayer 1 algo-target: spent: 0 of -6.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: spent an extra: 0.0 of -3.1000003814697266 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:        . . o . . . . . . . . . . . . . . . o x . .      
+SAPlayer 1 algo-target:      . . o . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . o x X . .  
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  O O O o o o o o o . . . . . . . . . . . . . . X o O O O
+SAPlayer 1 algo-target:    . . X X X X x x o . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . o . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . o . .      
+SAPlayer 1 algo-target:          . . o . o . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:            . . o S . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Performing turn 13 of your custom algo strategy
+SAPlayer 1 algo-target: SR: Expected Damage was 8: Actual damage was: 3.00
+SAPlayer 1 algo-target: SR: The onlineAdjustment value is now 0.38
+SAPlayer 1 algo-target: PREDICTED GAME STATE=========
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:        . . o . . . . . . . . . . . . . . . . x . .      
+SAPlayer 1 algo-target:      . . o . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . x X . .  
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  O O O o o o o o o . . . . . . . . . . . . . . X o O O O
+SAPlayer 1 algo-target:    . . X X X X . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Turn 13: We currently have 28.3 SP and 5.6 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 28.3 cores!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 28.30	MP: 4.60	minDamage:8.93
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 28.30	MP: 4.60	minDamage:8.93
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: MP: 5.60	minDamage:8.93
+SAPlayer 1 algo-target: DEMO RUN Online Adjustment: 0.06
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 0.00
+SAPlayer 1 algo-target: BEST SCOUT RUSH EVALUATION==========
+SAPlayer 1 algo-target: 	SpBudget:22.30	NumScouts:5	ScoutHealth: 32
+SAPlayer 1 algo-target: 	Expected Damage:1	Online Adjustment:0.38
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 22.30
+SAPlayer 1 algo-target: spent: 0 of -2.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:        . . o . . . . . . . . . . . . . . . . x . .      
+SAPlayer 1 algo-target:      . . o . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . x X . .  
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  O O O o o o o o o . . . . . . . . . . . . . o X o O O O
+SAPlayer 1 algo-target:    . . X X X X x x O . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . o . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . o . .      
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target: 
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Performing turn 14 of your custom algo strategy
+SAPlayer 1 algo-target: PREDICTED GAME STATE=========
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:        . . o . . . . . . . . . . . . . . . . x . .      
+SAPlayer 1 algo-target:      . . o . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . . x X . .  
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+SAPlayer 1 algo-target:  O O O o o o o o o . . . . . . . . . . . . . . X o O O O
+SAPlayer 1 algo-target:    . . X X X X . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Turn 14: We currently have 33.0 SP and 9.2 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 33.0 cores!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 33.00	MP: 8.20	minDamage:9.95
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 33.00	MP: 8.20	minDamage:9.95
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: MP: 9.20	minDamage:9.95
+SAPlayer 1 algo-target: DEMO RUN Online Adjustment: 0.06
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 0.00
+SAPlayer 1 algo-target: BEST SCOUT RUSH EVALUATION==========
+SAPlayer 1 algo-target: 	SpBudget:27.00	NumScouts:9	ScoutHealth: 36
+SAPlayer 1 algo-target: 	Expected Damage:6	Online Adjustment:0.69
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 27.00
+SAPlayer 1 algo-target: spent: 0 of -2.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:        . . o . . . . . . . . . . . . . . . o x . .      
+SAPlayer 1 algo-target:      . . o . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . o x x X . .  
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . o o o o o
+SAPlayer 1 algo-target:  O O O o o o o o o . . . . . . . . . . . . . o X o O O O
+SAPlayer 1 algo-target:    . . X X X X x x O . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . o . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . o . .      
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Performing turn 15 of your custom algo strategy
+SAPlayer 1 algo-target: PREDICTED GAME STATE=========
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:        . . o . . . . . . . . . . . . . . . . x . .      
+SAPlayer 1 algo-target:      . . o . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . . x x X . .  
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . o o o o o
+SAPlayer 1 algo-target:  O O O o o o o o o . . . . . . . . . . . . . . X o O O O
+SAPlayer 1 algo-target:    . . X X X X . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Turn 15: We currently have 37.7 SP and 11.9 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 5, Demos: 0. Cost: 5
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 5, Demos: 0. Cost: 5
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: about to boom...11.9 / 18.0 reached -- expecting: 18.014061 in 3 turns ||| started turn with: 11.9
+SAPlayer 1 algo-target: awaitingBoom:	true
+SAPlayer 1 algo-target: turnsUntilBoom:	3
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: 8.5 saveCores! We currently have 37.7 cores!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 31.70
+SAPlayer 1 algo-target: spent: 0 of -2.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . S o . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . o . o . .        
+SAPlayer 1 algo-target:        . . o . . . . . . . . . . . . . . . o x . .      
+SAPlayer 1 algo-target:      . . o . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . o x x X . .  
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . o o o o o
+SAPlayer 1 algo-target:  O O O o o o o o o . . . . . . . . . . . . . o X o O O O
+SAPlayer 1 algo-target:    . . X X X X x x O . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . o . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . o . .      
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Performing turn 16 of your custom algo strategy
+SAPlayer 1 algo-target: PREDICTED GAME STATE=========
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:        . . o . . . . . . . . . . . . . . . o x . .      
+SAPlayer 1 algo-target:      . . o . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    . . X . . . . . . . . . . . . . . . . . o x x X . .  
+SAPlayer 1 algo-target:  o o o o . . . . . . . . . . . . . . . . . . . o o o o o
+SAPlayer 1 algo-target:  O O O o o o o o o . . . . . . . . . . . . . . X o O O O
+SAPlayer 1 algo-target:    . . X X X X . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Turn 16: We currently have 38.8 SP and 13.9 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 5, Demos: 0. Cost: 5
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 5, Demos: 0. Cost: 5
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: about to boom...13.9 / 18.0 reached -- expecting: 19.089062 in 3 turns ||| started turn with: 13.9
+SAPlayer 1 algo-target: awaitingBoom:	true
+SAPlayer 1 algo-target: turnsUntilBoom:	3
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: 8.200000762939453 saveCores! We currently have 38.8 cores!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 32.80
+SAPlayer 1 algo-target: spent: 0 of -2.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:        . . o . . . . . . . . . . . . . . . o x . .      
+SAPlayer 1 algo-target:      . . o . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    x x X . . . . . . . . . . . . . . . . . o x x X . .  
+SAPlayer 1 algo-target:  o O O o . . . . . . . . . . . . . . . . . . . o o O O o
+SAPlayer 1 algo-target:  O O O o o o o o o . . . . . . . . . . . . . o X o O O O
+SAPlayer 1 algo-target:    . . X X X X x x O . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . o . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . o . .      
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Performing turn 17 of your custom algo strategy
+SAPlayer 1 algo-target: PREDICTED GAME STATE=========
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:        . . o . . . . . . . . . . . . . . . o x . .      
+SAPlayer 1 algo-target:      . . o . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    x x X . . . . . . . . . . . . . . . . . o x x X . .  
+SAPlayer 1 algo-target: 
+SAPlayer 1 algo-target:  O O O o o o o o o . . . . . . . . . . . . . . . o O O O
+SAPlayer 1 algo-target:    . . X X X X . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:        . . . . x x O . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Turn 17: We currently have 49.2 SP and 15.4 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 12, Demos: 0. Cost: 12
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 47.2 cores!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 49.20	MP: 14.40	minDamage:12.50
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: CAN HOOK: 30 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: x:16,y:12, L. damage:7.38, need:12.50. path_len: 46: ends:<13, 27>
+SAPlayer 1 algo-target: x:20,y:11, R. damage:7.56, need:12.50. path_len: 14: ends:<24, 17>
+SAPlayer 1 algo-target: x:19,y:10, L. damage:8.46, need:12.50. path_len: 46: ends:<13, 27>
+SAPlayer 1 algo-target: x:18,y:12, R. damage:11.20, need:12.50. path_len: 16: ends:<24, 17>
+SAPlayer 1 algo-target: x:18,y:12, L. damage:8.10, need:12.50. path_len: 46: ends:<13, 27>
+SAPlayer 1 algo-target: x:12,y:12, R. damage:9.95, need:12.50. path_len: 16: ends:<24, 17>
+SAPlayer 1 algo-target: x:21,y:11, R. damage:9.88, need:12.50. path_len: 14: ends:<24, 17>
+SAPlayer 1 algo-target: x:11,y:12, L. damage:6.40, need:12.50. path_len: 46: ends:<13, 27>
+SAPlayer 1 algo-target: x:10,y:12, R. damage:8.57, need:12.50. path_len: 16: ends:<24, 17>
+SAPlayer 1 algo-target: x:10,y:12, L. damage:6.42, need:12.50. path_len: 46: ends:<13, 27>
+SAPlayer 1 algo-target: x:17,y:12, L. damage:7.62, need:12.50. path_len: 46: ends:<13, 27>
+SAPlayer 1 algo-target: x:20,y:10, R. damage:7.98, need:12.50. path_len: 14: ends:<24, 17>
+SAPlayer 1 algo-target: x:9,y:12, R. damage:9.95, need:12.50. path_len: 16: ends:<24, 17>
+SAPlayer 1 algo-target: x:17,y:12, R. damage:9.48, need:12.50. path_len: 16: ends:<24, 17>
+SAPlayer 1 algo-target: x:18,y:10, L. damage:7.97, need:12.50. path_len: 46: ends:<13, 27>
+SAPlayer 1 algo-target: x:16,y:12, R. damage:11.33, need:12.50. path_len: 16: ends:<24, 17>
+SAPlayer 1 algo-target: x:21,y:12, L. damage:11.93, need:12.50. path_len: 48: ends:<13, 27>
+SAPlayer 1 algo-target: x:14,y:12, R. damage:11.20, need:12.50. path_len: 16: ends:<24, 17>
+SAPlayer 1 algo-target: x:14,y:12, L. damage:6.40, need:12.50. path_len: 46: ends:<13, 27>
+SAPlayer 1 algo-target: x:15,y:12, R. damage:8.58, need:12.50. path_len: 16: ends:<24, 17>
+SAPlayer 1 algo-target: x:21,y:12, R. damage:6.98, need:12.50. path_len: 14: ends:<24, 17>
+SAPlayer 1 algo-target: x:17,y:11, R. damage:6.65, need:12.50. path_len: 20: ends:<24, 17>
+SAPlayer 1 algo-target: x:21,y:10, L. damage:9.42, need:12.50. path_len: 48: ends:<13, 27>
+SAPlayer 1 algo-target: x:19,y:12, R. damage:11.21, need:12.50. path_len: 16: ends:<24, 17>
+SAPlayer 1 algo-target: x:13,y:12, R. damage:8.58, need:12.50. path_len: 16: ends:<24, 17>
+SAPlayer 1 algo-target: x:19,y:12, L. damage:10.37, need:12.50. path_len: 46: ends:<13, 27>
+SAPlayer 1 algo-target: x:11,y:12, R. damage:10.86, need:12.50. path_len: 16: ends:<24, 17>
+SAPlayer 1 algo-target: x:20,y:12, R. damage:8.99, need:12.50. path_len: 14: ends:<24, 17>
+SAPlayer 1 algo-target: x:15,y:12, L. damage:7.86, need:12.50. path_len: 46: ends:<13, 27>
+SAPlayer 1 algo-target: x:20,y:12, L. damage:9.47, need:12.50. path_len: 46: ends:<13, 27>
+SAPlayer 1 algo-target: Current best hook: <21, 12>, L. damage: 11.93 out of 12.50. path_len: 48. ends:<13, 27>
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 49.20	MP: 14.40	minDamage:12.50
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: MP: 15.40	minDamage:12.50
+SAPlayer 1 algo-target: DEMO RUN Online Adjustment: 0.06
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 0.00
+SAPlayer 1 algo-target: BEST SCOUT RUSH EVALUATION==========
+SAPlayer 1 algo-target: 	SpBudget:43.20	NumScouts:15	ScoutHealth: 50
+SAPlayer 1 algo-target: 	Expected Damage:12	Online Adjustment:0.84
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 41.20
+SAPlayer 1 algo-target: spent: 0 of -2.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:        . . o . . . . . . . . . . . . . . o x x . .      
+SAPlayer 1 algo-target:      . . o . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    x x X . . . . . . . . . . . . . . . . o x x x X . .  
+SAPlayer 1 algo-target:  o O O o . . . . . . . . . . . . . . . . . o o o o O O o
+SAPlayer 1 algo-target:  O O O o o o o o o . . . . . . . . . . . . . o x o O O O
+SAPlayer 1 algo-target:    . . X X X X x x O . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . o . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . o . .      
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Performing turn 18 of your custom algo strategy
+SAPlayer 1 algo-target: PREDICTED GAME STATE=========
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:        . . o . . . . . . . . . . . . . . . x x . .      
+SAPlayer 1 algo-target:      . . o . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    x x X . . . . . . . . . . . . . . . . . x x x X . .  
+SAPlayer 1 algo-target:  o O O o . . . . . . . . . . . . . . . . . o o o o O O o
+SAPlayer 1 algo-target:  O O O o o o o o o . . . . . . . . . . . . . . . o O O O
+SAPlayer 1 algo-target:    . . X X X X . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:        . . x . x x O . . . . . . . . . . . . . . .      
+SAPlayer 1 algo-target:          . . . . . . . . . . . . . . . . . . . .        
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+SAPlayer 1 algo-target: Turn 18: We currently have 51.9 SP and 16.5 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 12, Demos: 0. Cost: 12
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 51.9 cores!
+Winner (p1 perspective, 1 = p1 2 = p2): 1
+Waiting to exit finished game.
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 51.90	MP: 15.50	minDamage:13.46
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: CAN HOOK: 47 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Will hook: <21, 12>,s:L. expected damage: 15.02
+SAPlayer 1 algo-target: Remaining SP for defense/support: 31.90
+SAPlayer 1 algo-target: 
+SAPlayer 1 algo-target: Supports ready!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: SP: 51.90	MP: 15.50	minDamage:13.46
+SAPlayer 1 algo-target: Hook Attack Online Adjustment: 1.00
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: CAN HOOK: 2 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: x:16,y:13, R. damage:7.17, need:13.46. path_len: 22: ends:<24, 17>
+SAPlayer 1 algo-target: x:17,y:13, R. damage:7.54, need:13.46. path_len: 20: ends:<24, 17>
+SAPlayer 1 algo-target: Current best hook: <17, 13>, R. damage: 7.54 out of 13.46. path_len: 20. ends:<24, 17>
+SAPlayer 1 algo-target: HOOKING!!!	x:14,y:0,s:L
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: MP: 16.50	minDamage:13.46
+SAPlayer 1 algo-target: DEMO RUN Online Adjustment: 0.06
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 0.00
+SAPlayer 1 algo-target: BEST SCOUT RUSH EVALUATION==========
+SAPlayer 1 algo-target: 	SpBudget:45.90	NumScouts:16	ScoutHealth: 53
+SAPlayer 1 algo-target: 	Expected Damage:14	Online Adjustment:0.92
+SAPlayer 1 algo-target: SENDING SCOUT RUSH!
+SAPlayer 1 algo-target: 	SpBudget:45.90	NumScouts:16	ScoutHealth: 53
+SAPlayer 1 algo-target: 	Expected Damage:14	Online Adjustment:0.96
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 2.90
+SAPlayer 1 algo-target: spent: 0 of -2.0 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent an extra: 2.0 of 0.9000015258789062 || finishedBudget @ LINE 383
+SAPlayer 1 algo-target: topWallCap: (7, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: ==============BOARD STATE==============
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:              . . o . . . . . . . . . . o . .            
+SAPlayer 1 algo-target:            . . o . . . . . . . . . . . . o . .          
+SAPlayer 1 algo-target:          . . o . . . . . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:        . . o . . . . . . . . . . . . . . o x x . .      
+SAPlayer 1 algo-target:      . . o . . . . . . . . . . . . . . . . . . . . .    
+SAPlayer 1 algo-target:    x x X . . . . . . . . . . . . . . . . o x x x X x x  
+SAPlayer 1 algo-target:  o O O o . . . . . . . . . . . . . . . . . o o o o O O o
+SAPlayer 1 algo-target:  O O O o o o o o o . . . . . . . . . . . . . . . o O O O
+SAPlayer 1 algo-target:    . . X X X X . . . . . . . . . . . . . . . . . X . .  
+SAPlayer 1 algo-target:      . . . . . . . . . . . . . . . . . . . . . o . .    
+SAPlayer 1 algo-target:        . . x x x x O . . . . . . . . . . . . o . .      
+SAPlayer 1 algo-target:          . . o . o o o . . . . . . . . . . o . .        
+SAPlayer 1 algo-target:            . . o S S S . . . . . . . . . o . .          
+SAPlayer 1 algo-target:              . . o S S . . . . . . . . o . .            
+SAPlayer 1 algo-target:                . . o . . . . . . . . o . .              
+SAPlayer 1 algo-target:                  . . o . . . . . . o . .                
+SAPlayer 1 algo-target:                    . . o . . . . o . .                  
+SAPlayer 1 algo-target:                      . . o . . o . .                    
+SAPlayer 1 algo-target:                        . . o o . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+sent game end playerIndex: 0
+sent game end playerIndex: 1
+sent game end playerIndex: 0
+sent game end playerIndex: 1
+Done waiting now exiting finished game.
+Hard Exiting Now
+Closing stream
+Closing playerIndex: 0
+Closing stream
+Closing playerIndex: 1
+Exited for loop
+End of main
+Closing stream
+Closing stream
+
