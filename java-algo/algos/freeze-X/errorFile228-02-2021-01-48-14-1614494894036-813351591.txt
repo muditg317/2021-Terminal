@@ -1,0 +1,120 @@
+Configuring your custom java algo strategy...
+Set random seed to: -533392522538732146
+Performing turn 0 of your custom algo strategy
+Performing turn 1 of your custom algo strategy
+Turn Number:1
+scoutRushDefense:0
+reducedScoutRushDefense: 0
+enemyCornerSummary:  Side: LEFT
+Effective Wall Health: 0 
+Damage taken: 80
+
+cornerSummary structureHealth: 0.0
+ cornerSummary expectedDamage: 320.0
+
+Enemy left corner heuristic: Scouts: 0, Inters: 5, Demos: 0. Cost: 5
+enemyCornerSummary:  Side: RIGHT
+Effective Wall Health: 0 
+Damage taken: 80
+
+cornerSummary structureHealth: 0.0
+ cornerSummary expectedDamage: 320.0
+
+Enemy right corner heuristic: Scouts: 0, Inters: 5, Demos: 0. Cost: 5
+BOOM DECISION: ===========
+awaitingBoom:false
+turnsUntilBoom-1
+spent: 5 of 5 || finishedBudget @ LINE 262
+Turn 1: with 0 saveCores! We currently have 0.0 SP and 4.8 MP!
+0 saveCores! We currently have 0.0cores!
+awaitingBoom:false
+turnsUntilBoom-1
+CHECK FOR HOOK==================
+================HOOK ANALYSIS========
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!
+================HOOK ANALYSIS========
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!
+Performing turn 2 of your custom algo strategy
+Turn Number:2
+scoutRushDefense:0
+reducedScoutRushDefense: 0
+enemyCornerSummary:  Side: LEFT
+Effective Wall Health: 60 
+Damage taken: 80
+
+cornerSummary structureHealth: 60.0
+ cornerSummary expectedDamage: 320.0
+
+Enemy left corner heuristic: Scouts: 0, Inters: 8, Demos: 0. Cost: 8
+enemyCornerSummary:  Side: RIGHT
+Effective Wall Health: 60 
+Damage taken: 80
+
+cornerSummary structureHealth: 60.0
+ cornerSummary expectedDamage: 320.0
+
+Enemy right corner heuristic: Scouts: 0, Inters: 8, Demos: 0. Cost: 8
+BOOM DECISION: ===========
+awaitingBoom:false
+turnsUntilBoom-1
+spent: 4 of 5 || finishedBudget @ LINE 267
+Turn 2: with 0 saveCores! We currently have 1.5 SP and 7.6 MP!
+0 saveCores! We currently have 1.5cores!
+awaitingBoom:false
+turnsUntilBoom-1
+CHECK FOR HOOK==================
+================HOOK ANALYSIS========
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!
+================HOOK ANALYSIS========
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!
+Performing turn 3 of your custom algo strategy
+Turn Number:3
+scoutRushDefense:0
+reducedScoutRushDefense: 0
+enemyCornerSummary:  Side: LEFT
+Effective Wall Health: 60 
+Damage taken: 80
+
+cornerSummary structureHealth: 60.0
+ cornerSummary expectedDamage: 320.0
+
+Enemy left corner heuristic: Scouts: 0, Inters: 7, Demos: 0. Cost: 7
+enemyCornerSummary:  Side: RIGHT
+Effective Wall Health: 60 
+Damage taken: 80
+
+cornerSummary structureHealth: 60.0
+ cornerSummary expectedDamage: 320.0
+
+Enemy right corner heuristic: Scouts: 0, Inters: 7, Demos: 0. Cost: 7
+BOOM DECISION: ===========
+awaitingBoom:false
+turnsUntilBoom-1
+spent: 9 of 9 || finishedBudget @ LINE 262
+Turn 3: with 0 saveCores! We currently have 0.8999996 SP and 9.7 MP!
+0 saveCores! We currently have 0.8999996cores!
+awaitingBoom:false
+turnsUntilBoom-1
+CHECK FOR HOOK==================
+================HOOK ANALYSIS========
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!
+================HOOK ANALYSIS========
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!

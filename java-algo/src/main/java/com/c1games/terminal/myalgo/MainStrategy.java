@@ -596,7 +596,10 @@ public class MainStrategy {
       //GameIO.debug().println("Prevented spawn at" +location);
       for (Coords openLocation : Locations.boomPath_right) {
         if ((openLocation.x == location.x || (27 - openLocation.x) == location.x) && openLocation.y == location.y) {
-          markForDeletion = true;
+          if (Boom.turnsUntilBoom == 0) {
+            return 0;
+          }
+          markForDeletion = true; // turnsUntilBoom == 1
         }
       }
     }
