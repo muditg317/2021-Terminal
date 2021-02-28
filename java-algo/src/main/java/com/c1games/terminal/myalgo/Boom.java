@@ -252,10 +252,7 @@ public class Boom {
 //    SpawnUtility.placeSupports(move, supportArray);
 //    SpawnUtility.removeBuildings(move, supportArray);
 
-    return Stream.concat(Arrays.stream(Locations.boomCheck_right), Arrays.stream(Locations.boomLid_right))
-        .noneMatch(closeLocation -> move.getWallAt(new Coords(
-            boomSide.equals(Side.RIGHT) ? closeLocation.x : (27 - closeLocation.x),
-            closeLocation.y)) == null);
+    return true;
   }
 
   /**

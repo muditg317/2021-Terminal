@@ -9207,3 +9207,36 @@ SAPlayer 1 algo-target:              . . . . . . . . . . . . . . . .
 SAPlayer 1 algo-target: 
 sent game end playerIndex: 0
 sent game end playerIndex: 1
+SAPlayer 1 algo-target:          . . . . . . . . . O O . . . . . . . . .        
+SAPlayer 1 algo-target:        . . . X X O . X X O . . O X X . O X X . . .      
+SAPlayer 1 algo-target:      . . X O O O . O O O . . . . O O O . O O O X . .    
+SAPlayer 1 algo-target:    . . X O . . . . . . . . . . . . . . . . . . O X . .  
+SAPlayer 1 algo-target:  O O O O . . . . . . . . . . . . . . . . . . . . O O O O
+SAPlayer 1 algo-target:  O O O O . . . . . . . . . . . . . . . . . . . . O O o O
+SAPlayer 1 algo-target:    . . X O . . . . . . . . . . . . . . . . . . O X . .  
+SAPlayer 1 algo-target:      . . X O O O . O O O . . . . O O O . O O O X . .    
+SAPlayer 1 algo-target:        . . . X X O . X X O . . O X X . O X X . . .      
+SAPlayer 1 algo-target:          . . . . . . . . . O O . . . . . . . . .        
+SAPlayer 1 algo-target:            . . . . . . . . . . . . . . . . . .          
+SAPlayer 1 algo-target:              . . . . . . . . . . . . . . . .            
+SAPlayer 1 algo-target:                . . . . . . . . . . . . . .              
+SAPlayer 1 algo-target:                  . . . . . . . . . . . .                
+SAPlayer 1 algo-target:                    . . . . . . . . . .                  
+SAPlayer 1 algo-target:                      . . . . . . . .                    
+SAPlayer 1 algo-target:                        . . . . . .                      
+SAPlayer 1 algo-target:                          . . . .                        
+SAPlayer 1 algo-target:                            . .                          
+SAPlayer 1 algo-target: ============END BOARD STATE============
+sent game end playerIndex: 0
+sent game end playerIndex: 1
+Done waiting now exiting finished game.
+Hard Exiting Now
+Closing stream
+Closing playerIndex: 0
+Closing stream
+Closing playerIndex: 1
+Exited for loop
+End of main
+Closing stream
+Closing stream
+
