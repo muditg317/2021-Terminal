@@ -2,21 +2,25 @@ package com.c1games.terminal.algo.serialization;
 
 import com.c1games.terminal.algo.units.UnitType;
 import com.c1games.terminal.algo.units.UnitTypeAtlas;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
+import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
 /**
  * GSON deserializer for unit types from their shorthand strings as defined in the config.
  */
-public class UnitTypeDeserializer implements JsonDeserializer<UnitType> {
+public class UnitTypeDeserializer implements JsonDeserializer<UnitType>, JsonSerializer<UnitType> {
     private final UnitTypeAtlas atlas;
 
     public UnitTypeDeserializer(UnitTypeAtlas atlas) {
         this.atlas = atlas;
+    }
+
+    @Override
+    public JsonElement serialize(UnitType src, Type typeOfSrc, JsonSerializationContext context) {
+
+        return new JsonPrimitive(atlas.getString(src));
+
     }
 
     @Override

@@ -174,6 +174,11 @@ public class DemolisherRun extends Attack {
 
     GameIO.debug().println("================DAMAGES========");
     GameIO.debug().printf("%s: %d options\n", damages.size() > 0 ? "CAN DEMO" : "none", damages.size());
+    damages.forEach((key, value) -> GameIO.debug().printf("x:%d,y:%d. damage:%.2f, need:%.2f. path_len: %d: ends:%s\n\t%s\n",
+        key.x, key.y,
+        value.structureHealth, minDamage,
+        value.path.length, value.path[value.path.length-1].toString(),
+        Arrays.toString(Arrays.stream(value.path).limit(15).map(Coords::toString).toArray(String[]::new))));
     GameIO.debug().println("================END DEMO ANALYSIS========");
 
 

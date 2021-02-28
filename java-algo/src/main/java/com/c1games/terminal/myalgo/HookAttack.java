@@ -511,9 +511,9 @@ public class HookAttack extends Attack {
     catch (Exception ignored) {}
     */
 
-    neededWalls.removeIf(coords -> coords.y == hookLocation.y - 1);
-    neededSupport.removeIf(coords -> coords.y == hookLocation.y - 1);
-    neededTurrets.removeIf(coords -> coords.y == hookLocation.y - 1);
+    neededWalls.removeIf(coords -> coords.y == hookLocation.y - 1 && ((side == 0) == (coords.x > 13)));
+    neededSupport.removeIf(coords -> coords.y == hookLocation.y - 1 && ((side == 0) == (coords.x > 13)));
+    neededTurrets.removeIf(coords -> coords.y == hookLocation.y - 1 && ((side == 0) == (coords.x > 13)));
 
     GameIO.debug().println("\nSupports ready!");
 

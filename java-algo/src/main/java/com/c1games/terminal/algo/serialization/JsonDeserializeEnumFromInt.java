@@ -1,17 +1,16 @@
 package com.c1games.terminal.algo.serialization;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
+import com.google.gson.*;
 
 import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * GSON deserializer which deserializes an enum from an integer, simply producing the variant of the enum with the index that corresponds to
  * the JSON iterator.
  */
-public class JsonDeserializeEnumFromInt<T> implements JsonDeserializer<T> {
+public class JsonDeserializeEnumFromInt<T> implements JsonDeserializer<T>, JsonSerializer<T> {
     private final Class<T> typeClass;
     private int offset;
 
@@ -22,6 +21,11 @@ public class JsonDeserializeEnumFromInt<T> implements JsonDeserializer<T> {
             offset = startIndexAt[0].value();
         else
             offset = 0;
+    }
+
+    @Override
+    public JsonElement serialize(T src, Type typeOfSrc, JsonSerializationContext context) {
+        return new JsonPrimitive(Arrays.stream(typeClass.getEnumConstants()).collect(Collectors.toList()).indexOf(src) + offset);
     }
 
     @Override

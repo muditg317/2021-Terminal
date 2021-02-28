@@ -80,8 +80,7 @@ public class Boom {
         Boom.turnsUntilBoom = -1;
       }
     } //end boom decision
-    GameIO.debug().println("awaitingBoom:" + Boom.awaitingBoom);
-    GameIO.debug().println("turnsUntilBoom" + Boom.turnsUntilBoom);
+    Boom.debugPrint();
   }
 
   /**
@@ -218,7 +217,12 @@ public class Boom {
       if (openLocation.y > 13) continue;
       int x = side.equals("RIGHT") ? openLocation.x : (27 - openLocation.x);
       Coords toOpen = new Coords(x, openLocation.y);
+      boolean wasReady = alreadyReady;
       alreadyReady = !SpawnUtility.removeBuilding(move, toOpen) && alreadyReady;
+      if (wasReady && !alreadyReady) {
+        Unit wall = move.getWallAt(toOpen);
+        GameIO.debug().printf("BOOM PATH NOT CLEARED: %s - %s\n", toOpen, wall == null ? "null" : wall.unitInformation.display.orElse("some tower"));
+      }
     }
     return alreadyReady;
   }

@@ -285,16 +285,11 @@ public class StrategyUtility {
   }
 
   static GameState predictGameState(GameState move, List<Unit>[][] enemyBaseHistory) {
-    GameState prediction = new GameState(move.config, move.data);
+    GameState prediction = Utility.duplicateState(move);
     for (int i = 13; i < 41; i++) {
       for (int j = 0; j <= 14 - i%2; j++) {
         int x = j + (i-13)/2;
         int y = i - x;
-        prediction.allUnits[x][y] = move.allUnits[x][y].stream().map(unit -> {
-          Unit newUnit = new Unit(unit.type, unit.health, unit.id, unit.owner, move.config);
-          if (unit.upgraded) newUnit.upgrade();
-          return newUnit;
-        }).collect(Collectors.toList());
         List<Unit> history = enemyBaseHistory[x][y];
         if (y > 13 && !history.isEmpty()) {
           Unit lastUnit = history.get(history.size() - 1);

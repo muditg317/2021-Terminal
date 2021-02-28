@@ -4,21 +4,32 @@ import com.google.gson.*;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * GSON deserializer for a class which is represented by another list of elements. This particular deserializer is able to be aware of the type
  * of the elements of the list, and thus dispatch a customized deserializer for the list elements. This is, unfortunately, not possible in
  * regular java due to type erasure within java generics.
  */
-public class TypedListDeserializer<L, E> implements JsonDeserializer<L> {
+public class TypedListDeserializer<L extends List<E>, E> implements JsonDeserializer<L>, JsonSerializer<L> {
     private final Function<List<E>, L> factory;
     private final Class<E> elementClass;
 
     public TypedListDeserializer(Function<List<E>, L> factory, Class<E> elementClass) {
         this.factory = factory;
         this.elementClass = elementClass;
+    }
+
+    @Override
+    public JsonElement serialize(L src, Type typeOfSrc, JsonSerializationContext context) {
+        JsonArray jsonArray = new JsonArray();
+        for (E obj : src) {
+            jsonArray.add(context.serialize(obj, elementClass));
+        }
+        return jsonArray;
     }
 
     @Override

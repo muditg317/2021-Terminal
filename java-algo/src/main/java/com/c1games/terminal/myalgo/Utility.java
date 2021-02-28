@@ -10,6 +10,8 @@ import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.pathfinding.IllegalPathStartException;
 import com.c1games.terminal.algo.units.UnitType;
+import com.c1games.terminal.algo.units.UnitTypeAtlas;
+import com.google.gson.Gson;
 
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
@@ -208,16 +210,19 @@ public class Utility {
   }
 
   public static GameState duplicateState(GameState state) {
-    GameState duplicate = new GameState(state.config, state.data);
-    for (int _x = 0; _x < MapBounds.BOARD_SIZE; _x++) {
-      for (int _y = 0; _y < MapBounds.BOARD_SIZE; _y++) {
-        duplicate.allUnits[_x][_y] = state.allUnits[_x][_y].stream().map(unit -> {
-          Unit newUnit = new Unit(unit.type, unit.health, unit.id, unit.owner, duplicate.config);
-          if (unit.upgraded) newUnit.upgrade();
-          return newUnit;
-        }).collect(Collectors.toList());
-      }
-    }
+    Gson frameDataGSON = FrameData.gson(new UnitTypeAtlas(state.config));
+    FrameData copiedData = frameDataGSON.fromJson(frameDataGSON.toJson(state.data), FrameData.class);
+
+    GameState duplicate = new GameState(state.config, copiedData);
+//    for (int _x = 0; _x < MapBounds.BOARD_SIZE; _x++) {
+//      for (int _y = 0; _y < MapBounds.BOARD_SIZE; _y++) {
+//        duplicate.allUnits[_x][_y] = state.allUnits[_x][_y].stream().map(unit -> {
+//          Unit newUnit = new Unit(unit.type, unit.health, unit.id, unit.owner, duplicate.config);
+//          if (unit.upgraded) newUnit.upgrade();
+//          return newUnit;
+//        }).collect(Collectors.toList());
+//      }
+//    }
     return duplicate;
   }
 

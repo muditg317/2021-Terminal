@@ -62,7 +62,8 @@ public class MainStrategy {
     //DECIDE TO BOOM OR NOT HERE.==========================
     Boom.evaluate(move, reducedScoutRushDefense);
 
-    setUpEssentialDefense();
+    setUpEssentialDefense(move);
+    setUpEssentialDefense(predictedEnemyBaseLayout);
 
     //make sure we have enough for boom wall
     double saveCores = 0;
@@ -88,7 +89,6 @@ public class MainStrategy {
     /*
     ATTACKING ==================
      */
-    Boom.debugPrint();
 
     //update mp
     mp = move.data.p1Stats.bits;
@@ -123,7 +123,11 @@ public class MainStrategy {
     if (chosenAttack != null) {
       chosenAttack.execute(move);
       MyAlgo.lastAttack = chosenAttack;
+      if (!(chosenAttack instanceof HookAttack)) {
+        fillHookHoles();
+      }
     } else {
+      fillHookHoles();
       GameIO.debug().println("Spawn defensive inters!");
       spawnDefensiveInters(scoutRushDefense);
     }
@@ -138,7 +142,7 @@ public class MainStrategy {
    * @return
    */
   private static Attack chooseAttack(double attackSpBudget, double defenseSPBudget) {
-    List<Attack> potentialAttacks = new ArrayList<Attack>();
+    List<Attack> potentialAttacks = new ArrayList<>();
     float mp = move.data.p1Stats.bits;
     //GameIO.debug().println("CHECK FOR HOOK==================");
     int maxDemos = (int) (mp / move.config.unitInformation.get(UnitType.Demolisher.ordinal()).cost2.orElse(3));
@@ -170,7 +174,6 @@ public class MainStrategy {
 
     //we didnt hook attack or demolisher run
     GameIO.debug().println("Fill in hook holes");
-    fillHookHoles();
 
     GameState defendedState = Utility.duplicateState(move);
     setUpDefenseWithBudget(defendedState, defenseSPBudget, defenseSPBudget);
@@ -272,21 +275,21 @@ public class MainStrategy {
   /**
    * Sets up essential defenses (the triangle and some towers)
    */
-  private static void setUpEssentialDefense() {
+  private static void setUpEssentialDefense(GameState move) {
     int budget = (int) move.data.p1Stats.cores; //can use everything to setup essential defense
     int spent = 0;
     try {
 
       //Get the core corner turrets down
-      spent += attemptSpawnIfAffordable(Locations.Essentials.firstLeftTurret, Utility.TURRET, false, budget - spent);
-      spent += attemptSpawnIfAffordable(Locations.Essentials.firstRightTurret, Utility.TURRET, false, budget - spent);
+      spent += attemptSpawnIfAffordable(move, Locations.Essentials.firstLeftTurret, Utility.TURRET, false, budget - spent);
+      spent += attemptSpawnIfAffordable(move, Locations.Essentials.firstRightTurret, Utility.TURRET, false, budget - spent);
 
       //get walls in front of them
-      spent += attemptSpawnIfAffordable(Locations.Essentials.firstLeftTurretWall, Utility.WALL, false, budget);
-      spent += attemptSpawnIfAffordable(Locations.Essentials.firstRightTurretWall, Utility.WALL, false, budget);
+      spent += attemptSpawnIfAffordable(move, Locations.Essentials.firstLeftTurretWall, Utility.WALL, false, budget);
+      spent += attemptSpawnIfAffordable(move, Locations.Essentials.firstRightTurretWall, Utility.WALL, false, budget);
 
       //upgrade two corner turrets
-      spent += attemptSpawnIfAffordable(Locations.Essentials.firstLeftTurret, Utility.TURRET, true, budget - spent);
+      spent += attemptSpawnIfAffordable(move, Locations.Essentials.firstLeftTurret, Utility.TURRET, true, budget - spent);
       //spent += attemptSpawnIfAffordable(Locations.Essentials.firstRightTurret, Utility.TURRET, true, budget - spent);
       //TODO: Let's hold off on upgrading the right turret for now...
       //upgrade walls in front of them
@@ -298,7 +301,7 @@ public class MainStrategy {
         if (/*algoState.hooking && */ Locations.Essentials.mainWallHookHoles.contains(location)) {
           continue;
         }
-        spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
+        spent += attemptSpawnIfAffordable(move, location, Utility.WALL, false, budget - spent);
 
       }
 
@@ -311,33 +314,33 @@ public class MainStrategy {
         } else {
           location = Locations.Essentials.rightCornerWalls[i / 2];
         }
-        spent += attemptSpawnIfAffordable(location, Utility.WALL, false, budget - spent);
+        spent += attemptSpawnIfAffordable(move, location, Utility.WALL, false, budget - spent);
       }
 
 
       //get the entrance left turret down
-      spent += attemptSpawnIfAffordable(Locations.Essentials.leftEntranceTurret, Utility.TURRET, false, budget - spent);
+      spent += attemptSpawnIfAffordable(move, Locations.Essentials.leftEntranceTurret, Utility.TURRET, false, budget - spent);
 
       //if we have been hit in the corners hard this is now considered essential...
       int cornerDamage = DefenseUtility.cornerDamageTaken(move);
       if (cornerDamage >= move.data.p1Stats.integrity / 5) {
         for (int i = Locations.Essentials.leftCornerWalls.length - 1; i > 0; i--) {
           Coords location = Locations.Essentials.leftCornerWalls[i];
-          spent += attemptSpawnIfAffordable(location, Utility.WALL, true, budget - spent);
+          spent += attemptSpawnIfAffordable(move, location, Utility.WALL, true, budget - spent);
         }
         for (int i = Locations.Essentials.rightCornerWalls.length - 1; i > 0; i--) {
           Coords location = Locations.Essentials.rightCornerWalls[i];
-          spent += (int) attemptSpawnIfAffordable(location, Utility.WALL, true, budget - spent);
+          spent += (int) attemptSpawnIfAffordable(move, location, Utility.WALL, true, budget - spent);
         }
 
         //place corner turrets down
         for (Coords loc : Locations.cornerTurrets) {
-          spent += attemptSpawnIfAffordable(loc, Utility.TURRET, false, budget - spent);
+          spent += attemptSpawnIfAffordable(move, loc, Utility.TURRET, false, budget - spent);
         }
 
         if (cornerDamage > 5) { //larger threshold to upgrade these towers
           for (Coords loc : Locations.cornerTurrets) {
-            spent += attemptSpawnIfAffordable(loc, Utility.TURRET, true, budget - spent);
+            spent += attemptSpawnIfAffordable(move, loc, Utility.TURRET, true, budget - spent);
           }
         }
 
@@ -351,37 +354,37 @@ public class MainStrategy {
   }
   /**
    * Sets up defense with maximum of budget cores to spend
-   * @param move the gameState to set up on (needed for hypothetical scenarios)
+   * @param gameState the gameState to set up on (needed for hypothetical scenarios)
    * @param budget
    */
-  private static void setUpDefenseWithBudget(GameState move, double budget, double totalAllowedSpending) {
+  private static void setUpDefenseWithBudget(GameState gameState, double budget, double totalAllowedSpending) {
     GameIO.debug().printf("Set up defenses!\tBudget: %.2f\tMax spending: %.2f\n", budget, totalAllowedSpending);
     if (budget <= 0 && totalAllowedSpending <= 0) {
       return;
     }
     int SAVE_AMOUNT = 2;
-    Coords rightMostTurret = DefenseUtility.findRightMostTurret(move, Locations.topEntranceTurrets);
+    Coords rightMostTurret = DefenseUtility.findRightMostTurret(gameState, Locations.topEntranceTurrets);
     if (rightMostTurret != null && rightMostTurret.x > 6) {
       SAVE_AMOUNT = 6;
     }
     budget -= SAVE_AMOUNT; //save 2 for the cap walls
     totalAllowedSpending -= SAVE_AMOUNT; //save 2 for the cap walls
     int spent = 0;
-    double initialSP = move.data.p1Stats.cores;
+    double initialSP = gameState.data.p1Stats.cores;
     try {
 
-      spent += placeBudgetedDefenseHelper(budget, false);
+      spent += placeBudgetedDefenseHelper(gameState, budget, false);
 
     } catch (InsufficientResourcesException e) {
-      spent += (initialSP - move.data.p1Stats.cores);
+      spent += (initialSP - gameState.data.p1Stats.cores);
       GameIO.debug().println("spent: " + spent + " of " + budget + " || finishedBudget @ LINE " + e.getStackTrace()[5].getLineNumber());
-      initialSP = move.data.p1Stats.cores;
+      initialSP = gameState.data.p1Stats.cores;
 
       try {
-        spent += placeBudgetedDefenseHelper(totalAllowedSpending, true);
+        spent += placeBudgetedDefenseHelper(gameState, totalAllowedSpending, true);
       } catch (InsufficientResourcesException e2) {
-        spent += (initialSP - move.data.p1Stats.cores);
-        GameIO.debug().println("spent an extra: " + (initialSP - move.data.p1Stats.cores) + " of " + totalAllowedSpending + " || finishedBudget @ LINE " + e.getStackTrace()[5].getLineNumber());
+        spent += (initialSP - gameState.data.p1Stats.cores);
+        GameIO.debug().println("spent an extra: " + (initialSP - gameState.data.p1Stats.cores) + " of " + totalAllowedSpending + " || finishedBudget @ LINE " + e.getStackTrace()[5].getLineNumber());
       }
     } finally {
       // place the two cap walls and upgrade them if we have the available budget
@@ -389,32 +392,32 @@ public class MainStrategy {
       try {
         budget += SAVE_AMOUNT; //save 2 for the cap walls
         totalAllowedSpending += SAVE_AMOUNT; //save 2 for the cap walls
-        Coords lastTopTurretLocation = DefenseUtility.findRightMostTurret(move, Locations.topEntranceTurrets);
+        Coords lastTopTurretLocation = DefenseUtility.findRightMostTurret(gameState, Locations.topEntranceTurrets);
         Coords topWallCap = null;
         if (lastTopTurretLocation != null) {
           topWallCap = new Coords(lastTopTurretLocation.x + 1, lastTopTurretLocation.y);
 
-          spent += attemptSpawnIfAffordable(topWallCap, Utility.WALL, false, totalAllowedSpending - spent);
+          spent += attemptSpawnIfAffordable(gameState, topWallCap, Utility.WALL, false, totalAllowedSpending - spent);
           Coords lastTurret = Locations.topEntranceTurrets[Locations.topEntranceTurrets.length - 1];
           Coords lastWallCap = new Coords(lastTurret.x + 1, lastTurret.y);
           if (!topWallCap.equals(lastWallCap)) { //if its the final wall location, no need to delete it
-            SpawnUtility.removeBuilding(move, topWallCap);
+            SpawnUtility.removeBuilding(gameState, topWallCap);
           }
-          SpawnUtility.removeBuilding(move, topWallCap);
+          SpawnUtility.removeBuilding(gameState, topWallCap);
           GameIO.debug().print(String.format("topWallCap: (%s, %s)\n", topWallCap.x, topWallCap.y));
         }
 
 
         //at this point, only the first bottom turret should be down...
-        Coords lastBottomTurretLocation = DefenseUtility.findRightMostTurret(move, Locations.bottomEntranceTurrets);
+        Coords lastBottomTurretLocation = DefenseUtility.findRightMostTurret(gameState, Locations.bottomEntranceTurrets);
         Coords bottomWallCap = null;
         if (lastBottomTurretLocation != null) {
           bottomWallCap = new Coords(lastBottomTurretLocation.x + 1, lastBottomTurretLocation.y);
-          spent += attemptSpawnIfAffordable(bottomWallCap, Utility.WALL, false, totalAllowedSpending - spent);
+          spent += attemptSpawnIfAffordable(gameState, bottomWallCap, Utility.WALL, false, totalAllowedSpending - spent);
           Coords lastTurret = Locations.bottomEntranceTurrets[Locations.bottomEntranceTurrets.length - 1];
           Coords lastWallCap = new Coords(lastTurret.x + 1, lastTurret.y);
           if (!bottomWallCap.equals(lastWallCap)) { //if its the final wall location, no need to delete it
-            SpawnUtility.removeBuilding(move, bottomWallCap);
+            SpawnUtility.removeBuilding(gameState, bottomWallCap);
           }
           GameIO.debug().print(String.format("bottomWallCap: (%s, %s)\n", bottomWallCap.x, bottomWallCap.y));
         }
@@ -423,11 +426,11 @@ public class MainStrategy {
 
         // now if we have done everything possible we should have budget left over to upgrade these caps...
         if (topWallCap != null) {
-          spent += attemptSpawnIfAffordable(topWallCap, Utility.WALL, true, totalAllowedSpending - spent);
+          spent += attemptSpawnIfAffordable(gameState, topWallCap, Utility.WALL, true, totalAllowedSpending - spent);
 
         }
         if (bottomWallCap != null) {
-          spent += attemptSpawnIfAffordable(bottomWallCap, Utility.WALL, true, totalAllowedSpending - spent);
+          spent += attemptSpawnIfAffordable(gameState, bottomWallCap, Utility.WALL, true, totalAllowedSpending - spent);
         }
 
       } catch(InsufficientResourcesException e) {
@@ -436,18 +439,18 @@ public class MainStrategy {
     }
   }
 
-  private static int placeBudgetedDefenseHelper(double budget, boolean autoDelete) throws InsufficientResourcesException {
+  private static int placeBudgetedDefenseHelper(GameState gameState, double budget, boolean autoDelete) throws InsufficientResourcesException {
     int spent = 0;
     try {
-      Method spawnMethod = MainStrategy.class.getMethod(autoDelete ? "attemptSpawnAndDelete" : "attemptSpawnIfAffordable", Coords.class, UnitType.class, boolean.class, double.class);
+      Method spawnMethod = MainStrategy.class.getMethod(autoDelete ? "attemptSpawnAndDelete" : "attemptSpawnIfAffordable", GameState.class, Coords.class, UnitType.class, boolean.class, double.class);
 
       for (int i = 0; i < Locations.initialTopEntranceTurrets.length; i++) {
         Coords towerLocation = Locations.initialTopEntranceTurrets[i];
         Coords topWallLocation = Locations.topEntranceWalls[i];
 
-        spent += (int) spawnMethod.invoke(null, towerLocation, Utility.TURRET, false, budget - spent);
-        spent += (int) spawnMethod.invoke(null, topWallLocation, Utility.WALL, false, budget - spent);
-        //spent += (int) spawnMethod.invoke(null, towerLocation, Utility.TURRET, true, budget - spent);
+        spent += (int) spawnMethod.invoke(null, gameState, towerLocation, Utility.TURRET, false, budget - spent);
+        spent += (int) spawnMethod.invoke(null, gameState, topWallLocation, Utility.WALL, false, budget - spent);
+        //spent += (int) spawnMethod.invoke(null, gameState, towerLocation, Utility.TURRET, true, budget - spent);
       }
 
       //upgrade corner 2 walls ONLY IF WE HAVE BEEN HIT IN THE CORNER BEFORE
@@ -455,11 +458,11 @@ public class MainStrategy {
       if (cornerHasBeenHit) {
         for (int i = Locations.Essentials.leftCornerWalls.length - 1; i > 0; i--) {
           Coords location = Locations.Essentials.leftCornerWalls[i];
-          spent += (int) spawnMethod.invoke(null, location, Utility.WALL, true, budget - spent);
+          spent += (int) spawnMethod.invoke(null, gameState, location, Utility.WALL, true, budget - spent);
         }
         for (int i = Locations.Essentials.rightCornerWalls.length - 1; i > 0; i--) {
           Coords location = Locations.Essentials.rightCornerWalls[i];
-          spent += (int) spawnMethod.invoke(null, location, Utility.WALL, true, budget - spent);
+          spent += (int) spawnMethod.invoke(null, gameState, location, Utility.WALL, true, budget - spent);
         }
       }
 
@@ -474,45 +477,45 @@ public class MainStrategy {
         Coords topWallLocation = Locations.topEntranceWalls[i];
         Coords bottomTowerLocation = Locations.bottomEntranceTurrets[i];
 
-        spent += (int) spawnMethod.invoke(null, topTowerLocation, Utility.TURRET, false, budget - spent);
-        spent += (int) spawnMethod.invoke(null, topWallLocation, Utility.WALL, false, budget - spent);
-        spent += (int) spawnMethod.invoke(null, bottomTowerLocation, Utility.TURRET, false, budget - spent);
-        //spent += (int) spawnMethod.invoke(null, bottomTowerLocation, Utility.TURRET, true, budget - spent);
-        //spent += (int) spawnMethod.invoke(null, topTowerLocation, Utility.TURRET, true, budget - spent);
-        //spent += (int) spawnMethod.invoke(null, topWallLocation, Utility.WALL, true, budgt)
+        spent += (int) spawnMethod.invoke(null, gameState, topTowerLocation, Utility.TURRET, false, budget - spent);
+        spent += (int) spawnMethod.invoke(null, gameState, topWallLocation, Utility.WALL, false, budget - spent);
+        spent += (int) spawnMethod.invoke(null, gameState, bottomTowerLocation, Utility.TURRET, false, budget - spent);
+        //spent += (int) spawnMethod.invoke(null, gameState, bottomTowerLocation, Utility.TURRET, true, budget - spent);
+        //spent += (int) spawnMethod.invoke(null, gameState, topTowerLocation, Utility.TURRET, true, budget - spent);
+        //spent += (int) spawnMethod.invoke(null, gameState, topWallLocation, Utility.WALL, true, budgt)
 
       }
       //prevent right side damage
       Coords extraRightTower = new Coords(23, 13);
       Coords extraRightWall = new Coords(22, 13);
-      spent += (int) spawnMethod.invoke(null, extraRightTower, Utility.TURRET, false, budget - spent);
-      spent += (int) spawnMethod.invoke(null, extraRightTower, Utility.TURRET, true, budget - spent);
-      spent += (int) spawnMethod.invoke(null, extraRightWall, Utility.WALL, false, budget - spent);
-      spent += (int) spawnMethod.invoke(null, extraRightWall, Utility.WALL, true, budget - spent);
+      spent += (int) spawnMethod.invoke(null, gameState, extraRightTower, Utility.TURRET, false, budget - spent);
+      spent += (int) spawnMethod.invoke(null, gameState, extraRightTower, Utility.TURRET, true, budget - spent);
+      spent += (int) spawnMethod.invoke(null, gameState, extraRightWall, Utility.WALL, false, budget - spent);
+      spent += (int) spawnMethod.invoke(null, gameState, extraRightWall, Utility.WALL, true, budget - spent);
 
 
       //NOW WE DO ALL THE UPGRADES
       //upgrade all corner walls
       for (Coords location : Locations.Essentials.leftCornerWalls) {
-        spent += (int) spawnMethod.invoke(null, location, Utility.WALL, true, budget - spent);
+        spent += (int) spawnMethod.invoke(null, gameState, location, Utility.WALL, true, budget - spent);
       }
       for (Coords location : Locations.Essentials.rightCornerWalls) {
-        spent += (int) spawnMethod.invoke(null, location, Utility.WALL, true, budget - spent);
+        spent += (int) spawnMethod.invoke(null, gameState, location, Utility.WALL, true, budget - spent);
       }
 
       //upgrade left entrance towers
       for (Coords location : Locations.topEntranceTurrets) {
-        spent += (int) spawnMethod.invoke(null, location, Utility.TURRET, true, budget - spent);
+        spent += (int) spawnMethod.invoke(null, gameState, location, Utility.TURRET, true, budget - spent);
       }
       for (Coords location : Locations.bottomEntranceTurrets) {
-        spent += (int) spawnMethod.invoke(null, location, Utility.TURRET, true, budget - spent);
+        spent += (int) spawnMethod.invoke(null, gameState, location, Utility.TURRET, true, budget - spent);
       }
-      spent += (int) spawnMethod.invoke(null, new Coords(2, 12), Utility.TURRET, true, budget - spent);
-      spent += (int) spawnMethod.invoke(null, new Coords(1, 12), Utility.TURRET, true, budget - spent);
+      spent += (int) spawnMethod.invoke(null, gameState, new Coords(2, 12), Utility.TURRET, true, budget - spent);
+      spent += (int) spawnMethod.invoke(null, gameState, new Coords(1, 12), Utility.TURRET, true, budget - spent);
 
       //finall upgrade all the top entrance walls
       for (Coords location : Locations.topEntranceWalls) {
-        spent += (int) spawnMethod.invoke(null, location, Utility.WALL, true, budget - spent);
+        spent += (int) spawnMethod.invoke(null, gameState, location, Utility.WALL, true, budget - spent);
       }
 
       //upgrade all walls above a certain y
@@ -523,7 +526,7 @@ public class MainStrategy {
           Coords location = new Coords(x, y);
           Unit wall = move.getWallAt(location);
           if (move.getWallAt(location) != null && wall.type == Utility.WALL) {
-            spent += (int) spawnMethod.invoke(null, location, Utility.WALL, true, budget - spent);
+            spent += (int) spawnMethod.invoke(null, gameState, location, Utility.WALL, true, budget - spent);
           }
         }
       }
@@ -534,7 +537,7 @@ public class MainStrategy {
           Coords location = new Coords(x, y);
           Unit wall = move.getWallAt(location);
           if (move.getWallAt(location) != null && wall.type == Utility.TURRET) {
-            spent += (int) spawnMethod.invoke(null, location, Utility.TURRET, true, budget - spent);
+            spent += (int) spawnMethod.invoke(null, gameState, location, Utility.TURRET, true, budget - spent);
           }
         }
       }
@@ -543,15 +546,15 @@ public class MainStrategy {
       //MOST DEFENSE DONE=====================
 
       //      for(Coords location : Locations.extraTurretCoords) {
-      //        spent += (int) spawnMethod.invoke(null, location, Utility.TURRET, false, budget - spent);
+      //        spent += (int) spawnMethod.invoke(null, gameState, location, Utility.TURRET, false, budget - spent);
       //        if (autoDelete) SpawnUtility.removeBuilding(move, location);
-      //        spent += (int) spawnMethod.invoke(null, location, Utility.TURRET, true, budget - spent);
+      //        spent += (int) spawnMethod.invoke(null, gameState, location, Utility.TURRET, true, budget - spent);
       //      }
       //
       //      for(Coords location : Locations.extraWallCoords) {
-      //        spent += (int) spawnMethod.invoke(null, location, Utility.WALL, false, budget - spent);
+      //        spent += (int) spawnMethod.invoke(null, gameState, location, Utility.WALL, false, budget - spent);
       //        if (autoDelete) SpawnUtility.removeBuilding(move, location);
-      //        spent += (int) spawnMethod.invoke(null, location, Utility.WALL, true, budget - spent);
+      //        spent += (int) spawnMethod.invoke(null, gameState, location, Utility.WALL, true, budget - spent);
       //      }
 
       return spent;
@@ -567,13 +570,15 @@ public class MainStrategy {
 
   /**
    * Attempts to spawn if it is affordable. Returns the number of monies used.
+   *
+   * @param gameState
    * @param location
    * @param unitType
    * @param upgrade
    * @param budget
    * @return the amount of money used
    */
-  public static int attemptSpawnIfAffordable(Coords location, UnitType unitType, boolean upgrade, double budget) throws InsufficientResourcesException {
+  public static int attemptSpawnIfAffordable(GameState gameState, Coords location, UnitType unitType, boolean upgrade, double budget) throws InsufficientResourcesException {
 
     boolean markForDeletion = false;
     if (algoState.lastAttack != null && algoState.lastAttack.clearLocations.contains(location)) {
@@ -590,15 +595,15 @@ public class MainStrategy {
     }
 
 
-    if (StrategyUtility.numAffordableWithBudget(move, unitType, upgrade, budget) > 0) {
+    if (StrategyUtility.numAffordableWithBudget(gameState, unitType, upgrade, budget) > 0) {
       int spent = 0;
       if (upgrade) {
-        spent = move.attemptUpgrade(location) == 1 ? SpawnUtility.getUnitCost(move, unitType, true) : 0;
+        spent = gameState.attemptUpgrade(location) == 1 ? SpawnUtility.getUnitCost(gameState, unitType, true) : 0;
       } else {
-        spent = move.attemptSpawn(location, unitType) ? SpawnUtility.getUnitCost(move, unitType, upgrade) : 0;
+        spent = gameState.attemptSpawn(location, unitType) ? SpawnUtility.getUnitCost(gameState, unitType, upgrade) : 0;
       }
       if (markForDeletion && spent > 0) {
-        SpawnUtility.removeBuilding(move, location);
+        SpawnUtility.removeBuilding(gameState, location);
       }
       return spent;
     }
@@ -608,19 +613,21 @@ public class MainStrategy {
 
   /**
    * Attempts to spawn if it is affordable. Returns the number of monies used.
+   *
+   * @param gameState
    * @param location
    * @param unitType
    * @param upgrade
    * @param budget
    * @return the amount of money used
    */
-  public static int attemptSpawnAndDelete(Coords location, UnitType unitType, boolean upgrade, double budget) throws InsufficientResourcesException {
+  public static int attemptSpawnAndDelete(GameState gameState, Coords location, UnitType unitType, boolean upgrade, double budget) throws InsufficientResourcesException {
     if (upgrade == true) {
       return 0;
     }
-    int spent = attemptSpawnIfAffordable(location, unitType, upgrade, budget);
+    int spent = attemptSpawnIfAffordable(gameState, location, unitType, upgrade, budget);
     if (spent > 0) {
-      SpawnUtility.removeBuilding(move, location);
+      SpawnUtility.removeBuilding(gameState, location);
     }
     return spent;
   }

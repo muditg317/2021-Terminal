@@ -11,13 +11,40 @@ import java.util.function.Supplier;
  * GSON deserializer that deserializes a class from an array, deserializing each the value of each field, in order, from that corresponding
  * index in the array. Ignores static, final, and transient fields.
  */
-public class JsonDeserializeClassFromTuple<T> implements JsonDeserializer<T> {
+public class JsonDeserializeClassFromTuple<T> implements JsonDeserializer<T>, JsonSerializer<T> {
     private final Class<T> typeClass;
     private final Supplier<T> typeFactory;
 
     public JsonDeserializeClassFromTuple(Class<T> typeClass, Supplier<T> typeFactory) {
         this.typeClass = typeClass;
         this.typeFactory = typeFactory;
+    }
+
+    @Override
+    public JsonElement serialize(T src, Type typeOfSrc, JsonSerializationContext jsonSerializationContext) {
+        try {
+            JsonArray jsonArray = new JsonArray();
+
+            Field[] typeFields = typeClass.getFields();
+            for (int i = 0; i < typeFields.length; i++) {
+                Field field = typeFields[i];
+
+                if ((field.getModifiers() & Modifier.STATIC) != 0)
+                    continue;
+                if ((field.getModifiers() & Modifier.TRANSIENT) != 0)
+                    continue;
+                if ((field.getModifiers() & Modifier.FINAL) != 0)
+                    continue;
+
+                Class<?> fieldClass = field.getType();
+                Object fieldValue = field.get(src);
+                jsonArray.add(jsonSerializationContext.serialize(fieldValue, fieldClass));
+            }
+
+            return jsonArray;
+        } catch (Exception e) {
+            throw new JsonParseException(e);
+        }
     }
 
     @Override
