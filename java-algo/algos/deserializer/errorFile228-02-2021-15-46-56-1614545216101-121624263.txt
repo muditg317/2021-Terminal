@@ -1,0 +1,670 @@
+Configuring your custom java algo strategy...
+Set random seed to: -6139183153638945479
+Performing turn 0 of your custom algo strategy
+==============BOARD STATE==============
+                           . .                          
+                         . . . .                        
+                       . . . . . .                      
+                     . . . . . . . .                    
+                   . . . . . . . . . .                  
+                 . . . . . . . . . . . .                
+               . . . . . . . . . . . . . .              
+             . . . . . . . . . . . . . . . .            
+           . . . . . . . . . . . . . . . . . .          
+         . . . . . . . . . . . . . . . . . . . .        
+       . . . . x . . . x . . . . X . . . x . . . .      
+     . . . . . . . . . o . . . . o . . . o . . . . .    
+   . . x . . . . . . . . . . . . . . . . . . . . X . .  
+ o o o . . . . . . . . . . . . . . . . . . . . . o o o o
+ . . . o . . . . . . . . . . . . . . . . . . . . o . . .
+   . . X . . . . . . . . . . . . . . . . . . . . X . .  
+     . . . . . . . . . . . . . . . . . . . . . . . .    
+       . . . . . . . . . . . . . . . . . . . . . .      
+         . . o . . . . . . . . . . . . . . o . .        
+           . . o . . . . . . . . . . . . o . .          
+             . . o . . . . . . . . . . o . .            
+               . . o . . . . . . . . o . .              
+                 . . o . . . . . . o . .                
+                   . . o . . . . o . .                  
+                     . . o . . o . .                    
+                       . . o o . .                      
+                         . . . .                        
+                           . .                          
+============END BOARD STATE============
+Performing turn 1 of your custom algo strategy
+PREDICTED GAME STATE=========
+==============BOARD STATE==============
+                           . .                          
+                         . . . .                        
+                       . . . . . .                      
+                     . . . . . . . .                    
+                   . . . . . . . . . .                  
+                 . . . . . . . . . . . .                
+               . . . . . . . . . . . . . .              
+             . . . . . . . . . . . . . . . .            
+           . . . . . . . . . . . . . . . . . .          
+         . . . . . . . . . . . . . . . . . . . .        
+       . . . . x . . . x . . . . X . . . x . . . .      
+     . . . . . . . . . o . . . . o . . . o . . . . .    
+   . . x . . . . . . . . . . . . . . . . . . . . X . .  
+ o o o . . . . . . . . . . . . . . . . . . . . . o o o o
+ . . . o . . . . . . . . . . . . . . . . . . . . o . . .
+   . . X . . . . . . . . . . . . . . . . . . . . X . .  
+     . . . . . . . . . . . . . . . . . . . . . . . .    
+       . . . . . . . . . . . . . . . . . . . . . .      
+         . . o . . . . . . . . . . . . . . o . .        
+           . . o . . . . . . . . . . . . o . .          
+             . . o . . . . . . . . . . o . .            
+               . . o . . . . . . . . o . .              
+                 . . o . . . . . . o . .                
+                   . . o . . . . o . .                  
+                     . . o . . o . .                    
+                       . . o o . .                      
+                         . . . .                        
+                           . .                          
+============END BOARD STATE============
+Turn 1: We currently have 5.0 SP and 7.0 MP!
+scoutRushDefense:0
+reducedScoutRushDefense: 0
+Enemy left corner heuristic: Scouts: 0, Inters: 4, Demos: 0. Cost: 4
+Enemy right corner heuristic: Scouts: 0, Inters: 8, Demos: 0. Cost: 8
+BOOM DECISION: ===========
+awaitingBoom:	false
+turnsUntilBoom:	-1
+spent: 5 of 5 || finishedBudget @ LINE 73
+spent: 5 of 5 || finishedBudget @ LINE 73
+0.0 saveCores! We currently have 0.0 cores!
+================HOOK ANALYSIS========
+SP: 5.00	MP: 6.00	minDamage:6.65
+Hook Attack Online Adjustment: 1.00
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!
+================HOOK ANALYSIS========
+SP: 5.00	MP: 6.00	minDamage:6.65
+Hook Attack Online Adjustment: 1.00
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!
+================DEMO ANALYSIS========
+MP: 7.00	minDamage:6.65
+DEMO RUN Online Adjustment: 1.00
+================DAMAGES========
+CAN DEMO: 5 options
+x:4,y:9. damage:3.60, need:6.65. path_len: 29: ends:<17, 24>
+	[<4, 9>, <4, 10>, <5, 10>, <5, 11>, <6, 11>, <6, 12>, <7, 12>, <7, 13>, <8, 13>, <8, 14>, <9, 14>, <9, 15>, <10, 15>, <10, 16>, <10, 17>]
+x:1,y:12. damage:4.32, need:6.65. path_len: 31: ends:<17, 24>
+	[<1, 12>, <2, 12>, <2, 11>, <3, 11>, <4, 11>, <4, 12>, <5, 12>, <5, 13>, <6, 13>, <6, 14>, <7, 14>, <7, 15>, <8, 15>, <8, 16>, <9, 16>]
+x:23,y:9. damage:6.10, need:6.65. path_len: 29: ends:<10, 24>
+	[<23, 9>, <23, 10>, <22, 10>, <22, 11>, <21, 11>, <21, 12>, <20, 12>, <20, 13>, <19, 13>, <19, 14>, <18, 14>, <18, 15>, <17, 15>, <17, 16>, <17, 17>]
+x:20,y:6. damage:3.54, need:6.65. path_len: 33: ends:<8, 22>
+	[<20, 6>, <20, 7>, <21, 7>, <21, 8>, <22, 8>, <22, 9>, <22, 10>, <21, 10>, <21, 11>, <20, 11>, <20, 12>, <19, 12>, <19, 13>, <18, 13>, <18, 14>]
+x:19,y:5. damage:3.54, need:6.65. path_len: 35: ends:<8, 22>
+	[<19, 5>, <19, 6>, <20, 6>, <20, 7>, <21, 7>, <21, 8>, <22, 8>, <22, 9>, <22, 10>, <21, 10>, <21, 11>, <20, 11>, <20, 12>, <19, 12>, <19, 13>]
+================END DEMO ANALYSIS========
+Not doing enough damage!
+x:4,y:9. damage:3.60, need:6.65. path_len: 29: ends:<17, 24>
+	[<4, 9>, <4, 10>, <5, 10>, <5, 11>, <6, 11>, <6, 12>, <7, 12>, <7, 13>, <8, 13>, <8, 14>, <9, 14>, <9, 15>, <10, 15>, <10, 16>, <10, 17>]
+x:1,y:12. damage:4.32, need:6.65. path_len: 31: ends:<17, 24>
+	[<1, 12>, <2, 12>, <2, 11>, <3, 11>, <4, 11>, <4, 12>, <5, 12>, <5, 13>, <6, 13>, <6, 14>, <7, 14>, <7, 15>, <8, 15>, <8, 16>, <9, 16>]
+x:23,y:9. damage:6.10, need:6.65. path_len: 29: ends:<10, 24>
+	[<23, 9>, <23, 10>, <22, 10>, <22, 11>, <21, 11>, <21, 12>, <20, 12>, <20, 13>, <19, 13>, <19, 14>, <18, 14>, <18, 15>, <17, 15>, <17, 16>, <17, 17>]
+x:20,y:6. damage:3.54, need:6.65. path_len: 33: ends:<8, 22>
+	[<20, 6>, <20, 7>, <21, 7>, <21, 8>, <22, 8>, <22, 9>, <22, 10>, <21, 10>, <21, 11>, <20, 11>, <20, 12>, <19, 12>, <19, 13>, <18, 13>, <18, 14>]
+x:19,y:5. damage:3.54, need:6.65. path_len: 35: ends:<8, 22>
+	[<19, 5>, <19, 6>, <20, 6>, <20, 7>, <21, 7>, <21, 8>, <22, 8>, <22, 9>, <22, 10>, <21, 10>, <21, 11>, <20, 11>, <20, 12>, <19, 12>, <19, 13>]
+Fill in hook holes
+Set up defenses!	Budget: 0.00	Max spending: 0.00
+BEST SCOUT RUSH EVALUATION==========
+	SpBudget:5.00	NumScouts:7	ScoutHealth: 18
+	Expected Damage:5	Online Adjustment:1.00
+Spawn defensive inters!
+Set up defenses!	Budget: 0.00	Max spending: 0.00
+==============BOARD STATE==============
+                           . .                          
+                         . . . .                        
+                       . . . . . .                      
+                     . . . . . . . .                    
+                   . . . . . . . . . .                  
+                 . . . . . . . . . . . .                
+               . . . . . . . . . . . . . .              
+             . . . . . . . . . . . . . . . .            
+           . . . . . . . . . . . . . . . . . .          
+         . . . . . . . . . . . . . . . . . . . .        
+       . . . . x . . . x . . . . X . . . x . . . .      
+     . . . . . o . . . o . . . . o . . . o o . . . .    
+   . . x o . . . . . . . . . . . . . . . . . . o X . .  
+ o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+ o o o o . . . . . . . . . . . . . . . . . . . . o o o .
+   . . X . . . . . . . . . . . . . . . . . . . . X . .  
+     . . . . . . . . . . . . . . . . . . . . . . . .    
+       . . . . . . . . . . . . . . . . . . . . . .      
+         . . o . . . . . . . . . . . . . . o . .        
+           . . o . . . . . . . . . . . . o . .          
+             . . o . . . . . . . . . . o . .            
+               . . o . . . . . . . . o . .              
+                 . . o . . . . . . o . .                
+                   . . o . . . . o . .                  
+                     . . o . . o . .                    
+                       . . o o . .                      
+                         . . . .                        
+                           . .                          
+============END BOARD STATE============
+We got scored on at <20, 6> 1 times.
+We got scored on at <20, 6> 2 times.
+We got scored on at <20, 6> 2 times.
+We got scored on at <19, 5> 1 times.
+Performing turn 2 of your custom algo strategy
+PREDICTED GAME STATE=========
+==============BOARD STATE==============
+                           . .                          
+                         . . . .                        
+                       . . . . . .                      
+                     . . . . . . . .                    
+                   . . . . . . . . . .                  
+                 . . . . . . . . . . . .                
+               . . . . . . . . . . . . . .              
+             . . . . . . . . . . . . . . . .            
+           . . . . . . . . . . . . . . . . . .          
+         . . . . . . . . . . . . . . . . . . . .        
+       . . . . x . . . x . . . . X . . . x . . . .      
+     . . . . . o . . . o . . . . o . . . o o . . . .    
+   . . x o . . . . . . . . . . . . . . . . . . o X . .  
+ o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+ o o . . . . . . . . . . . . . . . . . . . . . . o o o .
+   . . . . . . . . . . . . . . . . . . . . . . . X . .  
+     . . . . . . . . . . . . . . . . . . . . . . . .    
+       . . . . . . . . . . . . . . . . . . . . . .      
+         . . . . . . . . . . . . . . . . . . . .        
+           . . . . . . . . . . . . . . . . . .          
+             . . . . . . . . . . . . . . . .            
+               . . . . . . . . . . . . . .              
+                 . . o . . . . . . o . .                
+                   . . o . . . . o . .                  
+                     . . o . . o . .                    
+                       . . o o . .                      
+                         . . . .                        
+                           . .                          
+============END BOARD STATE============
+Turn 2: We currently have 5.0 SP and 9.3 MP!
+scoutRushDefense:0
+reducedScoutRushDefense: 0
+Enemy left corner heuristic: Scouts: 0, Inters: 4, Demos: 0. Cost: 4
+Enemy right corner heuristic: Scouts: 0, Inters: 8, Demos: 0. Cost: 8
+BOOM DECISION: ===========
+awaitingBoom:	false
+turnsUntilBoom:	-1
+spent: 5 of 5 || finishedBudget @ LINE 75
+spent: 5 of 5 || finishedBudget @ LINE 75
+0.0 saveCores! We currently have 0.0 cores!
+================HOOK ANALYSIS========
+SP: 5.00	MP: 9.30	minDamage:8.22
+Hook Attack Online Adjustment: 1.00
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!
+================HOOK ANALYSIS========
+SP: 5.00	MP: 9.30	minDamage:8.22
+Hook Attack Online Adjustment: 1.00
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!
+================DEMO ANALYSIS========
+MP: 9.30	minDamage:8.22
+DEMO RUN Online Adjustment: 1.00
+================DAMAGES========
+CAN DEMO: 10 options
+x:4,y:9. damage:6.48, need:8.22. path_len: 29: ends:<17, 24>
+	[<4, 9>, <4, 10>, <5, 10>, <5, 11>, <6, 11>, <6, 12>, <7, 12>, <7, 13>, <8, 13>, <8, 14>, <9, 14>, <9, 15>, <10, 15>, <10, 16>, <10, 17>]
+x:1,y:12. damage:5.40, need:8.22. path_len: 31: ends:<17, 24>
+	[<1, 12>, <2, 12>, <2, 11>, <3, 11>, <4, 11>, <4, 12>, <5, 12>, <5, 13>, <6, 13>, <6, 14>, <7, 14>, <7, 15>, <8, 15>, <8, 16>, <9, 16>]
+x:23,y:9. damage:7.55, need:8.22. path_len: 29: ends:<10, 24>
+	[<23, 9>, <23, 10>, <22, 10>, <22, 11>, <21, 11>, <21, 12>, <20, 12>, <20, 13>, <19, 13>, <19, 14>, <18, 14>, <18, 15>, <17, 15>, <17, 16>, <17, 17>]
+x:5,y:8. damage:4.19, need:8.22. path_len: 29: ends:<19, 22>
+	[<5, 8>, <5, 9>, <6, 9>, <6, 10>, <7, 10>, <7, 11>, <8, 11>, <8, 12>, <9, 12>, <9, 13>, <10, 13>, <10, 14>, <11, 14>, <11, 15>, <12, 15>]
+x:2,y:11. damage:4.44, need:8.22. path_len: 29: ends:<17, 24>
+	[<2, 11>, <3, 11>, <4, 11>, <4, 12>, <5, 12>, <5, 13>, <6, 13>, <6, 14>, <7, 14>, <7, 15>, <8, 15>, <8, 16>, <9, 16>, <9, 17>, <10, 17>]
+x:21,y:7. damage:4.35, need:8.22. path_len: 29: ends:<8, 22>
+	[<21, 7>, <21, 8>, <20, 8>, <20, 9>, <19, 9>, <19, 10>, <18, 10>, <18, 11>, <17, 11>, <17, 12>, <16, 12>, <16, 13>, <15, 13>, <15, 14>, <14, 14>]
+x:6,y:7. damage:6.03, need:8.22. path_len: 29: ends:<19, 22>
+	[<6, 7>, <6, 8>, <7, 8>, <7, 9>, <8, 9>, <8, 10>, <9, 10>, <9, 11>, <10, 11>, <10, 12>, <11, 12>, <11, 13>, <12, 13>, <12, 14>, <13, 14>]
+x:3,y:10. damage:4.44, need:8.22. path_len: 29: ends:<17, 24>
+	[<3, 10>, <3, 11>, <4, 11>, <4, 12>, <5, 12>, <5, 13>, <6, 13>, <6, 14>, <7, 14>, <7, 15>, <8, 15>, <8, 16>, <9, 16>, <9, 17>, <10, 17>]
+x:20,y:6. damage:6.35, need:8.22. path_len: 29: ends:<6, 20>
+	[<20, 6>, <20, 7>, <19, 7>, <19, 8>, <18, 8>, <18, 9>, <17, 9>, <17, 10>, <16, 10>, <16, 11>, <15, 11>, <15, 12>, <14, 12>, <14, 13>, <13, 13>]
+x:7,y:6. damage:4.50, need:8.22. path_len: 29: ends:<21, 20>
+	[<7, 6>, <7, 7>, <8, 7>, <8, 8>, <9, 8>, <9, 9>, <10, 9>, <10, 10>, <11, 10>, <11, 11>, <12, 11>, <12, 12>, <13, 12>, <13, 13>, <14, 13>]
+================END DEMO ANALYSIS========
+Not doing enough damage!
+x:4,y:9. damage:6.48, need:8.22. path_len: 29: ends:<17, 24>
+	[<4, 9>, <4, 10>, <5, 10>, <5, 11>, <6, 11>, <6, 12>, <7, 12>, <7, 13>, <8, 13>, <8, 14>, <9, 14>, <9, 15>, <10, 15>, <10, 16>, <10, 17>]
+x:1,y:12. damage:5.40, need:8.22. path_len: 31: ends:<17, 24>
+	[<1, 12>, <2, 12>, <2, 11>, <3, 11>, <4, 11>, <4, 12>, <5, 12>, <5, 13>, <6, 13>, <6, 14>, <7, 14>, <7, 15>, <8, 15>, <8, 16>, <9, 16>]
+x:23,y:9. damage:7.55, need:8.22. path_len: 29: ends:<10, 24>
+	[<23, 9>, <23, 10>, <22, 10>, <22, 11>, <21, 11>, <21, 12>, <20, 12>, <20, 13>, <19, 13>, <19, 14>, <18, 14>, <18, 15>, <17, 15>, <17, 16>, <17, 17>]
+x:5,y:8. damage:4.19, need:8.22. path_len: 29: ends:<19, 22>
+	[<5, 8>, <5, 9>, <6, 9>, <6, 10>, <7, 10>, <7, 11>, <8, 11>, <8, 12>, <9, 12>, <9, 13>, <10, 13>, <10, 14>, <11, 14>, <11, 15>, <12, 15>]
+x:2,y:11. damage:4.44, need:8.22. path_len: 29: ends:<17, 24>
+	[<2, 11>, <3, 11>, <4, 11>, <4, 12>, <5, 12>, <5, 13>, <6, 13>, <6, 14>, <7, 14>, <7, 15>, <8, 15>, <8, 16>, <9, 16>, <9, 17>, <10, 17>]
+x:21,y:7. damage:4.35, need:8.22. path_len: 29: ends:<8, 22>
+	[<21, 7>, <21, 8>, <20, 8>, <20, 9>, <19, 9>, <19, 10>, <18, 10>, <18, 11>, <17, 11>, <17, 12>, <16, 12>, <16, 13>, <15, 13>, <15, 14>, <14, 14>]
+x:6,y:7. damage:6.03, need:8.22. path_len: 29: ends:<19, 22>
+	[<6, 7>, <6, 8>, <7, 8>, <7, 9>, <8, 9>, <8, 10>, <9, 10>, <9, 11>, <10, 11>, <10, 12>, <11, 12>, <11, 13>, <12, 13>, <12, 14>, <13, 14>]
+x:3,y:10. damage:4.44, need:8.22. path_len: 29: ends:<17, 24>
+	[<3, 10>, <3, 11>, <4, 11>, <4, 12>, <5, 12>, <5, 13>, <6, 13>, <6, 14>, <7, 14>, <7, 15>, <8, 15>, <8, 16>, <9, 16>, <9, 17>, <10, 17>]
+x:20,y:6. damage:6.35, need:8.22. path_len: 29: ends:<6, 20>
+	[<20, 6>, <20, 7>, <19, 7>, <19, 8>, <18, 8>, <18, 9>, <17, 9>, <17, 10>, <16, 10>, <16, 11>, <15, 11>, <15, 12>, <14, 12>, <14, 13>, <13, 13>]
+x:7,y:6. damage:4.50, need:8.22. path_len: 29: ends:<21, 20>
+	[<7, 6>, <7, 7>, <8, 7>, <8, 8>, <9, 8>, <9, 9>, <10, 9>, <10, 10>, <11, 10>, <11, 11>, <12, 11>, <12, 12>, <13, 12>, <13, 13>, <14, 13>]
+Fill in hook holes
+Set up defenses!	Budget: 0.00	Max spending: 0.00
+BEST SCOUT RUSH EVALUATION==========
+	SpBudget:5.00	NumScouts:9	ScoutHealth: 18
+	Expected Damage:7	Online Adjustment:1.00
+Spawn defensive inters!
+Set up defenses!	Budget: 0.00	Max spending: 0.00
+==============BOARD STATE==============
+                           . .                          
+                         . . . .                        
+                       . . . . . .                      
+                     . . . . . . . .                    
+                   . . . . . . . . . .                  
+                 . . . . . . . . . . . .                
+               . . . . . . . . . . . . . .              
+             . . . . . . . . . . . . . . . .            
+           . . . . . . . . . . . . . . . . . .          
+         . . . . . . . . . . . . . . . . . . . .        
+       . . . . X . . . x . . . . X . . . x . . . .      
+     . . . . o o . . o o . . . . o o o . o o . . . .    
+   . . x o . . . . . . . . . . . . . . . . . . o X . .  
+ o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+ o o . o . . . . . . . . . . . . . . . . . . . . o o o .
+   . . x . . . . . . . . . . . . . . . . . . . . X . .  
+     . . . . . . . . . . . . . . . . . . . . . . . .    
+       . . . . . . . . . . . . . . . . . . . . . .      
+         . . . . . . . . . . . . . . . . . . . .        
+           . . . . . . . . . . . . . . . . . .          
+             . . . . . . . . . . . . . . . .            
+               . . o . . . . . . . . o . .              
+                 . . o . . . . . . o . .                
+                   . . o . . . . o . .                  
+                     . . o . . o . .                    
+                       . . o o . .                      
+                         . . . .                        
+                           . .                          
+============END BOARD STATE============
+We got scored on at <20, 6> 2 times.
+We got scored on at <19, 5> 1 times.
+We got scored on at <7, 6> 1 times.
+We got scored on at <9, 4> 1 times.
+We got scored on at <20, 6> 2 times.
+We got scored on at <19, 5> 1 times.
+We got scored on at <7, 6> 1 times.
+Performing turn 3 of your custom algo strategy
+PREDICTED GAME STATE=========
+==============BOARD STATE==============
+                           . .                          
+                         . . . .                        
+                       . . . . . .                      
+                     . . . . . . . .                    
+                   . . . . . . . . . .                  
+                 . . . . . . . . . . . .                
+               . . . . . . . . . . . . . .              
+             . . . . . . . . . . . . . . . .            
+           . . . . . . . . . . . . . . . . . .          
+         . . . . . . . . . . . . . . . . . . . .        
+       . . . . X . . . x . . . . X . . . x . . . .      
+     . . . . o o . . o o . . . . o o o . o o . . . .    
+   . . x o . . . . . . . . . . . . . . . . . . o X . .  
+ o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+ o o . o . . . . . . . . . . . . . . . . . . . . . o o .
+   . . x . . . . . . . . . . . . . . . . . . . . X . .  
+     . . . . . . . . . . . . . . . . . . . . . . . .    
+       . . . . . . . . . . . . . . . . . . . . . .      
+         . . . . . . . . . . . . . . . . . . . .        
+           . . . . . . . . . . . . . . . . . .          
+             . . . . . . . . . . . . . . . .            
+               . . . . . . . . . . . . . .              
+                 . . . . . . . . . . . .                
+                   . . o . . . . o . .                  
+                     . . o . . o . .                    
+                       . . o o . .                      
+                         . . . .                        
+                           . .                          
+============END BOARD STATE============
+Turn 3: We currently have 5.0 SP and 11.0 MP!
+scoutRushDefense:0
+reducedScoutRushDefense: 0
+Enemy left corner heuristic: Scouts: 0, Inters: 4, Demos: 0. Cost: 4
+Enemy right corner heuristic: Scouts: 0, Inters: 8, Demos: 0. Cost: 8
+BOOM DECISION: ===========
+awaitingBoom:	false
+turnsUntilBoom:	-1
+spent: 5 of 5 || finishedBudget @ LINE 75
+spent: 5 of 5 || finishedBudget @ LINE 75
+0.0 saveCores! We currently have 0.0 cores!
+================HOOK ANALYSIS========
+SP: 5.00	MP: 11.00	minDamage:9.49
+Hook Attack Online Adjustment: 1.00
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!
+================HOOK ANALYSIS========
+SP: 5.00	MP: 11.00	minDamage:9.49
+Hook Attack Online Adjustment: 1.00
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!
+================DEMO ANALYSIS========
+MP: 11.00	minDamage:9.49
+DEMO RUN Online Adjustment: 1.00
+================DAMAGES========
+CAN DEMO: 7 options
+x:1,y:12. damage:4.88, need:9.49. path_len: 31: ends:<17, 24>
+	[<1, 12>, <2, 12>, <2, 11>, <3, 11>, <4, 11>, <4, 12>, <5, 12>, <5, 13>, <6, 13>, <6, 14>, <7, 14>, <7, 15>, <8, 15>, <8, 16>, <9, 16>]
+x:11,y:2. damage:5.75, need:9.49. path_len: 31: ends:<24, 17>
+	[<11, 2>, <11, 3>, <10, 3>, <10, 4>, <10, 5>, <11, 5>, <11, 6>, <12, 6>, <12, 7>, <13, 7>, <13, 8>, <14, 8>, <14, 9>, <15, 9>, <15, 10>]
+x:23,y:9. damage:8.23, need:9.49. path_len: 29: ends:<8, 22>
+	[<23, 9>, <23, 10>, <22, 10>, <22, 11>, <21, 11>, <21, 12>, <20, 12>, <20, 13>, <19, 13>, <19, 14>, <18, 14>, <18, 15>, <17, 15>, <16, 15>, <15, 15>]
+x:5,y:8. damage:5.06, need:9.49. path_len: 29: ends:<19, 22>
+	[<5, 8>, <5, 9>, <6, 9>, <6, 10>, <7, 10>, <7, 11>, <8, 11>, <8, 12>, <9, 12>, <9, 13>, <10, 13>, <10, 14>, <11, 14>, <11, 15>, <12, 15>]
+x:9,y:4. damage:6.10, need:9.49. path_len: 29: ends:<24, 17>
+	[<9, 4>, <9, 5>, <10, 5>, <10, 6>, <11, 6>, <11, 7>, <12, 7>, <12, 8>, <13, 8>, <13, 9>, <14, 9>, <14, 10>, <15, 10>, <15, 11>, <16, 11>]
+x:20,y:6. damage:5.42, need:9.49. path_len: 29: ends:<6, 20>
+	[<20, 6>, <20, 7>, <19, 7>, <19, 8>, <18, 8>, <18, 9>, <17, 9>, <17, 10>, <16, 10>, <16, 11>, <15, 11>, <15, 12>, <14, 12>, <14, 13>, <13, 13>]
+x:10,y:3. damage:5.07, need:9.49. path_len: 29: ends:<24, 17>
+	[<10, 3>, <10, 4>, <10, 5>, <11, 5>, <11, 6>, <12, 6>, <12, 7>, <13, 7>, <13, 8>, <14, 8>, <14, 9>, <15, 9>, <15, 10>, <16, 10>, <16, 11>]
+================END DEMO ANALYSIS========
+Not doing enough damage!
+x:1,y:12. damage:4.88, need:9.49. path_len: 31: ends:<17, 24>
+	[<1, 12>, <2, 12>, <2, 11>, <3, 11>, <4, 11>, <4, 12>, <5, 12>, <5, 13>, <6, 13>, <6, 14>, <7, 14>, <7, 15>, <8, 15>, <8, 16>, <9, 16>]
+x:11,y:2. damage:5.75, need:9.49. path_len: 31: ends:<24, 17>
+	[<11, 2>, <11, 3>, <10, 3>, <10, 4>, <10, 5>, <11, 5>, <11, 6>, <12, 6>, <12, 7>, <13, 7>, <13, 8>, <14, 8>, <14, 9>, <15, 9>, <15, 10>]
+x:23,y:9. damage:8.23, need:9.49. path_len: 29: ends:<8, 22>
+	[<23, 9>, <23, 10>, <22, 10>, <22, 11>, <21, 11>, <21, 12>, <20, 12>, <20, 13>, <19, 13>, <19, 14>, <18, 14>, <18, 15>, <17, 15>, <16, 15>, <15, 15>]
+x:5,y:8. damage:5.06, need:9.49. path_len: 29: ends:<19, 22>
+	[<5, 8>, <5, 9>, <6, 9>, <6, 10>, <7, 10>, <7, 11>, <8, 11>, <8, 12>, <9, 12>, <9, 13>, <10, 13>, <10, 14>, <11, 14>, <11, 15>, <12, 15>]
+x:9,y:4. damage:6.10, need:9.49. path_len: 29: ends:<24, 17>
+	[<9, 4>, <9, 5>, <10, 5>, <10, 6>, <11, 6>, <11, 7>, <12, 7>, <12, 8>, <13, 8>, <13, 9>, <14, 9>, <14, 10>, <15, 10>, <15, 11>, <16, 11>]
+x:20,y:6. damage:5.42, need:9.49. path_len: 29: ends:<6, 20>
+	[<20, 6>, <20, 7>, <19, 7>, <19, 8>, <18, 8>, <18, 9>, <17, 9>, <17, 10>, <16, 10>, <16, 11>, <15, 11>, <15, 12>, <14, 12>, <14, 13>, <13, 13>]
+x:10,y:3. damage:5.07, need:9.49. path_len: 29: ends:<24, 17>
+	[<10, 3>, <10, 4>, <10, 5>, <11, 5>, <11, 6>, <12, 6>, <12, 7>, <13, 7>, <13, 8>, <14, 8>, <14, 9>, <15, 9>, <15, 10>, <16, 10>, <16, 11>]
+Fill in hook holes
+Set up defenses!	Budget: 0.00	Max spending: 0.00
+BEST SCOUT RUSH EVALUATION==========
+	SpBudget:5.00	NumScouts:11	ScoutHealth: 18
+	Expected Damage:7	Online Adjustment:1.00
+Spawn defensive inters!
+Set up defenses!	Budget: 0.00	Max spending: 0.00
+==============BOARD STATE==============
+                           . .                          
+                         . . . .                        
+                       . . . . . .                      
+                     . . . . . . . .                    
+                   . . . . . . . . . .                  
+                 . . . . . . . . . . . .                
+               . . . . . . . . . . . . . .              
+             . . . . . . . . . . . . . . . .            
+           . . . . . . . . . . . . . . . . . .          
+         . . . . . . . . . . . . . . . . . . . .        
+       . . . . X . . . x o . . o X . . . X . . . .      
+     . . . . o o . o o o . . . . o o o . o o . . . .    
+   . . x o . . . . . . . . . . . . . . . . . . o X . .  
+ o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+ o o . o . . . . . . . . . . . . . . . . . . . . o o o .
+   . . X . . . . . . . . . . . . . . . . . . . . X . .  
+     . . . . . . . . . . . . . . . . . . . . . . . .    
+       . . . . . . . . . . . . . . . . . . . . . .      
+         . . . . . . . . . . . . . . . . . . . .        
+           . . . . . . . . . . . . . . . . . .          
+             . . . . . . . . . . . . . . . .            
+               . . . . . . . . . . . . . .              
+                 . . . . . . . . . . . .                
+                   . . o . . . . o . .                  
+                     . . o . . o . .                    
+                       . . o o . .                      
+                         . . . .                        
+                           . .                          
+============END BOARD STATE============
+We got scored on at <9, 4> 1 times.
+We got scored on at <20, 6> 2 times.
+We got scored on at <10, 3> 1 times.
+We got scored on at <19, 5> 1 times.
+We got scored on at <7, 6> 1 times.
+We got scored on at <9, 4> 1 times.
+We got scored on at <20, 6> 2 times.
+We got scored on at <10, 3> 2 times.
+We got scored on at <19, 5> 1 times.
+We got scored on at <7, 6> 1 times.
+Performing turn 4 of your custom algo strategy
+PREDICTED GAME STATE=========
+==============BOARD STATE==============
+                           . .                          
+                         . . . .                        
+                       . . . . . .                      
+                     . . . . . . . .                    
+                   . . . . . . . . . .                  
+                 . . . . . . . . . . . .                
+               . . . . . . . . . . . . . .              
+             . . . . . . . . . . . . . . . .            
+           . . . . . . . . . . . . . . . . . .          
+         . . . . . . . . . . . . . . . . . . . .        
+       . . . . X . . . x o . . o X . . . X . . . .      
+     . . . . o o . o o o . . . . o o o . o o . . . .    
+   . . x o . . . . . . . . . . . . . . . . . . o X . .  
+ o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+ o o . o . . . . . . . . . . . . . . . . . . . . . . o .
+   . . X . . . . . . . . . . . . . . . . . . . . . . .  
+     . . . . . . . . . . . . . . . . . . . . . . . .    
+       . . . . . . . . . . . . . . . . . . . . . .      
+         . . . . . . . . . . . . . . . . . . . .        
+           . . . . . . . . . . . . . . . . . .          
+             . . . . . . . . . . . . . . . .            
+               . . . . . . . . . . . . . .              
+                 . . . . . . . . . . . .                
+                   . . . . . . . . . .                  
+                     . . . . . o . .                    
+                       . . o o . .                      
+                         . . . .                        
+                           . .                          
+============END BOARD STATE============
+Turn 4: We currently have 5.7 SP and 12.3 MP!
+scoutRushDefense:0
+reducedScoutRushDefense: 0
+Enemy left corner heuristic: Scouts: 0, Inters: 4, Demos: 0. Cost: 4
+Enemy right corner heuristic: Scouts: 0, Inters: 8, Demos: 0. Cost: 8
+BOOM DECISION: ===========
+awaitingBoom:	false
+turnsUntilBoom:	-1
+spent: 5 of 5 || finishedBudget @ LINE 75
+spent: 5 of 5 || finishedBudget @ LINE 75
+0.0 saveCores! We currently have 0.6999998 cores!
+================HOOK ANALYSIS========
+SP: 5.70	MP: 12.30	minDamage:10.76
+Hook Attack Online Adjustment: 1.00
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!
+================HOOK ANALYSIS========
+SP: 5.70	MP: 12.30	minDamage:10.76
+Hook Attack Online Adjustment: 1.00
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!
+================DEMO ANALYSIS========
+MP: 12.30	minDamage:10.76
+DEMO RUN Online Adjustment: 1.00
+================DAMAGES========
+CAN DEMO: 6 options
+x:1,y:12. damage:6.90, need:10.76. path_len: 31: ends:<16, 25>
+	[<1, 12>, <2, 12>, <2, 11>, <3, 11>, <4, 11>, <4, 12>, <5, 12>, <5, 13>, <6, 13>, <6, 14>, <7, 14>, <7, 15>, <8, 15>, <8, 16>, <8, 17>]
+x:11,y:2. damage:5.40, need:10.76. path_len: 31: ends:<24, 17>
+	[<11, 2>, <11, 3>, <10, 3>, <10, 4>, <10, 5>, <11, 5>, <11, 6>, <12, 6>, <12, 7>, <13, 7>, <13, 8>, <14, 8>, <14, 9>, <15, 9>, <15, 10>]
+x:23,y:9. damage:7.54, need:10.76. path_len: 29: ends:<8, 22>
+	[<23, 9>, <23, 10>, <22, 10>, <22, 11>, <21, 11>, <21, 12>, <21, 13>, <20, 13>, <20, 14>, <19, 14>, <19, 15>, <18, 15>, <17, 15>, <16, 15>, <15, 15>]
+x:5,y:8. damage:6.58, need:10.76. path_len: 29: ends:<19, 22>
+	[<5, 8>, <5, 9>, <6, 9>, <6, 10>, <7, 10>, <7, 11>, <8, 11>, <8, 12>, <9, 12>, <9, 13>, <10, 13>, <10, 14>, <10, 15>, <11, 15>, <12, 15>]
+x:3,y:10. damage:5.46, need:10.76. path_len: 29: ends:<16, 25>
+	[<3, 10>, <3, 11>, <4, 11>, <4, 12>, <5, 12>, <5, 13>, <6, 13>, <6, 14>, <7, 14>, <7, 15>, <8, 15>, <8, 16>, <8, 17>, <9, 17>, <9, 18>]
+x:10,y:3. damage:5.40, need:10.76. path_len: 29: ends:<24, 17>
+	[<10, 3>, <10, 4>, <10, 5>, <11, 5>, <11, 6>, <12, 6>, <12, 7>, <13, 7>, <13, 8>, <14, 8>, <14, 9>, <15, 9>, <15, 10>, <16, 10>, <16, 11>]
+================END DEMO ANALYSIS========
+Not doing enough damage!
+x:1,y:12. damage:6.90, need:10.76. path_len: 31: ends:<16, 25>
+	[<1, 12>, <2, 12>, <2, 11>, <3, 11>, <4, 11>, <4, 12>, <5, 12>, <5, 13>, <6, 13>, <6, 14>, <7, 14>, <7, 15>, <8, 15>, <8, 16>, <8, 17>]
+x:11,y:2. damage:5.40, need:10.76. path_len: 31: ends:<24, 17>
+	[<11, 2>, <11, 3>, <10, 3>, <10, 4>, <10, 5>, <11, 5>, <11, 6>, <12, 6>, <12, 7>, <13, 7>, <13, 8>, <14, 8>, <14, 9>, <15, 9>, <15, 10>]
+x:23,y:9. damage:7.54, need:10.76. path_len: 29: ends:<8, 22>
+	[<23, 9>, <23, 10>, <22, 10>, <22, 11>, <21, 11>, <21, 12>, <21, 13>, <20, 13>, <20, 14>, <19, 14>, <19, 15>, <18, 15>, <17, 15>, <16, 15>, <15, 15>]
+x:5,y:8. damage:6.58, need:10.76. path_len: 29: ends:<19, 22>
+	[<5, 8>, <5, 9>, <6, 9>, <6, 10>, <7, 10>, <7, 11>, <8, 11>, <8, 12>, <9, 12>, <9, 13>, <10, 13>, <10, 14>, <10, 15>, <11, 15>, <12, 15>]
+x:3,y:10. damage:5.46, need:10.76. path_len: 29: ends:<16, 25>
+	[<3, 10>, <3, 11>, <4, 11>, <4, 12>, <5, 12>, <5, 13>, <6, 13>, <6, 14>, <7, 14>, <7, 15>, <8, 15>, <8, 16>, <8, 17>, <9, 17>, <9, 18>]
+x:10,y:3. damage:5.40, need:10.76. path_len: 29: ends:<24, 17>
+	[<10, 3>, <10, 4>, <10, 5>, <11, 5>, <11, 6>, <12, 6>, <12, 7>, <13, 7>, <13, 8>, <14, 8>, <14, 9>, <15, 9>, <15, 10>, <16, 10>, <16, 11>]
+Fill in hook holes
+Set up defenses!	Budget: 0.00	Max spending: 0.00
+BEST SCOUT RUSH EVALUATION==========
+	SpBudget:5.70	NumScouts:12	ScoutHealth: 18
+	Expected Damage:8	Online Adjustment:1.00
+Spawn defensive inters!
+Set up defenses!	Budget: 0.00	Max spending: 0.70
+spent: 0 of -2.0 || finishedBudget @ LINE 458
+spent an extra: 0.0 of -1.3000001907348633 || finishedBudget @ LINE 458
+topWallCap: (4, 12)
+==============BOARD STATE==============
+                           . .                          
+                         . . . .                        
+                       . . . . . .                      
+                     . . . . . . . .                    
+                   . . . . . . . . . .                  
+                 . . . . . . . . . . . .                
+               . . . . . . . . . . . . . .              
+             . . . . . . . . . . . . . . . .            
+           . . . . . . . . . . . . . . . . . .          
+         . . . . . . . . . . . . . . . . . . . .        
+       . . . . X . . . X o . . o X . . . X . . . .      
+     . . . . o o . o o o . . . . o o o . O o o . . .    
+   . . x o . . . . . . . . . . . . . . . . . . o X . .  
+ o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+ o o . o . . . . . . . . . . . . . . . . . . . . o . o .
+   . . X . . . . . . . . . . . . . . . . . . . . x . .  
+     . . . . . . . . . . . . . . . . . . . . . . . .    
+       . . . . . . . . . . . . . . . . . . . . . .      
+         . . . . . . . . . . . . . . . . . . . .        
+           . . . . . . . . . . . . . . . . . .          
+             . . . . . . . . . . . . . . . .            
+               . . . . . . . . . . . . . .              
+                 . . . . . . . . . . . .                
+                   . . o . . . . . . .                  
+                     . . o . . o . .                    
+                       . . o o . .                      
+                         . . . .                        
+                           . .                          
+============END BOARD STATE============
+Performing turn 5 of your custom algo strategy
+PREDICTED GAME STATE=========
+==============BOARD STATE==============
+                           . .                          
+                         . . . .                        
+                       . . . . . .                      
+                     . . . . . . . .                    
+                   . . . . . . . . . .                  
+                 . . . . . . . . . . . .                
+               . . . . . . . . . . . . . .              
+             . . . . . . . . . . . . . . . .            
+           . . . . . . . . . . . . . . . . . .          
+         . . . . . . . . . . . . . . . . . . . .        
+       . . . . X . . . X o . . o X . . . X . . . .      
+     . . . . o o . o o o . . . . o o o . O o . . . .    
+   . . x o . . . . . . . . . . . . . . . . . . o X . .  
+ o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+ o o . o . . . . . . . . . . . . . . . . . . . . o . o .
+   . . X . . . . . . . . . . . . . . . . . . . . x . .  
+     . . . . . . . . . . . . . . . . . . . . . . . .    
+       . . . . . . . . . . . . . . . . . . . . . .      
+         . . . . . . . . . . . . . . . . . . . .        
+           . . . . . . . . . . . . . . . . . .          
+             . . . . . . . . . . . . . . . .            
+               . . . . . . . . . . . . . .              
+                 . . . . . . . . . . . .                
+                   . . o . . . . . . .                  
+                     . . o . . o . .                    
+                       . . o o . .                      
+                         . . . .                        
+                           . .                          
+============END BOARD STATE============
+Turn 5: We currently have 5.7 SP and 13.2 MP!
+scoutRushDefense:0
+reducedScoutRushDefense: 0
+Enemy left corner heuristic: Scouts: 0, Inters: 4, Demos: 0. Cost: 4
+Enemy right corner heuristic: Scouts: 0, Inters: 8, Demos: 0. Cost: 8
+BOOM DECISION: ===========
+awaitingBoom:	false
+turnsUntilBoom:	-1
+spent: 5 of 5 || finishedBudget @ LINE 35
+spent: 5 of 5 || finishedBudget @ LINE 35
+0.0 saveCores! We currently have 0.6999998 cores!
+================HOOK ANALYSIS========
+SP: 5.00	MP: 12.20	minDamage:11.60
+Hook Attack Online Adjustment: 1.00
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!
+================HOOK ANALYSIS========
+SP: 5.00	MP: 12.20	minDamage:11.60
+Hook Attack Online Adjustment: 1.00
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!
+================DEMO ANALYSIS========
+MP: 13.20	minDamage:11.60
+DEMO RUN Online Adjustment: 1.00
+================DAMAGES========
+CAN DEMO: 3 options
+x:1,y:12. damage:6.90, need:11.60. path_len: 31: ends:<16, 25>
+	[<1, 12>, <2, 12>, <2, 11>, <3, 11>, <4, 11>, <4, 12>, <5, 12>, <5, 13>, <6, 13>, <6, 14>, <7, 14>, <7, 15>, <8, 15>, <8, 16>, <8, 17>]
+x:23,y:9. damage:7.54, need:11.60. path_len: 29: ends:<8, 22>
+	[<23, 9>, <23, 10>, <22, 10>, <22, 11>, <21, 11>, <21, 12>, <21, 13>, <20, 13>, <20, 14>, <19, 14>, <19, 15>, <18, 15>, <17, 15>, <16, 15>, <15, 15>]
+x:7,y:6. damage:6.58, need:11.60. path_len: 29: ends:<21, 20>
+	[<7, 6>, <7, 7>, <8, 7>, <8, 8>, <9, 8>, <9, 9>, <10, 9>, <10, 10>, <11, 10>, <11, 11>, <12, 11>, <12, 12>, <13, 12>, <13, 13>, <14, 13>]
+================END DEMO ANALYSIS========
+Not doing enough damage!
+x:1,y:12. damage:6.90, need:11.60. path_len: 31: ends:<16, 25>
+	[<1, 12>, <2, 12>, <2, 11>, <3, 11>, <4, 11>, <4, 12>, <5, 12>, <5, 13>, <6, 13>, <6, 14>, <7, 14>, <7, 15>, <8, 15>, <8, 16>, <8, 17>]
+x:23,y:9. damage:7.54, need:11.60. path_len: 29: ends:<8, 22>
+	[<23, 9>, <23, 10>, <22, 10>, <22, 11>, <21, 11>, <21, 12>, <21, 13>, <20, 13>, <20, 14>, <19, 14>, <19, 15>, <18, 15>, <17, 15>, <16, 15>, <15, 15>]
+x:7,y:6. damage:6.58, need:11.60. path_len: 29: ends:<21, 20>
+	[<7, 6>, <7, 7>, <8, 7>, <8, 8>, <9, 8>, <9, 9>, <10, 9>, <10, 10>, <11, 10>, <11, 11>, <12, 11>, <12, 12>, <13, 12>, <13, 13>, <14, 13>]
+Fill in hook holes
+Set up defenses!	Budget: 0.70	Max spending: 0.70
+spent: 0 of -1.3000001907348633 || finishedBudget @ LINE 458
+spent an extra: 0.0 of -1.3000001907348633 || finishedBudget @ LINE 458
+topWallCap: (4, 12)
+BEST SCOUT RUSH EVALUATION==========
+	SpBudget:5.00	NumScouts:13	ScoutHealth: 18
+	Expected Damage:9	Online Adjustment:1.00
+Spawn defensive inters!
+Set up defenses!	Budget: 0.70	Max spending: 0.70
+spent: 0 of -1.3000001907348633 || finishedBudget @ LINE 458
+spent an extra: 0.0 of -1.3000001907348633 || finishedBudget @ LINE 458
+topWallCap: (4, 12)
+Exception in thread "main" java.lang.IllegalStateException: java.io.IOException: stream closed
+	at com.c1games.terminal.algo.io.DefaultGameIO.nextFrameAnyType(DefaultGameIO.java:59)
+	at com.c1games.terminal.algo.io.GameLoopDriver.run(GameLoopDriver.java:27)
+	at com.c1games.terminal.myalgo.MyAlgo.main(MyAlgo.java:37)
+Caused by: java.io.IOException: stream closed
+	at com.c1games.terminal.algo.io.TerminatedStringReader.await(TerminatedStringReader.java:57)
+	at com.c1games.terminal.algo.io.DefaultGameIO.nextFrameAnyType(DefaultGameIO.java:57)
+	... 2 more

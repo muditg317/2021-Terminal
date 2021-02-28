@@ -140,6 +140,7 @@ public class DemolisherRun extends Attack {
                     attacker.health -= demolisherDamage;
                     numDemolishersToAttack--;
                     if (attacker.health <= 0) {
+                      testState.allUnits[attackersLocations.get(attacker).x][attackersLocations.get(attacker).y].removeIf(unit -> unit.health <= 0);
                       needToRepath = true;
                       break;
                     }

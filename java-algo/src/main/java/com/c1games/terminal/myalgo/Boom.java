@@ -75,16 +75,26 @@ public class Boom {
         this.sideToBoom, this.bombUnits, this.bombType, this.followerUnits, this.getCost());
   }
 
-  static void evaluate(GameState move, int expectedMpSpentPerTurn) {
-    GameIO.debug().print("BOOM STATE BEFORE DECISION=======");
-    Boom.debugPrint();
-    if (Boom.awaitingBoom && Boom.turnsUntilBoom == 0) {
+  static void progress() {
+    if (Boom.awaitingBoom && turnsUntilBoom == 0) { //just boomed this turn
       awaitingBoom = false;
       turnsUntilBoom = -99;
     }
     if (Boom.awaitingBoom) {
       Boom.turnsUntilBoom--;
     }
+  }
+
+  static void evaluate(GameState move, int expectedMpSpentPerTurn) {
+    GameIO.debug().print("BOOM STATE BEFORE DECISION=======");
+    Boom.debugPrint();
+//    if (Boom.awaitingBoom && Boom.turnsUntilBoom == 0) {
+//      awaitingBoom = false;
+//      turnsUntilBoom = -99;
+//    }
+//    if (Boom.awaitingBoom) {
+//      Boom.turnsUntilBoom--;
+//    }
     GameIO.debug().println("BOOM DECISION: ===========");
     float mp = move.data.p1Stats.bits;
     int MAX_EXTRAPOLATION_TURNS = Math.min(3, move.data.turnInfo.turnNumber / 5);
@@ -102,7 +112,7 @@ public class Boom {
           continue;
         }
 
-        float futureAttackThreshold = futureAttack.getCost();
+        int futureAttackThreshold = (int) futureAttack.getCost();
         float futureMP = extrapolateFutureMP(move, turns, expectedMpSpentPerTurn);
         GameIO.debug().println("futureAttackThreshold: " + futureAttackThreshold);
         GameIO.debug().println("futureMP: " + futureMP);
@@ -153,7 +163,7 @@ public class Boom {
     } else {
       SpawnUtility.spawnScouts(move, getBombStart(), this.bombUnits);
     }
-    SpawnUtility.spawnScouts(move, getFollowerStart(), this.followerUnits);
+    SpawnUtility.spawnScouts(move, getFollowerStart(), (int) move.data.p1Stats.bits);
 
     SpawnUtility.removeBuilding(move, new Coords(boomSide == Side.RIGHT ? 9 : 27 - 9, 5));
     SpawnUtility.removeBuilding(move, new Coords(4, 11));
@@ -303,22 +313,22 @@ public class Boom {
    * @return AttackBreakdown with where to attack and the related units needed
    */
   static Boom attackThreshold(GameState move) {
-//    UnitCounts leftUnitCounts = enemyDefenseHeuristic(move, Side.LEFT);
-//    int leftCost = leftUnitCounts.cost;
-//
-//    UnitCounts rightUnitCounts = enemyDefenseHeuristic(move, Side.RIGHT);
-//    int rightCost = rightUnitCounts.cost;
-//
-//    int enemyHealth = (int) move.data.p2Stats.integrity;
-//    int minDamage = Math.min(10, enemyHealth);
-//
-//
-//    Side weakerSide = leftCost < rightCost ? Side.LEFT : Side.RIGHT;
-//    UnitCounts correctUnitCounts = leftCost < rightCost ? leftUnitCounts : rightUnitCounts;
-//    correctUnitCounts.numScouts = minDamage;
-//    correctUnitCounts.cost += minDamage;
-//    return new AttackBreakdown(weakerSide, correctUnitCounts);
-    return bestBoom(move, move.data.p1Stats.bits, move.data.p2Stats.integrity / 4);
+    UnitCounts leftUnitCounts = enemyDefenseHeuristic(move, Side.LEFT);
+    int leftCost = leftUnitCounts.cost;
+
+    UnitCounts rightUnitCounts = enemyDefenseHeuristic(move, Side.RIGHT);
+    int rightCost = rightUnitCounts.cost;
+
+    int enemyHealth = (int) move.data.p2Stats.integrity;
+    int minDamage = Math.min(10, enemyHealth);
+
+    Side weakerSide = leftCost < rightCost ? Side.LEFT : Side.RIGHT;
+    UnitCounts correctUnitCounts = leftCost < rightCost ? leftUnitCounts : rightUnitCounts;
+    correctUnitCounts.numScouts = minDamage;
+    correctUnitCounts.cost += minDamage;
+    return new Boom(weakerSide, correctUnitCounts.numInterceptors, UnitType.Scout, correctUnitCounts.numScouts);
+    //return new AttackBreakdown(weakerSide, correctUnitCounts);
+//    return bestBoom(move, move.data.p1Stats.bits, move.data.p2Stats.integrity / 4);
   }
 
   /**
@@ -333,10 +343,7 @@ public class Boom {
     GameState duplicate = Utility.duplicateState(move);
 
     duplicate.data.p1Stats.cores += 5 * turns;
-    for (int i = 1; i <= turns; i++) {
-      float mpIncome = duplicate.config.resources.bitsPerRound + duplicate.config.resources.bitGrowthRate * (duplicate.data.turnInfo.turnNumber+i) / duplicate.config.resources.turnIntervalForBitSchedule;
-      duplicate.data.p1Stats.bits += mpIncome;
-    }
+    duplicate.data.p1Stats.bits = extrapolateFutureMP(move, turns, 0);
 
     return attackThreshold(duplicate);
   }
@@ -488,6 +495,7 @@ public class Boom {
     float damageToBase = 0;
     float spTaken = 0;
     int f;
+    //Condition: Both Bombs and Followers are alive
     for (f = 0; f < Math.min(bombPath.size()*inverseBombSpeed, followerPath.size()*inverseFollowerSpeed) && f < 400; f++) {
       int bombIndex = (int)(f*(1.0/inverseBombSpeed));
       if (bombIndex >= bombPath.size()) break; // TODO: make sure this is a good breaking condition
@@ -547,6 +555,7 @@ public class Boom {
               attacker.health -= bombDamage;
               numBombsToAttack--;
               if (attacker.health <= 0) {
+                boomState.allUnits[bombAttackerLocations.get(attacker).x][bombAttackerLocations.get(attacker).y].removeIf(unit -> unit.health <= 0);
                 needToRepath = true;
                 break;
               }
@@ -579,6 +588,7 @@ public class Boom {
               attacker.health -= followerDamage;
               numFollowersToAttack--;
               if (attacker.health <= 0) {
+                boomState.allUnits[followerAttackerLocations.get(attacker).x][followerAttackerLocations.get(attacker).y].removeIf(unit -> unit.health <= 0);
                 needToRepath = true;
                 break;
               }
@@ -627,16 +637,26 @@ public class Boom {
         followerPath.addAll(newFollowerPath);
       }
     }
+    if (boomState.data.turnInfo.turnNumber == 12) {
+      GameIO.debug().printf("BOOM SIM: %s. %s bomb. %d,%d\n", this.sideToBoom, this.bombType, this.bombUnits, this.followerUnits);
+      GameIO.debug().println(bombPath);
+    }
+
     Coords bombEndpoint = bombPath.get(bombPath.size()-1);
     if (!MapBounds.IS_ON_EDGE[bombTargetEdge][bombEndpoint.x][bombEndpoint.y]) {
       for (int x = Math.max(0, bombEndpoint.x-1); x <= Math.min(MapBounds.BOARD_SIZE-1, bombEndpoint.x+1); x++) {
         for (int y = Math.max(0, bombEndpoint.y-1); y <= Math.min(MapBounds.BOARD_SIZE-1, bombEndpoint.y+1); y++) {
           List<Unit> towers = boomState.allUnits[x][y];
+          int finalX = x;
+          int finalY = y;
           spTaken += (float) towers.stream().mapToDouble(towerUnit -> {
             if (towerUnit.owner == PlayerId.Player2) {
               float initialHealth = towerUnit.health;
               towerUnit.health -= bombHealth * bombHealths.size();
               towerUnit.health = Math.max(towerUnit.health, 0);
+              if (towerUnit.health <= 0) {
+                boomState.allUnits[finalX][finalY].removeIf(unit -> unit.health <= 0);
+              }
               float damageDone = initialHealth - towerUnit.health;
               return Utility.damageToSp(towerUnit, damageDone);
             }
@@ -647,6 +667,7 @@ public class Boom {
     } else {
       damageToBase += bombHealths.size();
     }
+    // Only followers alive
     for (; f < followerPath.size()*inverseFollowerSpeed && f < 400; f++) {
       int followerIndex = (int)(f*(1.0/inverseFollowerSpeed));
       if (followerIndex >= followerPath.size()) break; // TODO: make sure this is a good breaking condition
@@ -683,6 +704,7 @@ public class Boom {
               attacker.health -= followerDamage;
               numFollowersToAttack--;
               if (attacker.health <= 0) {
+                boomState.allUnits[followerAttackerLocations.get(attacker).x][followerAttackerLocations.get(attacker).y].removeIf(unit -> unit.health <= 0);
                 needToRepath = true;
                 break;
               }
@@ -719,16 +741,23 @@ public class Boom {
         followerPath.addAll(newFollowerPath);
       }
     }
+
+    //end condition
     Coords followerEndpoint = followerPath.get(followerPath.size()-1);
     if (!MapBounds.IS_ON_EDGE[followerTargetEdge][followerEndpoint.x][followerEndpoint.y]) {
       for (int x = Math.max(0, followerEndpoint.x-1); x <= Math.min(MapBounds.BOARD_SIZE-1, followerEndpoint.x+1); x++) {
         for (int y = Math.max(0, followerEndpoint.y-1); y <= Math.min(MapBounds.BOARD_SIZE-1, followerEndpoint.y+1); y++) {
+          int finalX = x;
+          int finalY = y;
           List<Unit> towers = boomState.allUnits[x][y];
           spTaken += (float) towers.stream().mapToDouble(towerUnit -> {
             if (towerUnit.owner == PlayerId.Player2) {
               float initialHealth = towerUnit.health;
               towerUnit.health -= followerHealth * followerHealths.size();
               towerUnit.health = Math.max(towerUnit.health, 0);
+              if (towerUnit.health <= 0) {
+                boomState.allUnits[finalX][finalY].removeIf(unit -> unit.health <= 0);
+              }
               float damageDone = initialHealth - towerUnit.health;
               return Utility.damageToSp(towerUnit, damageDone);
             }
@@ -793,7 +822,7 @@ public class Boom {
    */
   static float extrapolateFutureMP(GameState move, int turns, int expectedBaseCostPerTurn) {
     float currentMP = move.data.p1Stats.bits;
-    for(int i = 0; i < turns; i++) {
+    for(int i = 1; i <= turns; i++) {
       float baseMPIncome = move.config.resources.bitsPerRound + move.config.resources.bitGrowthRate * (move.data.turnInfo.turnNumber + i) / move.config.resources.turnIntervalForBitSchedule;
       currentMP *= (1 - move.config.resources.bitDecayPerRound);
       //currentMP -= currentMP%0.01; //TODO: What was this line doing? I commented it out for now...

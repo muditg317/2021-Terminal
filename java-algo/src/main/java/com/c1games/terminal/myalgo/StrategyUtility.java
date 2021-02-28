@@ -247,7 +247,7 @@ public class StrategyUtility {
    * copied and modified from game state
    * @param move
    * @param coords
-   * @return
+   * @return everything that can see and it can see
    */
   static Map<Unit, Coords> getTowerLocations(GameState move, Coords coords, double walkerRange) {
     Map<Unit, Coords> attackers = new HashMap<>();
@@ -338,8 +338,6 @@ public class StrategyUtility {
         }
       }
     }
-    GameIO.debug().println("PREDICTED GAME STATE=========");
-    Utility.printGameBoard(prediction.allUnits);
     return prediction;
   }
 

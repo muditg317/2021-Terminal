@@ -28,6 +28,7 @@ public class MainStrategy {
     // do unconditional things
     // unconditionally make sure that we can hook next round if we want
     markHookHolesForDeletion();
+    Boom.progress();
   }
 
   /**
@@ -59,14 +60,18 @@ public class MainStrategy {
 
 
 
-    //DECIDE TO BOOM OR NOT HERE.==========================
-    Boom.evaluate(predictedEnemyBaseLayout, reducedScoutRushDefense);
-    setUpEssentialDefense(move, move.data.p1Stats.cores);
 
     //setUpEssentialDefense(move, move.data.p1Stats.cores - Locations.Essentials.mainWallHookHoles.size() * move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1));
     //setUpEssentialDefense(predictedEnemyBaseLayout, predictedEnemyBaseLayout.data.p1Stats.cores - Locations.Essentials.mainWallHookHoles.size() * predictedEnemyBaseLayout.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1));
-
+    setUpEssentialDefense(move, move.data.p1Stats.cores);
     setUpEssentialDefense(predictedEnemyBaseLayout, predictedEnemyBaseLayout.data.p1Stats.cores);
+
+    //DECIDE TO BOOM OR NOT HERE.==========================
+    Boom.evaluate(predictedEnemyBaseLayout, reducedScoutRushDefense);
+
+    GameIO.debug().println("PREDICTED GAME STATE=========");
+    Utility.printGameBoard(predictedEnemyBaseLayout.allUnits);
+
     //make sure we have enough for boom wall
     double saveCores = 0;
 

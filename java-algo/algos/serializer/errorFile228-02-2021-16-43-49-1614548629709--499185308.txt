@@ -1,0 +1,267 @@
+Configuring your custom java algo strategy...
+Set random seed to: 7111839038703078182
+Performing turn 0 of your custom algo strategy
+==============BOARD STATE==============
+                           . .                          
+                         . . . .                        
+                       . . . . . .                      
+                     . . . . . . . .                    
+                   . . . . . . . . . .                  
+                 . . . . . . . . . . . .                
+               . . . . . . . . . . . . . .              
+             . . . . . . . . . . . . . . . .            
+           . . . . . . . . . . . . . . . . . .          
+         . . . . . . . . . . . . . . . . . . . .        
+       . . . . x . . . x . . . . X . . . x . . . .      
+     . . . . . . . . . o . . . . o . . . o . . . . .    
+   . . x . . . . . . . . . . . . . . . . . . . . X . .  
+ o o o . . . . . . . . . . . . . . . . . . . . . o o o o
+ o o o o . . . . . . . . . . . . . . . . . . . . . o o o
+   . . X . . . . . . . . . . . . . . . . . . . . x . .  
+     . . . . . o . . . o . . . . o . . . . . . . . .    
+       . . . . x . . . X . . . . x . . . x . . . .      
+         . . . . . . . . . . . . . . . . . . . .        
+           . . . . . . . . . . . . . . . . . .          
+             . . . . . . . . . . . . . . . .            
+               . . . . . . . . . . . . . .              
+                 . . . . . . . . . . . .                
+                   . . . . . . . . . .                  
+                     . . . . . . . .                    
+                       . . . . . .                      
+                         . . . .                        
+                           . .                          
+============END BOARD STATE============
+Performing turn 1 of your custom algo strategy
+PREDICTED GAME STATE=========
+==============BOARD STATE==============
+                           . .                          
+                         . . . .                        
+                       . . . . . .                      
+                     . . . . . . . .                    
+                   . . . . . . . . . .                  
+                 . . . . . . . . . . . .                
+               . . . . . . . . . . . . . .              
+             . . . . . . . . . . . . . . . .            
+           . . . . . . . . . . . . . . . . . .          
+         . . . . . . . . . . . . . . . . . . . .        
+       . . . . x . . . x . . . . X . . . x . . . .      
+     . . . . . . . . . o . . . . o . . . o . . . . .    
+   . . x . . . . . . . . . . . . . . . . . . . . X . .  
+ o o o . . . . . . . . . . . . . . . . . . . . . o o o o
+ o o o o . . . . . . . . . . . . . . . . . . . . . o o o
+   . . X . . . . . . . . . . . . . . . . . . . . x . .  
+     . . . . . o . . . o . . . . o . . . . . . . . .    
+       . . . . x . . . X . . . . x . . . x . . . .      
+         . . . . . . . . . . . . . . . . . . . .        
+           . . . . . . . . . . . . . . . . . .          
+             . . . . . . . . . . . . . . . .            
+               . . . . . . . . . . . . . .              
+                 . . . . . . . . . . . .                
+                   . . . . . . . . . .                  
+                     . . . . . . . .                    
+                       . . . . . .                      
+                         . . . .                        
+                           . .                          
+============END BOARD STATE============
+Turn 1: We currently have 5.0 SP and 7.0 MP!
+scoutRushDefense:0
+reducedScoutRushDefense: 0
+BOOM STATE BEFORE DECISION=======awaitingBoom:	false
+turnsUntilBoom:	-1
+BOOM DECISION: ===========
+awaitingBoom:	false
+turnsUntilBoom:	-1
+spent: 5.0 of 5.0 || finishedBudget @ LINE 74
+spent: 5.0 of 5.0 || finishedBudget @ LINE 74
+0.0 saveCores! We currently have 0.0 cores!
+Defense budget: 12.00================HOOK ANALYSIS========
+SP: 5.00	MP: 6.00	minDamage:6.65
+Hook Attack Online Adjustment: 1.00
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!
+================DEMO ANALYSIS========
+MP: 7.00	minDamage:6.65
+DEMO RUN Online Adjustment: 1.00
+================DAMAGES========
+CAN DEMO: 69 options
+================END DEMO ANALYSIS========
+Current best hook: <25, 11>. damage: 6.34 out of 6.65. path_len: 29. ends:<10, 24>
+Set up defenses!	Budget: 0.00	Max spending: 0.00
+BEST SCOUT RUSH EVALUATION==========
+	SpBudget:5.00	NumScouts:7	ScoutHealth: 18
+	Expected Damage:5	Online Adjustment:1.00
+Spawn defensive inters!
+spent: 0.0 of 0.0 || finishedBudget @ LINE 74
+Set up defenses!	Budget: 0.00	Max spending: 0.00
+==============BOARD STATE==============
+                           . .                          
+                         . . . .                        
+                       . . . . . .                      
+                     . . . . . . . .                    
+                   . . . . . . . . . .                  
+                 . . . . . . . . . . . .                
+               . . . . . . . . . . . . . .              
+             . . . . . . . . . . . . . . . .            
+           . . . . . . . . . . . . . . . . . .          
+         . . . . . . . . . . . . . . . . . . . .        
+       . . . . x . . . x . . . . X . . . x . . . .      
+     . . . . . o . . . o . . . . o . . . o o . . . .    
+   . . x o . . . . . . . . . . . . . . . . . . o X . .  
+ o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+ o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+   . . X o . . . . . . . . . . . . . . . . . . o x . .  
+     . . . . o o . . . o . . . . o . . . o . . . . .    
+       . . . . x . . . X . . . . x . . . x . . . .      
+         . . . . . . . . . . . . . . . . . . . .        
+           . . . . . . . . . . . . . . . . . .          
+             . . . . . . . . . . . . . . . .            
+               . . . . . . . . . . . . . .              
+                 . . . . . . . . . . . .                
+                   . . . . . . . . . .                  
+                     . . . . . . . .                    
+                       . . . . . .                      
+                         . . . .                        
+                           . .                          
+============END BOARD STATE============
+Performing turn 2 of your custom algo strategy
+PREDICTED GAME STATE=========
+==============BOARD STATE==============
+                           . .                          
+                         . . . .                        
+                       . . . . . .                      
+                     . . . . . . . .                    
+                   . . . . . . . . . .                  
+                 . . . . . . . . . . . .                
+               . . . . . . . . . . . . . .              
+             . . . . . . . . . . . . . . . .            
+           . . . . . . . . . . . . . . . . . .          
+         . . . . . . . . . . . . . . . . . . . .        
+       . . . . x . . . x . . . . X . . . x . . . .      
+     . . . . . o . . . o . . . . o . . . o o . . . .    
+   . . x o . . . . . . . . . . . . . . . . . . o X . .  
+ o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+ o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+   . . X o . . . . . . . . . . . . . . . . . . o x . .  
+     . . . . o o . . . o . . . . o . . . o . . . . .    
+       . . . . x . . . X . . . . x . . . x . . . .      
+         . . . . . . . . . . . . . . . . . . . .        
+           . . . . . . . . . . . . . . . . . .          
+             . . . . . . . . . . . . . . . .            
+               . . . . . . . . . . . . . .              
+                 . . . . . . . . . . . .                
+                   . . . . . . . . . .                  
+                     . . . . . . . .                    
+                       . . . . . .                      
+                         . . . .                        
+                           . .                          
+============END BOARD STATE============
+Turn 2: We currently have 5.0 SP and 9.3 MP!
+scoutRushDefense:0
+reducedScoutRushDefense: 0
+BOOM STATE BEFORE DECISION=======awaitingBoom:	false
+turnsUntilBoom:	-1
+BOOM DECISION: ===========
+awaitingBoom:	false
+turnsUntilBoom:	-1
+spent: 5.0 of 5.0 || finishedBudget @ LINE 76
+spent: 5.0 of 5.0 || finishedBudget @ LINE 76
+0.0 saveCores! We currently have 0.0 cores!
+Defense budget: 18.00================HOOK ANALYSIS========
+SP: 5.00	MP: 8.30	minDamage:7.62
+Hook Attack Online Adjustment: 1.00
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!
+================DEMO ANALYSIS========
+MP: 9.30	minDamage:7.62
+DEMO RUN Online Adjustment: 1.00
+================DAMAGES========
+CAN DEMO: 94 options
+================END DEMO ANALYSIS========
+Current best hook: <25, 11>. damage: 7.55 out of 7.62. path_len: 29. ends:<10, 24>
+Set up defenses!	Budget: 0.00	Max spending: 0.00
+BEST SCOUT RUSH EVALUATION==========
+	SpBudget:5.00	NumScouts:9	ScoutHealth: 18
+	Expected Damage:7	Online Adjustment:1.00
+Spawn defensive inters!
+spent: 0.0 of 0.0 || finishedBudget @ LINE 76
+Set up defenses!	Budget: 0.00	Max spending: 0.00
+==============BOARD STATE==============
+                           . .                          
+                         . . . .                        
+                       . . . . . .                      
+                     . . . . . . . .                    
+                   . . . . . . . . . .                  
+                 . . . . . . . . . . . .                
+               . . . . . . . . . . . . . .              
+             . . . . . . . . . . . . . . . .            
+           . . . . . . . . . . . . . . . . . .          
+         . . . . . . . . . . . . . . . . . . . .        
+       . . . . X . . . x . . . . X . . . x . . . .      
+     . . . . o o . . . o . . . . o . . . o o . . . .    
+   . . x o . . . . . . . . . . . . . . . . . . o X . .  
+ o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+ o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+   . . X o . . . . . . . . . . . . . . . . . . o x . .  
+     . . . . o o . . . o . . . . o . . . o o . . . .    
+       . . . . x . . . X . . . . x . . . X . . . .      
+         . . . . . . . . . . . . . . . . . . . .        
+           . . . . . . . . . . . . . . . . . .          
+             . . . . . . . . . . . . . . . .            
+               . . . . . . . . . . . . . .              
+                 . . . . . . . . . . . .                
+                   . . . . . . . . . .                  
+                     . . . . . . . .                    
+                       . . . . . .                      
+                         . . . .                        
+                           . .                          
+============END BOARD STATE============
+Performing turn 3 of your custom algo strategy
+PREDICTED GAME STATE=========
+==============BOARD STATE==============
+                           . .                          
+                         . . . .                        
+                       . . . . . .                      
+                     . . . . . . . .                    
+                   . . . . . . . . . .                  
+                 . . . . . . . . . . . .                
+               . . . . . . . . . . . . . .              
+             . . . . . . . . . . . . . . . .            
+           . . . . . . . . . . . . . . . . . .          
+         . . . . . . . . . . . . . . . . . . . .        
+       . . . . X . . . x . . . . X . . . x . . . .      
+     . . . . o o . . . o . . . . o . . . o o . . . .    
+   . . x o . . . . . . . . . . . . . . . . . . o X . .  
+ o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+ o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+   . . X o . . . . . . . . . . . . . . . . . . o x . .  
+     . . . . o o . . . o . . . . o . . . o o . . . .    
+       . . . . x . . . X . . . . x . . . X . . . .      
+         . . . . . . . . . . . . . . . . . . . .        
+           . . . . . . . . . . . . . . . . . .          
+             . . . . . . . . . . . . . . . .            
+               . . . . . . . . . . . . . .              
+                 . . . . . . . . . . . .                
+                   . . . . . . . . . .                  
+                     . . . . . . . .                    
+                       . . . . . .                      
+                         . . . .                        
+                           . .                          
+============END BOARD STATE============
+Turn 3: We currently have 5.0 SP and 11.0 MP!
+scoutRushDefense:0
+reducedScoutRushDefense: 0
+BOOM STATE BEFORE DECISION=======awaitingBoom:	false
+turnsUntilBoom:	-1
+BOOM DECISION: ===========
+awaitingBoom:	false
+turnsUntilBoom:	-1
+spent: 5.0 of 5.0 || finishedBudget @ LINE 76
+spent: 5.0 of 5.0 || finishedBudget @ LINE 76
+0.0 saveCores! We currently have 0.0 cores!
+Defense budget: 24.00================HOOK ANALYSIS========
+SP: 5.00	MP: 10.00	minDamage:8.51
+Hook Attack Online Adjustment: 1.00
