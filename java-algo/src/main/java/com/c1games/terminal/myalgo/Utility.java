@@ -209,7 +209,36 @@ public class Utility {
    * @param board
    */
   public static void printGameBoard(List<Unit>[][] board) {
+    GameIO.debug().println("==============BOARD STATE==============");
+    for (int x = 0; x < board[0].length; x++) {
+      StringBuilder sb = new StringBuilder();
+      for(int y = 0; y < board.length; y++) {
+        sb.append(boardLocationToChar(board, x, y));
+      }
+      GameIO.debug().println(sb.toString());
+    }
+    GameIO.debug().println("============END BOARD STATE============");
+  }
 
+  private static String boardLocationToChar(List<Unit>[][] board, int x, int y) {
+    if (!MapBounds.ARENA[x][y]) {
+      return "  ";
+    }
+    List<Unit> units = board[x][y];
+    if (units.isEmpty()) {
+      return " •";
+    }
+    Unit unit = units.get(0);
+    switch (unit.type) {
+      case Wall:
+        return unit.upgraded ? " ▲" : " ○";
+      case Support:
+        return unit.upgraded ? " ◙" : " ◘";
+      case Turret:
+        return unit.upgraded ? " Φ" : " Θ";
+      default:
+        return (units.size() < 10 ? " " : "") + units.size();
+    }
   }
 
   public static class Pair<T,K> {

@@ -45,6 +45,13 @@ public class MyAlgo implements GameLoop {
     long seed = rand.nextLong();
     rand.setSeed(seed);
     GameIO.debug().println("Set random seed to: " + seed);
+
+    for (int x = 0; x < MapBounds.BOARD_SIZE; x++) {
+      for (int y = 0; y < MapBounds.BOARD_SIZE; y++) {
+        enemyBaseHistory[x][y] = new ArrayList<Unit>();
+      }
+    }
+
   }
 
   /**
@@ -104,6 +111,8 @@ public class MyAlgo implements GameLoop {
           enemyBaseHistory[x][y].set(move.data.turnInfo.turnNumber, structureAtCoords.size() > 0 ? structureAtCoords.get(0) : null);
         }
       }
+
+//      Utility.printGameBoard();
     }
 
 
