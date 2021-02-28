@@ -53,7 +53,9 @@ public class MyAlgo implements GameLoop {
   @Override
   public void onTurn(GameIO io, GameState move) {
     GameIO.debug().println("Performing turn " + move.data.turnInfo.turnNumber + " of your custom algo strategy");
-    lastAttack.learn(attackActualValue);
+    if (lastAttack != null) {
+      lastAttack.learn(attackActualValue);
+    }
     attackActualValue = 0;
     lastAttack = null;
     //Utility.buildReactiveDefenses(move);

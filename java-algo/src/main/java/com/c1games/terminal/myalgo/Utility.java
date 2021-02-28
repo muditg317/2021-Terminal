@@ -204,6 +204,14 @@ public class Utility {
     }
   }
 
+  /**
+   * Prints out the board to the console
+   * @param board
+   */
+  public static void printGameBoard(List<Unit>[][] board) {
+
+  }
+
   public static class Pair<T,K> {
     public T key;
     public K value;
