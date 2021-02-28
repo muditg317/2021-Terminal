@@ -150,6 +150,7 @@ public class ScoutRush extends Attack {
    */
   public void learn(double actualDamage) {
     onlineAdjustment = actualDamage / expectedDamage;
+    GameIO.debug().printf("SR: Expected Damage was %d: Actual damage was: %d\n", this.expectedDamage, actualDamage);
     GameIO.debug().printf("SR: The onlineAdjustment value is now %.2f\n", onlineAdjustment);
   }
 

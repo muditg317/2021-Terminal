@@ -278,4 +278,17 @@ public class StrategyUtility {
 
     return attackers;
   }
+
+  static GameState predictGameState(GameState move, List<Unit>[][] enemyBaseHistory) {
+    GameState prediction = new GameState(move.config, move.data);
+    for (int i = 13; i < 41; i++) {
+      for (int j = 0; j <= 14 - i%2; j++) {
+        int x = j + (i-13)/2;
+        int y = i - x;
+
+      }
+    }
+    return prediction;
+  }
+
 }

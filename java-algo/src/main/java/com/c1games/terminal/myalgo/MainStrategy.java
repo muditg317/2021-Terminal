@@ -15,9 +15,13 @@ public class MainStrategy {
   private static MyAlgo algoState;
   private static GameState move;
 
+  private static GameState predictedEnemyBaseLayout;
+
   static void execute(MyAlgo algoState, GameState move) {
     MainStrategy.algoState = algoState;
     MainStrategy.move = move;
+
+    predictedEnemyBaseLayout = StrategyUtility.predictGameState(move, algoState.enemyBaseHistory);
 
     executeHelper();
 
@@ -36,7 +40,6 @@ public class MainStrategy {
     We need a good heuristic that considers the enemy MP and factories to decide when to put more defenses vs more factories
      */
     //always set up the essential defenses
-    MyAlgo.lastAttack = null;
     deleteDamagedStructures();
 
 
@@ -72,9 +75,6 @@ public class MainStrategy {
       saveCores = Math.min(Math.max(move.data.p1Stats.cores, 0), saveCores);
     }
 
-    //TODO: Defense spending should be here... This may break the boom save cores thing
-
-
 //    int prevDamage = algoState.scoredOnLocations.get(algoState.scoredOnLocations.size() - 1).size();
 //    float health = move.data.p1Stats.integrity;
 //    if (health / (health + prevDamage) >= 0.8) {
@@ -84,9 +84,8 @@ public class MainStrategy {
 
     double defenseBudget = StrategyUtility.neededDefenseSpending(move);
     double attackSpBudget = sp - defenseBudget;
-    //Attack
     /*
-    For now let's just focus on defending and bomb attacking
+    ATTACKING ==================
      */
     Boom.debugPrint();
 
@@ -119,7 +118,26 @@ public class MainStrategy {
       setUpDefenseWithBudget(defenseBudget, move.data.p1Stats.cores);
       return;
     }
+    Attack chosenAttack = chooseAttack(attackSpBudget);
+    if (chosenAttack != null) {
+      chosenAttack.execute(move);
+      MyAlgo.lastAttack = chosenAttack;
+    } else {
+      GameIO.debug().println("Spawn defensive inters!");
+      spawnDefensiveInters(scoutRushDefense);
+    }
+    // put up defenses (moved before end of else blck because we were messing up our own booms
+    defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores - saveCores);
+    setUpDefenseWithBudget(defenseBudget, move.data.p1Stats.cores);
+  }
 
+  /**
+   * Decides the best attack and returns it. Nullable
+   * If null, best attack not decided
+   * @return
+   */
+  private static Attack chooseAttack(double attackSpBudget) {
+    float mp = move.data.p1Stats.bits;
     GameIO.debug().println("CHECK FOR HOOK==================");
     int maxDemos = (int) (mp / move.config.unitInformation.get(UnitType.Demolisher.ordinal()).cost2.orElse(3));
     double enemySP = StrategyUtility.enemySPOnBoard(move);
@@ -137,57 +155,39 @@ public class MainStrategy {
       potentialHookAttack = upperHookAttack;
     }
     algoState.hooking = potentialHookAttack != null;
+
     if (potentialHookAttack != null) {
       GameIO.debug().printf("HOOKING!!!\tx:%d,y:%d,s:%s\n",potentialHookAttack.demolishers[0].x,potentialHookAttack.demolishers[0].y,potentialHookAttack.demolishers[0].x-13 == 0 ? "R" : "L");
-      potentialHookAttack.execute(move);
-      MyAlgo.lastAttack = potentialHookAttack;
-    } else { //hook attack not done
-      DemolisherRun potentialDemolisherRun = DemolisherRun.evaluate(move, mp, maxDemos * minDamagePerDemo);
+      return potentialHookAttack;
+    }
+
+    DemolisherRun potentialDemolisherRun = DemolisherRun.evaluate(move, mp, maxDemos * minDamagePerDemo);
+    algoState.hooking = potentialDemolisherRun != null;
+    if (potentialDemolisherRun != null) {
+      GameIO.debug().printf("DEMO RUN!\tat:%s\t damage:%.2f\n",potentialDemolisherRun.demolisherLocation, potentialDemolisherRun.expectedDefense.structureHealth);
+      return potentialDemolisherRun;
+    }
+
+    //we didnt hook attack or demolisher run
+    GameIO.debug().println("Fill in hook holes");
+    fillHookHoles();
+    ScoutRush potentialScoutRush = ScoutRush.evaluate(move, attackSpBudget);
+    if (potentialScoutRush != null && Math.random() > 0.1) {
+      GameIO.debug().println("Ping rush!");
+      return potentialScoutRush;
+    }
+
+
+    if (move.data.p1Stats.bits > StrategyUtility.mpCapacity(move, move.data.turnInfo.turnNumber) * 0.8) {
+      potentialDemolisherRun = DemolisherRun.evaluate(move, move.data.p1Stats.bits, 0);
       algoState.hooking = potentialDemolisherRun != null;
       if (potentialDemolisherRun != null) {
-        GameIO.debug().printf("DEMO RUN!\tat:%s\t damage:%.2f\n",potentialDemolisherRun.demolisherLocation, potentialDemolisherRun.expectedDefense.structureHealth);
-        potentialDemolisherRun.execute(move);
-        MyAlgo.lastAttack = potentialDemolisherRun;
-      } else {
-        GameIO.debug().println("Fill in hook holes");
-        fillHookHoles();
-        ScoutRush potentialScoutRush = ScoutRush.evaluate(move, attackSpBudget);
-        if (potentialScoutRush != null && Math.random() > 0.1) {
-          GameIO.debug().println("Ping rush!");
-          setUpEssentialDefense();
-          potentialScoutRush.execute(move);
-          MyAlgo.lastAttack = potentialScoutRush;
-        } else {
-          if (move.data.p1Stats.bits > StrategyUtility.mpCapacity(move, move.data.turnInfo.turnNumber) * 0.8) {
-            defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores - saveCores);
-            setUpDefenseWithBudget(defenseBudget, move.data.p1Stats.cores);
-            potentialDemolisherRun = DemolisherRun.evaluate(move, move.data.p1Stats.bits, 0);
-            algoState.hooking = potentialDemolisherRun != null;
-            if (potentialDemolisherRun != null) {
-              GameIO.debug().printf("fallback demo run!\tat:%s\t damage:%.2f\n", potentialDemolisherRun.demolisherLocation, potentialDemolisherRun.expectedDefense.structureHealth);
-              potentialDemolisherRun.execute(move);
-            } else {
-              GameIO.debug().println("Spawn defensive inters!");
-              spawnDefensiveInters(scoutRushDefense);
-            }
-          } else {
-            GameIO.debug().println("Spawn defensive inters!");
-            spawnDefensiveInters(scoutRushDefense);
-          }
-        }
+        GameIO.debug().printf("fallback demo run!\tat:%s\t damage:%.2f\n", potentialDemolisherRun.demolisherLocation, potentialDemolisherRun.expectedDefense.structureHealth);
+        return potentialDemolisherRun;
       }
     }
-    // put up defenses (moved before end of else blck because we were messing up our own booms
-    defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores - saveCores);
-    setUpDefenseWithBudget(defenseBudget, move.data.p1Stats.cores);
-  }
 
-  /**
-   * Decides the best attack and returns it. Nullable
-   * If null, best attack not decided
-   * @return
-   */
-  private static Attack chooseAttack() {
+    // no attack found :c
     return null;
   }
 
@@ -360,7 +360,7 @@ public class MainStrategy {
 
           spent += attemptSpawnIfAffordable(topWallCap, Utility.WALL, false, totalAllowedSpending - spent);
           SpawnUtility.removeBuilding(move, topWallCap);
-          GameIO.debug().print(String.format("topWallCap: (%s, %s)", topWallCap.x, topWallCap.y));
+          GameIO.debug().print(String.format("topWallCap: (%s, %s)\n", topWallCap.x, topWallCap.y));
         }
 
 
@@ -371,7 +371,7 @@ public class MainStrategy {
           bottomWallCap = new Coords(lastBottomTurretLocation.x + 1, lastBottomTurretLocation.y);
           spent += attemptSpawnIfAffordable(bottomWallCap, Utility.WALL, false, totalAllowedSpending - spent);
           SpawnUtility.removeBuilding(move, bottomWallCap);
-          GameIO.debug().print(String.format("bottomWallCap: (%s, %s)", bottomWallCap.x, bottomWallCap.y));
+          GameIO.debug().print(String.format("bottomWallCap: (%s, %s)\n", bottomWallCap.x, bottomWallCap.y));
         }
 
 

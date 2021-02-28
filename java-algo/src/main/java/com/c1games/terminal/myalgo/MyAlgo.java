@@ -8,9 +8,11 @@ import com.c1games.terminal.algo.PlayerId;
 import com.c1games.terminal.algo.io.GameLoop;
 import com.c1games.terminal.algo.io.GameLoopDriver;
 import com.c1games.terminal.algo.map.GameState;
+import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Turtle Algo:
@@ -23,11 +25,14 @@ public class MyAlgo implements GameLoop {
   //ArrayList<ArrayList<Coords>> scoredOnLocations = new ArrayList<>();
   static HashMap<Coords, Integer> scoredOnLocations = new HashMap<>();
   static Attack lastAttack = null;
+  static double attackActualValue;
   int enemySupportTowerCoresInvestment = 0;
   //boolean awaitingBoom = false;
   //int turnsUntilBoom = -1;
   //String boomSide = "";
   boolean hooking = false;
+
+  List<Unit>[][] enemyBaseHistory = new ArrayList[MapBounds.BOARD_SIZE][MapBounds.BOARD_SIZE];
 
   public static void main(String[] args) {
     new GameLoopDriver(new MyAlgo()).run();
@@ -48,7 +53,9 @@ public class MyAlgo implements GameLoop {
   @Override
   public void onTurn(GameIO io, GameState move) {
     GameIO.debug().println("Performing turn " + move.data.turnInfo.turnNumber + " of your custom algo strategy");
-
+    lastAttack.learn(attackActualValue);
+    attackActualValue = 0;
+    lastAttack = null;
     //Utility.buildReactiveDefenses(move);
     int turnNumber = move.data.turnInfo.turnNumber;
 
@@ -80,29 +87,42 @@ public class MyAlgo implements GameLoop {
             key, value));
       }
     }
-    //evaluate our attacks
-    if (lastAttack instanceof ScoutRush) {
-      ScoutRush sr = (ScoutRush) lastAttack;
-      int lastDamage = 0;
-      for (FrameData.Events.BreachEvent breach : move.data.events.breach) {
-        if (breach.unitOwner == PlayerId.Player1) {
-          lastDamage++;
+
+    // remember their layout
+    if (move.data.turnInfo.actionPhaseFrameNumber == 0) {
+      for (int i = 13; i < 41; i++) {
+        for (int j = 0; j <= 14 - i%2; j++) {
+          int x = j + (i-13)/2;
+          int y = i - x;
+          List<Unit> structureAtCoords = move.allUnits[x][y].stream().filter(unit -> move.isStructure(unit.type)).map(unit -> {
+            Unit newUnit = new Unit(unit.type, unit.health, unit.id, unit.owner, move.config);
+            if (unit.upgraded) newUnit.upgrade();
+            return newUnit;
+          }).collect(Collectors.toList());
+          enemyBaseHistory[x][y].set(move.data.turnInfo.turnNumber, structureAtCoords.size() > 0 ? structureAtCoords.get(0) : null);
         }
       }
-      GameIO.debug().printf("SR: Expected Damage was %d: Actual damage was: %d\n", sr.expectedDamage, lastDamage);
-      sr.learn(lastDamage);
+    }
+
+
+    //evaluate our attacks
+    if (lastAttack instanceof ScoutRush) {
+      for (FrameData.Events.BreachEvent breach : move.data.events.breach) {
+        if (breach.unitOwner == PlayerId.Player1) {
+          attackActualValue++;
+        }
+      }
+
     } else if (lastAttack instanceof DemolisherRun || lastAttack instanceof HookAttack) {
-      int actualSpDamage = 0;
       for (FrameData.Events.DamageEvent damage : move.data.events.damage) {
         Unit attacked = move.getWallAt(damage.coords);
 
         if (attacked != null && damage.unitOwner == PlayerId.Player2) {
           double damageDone = damage.damage;
           damageDone = Math.min(damageDone, attacked.health);
-          actualSpDamage += Utility.damageToSp(attacked, damageDone);
+          attackActualValue += Utility.damageToSp(attacked, damageDone);
         }
       }
-      lastAttack.learn(actualSpDamage);
     }
   }
 

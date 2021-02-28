@@ -36,6 +36,7 @@ public class DemolisherRun extends Attack {
   public void execute(GameState move) {
     SpawnUtility.spawnDemolishers(move, demolisherLocation, numDemolishers);
     for (int wallY = 2; wallY <= 13; wallY++) {
+      if (wallY == 11) continue;
       Coords leftWall = new Coords(15-wallY,wallY);
       if (demolisherLocation.x > 13 || wallY < demolisherLocation.y) {
         if (SpawnUtility.placeWall(move, leftWall)) SpawnUtility.removeBuilding(move, leftWall);
