@@ -230,6 +230,10 @@ public class StrategyUtility {
     return enemySP;
   }
 
+  static double totalEnemySp(GameState move) {
+    return enemySPOnBoard(move) + move.data.p2Stats.cores;
+  }
+
   static boolean pathHitsTargetEdge(List<Coords> path, int targetEdge) {
     for (Coords coord : path) {
       if (MapBounds.IS_ON_EDGE[targetEdge][coord.x][coord.y]) {

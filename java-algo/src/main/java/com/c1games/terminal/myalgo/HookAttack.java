@@ -43,6 +43,7 @@ public class HookAttack extends Attack {
     this.units = new UnitCounts(move, this.scouts.length, this.interceptors.length, this.demolishers.length);
     this.side = side;
     this.location = location;
+    this.clearLocations = new HashSet<>(Arrays.asList(expectedDefense.path));
   }
 
   /**
@@ -108,6 +109,8 @@ public class HookAttack extends Attack {
     int numDemolishers = (int) (availableMP / demolisherInfo.cost2.orElse(3));
 
     GameIO.debug().println("================HOOK ANALYSIS========");
+    GameIO.debug().printf("SP: %.2f\tMP: %.2f\tminDamage:%.2f\n", availableSP, availableMP, minDamage);
+    GameIO.debug().printf("Hook Attack Online Adjustment: %.2f\n", onlineAdjustment);
 
     if (numDemolishers == 0) {
       GameIO.debug().println("no demos");
@@ -251,16 +254,7 @@ public class HookAttack extends Attack {
           double supportAmount = remainingSP > move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(4) ? remainingSP * 3 / 4 : 0;
 //          supportAmount += move.data.p1Units.support.size() * move.config.unitInformation.get(UnitType.Support.ordinal()).shieldPerUnit.orElse(3);
 
-          GameState testState = new GameState(move.config, move.data);
-          for (int _x = 0; _x < MapBounds.BOARD_SIZE; _x++) {
-            for (int _y = 0; _y < MapBounds.BOARD_SIZE; _y++) {
-              testState.allUnits[_x][_y] = move.allUnits[_x][_y].stream().map(unit -> {
-                Unit newUnit = new Unit(unit.type, unit.health, unit.id, unit.owner, move.config);
-                if (unit.upgraded) newUnit.upgrade();
-                return newUnit;
-              }).collect(Collectors.toList());
-            }
-          }
+          GameState testState = Utility.duplicateState(move);
 
           double demolisherHealth = demolisherInfo.startHealth.orElse(5) + supportAmount;
           List<Double> demolisherHealths = new ArrayList<>(numDemolishers);
@@ -340,7 +334,7 @@ public class HookAttack extends Attack {
             }
           }
           spTaken *= onlineAdjustment;
-          if (spTaken >= minDamage) { // ignore result if it doesn't help
+          if (spTaken >= minDamage/2) { // ignore result if it doesn't help
             damages.put(new Utility.Pair<>(start, side), new Utility.Pair<>(new ArrayList<>(neededWalls), new ExpectedDefense(move, path.toArray(new Coords[0]), spTaken, expectedDamage)));
           }
         }
@@ -353,7 +347,7 @@ public class HookAttack extends Attack {
 
 
     Utility.Pair<Coords, Integer> bestAttack = null;
-    ExpectedDefense bestED = new ExpectedDefense(move, null, minDamage, 0);
+    ExpectedDefense bestED = new ExpectedDefense(move, null, minDamage/2, 0);
 
     for (Map.Entry<Utility.Pair<Coords, Integer>, Utility.Pair<List<Coords>, ExpectedDefense>> entry : damages.entrySet()) {
       if (entry.getValue().value.structureHealth > bestED.structureHealth) {
@@ -361,13 +355,19 @@ public class HookAttack extends Attack {
         bestED = entry.getValue().value;
       }
     }
-    if (bestAttack == null) {
+    if (bestAttack == null || bestED.structureHealth < minDamage) {
       GameIO.debug().println("Not doing enough damage!");
-      damages.forEach((key, value) -> GameIO.debug().printf("x:%d,y:%d, %s. damage:%.2f, need:%.2f. path_len: %d: ends:%s\n\t%s\n",
+      damages.forEach((key, value) -> GameIO.debug().printf("x:%d,y:%d, %s. damage:%.2f, need:%.2f. path_len: %d: ends:%s\n",
           key.key.x, key.key.y, key.value == 0 ? "R" : "L",
           value.value.structureHealth, minDamage,
-          value.value.path.length, value.value.path[value.value.path.length-1].toString(),
-          Arrays.toString(Arrays.stream(value.value.path).limit(15).map(Coords::toString).toArray(String[]::new))));
+          value.value.path.length, value.value.path[value.value.path.length-1].toString()));
+//          Arrays.toString(Arrays.stream(value.value.path).limit(15).map(Coords::toString).toArray(String[]::new))));
+      if (bestAttack != null) {
+        GameIO.debug().printf("Current best hook: %s, %s. damage: %.2f out of %.2f. path_len: %d. ends:%s\n",
+            bestAttack.key, bestAttack.value == 0 ? "R" : "L",
+            bestED.structureHealth, minDamage,
+            bestED.path.length, bestED.path[bestED.path.length-1].toString());
+      }
       return null;
     }
 
@@ -511,7 +511,9 @@ public class HookAttack extends Attack {
     catch (Exception ignored) {}
     */
 
-
+    neededWalls.removeIf(coords -> coords.y == hookLocation.y - 1);
+    neededSupport.removeIf(coords -> coords.y == hookLocation.y - 1);
+    neededTurrets.removeIf(coords -> coords.y == hookLocation.y - 1);
 
     GameIO.debug().println("\nSupports ready!");
 
@@ -533,6 +535,15 @@ public class HookAttack extends Attack {
 
   public static void decayLearning() {
     onlineAdjustment = (onlineAdjustment + 1) / 2.0;
+  }
+
+  /**
+   * Returns some evaluation of this attack. Currently it is the percent of total enemy SP that it takes
+   * @param move
+   * @return
+   */
+  public double evaluation(GameState move) {
+    return this.expectedDefense.structureHealth / StrategyUtility.totalEnemySp(move);
   }
 
 }

@@ -30,7 +30,6 @@ public class MyAlgo implements GameLoop {
   //boolean awaitingBoom = false;
   //int turnsUntilBoom = -1;
   //String boomSide = "";
-  boolean hooking = false;
 
   List<Unit>[][] enemyBaseHistory = new ArrayList[MapBounds.BOARD_SIZE][MapBounds.BOARD_SIZE];
 
@@ -100,10 +99,8 @@ public class MyAlgo implements GameLoop {
     // remember their layout
     if (move.data.turnInfo.actionPhaseFrameNumber == 0) {
       List<Unit>[][] currentBoard = new ArrayList[MapBounds.BOARD_SIZE][MapBounds.BOARD_SIZE];
-      for (int i = 13; i < 41; i++) {
-        for (int j = 0; j <= 14 - i%2; j++) {
-          int x = j + (i-13)/2;
-          int y = i - x;
+      for (int x = 0; x < MapBounds.BOARD_SIZE; x++) {
+        for(int y = 0; y < MapBounds.BOARD_SIZE; y++) {
           List<Unit> structureAtCoords = move.allUnits[x][y].stream().filter(unit -> move.isStructure(unit.type)).map(unit -> {
             Unit newUnit = new Unit(unit.type, unit.health, unit.id, unit.owner, move.config);
             if (unit.upgraded) newUnit.upgrade();

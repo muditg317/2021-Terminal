@@ -26,6 +26,7 @@ public class DemolisherRun extends Attack {
     this.demolisherLocation = demolisherLocation;
     this.expectedDefense = expectedDefense;
     this.numDemolishers = numDemolishers;
+    this.clearLocations = new HashSet<>(Arrays.asList(expectedDefense.path));
   }
 
 
@@ -62,6 +63,8 @@ public class DemolisherRun extends Attack {
     int numDemolishers = (int) (availableMP / demolisherInfo.cost2.orElse(3));
 
     GameIO.debug().println("================DEMO ANALYSIS========");
+    GameIO.debug().printf("MP: %.2f\tminDamage:%.2f\n", availableMP, minDamage);
+    GameIO.debug().printf("DEMO RUN Online Adjustment: %.2f\n", onlineAdjustment);
 
     if (numDemolishers == 0) {
       GameIO.debug().println("no demos");
@@ -83,16 +86,7 @@ public class DemolisherRun extends Attack {
         continue;
       }
 
-      GameState testState = new GameState(move.config, move.data);
-      for (int x = 0; x < MapBounds.BOARD_SIZE; x++) {
-        for (int y = 0; y < MapBounds.BOARD_SIZE; y++) {
-          testState.allUnits[x][y] = move.allUnits[x][y].stream().map(unit -> {
-            Unit newUnit = new Unit(unit.type, unit.health, unit.id, unit.owner, move.config);
-            if (unit.upgraded) newUnit.upgrade();
-            return newUnit;
-          }).collect(Collectors.toList());
-        }
-      }
+      GameState testState = Utility.duplicateState(move);
 
       double demolisherHealth = demolisherInfo.startHealth.orElse(5);
       List<Double> demolisherHealths = new ArrayList<>(numDemolishers);
@@ -172,7 +166,7 @@ public class DemolisherRun extends Attack {
         }
       }
       spTaken *= onlineAdjustment;
-      if (spTaken >= minDamage) { // ignore result if it doesn't help
+      if (spTaken >= minDamage/2) { // ignore result if it doesn't help
         damages.put(start, new ExpectedDefense(move, path.toArray(new Coords[0]), spTaken, expectedDamage));
       }
     }
@@ -201,6 +195,21 @@ public class DemolisherRun extends Attack {
           Arrays.toString(Arrays.stream(value.path).limit(15).map(Coords::toString).toArray(String[]::new))));
       return null;
     }
+    if (bestAttack == null || bestED.structureHealth < minDamage) {
+      GameIO.debug().println("Not doing enough damage!");
+      damages.forEach((key, value) -> GameIO.debug().printf("x:%d,y:%d. damage:%.2f, need:%.2f. path_len: %d: ends:%s\n",
+          key.x, key.y,
+          value.structureHealth, minDamage,
+          value.path.length, value.path[value.path.length-1].toString()));
+//          Arrays.toString(Arrays.stream(value.value.path).limit(15).map(Coords::toString).toArray(String[]::new))));
+      if (bestAttack != null) {
+        GameIO.debug().printf("Current best hook: %s. damage: %.2f out of %.2f. path_len: %d. ends:%s\n",
+            bestAttack,
+            bestED.structureHealth, minDamage,
+            bestED.path.length, bestED.path[bestED.path.length-1].toString());
+      }
+      return null;
+    }
 
     Coords hookLocation = bestAttack;
 
@@ -217,5 +226,13 @@ public class DemolisherRun extends Attack {
     onlineAdjustment = (onlineAdjustment + 1) / 2.0;
   }
 
+  /**
+   * Returns some evaluation of this attack. Currently it is the percent of total enemy SP that it takes
+   * @param move
+   * @return
+   */
+  public double evaluation(GameState move) {
+    return this.expectedDefense.structureHealth / StrategyUtility.totalEnemySp(move);
+  }
 
 }

@@ -215,6 +215,7 @@ public class Boom {
     boolean alreadyReady = true;
     for (int i = 0; i < Locations.boomPath_right.length; i++) {
       Coords openLocation = Locations.boomPath_right[i];
+      if (openLocation.y > 13) continue;
       int x = side.equals("RIGHT") ? openLocation.x : (27 - openLocation.x);
       Coords toOpen = new Coords(x, openLocation.y);
       alreadyReady = !SpawnUtility.removeBuilding(move, toOpen) && alreadyReady;

@@ -6,6 +6,7 @@ import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.units.UnitType;
 import com.c1games.terminal.algo.GameIO;
 
+import java.util.HashSet;
 import java.util.List;
 public class ScoutRush extends Attack {
   private static final Coords[] UPGRADED_SUPPORT_LOCATIONS = {
@@ -39,12 +40,14 @@ public class ScoutRush extends Attack {
   int targetSide;
   double spBudget;
 
+
   public ScoutRush(Coords startCoord, double spBudget, int numScouts, int scoutHealth) {
     this.startCoord = startCoord;
     this.spBudget = spBudget;
     this.numScouts = numScouts;
     this.scoutHealth = scoutHealth;
     this.targetSide = startCoord.x <= 13 ? MapBounds.EDGE_TOP_RIGHT : MapBounds.EDGE_TOP_LEFT;
+    this.clearLocations = new HashSet<>();
   }
 
   /**
@@ -64,6 +67,10 @@ public class ScoutRush extends Attack {
     rightSr.calculateSurvivingScouts(move);
 
     ScoutRush bestSr = leftSr.expectedDamage >= rightSr.expectedDamage ? leftSr : rightSr;
+
+    GameIO.debug().printf("BEST SCOUT RUSH EVALUATION==========\n\tSpBudget:%.2f\tNumScouts:%d\tScoutHealth: %d\n\tExpected Damage:%d\tOnline Adjustment:%.2f\n",
+        bestSr.spBudget, bestSr.numScouts, bestSr.scoutHealth, bestSr.expectedDamage, ScoutRush.onlineAdjustment);
+
     if (bestSr.expectedDamage < /*some threshold TODO: i bumped this to 3 from 4 (put it back to test something) */ (mp / 4) + (move.data.p2Stats.integrity / 10) + 3 && bestSr.expectedDamage < move.data.p2Stats.integrity) {
       return null; //don't do the ping attack
     }
@@ -156,6 +163,14 @@ public class ScoutRush extends Attack {
 
   public static void decayLearning() {
     onlineAdjustment = (onlineAdjustment + 1) / 2.0;
+  }
+
+  /**
+   * Returns the evaluation or "score" of this ScoutRush
+   * @return
+   */
+  public double evaluation(GameState move) {
+    return expectedDamage / move.data.p2Stats.integrity;
   }
 
 }

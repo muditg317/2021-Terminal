@@ -11,12 +11,15 @@ import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.pathfinding.IllegalPathStartException;
 import com.c1games.terminal.algo.units.UnitType;
 
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Utility {
 
@@ -204,38 +207,53 @@ public class Utility {
     }
   }
 
+  public static GameState duplicateState(GameState state) {
+    GameState duplicate = new GameState(state.config, state.data);
+    for (int _x = 0; _x < MapBounds.BOARD_SIZE; _x++) {
+      for (int _y = 0; _y < MapBounds.BOARD_SIZE; _y++) {
+        duplicate.allUnits[_x][_y] = state.allUnits[_x][_y].stream().map(unit -> {
+          Unit newUnit = new Unit(unit.type, unit.health, unit.id, unit.owner, duplicate.config);
+          if (unit.upgraded) newUnit.upgrade();
+          return newUnit;
+        }).collect(Collectors.toList());
+      }
+    }
+    return duplicate;
+  }
+
   /**
    * Prints out the board to the console
    * @param board
    */
   public static void printGameBoard(List<Unit>[][] board) {
     GameIO.debug().println("==============BOARD STATE==============");
-    for (int x = 0; x < board[0].length; x++) {
+
+    for(int y = MapBounds.BOARD_SIZE-1; y >= 0; y--) {
       StringBuilder sb = new StringBuilder();
-      for(int y = 0; y < board.length; y++) {
+      for (int x = 0; x < MapBounds.BOARD_SIZE; x++) {
         sb.append(boardLocationToChar(board, x, y));
       }
-      GameIO.debug().println(sb.toString());
+      new PrintStream(GameIO.debug(), true, StandardCharsets.UTF_8).println(sb.toString());
     }
     GameIO.debug().println("============END BOARD STATE============");
   }
 
   private static String boardLocationToChar(List<Unit>[][] board, int x, int y) {
-    if (!MapBounds.ARENA[x][y]) {
+    if (!MapBounds.ARENA[x][y] || board[x][y] == null) {
       return "  ";
     }
     List<Unit> units = board[x][y];
     if (units.isEmpty()) {
-      return " •";
+      return " .";
     }
     Unit unit = units.get(0);
     switch (unit.type) {
       case Wall:
-        return unit.upgraded ? " ▲" : " ○";
+        return unit.upgraded ? " O" : " o";
       case Support:
-        return unit.upgraded ? " ◙" : " ◘";
+        return unit.upgraded ? " S" : " s";
       case Turret:
-        return unit.upgraded ? " Φ" : " Θ";
+        return unit.upgraded ? " X" : " x";
       default:
         return (units.size() < 10 ? " " : "") + units.size();
     }
