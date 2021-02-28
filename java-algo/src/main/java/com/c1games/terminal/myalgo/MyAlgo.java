@@ -24,6 +24,7 @@ public class MyAlgo implements GameLoop {
   final Random rand = new Random();
   //ArrayList<ArrayList<Coords>> scoredOnLocations = new ArrayList<>();
   static HashMap<Coords, Integer> scoredOnLocations = new HashMap<>();
+  static HashMap<Coords, Double> wallDamage = new HashMap<>();
   static Attack lastAttack = null;
   static double attackActualValue;
   int enemySupportTowerCoresInvestment = 0;
@@ -93,6 +94,16 @@ public class MyAlgo implements GameLoop {
         scoredOnLocations.put(breach.coords, scoredOnLocations.getOrDefault(breach.coords, 0) + 1);
         scoredOnLocations.forEach((key, value) -> GameIO.debug().printf("We got scored on at %s %d times.\n",
             key, value));
+      }
+    }
+
+    //Remember where we take wall damage
+    for (FrameData.Events.DamageEvent damage : move.data.events.damage) {
+      if (damage.unitOwner == PlayerId.Player1) {
+        Unit wall = move.getWallAt(damage.coords);
+        if (wall != null && wall.type == Utility.WALL) {
+          wallDamage.put(damage.coords, wallDamage.getOrDefault(damage.coords, 0.0) + damage.damage);
+        }
       }
     }
 

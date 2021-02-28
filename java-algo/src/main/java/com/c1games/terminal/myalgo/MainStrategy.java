@@ -61,10 +61,12 @@ public class MainStrategy {
 
     //DECIDE TO BOOM OR NOT HERE.==========================
     Boom.evaluate(predictedEnemyBaseLayout, reducedScoutRushDefense);
+    setUpEssentialDefense(move, move.data.p1Stats.cores);
 
-    setUpEssentialDefense(move, move.data.p1Stats.cores - Locations.Essentials.mainWallHookHoles.size() * move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1));
-    setUpEssentialDefense(predictedEnemyBaseLayout, predictedEnemyBaseLayout.data.p1Stats.cores - Locations.Essentials.mainWallHookHoles.size() * predictedEnemyBaseLayout.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1));
+    //setUpEssentialDefense(move, move.data.p1Stats.cores - Locations.Essentials.mainWallHookHoles.size() * move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1));
+    //setUpEssentialDefense(predictedEnemyBaseLayout, predictedEnemyBaseLayout.data.p1Stats.cores - Locations.Essentials.mainWallHookHoles.size() * predictedEnemyBaseLayout.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1));
 
+    setUpEssentialDefense(predictedEnemyBaseLayout, predictedEnemyBaseLayout.data.p1Stats.cores);
     //make sure we have enough for boom wall
     double saveCores = 0;
 
@@ -84,6 +86,7 @@ public class MainStrategy {
 
 
     double defenseBudget = StrategyUtility.neededDefenseSpending(move);
+    GameIO.debug().printf("Defense budget: %.2f", defenseBudget);
     defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores);
     double attackSpBudget = sp - defenseBudget;
     /*
@@ -96,8 +99,8 @@ public class MainStrategy {
 
     if (Boom.awaitingBoom && Boom.turnsUntilBoom == 0 && Boom.attack != null) { // DO THE BOOM
       if (Boom.attack.execute(move)) {
-//        fillHookHoles(move); //done by the Boom execution
-
+        GameIO.debug().printf("DOING THE BOOM: %s\n", Boom.attack.sideToBoom.toString());
+        fillHookHoles(move); //done by the Boom execution
         setUpEssentialDefense(move, move.data.p1Stats.cores);
         defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores);
         setUpDefenseWithBudget(move, defenseBudget, move.data.p1Stats.cores);
@@ -125,7 +128,7 @@ public class MainStrategy {
     if (chosenAttack != null) {
       MyAlgo.lastAttack = chosenAttack;
       if (!(chosenAttack instanceof HookAttack)) {
-        fillHookHoles(move);
+       //fillHookHoles(move);
       }
       chosenAttack.execute(move);
     } else {
@@ -352,10 +355,9 @@ public class MainStrategy {
       }
 
       //upgrade walls infront of middle mainTurrets
-      for (int i = 1; i < Locations.Essentials.mainTurrets.length - 1; i++) {
-        Coords loc = Locations.Essentials.mainTurrets[i];
-        spent += attemptSpawnIfAffordable(move, loc, Utility.WALL, false, budget - spent);
-
+      for (int i = 1; i < Locations.Essentials.mainTurretWalls.length - 1; i++) {
+        Coords loc = Locations.Essentials.mainTurretWalls[i];
+        spent += attemptSpawnIfAffordable(move, loc, Utility.WALL, true, budget - spent);
       }
 
 
@@ -387,6 +389,14 @@ public class MainStrategy {
         }
 
       } //end corner placing
+
+      List<Coords> highPriorityWalls = DefenseUtility.getHighPriorityWalls(move);
+      GameIO.debug().println("List of High Priority Walls: " + highPriorityWalls);
+      if (highPriorityWalls != null) {
+        for (Coords loc : highPriorityWalls) {
+          spent += attemptSpawnIfAffordable(move, loc, Utility.WALL, true, budget - spent);
+        }
+      }
 
 
     } catch (InsufficientResourcesException e) {

@@ -4,6 +4,9 @@ import com.c1games.terminal.algo.Coords;
 import com.c1games.terminal.algo.GameIO;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.Unit;
+import com.c1games.terminal.algo.PlayerId;
+
+import java.util.*;
 
 public class DefenseUtility {
 
@@ -47,6 +50,56 @@ public class DefenseUtility {
     }
     GameIO.debug().printf("cornerHasBeenHit is %d\n", totalCornerHits);
     return totalCornerHits;
+  }
+
+  /**
+   * Returns the walls that need to be upgraded based on prior damage. Requires MyAlgo.wallDamage to work correctly.
+   *
+   */
+  static List<Coords> getHighPriorityWalls(GameState move) {
+    List<Coords> highPriorityWalls = new ArrayList<Coords>();
+    for (Map.Entry<Coords, Double> entry : MyAlgo.wallDamage.entrySet()) {
+      double totalDamage = entry.getValue();
+      double damagePerTurn = totalDamage / (move.data.turnInfo.turnNumber + 1);
+      if (damagePerTurn > 10) { //some criteria that will upgrade the wall
+        highPriorityWalls.add(entry.getKey());
+      }
+    }
+    return highPriorityWalls;
+  }
+
+  /**
+   * Calculates some rating of our defense..
+   * Cuts the board in half and counts the total SP value of the structures on the left and right side and then
+   * returns the value of the lowest side
+   * @param move the game state
+   * @return the defensive rating
+   */
+  public static float ourDefenseRating(GameState move) {
+
+    float leftRating = 0;
+    float rightRating = 0;
+
+    List<Unit>[][] allUnits = move.allUnits;
+    for (int x = 0; x < allUnits.length; x++) {
+      List<Unit>[] row = allUnits[x];
+      for (List<Unit> units : row) {
+        if (units.isEmpty() || move.isInfo(units.get(0).type)) {
+          continue;
+        }
+        Unit unit = units.get(0);
+        if (unit.owner == PlayerId.Player1) { //this is our structure
+          float unitValue = 0;
+          unitValue += unit.unitInformation.cost1.getAsDouble() * unit.health / unit.unitInformation.startHealth.getAsDouble();
+          if (x < 13) {
+            leftRating += unitValue;
+          } else {
+            rightRating += unitValue;
+          }
+        }
+      }
+    }
+    return 2 * Math.min(leftRating, rightRating);
   }
 
 }

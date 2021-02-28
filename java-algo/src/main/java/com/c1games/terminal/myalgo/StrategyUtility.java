@@ -57,7 +57,7 @@ public class StrategyUtility {
     float ourHealth = move.data.p1Stats.integrity;
     float baseMPIncome = move.config.resources.bitsPerRound + move.config.resources.bitGrowthRate * (move.data.turnInfo.turnNumber) / move.config.resources.turnIntervalForBitSchedule;
     float enemyMPIncome = baseMPIncome;
-    int defenseRating = calculateTotalDefenseDamage(move);
+    float defenseRating = (int) DefenseUtility.ourDefenseRating(move);
 
 
 
@@ -66,8 +66,8 @@ public class StrategyUtility {
 
 
     int maxEnemyScoutRushHealth = maxEnemyScoutRushHealth(move);
-    final int bias_term = 40; //TODO: Tunable (more means we need more defense as a base)
-    int possibleRemainingScoutRushHealth = maxEnemyScoutRushHealth + bias_term - defenseRating;
+    final int bias_term = 20; //TODO: Tunable (more means we need more defense as a base)
+    int possibleRemainingScoutRushHealth = (int) (maxEnemyScoutRushHealth + bias_term - 2 * defenseRating);
     /*
     We divide by 15
     since 2 SP (unupgraded) tower deals ~30 dmg

@@ -12,6 +12,7 @@ import com.c1games.terminal.algo.units.UnitType;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Boom {
   private static final Coords[] leftPath = {
@@ -55,13 +56,13 @@ public class Boom {
   Coords getBombStart() {
     return this.bombType == UnitType.Interceptor
         ? new Coords(this.sideToBoom == Side.RIGHT ? 23 : 27 - 23, 9)
-        : new Coords(this.sideToBoom == Side.RIGHT ? 10 : 27 - 10, 3);
+        : new Coords(this.sideToBoom == Side.RIGHT ? 9 : 27 - 9, 4);
   }
 
   Coords getFollowerStart() {
     return this.bombType == UnitType.Interceptor
-        ? new Coords(this.sideToBoom == Side.RIGHT ? 6 : 27 - 6, 7)
-        : new Coords(this.sideToBoom == Side.RIGHT ? 9 : 27 - 9, 4);
+        ? new Coords(this.sideToBoom == Side.RIGHT ? 8 : 27 - 8, 5)
+        : new Coords(this.sideToBoom == Side.RIGHT ? 8 : 27 - 8, 5);
   }
 
   int getCost() {
@@ -156,66 +157,82 @@ public class Boom {
    * @return
    */
   static boolean placeBoomLid(GameState move, Side boomSide) {
-    List<Coords> toPlace = Arrays.stream(Locations.boomLid_right)
+    List<Coords> checkWalls = Arrays.stream(Locations.boomCheck_right)
         .map(coords -> new Coords(boomSide == Side.RIGHT ? coords.x : (27 - coords.x), coords.y))
         .filter(coords -> move.getWallAt(coords) == null)
         .collect(Collectors.toList());
+
+    List<Coords> lidWalls = Arrays.stream(Locations.boomLid_right)
+        .sorted((c1, c2) -> c2.x - c1.x)
+        .sorted((c1, c2) -> c1.y - c2.y)
+        .map(coords -> new Coords(boomSide == Side.RIGHT ? coords.x : (27 - coords.x), coords.y))
+        .filter(coords -> move.getWallAt(coords) == null)
+        .collect(Collectors.toList());
+
+    double wallCost = move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1);
+    double supportCost = move.config.unitInformation.get(UnitType.Support.ordinal()).cost1.orElse(4);
+
     // check if we have anough sp to fill the lid
-    if (move.data.p1Stats.bits < toPlace.size() * move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1)) return false;
+    if (move.data.p1Stats.bits < (checkWalls.size() + lidWalls.size()) * wallCost) return false;
 
     // place the lid
-    toPlace.forEach(coords -> SpawnUtility.placeWall(move, coords));
+    checkWalls.forEach(coords -> SpawnUtility.placeWall(move, coords));
+
+    int[] supportsAffordable = new int[]{(int) ((move.data.p1Stats.bits - (lidWalls.size() * wallCost)) / (supportCost - wallCost))};
+    lidWalls.stream().map(coords -> ((supportsAffordable[0]-- > 0 && SpawnUtility.placeSupport(move, coords)) || SpawnUtility.placeWall(move, coords)) && SpawnUtility.removeBuilding(move, coords));
+
+
 
     // try placing shields
-    double supportCost = move.config.unitInformation.get(UnitType.Support.ordinal()).cost1.orElse(4);
-    int affordableSupports = (int) (move.data.p1Stats.cores / supportCost);
-    GameIO.debug().printf("Booming with %d support towers\n", affordableSupports);
-    List<Coords> neededSupports = Arrays.asList(Locations.safeSupportLocations);
-    int maxY = neededSupports.stream().limit(affordableSupports).mapToInt(coords -> coords.y).max().orElse(0);
-    GameIO.debug().printf("max Y: %d\n",maxY);
-    List<Coords> defensiveWalls = new ArrayList<>();
-    if (neededSupports.size() > 0 && maxY >= 3) { // place protective walls over the supports
-      int wallY = maxY + 1;
-      for (int x = 15-wallY; x <= (wallY+12); x++) {
-        Coords wallPos = new Coords(x, wallY);
-        if (move.getWallAt(wallPos) == null) {
-          defensiveWalls.add(wallPos);
-        }
-      }
-      GameIO.debug().printf("Need walls: %s\n",defensiveWalls);
-      int neededWalls = defensiveWalls.size();
-      double expectedWallCost = neededWalls * move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1);
-      while (wallY > 3 && expectedWallCost > (move.data.p1Stats.cores - neededSupports.size() * supportCost)) {
-        GameIO.debug().printf("Not enough SP for wall! SP: %.2f, support cost: %.2f, wall cost: %.2f\n",move.data.p1Stats.cores, neededSupports.size()*supportCost, expectedWallCost);
-        int finalMaxY = maxY;
-        neededSupports = neededSupports.stream().filter(coords -> coords.y < finalMaxY).collect(Collectors.toList());
-        maxY = neededSupports.stream().mapToInt(coords -> coords.y).max().orElse(0);
-        GameIO.debug().printf("new Max Y: %d\n",maxY);
-        wallY = maxY + 1;
-        defensiveWalls = new ArrayList<>();
-        for (int x = 15-wallY; x <= (wallY+12); x++) {
-          Coords wallPos = new Coords(x, wallY);
-          if (move.getWallAt(wallPos) == null) {
-            defensiveWalls.add(wallPos);
-          }
-        }
-        neededWalls = defensiveWalls.size();
-        expectedWallCost = neededWalls * move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1);
-      }
-    }
-    GameIO.debug().println(defensiveWalls);
-    GameIO.debug().println(neededSupports);
+//    double supportCost = move.config.unitInformation.get(UnitType.Support.ordinal()).cost1.orElse(4);
+//    int affordableSupports = (int) (move.data.p1Stats.cores / supportCost);
+//    GameIO.debug().printf("Booming with %d support towers\n", affordableSupports);
+//    List<Coords> neededSupports = Arrays.asList(Locations.safeSupportLocations);
+//    int maxY = neededSupports.stream().limit(affordableSupports).mapToInt(coords -> coords.y).max().orElse(0);
+//    GameIO.debug().printf("max Y: %d\n",maxY);
+//    List<Coords> defensiveWalls = new ArrayList<>();
+//    if (neededSupports.size() > 0 && maxY >= 3) { // place protective walls over the supports
+//      int wallY = maxY + 1;
+//      for (int x = 15-wallY; x <= (wallY+12); x++) {
+//        Coords wallPos = new Coords(x, wallY);
+//        if (move.getWallAt(wallPos) == null) {
+//          defensiveWalls.add(wallPos);
+//        }
+//      }
+//      GameIO.debug().printf("Need walls: %s\n",defensiveWalls);
+//      int neededWalls = defensiveWalls.size();
+//      double expectedWallCost = neededWalls * move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1);
+//      while (wallY > 3 && expectedWallCost > (move.data.p1Stats.cores - neededSupports.size() * supportCost)) {
+//        GameIO.debug().printf("Not enough SP for wall! SP: %.2f, support cost: %.2f, wall cost: %.2f\n",move.data.p1Stats.cores, neededSupports.size()*supportCost, expectedWallCost);
+//        int finalMaxY = maxY;
+//        neededSupports = neededSupports.stream().filter(coords -> coords.y < finalMaxY).collect(Collectors.toList());
+//        maxY = neededSupports.stream().mapToInt(coords -> coords.y).max().orElse(0);
+//        GameIO.debug().printf("new Max Y: %d\n",maxY);
+//        wallY = maxY + 1;
+//        defensiveWalls = new ArrayList<>();
+//        for (int x = 15-wallY; x <= (wallY+12); x++) {
+//          Coords wallPos = new Coords(x, wallY);
+//          if (move.getWallAt(wallPos) == null) {
+//            defensiveWalls.add(wallPos);
+//          }
+//        }
+//        neededWalls = defensiveWalls.size();
+//        expectedWallCost = neededWalls * move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1);
+//      }
+//    }
+//    GameIO.debug().println(defensiveWalls);
+//    GameIO.debug().println(neededSupports);
+//
+//    //place walls to protect the supports
+//    Coords[] wallArray = defensiveWalls.toArray(new Coords[0]);
+//    SpawnUtility.placeWalls(move, wallArray);
+//    SpawnUtility.removeBuildings(move, wallArray);
+//    //now put down supports
+//    Coords[] supportArray = neededSupports.toArray(new Coords[0]);
+//    SpawnUtility.placeSupports(move, supportArray);
+//    SpawnUtility.removeBuildings(move, supportArray);
 
-    //place walls to protect the supports
-    Coords[] wallArray = defensiveWalls.toArray(new Coords[0]);
-    SpawnUtility.placeWalls(move, wallArray);
-    SpawnUtility.removeBuildings(move, wallArray);
-    //now put down supports
-    Coords[] supportArray = neededSupports.toArray(new Coords[0]);
-    SpawnUtility.placeSupports(move, supportArray);
-    SpawnUtility.removeBuildings(move, supportArray);
-
-    return Arrays.stream(Locations.boomLid_right)
+    return Stream.concat(Arrays.stream(Locations.boomCheck_right), Arrays.stream(Locations.boomLid_right))
         .noneMatch(closeLocation -> move.getWallAt(new Coords(
             boomSide.equals(Side.RIGHT) ? closeLocation.x : (27 - closeLocation.x),
             closeLocation.y)) == null);

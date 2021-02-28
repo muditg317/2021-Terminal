@@ -44,6 +44,24 @@ public class Utility {
 
 
   /**
+   * Fills the other hook holes for this scout attack but leaves the one needed open
+   * @param gameState
+   * @return the amount spent
+   */
+  static int fillOtherHookHoles(GameState gameState, Coords noFill) {
+    int spent = 0;
+    for (Coords loc : Locations.Essentials.mainWallHookHoles) {
+      if (loc.equals(noFill)) {
+        continue;
+      }
+      if (SpawnUtility.placeWall(gameState, loc)) {
+        spent++;
+      }
+    }
+    return spent;
+  }
+
+  /**
    * Goes through the list of locations, gets the path taken from them,
    * and loosely calculates how much damage will be taken by traveling that path assuming speed of 1.
    * @param move

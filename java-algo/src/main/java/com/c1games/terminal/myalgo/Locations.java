@@ -72,7 +72,7 @@ class Locations {
         new Coords(10, 11),
         new Coords(17, 11),
 
-        new Coords(11, 11),
+        new Coords(9, 11),
         new Coords(18, 11),
 
         new Coords(12, 10),
@@ -183,9 +183,21 @@ class Locations {
       //new Coords(27,13),
   };
   
-  static final Coords[] boomLid_right;
+  static final Coords[] boomLid_right = {
+      new Coords(7, 6),
+      new Coords(8, 6),
+      new Coords(9, 6),
+      new Coords(10, 5),
+      new Coords(11,4),
+      new Coords(12, 4),
+      new Coords(13, 4),
+      new Coords(14, 4),
+      new Coords(15, 4),
+      new Coords(16, 4)
+  };
+  static final Coords[] boomCheck_right;
   static{
-    boomLid_right = Stream.concat(Stream.concat(Arrays.stream(
+    boomCheck_right = Stream.concat(Stream.concat(Arrays.stream(
         Essentials.leftCornerWalls),
         Arrays.stream(Essentials.mainWallCoords)),
         Essentials.mainWallHookHoles.stream()).toArray(Coords[]::new);

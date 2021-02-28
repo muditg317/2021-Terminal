@@ -536,7 +536,7 @@ public class HookAttack extends Attack {
   }
 
   public void learn(double actualSpDamage) {
-    onlineAdjustment = actualSpDamage / this.expectedDefense.structureHealth;
+    onlineAdjustment *= actualSpDamage / this.expectedDefense.structureHealth;
   }
 
   public static void decayLearning() {

@@ -37,39 +37,7 @@ public class DeadUtility {
       }
     }
   }
-  /**
-   * Calculates some rating of our defense..
-   * Cuts the board in half and counts the total SP value of the structures on the left and right side and then
-   * returns the value of the lowest side
-   * @param move the game state
-   * @return the defensive rating
-   */
-  private static float calculateDefenseRating(GameState move) {
 
-    float leftRating = 0;
-    float rightRating = 0;
-
-    List<Unit>[][] allUnits = move.allUnits;
-    for (int x = 0; x < allUnits.length; x++) {
-      List<Unit>[] row = allUnits[x];
-      for (List<Unit> units : row) {
-        if (units.isEmpty() || move.isInfo(units.get(0).type)) {
-          continue;
-        }
-        Unit unit = units.get(0);
-        if (unit.owner == PlayerId.Player1) { //this is our structure
-          float unitValue = 0;
-          unitValue += unit.unitInformation.cost()[0] * unit.health / unit.unitInformation.startHealth.getAsDouble();
-          if (x < 13) {
-            leftRating += unitValue;
-          } else {
-            rightRating += unitValue;
-          }
-        }
-      }
-    }
-    return 2 * Math.min(leftRating, rightRating);
-  }
 
   /**
    * OLD ALGO
