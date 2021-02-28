@@ -1,0 +1,3 @@
+Configuring your custom java algo strategy...
+Set random seed to: -2563386992767884013
+Performing turn 0 of your custom algo strategy
