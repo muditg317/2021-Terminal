@@ -297,8 +297,11 @@ public class StrategyUtility {
         List<Unit> relevantHistory = history.stream().skip(Math.max(0, history.size() - maxUnits)).limit(maxUnits).collect(Collectors.toList());
         if (y > 13 && !relevantHistory.isEmpty()) {
           if (prediction.allUnits[x][y].isEmpty()) {
-            Unit newUnit = new Unit(relevantHistory.get(0).type, relevantHistory.get(0).health, relevantHistory.get(0).id+"hi", relevantHistory.get(0).owner, prediction.config);
-            if (relevantHistory.get(0).upgraded) newUnit.upgrade();
+            Unit newUnit = relevantHistory.get(0);
+            if (newUnit != null) {
+              newUnit = new Unit(newUnit.type, newUnit.health, newUnit.id + "hi", newUnit.owner, prediction.config);
+              if (newUnit.upgraded) newUnit.upgrade();
+            }
             Unit[] detectedUnit = new Unit[]{newUnit};
             relevantHistory.stream().skip(1).forEach(unit -> {
               if ((!pickBest && detectedUnit[0] == null) || unit == null) {
