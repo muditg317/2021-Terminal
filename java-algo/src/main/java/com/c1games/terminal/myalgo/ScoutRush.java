@@ -60,7 +60,8 @@ public class ScoutRush extends Attack {
   public static ScoutRush evaluate(GameState move, double spBudget) {
     int mp = (int) move.data.p1Stats.bits;
     double scoutBaseHealth = move.config.unitInformation.get(UnitType.Scout.ordinal()).startHealth.orElse(15);;
-    int estimatedScoutHealth = (int) (scoutBaseHealth + (spBudget * 3.0 / 4.0));
+    int estimatedSupports = (int) (spBudget / 4);
+    int estimatedScoutHealth = (int) (scoutBaseHealth + (estimatedSupports * 3.5));
     ScoutRush leftSr = new ScoutRush(new Coords(14, 0), spBudget, mp, estimatedScoutHealth);
     ScoutRush rightSr = new ScoutRush(new Coords(13, 0), spBudget, mp, estimatedScoutHealth);
     leftSr.calculateSurvivingScouts(move); //targeting the left side

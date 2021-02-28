@@ -121,11 +121,11 @@ public class MainStrategy {
     }
     Attack chosenAttack = chooseAttack(attackSpBudget, defenseBudget);
     if (chosenAttack != null) {
-      chosenAttack.execute(move);
       MyAlgo.lastAttack = chosenAttack;
       if (!(chosenAttack instanceof HookAttack)) {
         fillHookHoles(move);
       }
+      chosenAttack.execute(move);
     } else {
       fillHookHoles(move);
       GameIO.debug().println("Spawn defensive inters!");

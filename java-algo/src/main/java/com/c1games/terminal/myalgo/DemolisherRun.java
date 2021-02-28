@@ -88,10 +88,10 @@ public class DemolisherRun extends Attack {
       }
 
       GameState testState = Utility.duplicateState(move);
-      if (i % 10 == 0) {
-        GameIO.debug().printf("TESTING DEMO RUN from %s:\n", start);
-        Utility.printGameBoard(testState.allUnits);
-      }
+      //if (i % 10 == 0) {
+        //GameIO.debug().printf("TESTING DEMO RUN from %s:\n", start);
+        //Utility.printGameBoard(testState.allUnits);
+      //}
 
       double demolisherHealth = demolisherInfo.startHealth.orElse(5);
       List<Double> demolisherHealths = new ArrayList<>(numDemolishers);
