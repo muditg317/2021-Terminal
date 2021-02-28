@@ -42,7 +42,7 @@ class Locations {
 
         new Coords(7, 10),
         new Coords(11, 10),
-        new Coords(16, 9),
+        new Coords(16, 10),
         new Coords(20, 10),
 
         new Coords(24, 12),

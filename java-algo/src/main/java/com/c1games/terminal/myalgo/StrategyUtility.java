@@ -330,7 +330,7 @@ public class StrategyUtility {
           } else if (!prediction.allUnits[x][y].get(0).upgraded) {
             Unit predictedUnit = prediction.allUnits[x][y].get(0);
             relevantHistory.forEach(unit -> {
-              if (unit.type == predictedUnit.type && unit.upgraded && !predictedUnit.upgraded) {
+              if (unit != null && unit.type == predictedUnit.type && unit.upgraded && !predictedUnit.upgraded) {
                 predictedUnit.upgrade();
               }
             });
