@@ -66,8 +66,8 @@ public class StrategyUtility {
 
 
     int maxEnemyScoutRushHealth = maxEnemyScoutRushHealth(move);
-    final int bias_term = 20; //TODO: Tunable (more means we need more defense as a base)
-    int possibleRemainingScoutRushHealth = (int) (maxEnemyScoutRushHealth + bias_term - 2 * defenseRating);
+    final int bias_term = 0; //TODO: Tunable (more means we need more defense as a base)
+    int possibleRemainingScoutRushHealth = (int) (maxEnemyScoutRushHealth + bias_term - 1.5 * defenseRating);
     /*
     We divide by 15
     since 2 SP (unupgraded) tower deals ~30 dmg

@@ -57,14 +57,29 @@ public class DefenseUtility {
    *
    */
   static List<Coords> getHighPriorityWalls(GameState move) {
+    final int MAX_PRIORITY_WALLS = 5;
     List<Coords> highPriorityWalls = new ArrayList<Coords>();
-    for (Map.Entry<Coords, Double> entry : MyAlgo.wallDamage.entrySet()) {
+
+    //sort the map first into most damage to least damage
+    LinkedHashMap<Coords, Double> sortedWallDamage = new LinkedHashMap<>();
+    MyAlgo.wallDamage.entrySet()
+        .stream()
+        .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+        .forEachOrdered(x -> sortedWallDamage.put(x.getKey(), x.getValue()));
+
+
+    for (Map.Entry<Coords, Double> entry : sortedWallDamage.entrySet()) {
       double totalDamage = entry.getValue();
       double damagePerTurn = totalDamage / (move.data.turnInfo.turnNumber + 1);
-      if (damagePerTurn > 10) { //some criteria that will upgrade the wall
+      if (damagePerTurn > 3 && totalDamage > 30) { //some criteria that will upgrade the wall
         highPriorityWalls.add(entry.getKey());
       }
+      if (highPriorityWalls.size() > MAX_PRIORITY_WALLS) {
+        break;
+      }
     }
+    GameIO.debug().println("Sorted Wall Damages: " + sortedWallDamage);
+
     return highPriorityWalls;
   }
 

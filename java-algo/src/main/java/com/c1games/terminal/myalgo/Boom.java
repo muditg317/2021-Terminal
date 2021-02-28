@@ -69,7 +69,15 @@ public class Boom {
     return followerUnits + bombUnits;
   }
 
+  @Override
+  public String toString() {
+    return String.format("Boom: Side: %s \t Bomb Units: %d, Bomb Type: %s, Follower Units: %d, Cost: %d",
+        this.sideToBoom, this.bombUnits, this.bombType, this.followerUnits, this.getCost());
+  }
+
   static void evaluate(GameState move, int expectedMpSpentPerTurn) {
+    GameIO.debug().print("BOOM STATE BEFORE DECISION=======");
+    Boom.debugPrint();
     if (Boom.awaitingBoom && Boom.turnsUntilBoom == 0) {
       awaitingBoom = false;
       turnsUntilBoom = -99;
@@ -89,14 +97,15 @@ public class Boom {
       }
       for (; turns <= MAX_EXTRAPOLATION_TURNS; turns++) {
         Boom futureAttack = futureAttackThreshold(move, turns);
+        GameIO.debug().println("Future Boom Attack:\n" + futureAttack);
         if (futureAttack == null) {
           continue;
         }
 
         float futureAttackThreshold = futureAttack.getCost();
         float futureMP = extrapolateFutureMP(move, turns, expectedMpSpentPerTurn);
-//        GameIO.debug().println("futureAttackThreshold: " + futureAttackThreshold);
-//        GameIO.debug().println("futureMP: " + futureMP);
+        GameIO.debug().println("futureAttackThreshold: " + futureAttackThreshold);
+        GameIO.debug().println("futureMP: " + futureMP);
         if (futureMP >= futureAttackThreshold) {
           GameIO.debug().println("about to boom..." + mp + " / " + futureAttackThreshold + " reached -- expecting: " + futureMP +" in " + turns +" turns ||| started turn with: " + mp);
           Boom.awaitingBoom = true;
@@ -429,6 +438,11 @@ public class Boom {
     return bestBoom;
   }
 
+  /**
+   * Returns the expected damage to enemy integrity of this boom.
+   * @param state
+   * @return
+   */
   private double simulateDamage(GameState state) {
     GameState boomState = Utility.duplicateState(state);
 
@@ -461,24 +475,15 @@ public class Boom {
     }
 
     Coords bombStart = getBombStart();
-    List<Coords> bombPath;
-    int bombTargetEdge = (this.sideToBoom == Side.RIGHT && this.bombType == UnitType.Scout) ? MapBounds.EDGE_TOP_RIGHT : MapBounds.EDGE_BOTTOM_LEFT;
-    try {
-      bombPath = boomState.pathfind(bombStart, bombTargetEdge);
-    } catch (IllegalPathStartException e) {
-//            GameIO.debug().printf("x:%d,y:%d. invalid hook exit\n", x, y);
-      return 0;
-    }
+    int bombTargetEdge = MapBounds.getEdgeFromStart(bombStart);
+
+    List<Coords>  bombPath = boomState.pathfind(bombStart, bombTargetEdge);
 
     Coords followerStart = getFollowerStart();
-    List<Coords> followerPath;
-    int followerTargetEdge = this.sideToBoom == Side.RIGHT ? MapBounds.EDGE_TOP_RIGHT : MapBounds.EDGE_BOTTOM_LEFT;
-    try {
-      followerPath = boomState.pathfind(followerStart, followerTargetEdge);
-    } catch (IllegalPathStartException e) {
-//            GameIO.debug().printf("x:%d,y:%d. invalid hook exit\n", x, y);
-      return 0;
-    }
+    int followerTargetEdge = MapBounds.getEdgeFromStart(followerStart);
+
+    List<Coords> followerPath = boomState.pathfind(followerStart, followerTargetEdge);
+
 
     float damageToBase = 0;
     float spTaken = 0;

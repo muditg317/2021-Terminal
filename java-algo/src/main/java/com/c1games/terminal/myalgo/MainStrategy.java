@@ -54,8 +54,8 @@ public class MainStrategy {
 
     GameIO.debug().println("scoutRushDefense:" + scoutRushDefense);
     GameIO.debug().println("reducedScoutRushDefense: " + reducedScoutRushDefense);
-    GameIO.debug().println("Enemy left corner heuristic: " + Boom.enemyDefenseHeuristic(move, Side.LEFT));
-    GameIO.debug().println("Enemy right corner heuristic: " + Boom.enemyDefenseHeuristic(move, Side.RIGHT));
+    //GameIO.debug().println("Enemy left corner heuristic: " + Boom.enemyDefenseHeuristic(move, Side.LEFT));
+    //GameIO.debug().println("Enemy right corner heuristic: " + Boom.enemyDefenseHeuristic(move, Side.RIGHT));
 
 
 
@@ -165,7 +165,7 @@ public class MainStrategy {
     }
 
     if (potentialHookAttack != null) {
-      GameIO.debug().printf("HOOKING!!!\tx:%d,y:%d,s:%s\n",potentialHookAttack.demolishers[0].x,potentialHookAttack.demolishers[0].y,potentialHookAttack.demolishers[0].x-13 == 0 ? "R" : "L");
+      GameIO.debug().printf("HOOKING!!!\tx:%d,y:%d,s:%s\n",potentialHookAttack.hookX,potentialHookAttack.hookY,potentialHookAttack.hookSide == 0 ? "R" : "L");
       potentialAttacks.add(potentialHookAttack);
     }
 
@@ -197,7 +197,7 @@ public class MainStrategy {
       }
 
       if (potentialHookAttack != null) {
-        GameIO.debug().printf("fall back hook::\n\tx:%d,y:%d,s:%s\n",potentialHookAttack.demolishers[0].x,potentialHookAttack.demolishers[0].y,potentialHookAttack.demolishers[0].x-13 == 0 ? "R" : "L");
+        GameIO.debug().printf("fall back hook::\n\tx:%d,y:%d,s:%s\n",potentialHookAttack.hookX,potentialHookAttack.hookY,potentialHookAttack.hookSide == 0 ? "R" : "L");
         potentialAttacks.add(potentialHookAttack);
       }
 
@@ -349,14 +349,10 @@ public class MainStrategy {
 
       }
 
-      //upgrade all main turrets
-      for (Coords loc : Locations.Essentials.mainTurrets) {
-        spent += attemptSpawnIfAffordable(move, loc, Utility.TURRET, true, budget - spent);
-      }
+      //upgrade every other mainWallTurret
 
-      //upgrade walls infront of middle mainTurrets
-      for (int i = 1; i < Locations.Essentials.mainTurretWalls.length - 1; i++) {
-        Coords loc = Locations.Essentials.mainTurretWalls[i];
+      for (int i = 0; i < Locations.Essentials.mainTurretWalls.length; i += 2) {
+        Coords loc = Locations.Essentials.mainTurrets[i];
         spent += attemptSpawnIfAffordable(move, loc, Utility.WALL, true, budget - spent);
       }
 
@@ -446,6 +442,16 @@ public class MainStrategy {
     try {
       Method spawnMethod = MainStrategy.class.getMethod(autoDelete ? "attemptSpawnAndDelete" : "attemptSpawnIfAffordable", GameState.class, Coords.class, UnitType.class, boolean.class, double.class);
 
+      //upgrade all main turrets
+      for (Coords loc : Locations.Essentials.mainTurrets) {
+        spent += attemptSpawnIfAffordable(move, loc, Utility.TURRET, true, budget - spent);
+      }
+
+      //upgrade walls infront of middle mainTurrets
+      for (int i = 1; i < Locations.Essentials.mainTurretWalls.length - 1; i++) {
+        Coords loc = Locations.Essentials.mainTurretWalls[i];
+        spent += attemptSpawnIfAffordable(move, loc, Utility.WALL, true, budget - spent);
+      }
 
       //upgrade all turret walls
       for (Coords loc : Locations.Essentials.mainTurretWalls) {

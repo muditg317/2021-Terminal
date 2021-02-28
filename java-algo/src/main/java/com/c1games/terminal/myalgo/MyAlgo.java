@@ -24,7 +24,7 @@ public class MyAlgo implements GameLoop {
   final Random rand = new Random();
   //ArrayList<ArrayList<Coords>> scoredOnLocations = new ArrayList<>();
   static HashMap<Coords, Integer> scoredOnLocations = new HashMap<>();
-  static HashMap<Coords, Double> wallDamage = new HashMap<>();
+  static HashMap<Coords, Double> wallDamage = new LinkedHashMap<>();
   static Attack lastAttack = null;
   static double attackActualValue;
   int enemySupportTowerCoresInvestment = 0;
