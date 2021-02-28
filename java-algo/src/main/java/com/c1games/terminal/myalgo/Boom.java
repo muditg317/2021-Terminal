@@ -130,7 +130,7 @@ public class Boom {
         Boom.turnsUntilBoom = -1;
       }
     } else { //booming this turn turnsUntilBoom == 0
-      Boom.attack = attackThreshold(move);
+      //Boom.attack = attackThreshold(move);
 //      Boom.side = attack.side;
 
     }
