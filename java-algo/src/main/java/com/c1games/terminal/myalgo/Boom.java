@@ -77,8 +77,8 @@ public class Boom {
 
   static void progress() {
     if (Boom.awaitingBoom && turnsUntilBoom == 0) { //just boomed this turn
-      awaitingBoom = false;
-      turnsUntilBoom = -99;
+      Boom.awaitingBoom = false;
+      Boom.turnsUntilBoom = -99;
     }
     if (Boom.awaitingBoom) {
       Boom.turnsUntilBoom--;
@@ -120,6 +120,7 @@ public class Boom {
           GameIO.debug().println("about to boom..." + mp + " / " + futureAttackThreshold + " reached -- expecting: " + futureMP +" in " + turns +" turns ||| started turn with: " + mp);
           Boom.awaitingBoom = true;
           Boom.turnsUntilBoom = turns;
+          Boom.attack = futureAttack;
           shouldStillBoom = true;
           break;
         }
@@ -305,6 +306,10 @@ public class Boom {
   static void debugPrint() {
     GameIO.debug().println("awaitingBoom:\t" + Boom.awaitingBoom);
     GameIO.debug().println("turnsUntilBoom:\t" + Boom.turnsUntilBoom);
+    if (Boom.attack != null) {
+      GameIO.debug().println("Boom side:" + Boom.attack.sideToBoom);
+
+    }
   }
 
   /**
