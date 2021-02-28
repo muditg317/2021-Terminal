@@ -9,7 +9,7 @@ Looking for Config file at:
 C:\Users\mudit\Main_Drive\Coding\2021-Terminal/game-configs.json
 .\java-algo\algo-target\run.ps1
 .\java-algo\algos\freeze-X\run.ps1
-Saving replay: C:\Users\mudit\Main_Drive\Coding\2021-Terminal\replays\p1-27-02-2021-19-29-13-1614472153329-832453962.replay
+Saving replay: C:\Users\mudit\Main_Drive\Coding\2021-Terminal\replays\p1-27-02-2021-19-45-19-1614473119804--798451905.replay
 P1 Name: algo-target seasonMode:5
 P2 Name: freeze-X seasonMode:5
 Waiting for: 3000 before starting first turn.
@@ -54,14 +54,16 @@ Algo Crashed. Crash: false !processIsAlive: true
 Algo Crashed. Crash: false !processIsAlive: true
 Algo Crashed. Crash: false !processIsAlive: true
 Algo Crashed. Crash: false !processIsAlive: true
-Algo Crashed. Crash: false !processIsAlive: true
-Algo Crashed. Crash: false !processIsAlive: true
-Algo Crashed. Crash: false !processIsAlive: true
 SAPlayer 1 algo-target: Configuring your custom java algo strategy...
-SAPlayer 1 algo-target: Set random seed to: 4104150137868537396
+SAPlayer 1 algo-target: Set random seed to: -3922282237463735447
 SAPlayer 1 algo-target: Performing turn 0 of your custom algo strategy
-SAPlayer 1 algo-target: Exception in thread "main" java.lang.NullPointerException
-SAPlayer 1 algo-target: 	at com.c1games.terminal.myalgo.MyAlgo.onActionFrame(MyAlgo.java:104)
+SAPlayer 1 algo-target: Exception in thread "main" java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+SAPlayer 1 algo-target: 	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:64)
+SAPlayer 1 algo-target: 	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:70)
+SAPlayer 1 algo-target: 	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:248)
+SAPlayer 1 algo-target: 	at java.base/java.util.Objects.checkIndex(Objects.java:372)
+SAPlayer 1 algo-target: 	at java.base/java.util.ArrayList.set(ArrayList.java:472)
+SAPlayer 1 algo-target: 	at com.c1games.terminal.myalgo.MyAlgo.onActionFrame(MyAlgo.java:111)
 SAPlayer 1 algo-target: 	at com.c1games.terminal.algo.io.GameLoopDriver.run(GameLoopDriver.java:31)
 SAPlayer 1 algo-target: 	at com.c1games.terminal.myalgo.MyAlgo.main(MyAlgo.java:38)
 Algo Crashed. Crash: false !processIsAlive: true

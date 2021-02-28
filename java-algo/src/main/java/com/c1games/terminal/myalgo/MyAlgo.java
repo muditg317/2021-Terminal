@@ -108,7 +108,7 @@ public class MyAlgo implements GameLoop {
             if (unit.upgraded) newUnit.upgrade();
             return newUnit;
           }).collect(Collectors.toList());
-          enemyBaseHistory[x][y].set(move.data.turnInfo.turnNumber, structureAtCoords.size() > 0 ? structureAtCoords.get(0) : null);
+          enemyBaseHistory[x][y].add(structureAtCoords.size() > 0 ? structureAtCoords.get(0) : null);
         }
       }
 
