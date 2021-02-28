@@ -529,16 +529,18 @@ public class MainStrategy {
 
 
       //NOW WE DO ALL THE UPGRADES
-      //upgrade all corner walls
-      for (Coords location : Locations.Essentials.leftCornerWalls) {
-        spent += (int) spawnMethod.invoke(null, gameState, location, Utility.WALL, true, budget - spent);
-      }
-      for (Coords location : Locations.Essentials.rightCornerWalls) {
-        spent += (int) spawnMethod.invoke(null, gameState, location, Utility.WALL, true, budget - spent);
-      }
+      //upgrade only the very corner walls
+      Coords leftCorner = new Coords(0, 13);
+      spent += (int) spawnMethod.invoke(null, gameState, leftCorner, Utility.WALL, true, budget - spent);
+
+      Coords rightCorner = new Coords(27, 13);
+      spent += (int) spawnMethod.invoke(null, gameState, rightCorner, Utility.WALL, true, budget - spent);
+
 
       //upgrade left entrance towers
-      for (Coords location : Locations.topEntranceTurrets) {
+      for (int i = Locations.topEntranceTurrets.length - 1; i >= 0; i--) {
+
+        Coords location = Locations.topEntranceTurrets[i];
         spent += (int) spawnMethod.invoke(null, gameState, location, Utility.TURRET, true, budget - spent);
       }
       for (Coords location : Locations.bottomEntranceTurrets) {

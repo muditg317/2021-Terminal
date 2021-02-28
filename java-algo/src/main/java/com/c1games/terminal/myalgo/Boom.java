@@ -239,6 +239,29 @@ public class Boom {
     return true; //alreadyReady
   }
 
+  /**
+   * clears an attack path for a boom attack
+   * @param side the side which to hit
+   * @return whether the path was already clear
+   */
+  static boolean clearBoomPathForce(GameState state, Side side) {
+    boolean alreadyReady = true;
+    for (int i = 0; i < Locations.boomPath_right.length; i++) {
+      Coords openLocation = Locations.boomPath_right[i];
+      if (openLocation.y > 13) continue;
+      int x = side == Side.RIGHT ? openLocation.x : (27 - openLocation.x);
+      Coords toOpen = new Coords(x, openLocation.y);
+      boolean wasReady = alreadyReady;
+      alreadyReady = !SpawnUtility.removeBuilding(state, toOpen) && alreadyReady;
+      state.allUnits[toOpen.x][toOpen.y].removeIf(unit -> state.isStructure(unit.type) && unit.owner == PlayerId.Player1);
+//      if (wasReady && !alreadyReady) {
+//        Unit wall = state.getWallAt(toOpen);
+//        GameIO.debug().printf("BOOM PATH NOT CLEARED: %s - %s\n", toOpen, wall == null ? "null" : wall.unitInformation.display.orElse("some tower"));
+//      }
+    }
+    return true; //alreadyReady
+  }
+
   static void debugPrint() {
     GameIO.debug().println("awaitingBoom:\t" + Boom.awaitingBoom);
     GameIO.debug().println("turnsUntilBoom:\t" + Boom.turnsUntilBoom);
@@ -373,7 +396,8 @@ public class Boom {
     GameState boomState = Utility.duplicateState(state);
 
     placeBoomLid(boomState, this.sideToBoom);
-    clearBoomPath(boomState, this.sideToBoom);
+    // force removes the things in the bom path
+    clearBoomPathForce(boomState, this.sideToBoom);
 
 
     Coords bombStart = getBombStart();
@@ -419,14 +443,14 @@ public class Boom {
 
     float damageToBase = 0;
     float spTaken = 0;
-    int p;
-    for (p = 0; p < Math.min(bombPath.size(), followerPath.size()) && p < 100; p++) {
-      Coords bombPathPoint = bombPath.get(p);
+    int f;
+    for (f = 0; f < Math.min(bombPath.size()*(1/bombInfo.speed.orElse(this.bombType == UnitType.Interceptor ? 0.25 : 1)), followerPath.size()*(1/followerInfo.speed.orElse(1))) && f < 400; f++) {
+      Coords bombPathPoint = bombPath.get((int)(f*bombInfo.speed.orElse(this.bombType == UnitType.Interceptor ? 0.25 : 1)));
       Map<Unit, Coords> bombAttackerLocations = StrategyUtility.getTowerLocations(boomState, bombPathPoint, bombInfo.attackRange.orElse(this.bombType == UnitType.Interceptor ? 0 : 3.5));
       List<Unit> bombAttackers = new ArrayList<>(bombAttackerLocations.keySet());
       bombAttackers.sort((o1, o2) -> (int) Math.signum(bombPathPoint.distance(bombAttackerLocations.get(o2)) - bombPathPoint.distance(bombAttackerLocations.get(o1))));
 
-      Coords followerPathPoint = followerPath.get(p);
+      Coords followerPathPoint = followerPath.get((int)(f*followerInfo.speed.orElse(1)));
       Map<Unit, Coords> followerAttackerLocations = StrategyUtility.getTowerLocations(boomState, followerPathPoint, followerInfo.attackRange.orElse(3.5));
       List<Unit> followerAttackers = new ArrayList<>(followerAttackerLocations.keySet());
       followerAttackers.sort((o1, o2) -> (int) Math.signum(followerPathPoint.distance(followerAttackerLocations.get(o2)) - followerPathPoint.distance(followerAttackerLocations.get(o1))));
@@ -435,6 +459,7 @@ public class Boom {
       for (Unit attacker : bombAttackers) {
         if (attacker.owner == PlayerId.Player1) {
           if (attacker.type == UnitType.Support) {
+            if (f % )
             double shieldAmount = attacker.unitInformation.shieldPerUnit.orElse(attacker.upgraded ? 5 : 3) + (attacker.upgraded ? (attacker.unitInformation.shieldBonusPerY.orElse(0.3) * bombAttackerLocations.get(attacker).y) : 0);
             for (int d = 0; d < bombHealths.size(); d++) {
               if (!bombShielders.get(d).contains(attacker)) {
