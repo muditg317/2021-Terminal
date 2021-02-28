@@ -214,15 +214,15 @@ public class Utility {
     FrameData copiedData = frameDataGSON.fromJson(frameDataGSON.toJson(state.data), FrameData.class);
 
     GameState duplicate = new GameState(state.config, copiedData);
-//    for (int _x = 0; _x < MapBounds.BOARD_SIZE; _x++) {
-//      for (int _y = 0; _y < MapBounds.BOARD_SIZE; _y++) {
-//        duplicate.allUnits[_x][_y] = state.allUnits[_x][_y].stream().map(unit -> {
-//          Unit newUnit = new Unit(unit.type, unit.health, unit.id, unit.owner, duplicate.config);
-//          if (unit.upgraded) newUnit.upgrade();
-//          return newUnit;
-//        }).collect(Collectors.toList());
-//      }
-//    }
+    for (int _x = 0; _x < MapBounds.BOARD_SIZE; _x++) {
+      for (int _y = 0; _y < MapBounds.BOARD_SIZE; _y++) {
+        duplicate.allUnits[_x][_y] = state.allUnits[_x][_y].stream().map(unit -> {
+          Unit newUnit = new Unit(unit.type, unit.health, unit.id, unit.owner, duplicate.config);
+          if (unit.upgraded) newUnit.upgrade();
+          return newUnit;
+        }).collect(Collectors.toList());
+      }
+    }
     return duplicate;
   }
 

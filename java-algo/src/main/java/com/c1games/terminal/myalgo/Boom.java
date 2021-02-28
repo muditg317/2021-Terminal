@@ -224,7 +224,7 @@ public class Boom {
         GameIO.debug().printf("BOOM PATH NOT CLEARED: %s - %s\n", toOpen, wall == null ? "null" : wall.unitInformation.display.orElse("some tower"));
       }
     }
-    return alreadyReady;
+    return true; //alreadyReady
   }
 
   static void debugPrint() {

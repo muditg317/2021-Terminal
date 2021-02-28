@@ -4,6 +4,7 @@ import com.c1games.terminal.algo.Config;
 import com.c1games.terminal.algo.Coords;
 import com.c1games.terminal.algo.GameIO;
 import com.c1games.terminal.algo.PlayerId;
+import com.c1games.terminal.algo.io.GameLoop;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
@@ -87,6 +88,10 @@ public class DemolisherRun extends Attack {
       }
 
       GameState testState = Utility.duplicateState(move);
+      if (i % 10 == 0) {
+        GameIO.debug().printf("TESTING DEMO RUN from %s:\n", start);
+        Utility.printGameBoard(testState.allUnits);
+      }
 
       double demolisherHealth = demolisherInfo.startHealth.orElse(5);
       List<Double> demolisherHealths = new ArrayList<>(numDemolishers);

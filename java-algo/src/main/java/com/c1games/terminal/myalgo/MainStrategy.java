@@ -96,7 +96,7 @@ public class MainStrategy {
 
     if (Boom.awaitingBoom && Boom.turnsUntilBoom == 0) { // DO THE BOOM
       if (Boom.execute(move)) {
-        fillHookHoles();
+        fillHookHoles(move);
 
         defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores);
         setUpDefenseWithBudget(move, defenseBudget, move.data.p1Stats.cores);
@@ -112,7 +112,7 @@ public class MainStrategy {
         Boom.clearBoomPath(move, "RIGHT");
         GameIO.debug().println("clearing path for future BOOM!!");
       }
-      fillHookHoles();
+      fillHookHoles(move);
 
       // put up defenses (moved before end of else blck because we were messing up our own booms
       defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores - saveCores);
@@ -124,10 +124,10 @@ public class MainStrategy {
       chosenAttack.execute(move);
       MyAlgo.lastAttack = chosenAttack;
       if (!(chosenAttack instanceof HookAttack)) {
-        fillHookHoles();
+        fillHookHoles(move);
       }
     } else {
-      fillHookHoles();
+      fillHookHoles(move);
       GameIO.debug().println("Spawn defensive inters!");
       spawnDefensiveInters(scoutRushDefense);
     }
@@ -177,8 +177,10 @@ public class MainStrategy {
 
     GameState defendedState = Utility.duplicateState(move);
     setUpDefenseWithBudget(defendedState, defenseSPBudget, defenseSPBudget);
+    double scoutRushSPBudet = attackSpBudget - fillHookHoles(defendedState);
 
-    ScoutRush potentialScoutRush = ScoutRush.evaluate(defendedState, attackSpBudget);
+
+    ScoutRush potentialScoutRush = ScoutRush.evaluate(defendedState, scoutRushSPBudet);
     if (potentialScoutRush != null && Math.random() > 0.1) {
       GameIO.debug().printf("SENDING SCOUT RUSH!\n\tSpBudget:%.2f\tNumScouts:%d\tScoutHealth: %d\n\tExpected Damage:%d\tOnline Adjustment:%.2f\n",
           potentialScoutRush.spBudget, potentialScoutRush.numScouts, potentialScoutRush.scoutHealth, potentialScoutRush.expectedDamage, ScoutRush.onlineAdjustment);
@@ -256,11 +258,16 @@ public class MainStrategy {
 
   /**
    * Fills the main wall hook holes
+   * @return the total cores spent
    */
-  private static void fillHookHoles() {
+  private static int fillHookHoles(GameState gameState) {
+    int spent = 0;
     for (Coords location : Locations.Essentials.mainWallHookHoles) {
-      SpawnUtility.placeWall(move, location);
+      if (SpawnUtility.placeWall(gameState, location)) {
+        spent++;
+      }
     }
+    return spent;
   }
 
   /**
