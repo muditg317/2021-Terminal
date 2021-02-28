@@ -99,17 +99,11 @@ class Locations {
 
   static final Coords[] cornerTurrets = {
 
-      new Coords(5, 11),
-      new Coords(24, 13),
+      new Coords(2, 12),
+      new Coords(25, 12),
 
-      new Coords(3, 13),
-      new Coords(23, 13),
-      new Coords(4, 11),
-
-      new Coords(4, 13),
-      new Coords(5, 13),
-      new Coords(24, 12)
-
+      new Coords(1, 12),
+      new Coords(26, 12)
   };
 
   static final Coords[] rightTurrets = {

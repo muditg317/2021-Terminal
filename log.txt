@@ -14,3 +14,1418 @@ P1 Name: algo-target seasonMode:5
 P2 Name: freeze-X seasonMode:5
 Waiting for: 3000 before starting first turn.
 Done waiting starting first turn.
+SAPlayer 1 algo-target: Configuring your custom java algo strategy...
+SAPlayer 1 algo-target: Set random seed to: -2563386992767884013
+SAPlayer 1 algo-target: Performing turn 0 of your custom algo strategy
+SAPlayer 1 algo-target: Performing turn 1 of your custom algo strategy
+Invalid location to remove, already removing21 9
+Invalid location to remove, already removing6 9
+Invalid location to remove, already removing20 8
+Invalid location to remove, already removing7 8
+SAPlayer 1 algo-target: Turn 1: We currently have 5.0 SP and 7.0 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 5, Demos: 0. Cost: 5
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 5, Demos: 0. Cost: 5
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: spent: 5 of 5 || finishedBudget @ LINE 74
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 0.0 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 0.00
+SAPlayer 1 algo-target: Performing turn 2 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 2: We currently have 8.2 SP and 9.3 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 7, Demos: 0. Cost: 7
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 7, Demos: 0. Cost: 7
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 2.1999998 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.20	Max spending: 0.20
+SAPlayer 1 algo-target: spent: 0 of -1.8000001907348633 || finishedBudget @ LINE 404
+SAPlayer 1 algo-target: spent an extra: 0.0 of -1.8000001907348633 || finishedBudget @ LINE 404
+SAPlayer 1 algo-target: topWallCap: (4, 12)
+SAPlayer 1 algo-target: bottomWallCap: (6, 10)
+SAPlayer 1 algo-target: Performing turn 3 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 3: We currently have 7.2 SP and 11.0 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 7, Demos: 0. Cost: 7
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 7, Demos: 0. Cost: 7
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 7.2 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Ping rush!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 1.20	Max spending: 1.20
+SAPlayer 1 algo-target: spent: 0 of -0.8000001907348633 || finishedBudget @ LINE 404
+SAPlayer 1 algo-target: spent an extra: 0.0 of -0.8000001907348633 || finishedBudget @ LINE 404
+SAPlayer 1 algo-target: topWallCap: (4, 12)
+SAPlayer 1 algo-target: bottomWallCap: (6, 10)
+SAPlayer 1 algo-target: null
+SAPlayer 1 algo-target: <3, 10> 1 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 2 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 3 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 4 times.
+SAPlayer 1 algo-target: Performing turn 4 of your custom algo strategy
+SAPlayer 1 algo-target: SR: Expected Damage was 11: Actual damage was: 6.00
+SAPlayer 1 algo-target: SR: The onlineAdjustment value is now 0.55
+SAPlayer 1 algo-target: Turn 4: We currently have 17.3 SP and 4.0 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 17.3 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 11.30
+SAPlayer 1 algo-target: spent: 0 of -2.0 || finishedBudget @ LINE 404
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent an extra: 11.0 of 9.299999237060547 || finishedBudget @ LINE 404
+SAPlayer 1 algo-target: topWallCap: (7, 12)
+SAPlayer 1 algo-target: bottomWallCap: (7, 10)
+SAPlayer 1 algo-target: Performing turn 5 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 5: We currently have 23.1 SP and 7.0 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 20.1 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 5.00	Max spending: 14.10
+SAPlayer 1 algo-target: spent: 4 of 3.0 || finishedBudget @ LINE 405
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (7, 12)
+SAPlayer 1 algo-target: bottomWallCap: (7, 10)
+SAPlayer 1 algo-target: Performing turn 6 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 6: We currently have 21.1 SP and 9.3 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 21.1 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 5.00	Max spending: 15.10
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 4 of 3.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (8, 12)
+SAPlayer 1 algo-target: bottomWallCap: (7, 10)
+SAPlayer 1 algo-target: Performing turn 7 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 7: We currently have 20.3 SP and 11.0 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 20.3 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 14.30
+SAPlayer 1 algo-target: spent: 0 of -2.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent an extra: 14.0 of 12.299999237060547 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (8, 10)
+SAPlayer 1 algo-target: Performing turn 8 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 8: We currently have 32.5 SP and 12.3 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 6, Demos: 0. Cost: 6
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 29.5 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 5.00	Max spending: 23.50
+SAPlayer 1 algo-target: spent: 4 of 3.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 9 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 9: We currently have 30.5 SP and 13.2 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 14, Demos: 0. Cost: 14
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 30.5 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 5.00	Max spending: 24.50
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 3 of 3.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 10 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 10: We currently have 29.2 SP and 14.9 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 14, Demos: 0. Cost: 14
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 29.2 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 23.20
+SAPlayer 1 algo-target: spent: 0 of -2.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 11 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 11: We currently have 35.7 SP and 16.2 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 35.7 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 6.00	Max spending: 29.70
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 4 of 4.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 12 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 12: We currently have 32.9 SP and 17.2 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 32.9 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: CAN DEMO: 26 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Will run demo: <2, 11>. expected damage: 19.97
+SAPlayer 1 algo-target: fallback demo run!	at:<2, 11>	 damage:19.97
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 26.90
+SAPlayer 1 algo-target: spent: 0 of -2.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 13 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 13: We currently have 40.9 SP and 5.2 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 40.9 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+Invalid location to remove, already removing21 18
+Invalid location to remove, already removing7 19
+Invalid location to remove, already removing20 19
+Invalid location to remove, already removing4 16
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 2.00	Max spending: 34.90
+SAPlayer 1 algo-target: spent: 0 of 0.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 14 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 14: We currently have 42.1 SP and 8.9 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 11, Demos: 0. Cost: 11
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 42.1 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+Invalid location to remove, already removing21 18
+Invalid location to remove, already removing7 19
+Invalid location to remove, already removing20 19
+Invalid location to remove, already removing4 16
+Invalid location to remove, already removing5 17
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 36.10
+SAPlayer 1 algo-target: spent: 0 of -2.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 15 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 15: We currently have 45.5 SP and 11.7 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 45.5 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 39.50
+SAPlayer 1 algo-target: spent: 0 of -2.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 16 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 16: We currently have 49.9 SP and 13.8 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 49.9 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 7.00	Max spending: 43.90
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 6 of 5.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 17 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 17: We currently have 45.0 SP and 15.4 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 45.0 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 39.00
+SAPlayer 1 algo-target: spent: 0 of -2.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 18 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 18: We currently have 54.7 SP and 16.5 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 54.7 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 3.00	Max spending: 48.70
+SAPlayer 1 algo-target: spent: 2 of 1.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 19 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 19: We currently have 57.1 SP and 17.4 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 57.1 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 11.00	Max spending: 51.10
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 9 of 9.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: We got scored on at <3, 10> 5 times.
+SAPlayer 1 algo-target: Performing turn 20 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 20: We currently have 49.1 SP and 19.1 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 49.1 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 43.10
+SAPlayer 1 algo-target: spent: 0 of -6.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 21 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 21: We currently have 61.2 SP and 20.3 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 15, Demos: 0. Cost: 15
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 59.2 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: CAN DEMO: 25 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Will run demo: <25, 11>. expected damage: 13.00
+SAPlayer 1 algo-target: fallback demo run!	at:<25, 11>	 damage:13.00
+SAPlayer 1 algo-target: Set up defenses!	Budget: 8.00	Max spending: 53.20
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 6 of 6.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 22 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 22: We currently have 53.9 SP and 6.2 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 16, Demos: 0. Cost: 16
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 53.9 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 47.90
+SAPlayer 1 algo-target: spent: 0 of -2.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 23 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 23: We currently have 63.4 SP and 10.6 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 14, Demos: 0. Cost: 14
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 63.4 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+Invalid location to remove, already removing6 18
+Invalid location to remove, already removing21 18
+Invalid location to remove, already removing7 19
+Invalid location to remove, already removing20 19
+Invalid location to remove, already removing5 17
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 12.00	Max spending: 57.40
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 10 of 10.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 24 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 24: We currently have 56.6 SP and 14.0 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 15, Demos: 0. Cost: 15
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 55.6 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 49.60
+SAPlayer 1 algo-target: spent: 0 of -6.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 25 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 25: We currently have 62.0 SP and 16.5 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 15, Demos: 0. Cost: 15
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 62.0 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 56.00
+SAPlayer 1 algo-target: spent: 0 of -6.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: We got scored on at <3, 10> 6 times.
+SAPlayer 1 algo-target: Performing turn 26 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 26: We currently have 63.0 SP and 18.4 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 15, Demos: 0. Cost: 15
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 63.0 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 57.00
+SAPlayer 1 algo-target: spent: 0 of -6.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 27 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 27: We currently have 75.1 SP and 19.8 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 14, Demos: 0. Cost: 14
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 12, Demos: 0. Cost: 12
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 73.1 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 7.00	Max spending: 67.10
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 5 of 5.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 28 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 28: We currently have 72.5 SP and 20.9 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 15, Demos: 0. Cost: 15
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 12, Demos: 0. Cost: 12
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 72.5 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 15.00	Max spending: 66.50
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 14 of 13.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: We got scored on at <3, 10> 7 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 8 times.
+SAPlayer 1 algo-target: Performing turn 29 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 29: We currently have 60.5 SP and 21.7 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 15, Demos: 0. Cost: 15
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:false
+SAPlayer 1 algo-target: turnsUntilBoom-1
+SAPlayer 1 algo-target: 0.0 saveCores! We currently have 60.5 cores!
+SAPlayer 1 algo-target: awaitingBoom:	false
+SAPlayer 1 algo-target: turnsUntilBoom:	-1
+SAPlayer 1 algo-target: CHECK FOR HOOK==================
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================HOOK ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END HOOK ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: ================DEMO ANALYSIS========
+SAPlayer 1 algo-target: ================DAMAGES========
+SAPlayer 1 algo-target: none: 0 options
+SAPlayer 1 algo-target: ================END DEMO ANALYSIS========
+SAPlayer 1 algo-target: Not doing enough damage!
+SAPlayer 1 algo-target: Fill in hook holes
+SAPlayer 1 algo-target: Spawn defensive inters!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 54.50
+SAPlayer 1 algo-target: spent: 0 of -6.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 30 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 30: We currently have 74.0 SP and 23.3 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 14, Demos: 0. Cost: 14
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 12, Demos: 0. Cost: 12
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: about to boom...23.3 / 26.0 reached -- expecting: 26.292187 in 3 turns ||| started turn with: 23.3
+SAPlayer 1 algo-target: awaitingBoom:true
+SAPlayer 1 algo-target: turnsUntilBoom3
+SAPlayer 1 algo-target: 4.0 saveCores! We currently have 72.0 cores!
+SAPlayer 1 algo-target: awaitingBoom:	true
+SAPlayer 1 algo-target: turnsUntilBoom:	3
+SAPlayer 1 algo-target: Set up defenses!	Budget: 8.00	Max spending: 66.00
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 6 of 6.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 31 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 31: We currently have 70.4 SP and 24.5 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 15, Demos: 0. Cost: 15
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: about to boom...24.5 / 27.0 reached -- expecting: 27.02969 in 3 turns ||| started turn with: 24.5
+SAPlayer 1 algo-target: awaitingBoom:true
+SAPlayer 1 algo-target: turnsUntilBoom3
+SAPlayer 1 algo-target: 3.700000762939453 saveCores! We currently have 70.4 cores!
+SAPlayer 1 algo-target: awaitingBoom:	true
+SAPlayer 1 algo-target: turnsUntilBoom:	3
+SAPlayer 1 algo-target: Set up defenses!	Budget: 16.00	Max spending: 64.40
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 15 of 14.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 32 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 32: We currently have 59.8 SP and 25.4 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 15, Demos: 0. Cost: 15
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: about to boom...25.4 / 27.0 reached -- expecting: 27.640623 in 3 turns ||| started turn with: 25.4
+SAPlayer 1 algo-target: awaitingBoom:true
+SAPlayer 1 algo-target: turnsUntilBoom3
+SAPlayer 1 algo-target: 3.4000015258789062 saveCores! We currently have 59.8 cores!
+SAPlayer 1 algo-target: awaitingBoom:	true
+SAPlayer 1 algo-target: turnsUntilBoom:	3
+SAPlayer 1 algo-target: Set up defenses!	Budget: 24.00	Max spending: 53.80
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 18 of 18.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 33 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 33: We currently have 46.2 SP and 26.1 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 16, Demos: 0. Cost: 16
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: about to boom...26.1 / 27.0 reached -- expecting: 27.55625 in 2 turns ||| started turn with: 26.1
+SAPlayer 1 algo-target: awaitingBoom:true
+SAPlayer 1 algo-target: turnsUntilBoom2
+SAPlayer 1 algo-target: 10.399999618530273 saveCores! We currently have 46.2 cores!
+SAPlayer 1 algo-target: awaitingBoom:	true
+SAPlayer 1 algo-target: turnsUntilBoom:	2
+SAPlayer 1 algo-target: Set up defenses!	Budget: 18.00	Max spending: 40.20
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: spent: 12 of 12.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: We got scored on at <3, 10> 9 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 10 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 11 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: Performing turn 34 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 34: We currently have 36.4 SP and 26.6 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 17, Demos: 0. Cost: 17
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 14, Demos: 0. Cost: 14
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: about to boom...26.6 / 28.0 reached -- expecting: 28.0125 in 2 turns ||| started turn with: 26.6
+SAPlayer 1 algo-target: awaitingBoom:true
+SAPlayer 1 algo-target: turnsUntilBoom2
+SAPlayer 1 algo-target: 10.199999809265137 saveCores! We currently have 36.4 cores!
+SAPlayer 1 algo-target: awaitingBoom:	true
+SAPlayer 1 algo-target: turnsUntilBoom:	2
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 30.40
+SAPlayer 1 algo-target: spent: 0 of -6.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 35 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 35: We currently have 45.4 SP and 27.0 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 16, Demos: 0. Cost: 16
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: about to boom...27.0 / 27.0 reached -- expecting: 27.75 in 1 turns ||| started turn with: 27.0
+SAPlayer 1 algo-target: awaitingBoom:true
+SAPlayer 1 algo-target: turnsUntilBoom1
+SAPlayer 1 algo-target: 17.5 saveCores! We currently have 43.4 cores!
+SAPlayer 1 algo-target: awaitingBoom:	true
+SAPlayer 1 algo-target: turnsUntilBoom:	1
+SAPlayer 1 algo-target: clearing path for future BOOM!!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 37.40
+SAPlayer 1 algo-target: spent: 0 of -6.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 36 of your custom algo strategy
+Invalid location to remove, already removing26 13
+Invalid location to remove, already removing27 13
+SAPlayer 1 algo-target: Turn 36: We currently have 59.0 SP and 27.3 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 15, Demos: 0. Cost: 15
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: awaitingBoom:true
+SAPlayer 1 algo-target: turnsUntilBoom0
+SAPlayer 1 algo-target: 25.0 saveCores! We currently have 55.0 cores!
+SAPlayer 1 algo-target: awaitingBoom:	true
+SAPlayer 1 algo-target: turnsUntilBoom:	0
+SAPlayer 1 algo-target: Going to boom right now
+SAPlayer 1 algo-target: Cores:55.0
+SAPlayer 1 algo-target: BOOM PATH BLOCKED!!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 49.00
+SAPlayer 1 algo-target: spent: 0 of -6.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 37 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 37: We currently have 67.0 SP and 27.5 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 15, Demos: 0. Cost: 15
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 13, Demos: 0. Cost: 13
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: about to boom...27.5 / 27.0 reached -- expecting: 27.5 in 0 turns ||| started turn with: 27.5
+SAPlayer 1 algo-target: awaitingBoom:true
+SAPlayer 1 algo-target: turnsUntilBoom0
+SAPlayer 1 algo-target: 25.0 saveCores! We currently have 61.0 cores!
+SAPlayer 1 algo-target: awaitingBoom:	true
+SAPlayer 1 algo-target: turnsUntilBoom:	0
+SAPlayer 1 algo-target: Going to boom right now
+SAPlayer 1 algo-target: Cores:61.0
+SAPlayer 1 algo-target: BOOM PATH BLOCKED!!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 55.00
+SAPlayer 1 algo-target: spent: 0 of -6.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+Invalid location to remove, already removing26 13
+Invalid location to remove, already removing27 13
+SAPlayer 1 algo-target: Performing turn 38 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 38: We currently have 69.4 SP and 27.6 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 2, Demos: 0. Cost: 2
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 2, Demos: 0. Cost: 2
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+Invalid location to remove, already removing26 13
+Invalid location to remove, already removing27 13
+SAPlayer 1 algo-target: about to boom...27.6 / 14.0 reached -- expecting: 27.6 in 0 turns ||| started turn with: 27.6
+SAPlayer 1 algo-target: awaitingBoom:true
+SAPlayer 1 algo-target: turnsUntilBoom0
+SAPlayer 1 algo-target: 25.0 saveCores! We currently have 65.4 cores!
+SAPlayer 1 algo-target: awaitingBoom:	true
+SAPlayer 1 algo-target: turnsUntilBoom:	0
+SAPlayer 1 algo-target: Going to boom right now
+SAPlayer 1 algo-target: Cores:65.4
+SAPlayer 1 algo-target: BOOM PATH BLOCKED!!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 59.40
+SAPlayer 1 algo-target: spent: 0 of -6.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 0
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 1 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 2 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 3 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 4 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 5 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 6 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 7 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 8 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 9 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 10 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 11 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 12 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 13 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 14 times.
+SAPlayer 1 algo-target: Performing turn 39 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 39: We currently have 71.8 SP and 27.7 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 2, Demos: 0. Cost: 2
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 5, Demos: 0. Cost: 5
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: about to boom...27.7 / 14.0 reached -- expecting: 27.7 in 0 turns ||| started turn with: 27.7
+SAPlayer 1 algo-target: awaitingBoom:true
+SAPlayer 1 algo-target: turnsUntilBoom0
+SAPlayer 1 algo-target: 25.0 saveCores! We currently have 67.8 cores!
+SAPlayer 1 algo-target: awaitingBoom:	true
+SAPlayer 1 algo-target: turnsUntilBoom:	0
+SAPlayer 1 algo-target: Going to boom right now
+SAPlayer 1 algo-target: Cores:67.8
+SAPlayer 1 algo-target: BOOM PATH BLOCKED!!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 61.80
+Invalid location to remove, already removing1 13
+Invalid location to remove, already removing0 13
+SAPlayer 1 algo-target: spent: 0 of -6.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 14
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: Performing turn 40 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 40: We currently have 77.7 SP and 28.8 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 5, Demos: 0. Cost: 5
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 5, Demos: 0. Cost: 5
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: about to boom...28.8 / 18.0 reached -- expecting: 28.8 in 0 turns ||| started turn with: 28.8
+SAPlayer 1 algo-target: awaitingBoom:true
+SAPlayer 1 algo-target: turnsUntilBoom0
+SAPlayer 1 algo-target: 25.0 saveCores! We currently have 71.7 cores!
+SAPlayer 1 algo-target: awaitingBoom:	true
+SAPlayer 1 algo-target: turnsUntilBoom:	0
+SAPlayer 1 algo-target: Going to boom right now
+SAPlayer 1 algo-target: Cores:71.7
+SAPlayer 1 algo-target: BOOM PATH BLOCKED!!
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 65.70
+SAPlayer 1 algo-target: spent: 0 of -6.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 14
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+Invalid location to remove, already removing26 13
+Invalid location to remove, already removing27 13
+SAPlayer 1 algo-target: Performing turn 41 of your custom algo strategy
+SAPlayer 1 algo-target: Turn 41: We currently have 80.1 SP and 29.6 MP!
+SAPlayer 1 algo-target: scoutRushDefense:0
+SAPlayer 1 algo-target: reducedScoutRushDefense: 0
+SAPlayer 1 algo-target: Enemy left corner heuristic: Scouts: 0, Inters: 2, Demos: 0. Cost: 2
+SAPlayer 1 algo-target: Enemy right corner heuristic: Scouts: 0, Inters: 2, Demos: 0. Cost: 2
+SAPlayer 1 algo-target: BOOM DECISION: ===========
+SAPlayer 1 algo-target: about to boom...29.6 / 14.0 reached -- expecting: 29.6 in 0 turns ||| started turn with: 29.6
+SAPlayer 1 algo-target: awaitingBoom:true
+SAPlayer 1 algo-target: turnsUntilBoom0
+SAPlayer 1 algo-target: 25.0 saveCores! We currently have 76.1 cores!
+SAPlayer 1 algo-target: awaitingBoom:	true
+SAPlayer 1 algo-target: turnsUntilBoom:	0
+SAPlayer 1 algo-target: Going to boom right now
+SAPlayer 1 algo-target: Cores:76.1
+SAPlayer 1 algo-target: BOOM PATH BLOCKED!!
+Invalid location to remove, already removing26 13
+Invalid location to remove, already removing27 13
+Winner (p1 perspective, 1 = p1 2 = p2): 2
+Waiting to exit finished game.
+SAPlayer 1 algo-target: Set up defenses!	Budget: 0.00	Max spending: 70.10
+SAPlayer 1 algo-target: spent: 0 of -6.0 || finishedBudget @ LINE 337
+SAPlayer 1 algo-target: cornerHasBeenHit is 14
+SAPlayer 1 algo-target: topWallCap: (9, 12)
+SAPlayer 1 algo-target: bottomWallCap: (9, 10)
+SAPlayer 1 algo-target: We got scored on at <27, 13> 1 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 14 times.
+SAPlayer 1 algo-target: We got scored on at <27, 13> 2 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 14 times.
+SAPlayer 1 algo-target: We got scored on at <27, 13> 3 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 14 times.
+SAPlayer 1 algo-target: We got scored on at <27, 13> 4 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 14 times.
+SAPlayer 1 algo-target: We got scored on at <27, 13> 5 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 14 times.
+SAPlayer 1 algo-target: We got scored on at <27, 13> 6 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 14 times.
+SAPlayer 1 algo-target: We got scored on at <27, 13> 7 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 14 times.
+SAPlayer 1 algo-target: We got scored on at <27, 13> 8 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 14 times.
+SAPlayer 1 algo-target: We got scored on at <27, 13> 9 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 14 times.
+SAPlayer 1 algo-target: We got scored on at <27, 13> 10 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 14 times.
+SAPlayer 1 algo-target: We got scored on at <27, 13> 11 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 14 times.
+SAPlayer 1 algo-target: We got scored on at <27, 13> 12 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 14 times.
+SAPlayer 1 algo-target: We got scored on at <27, 13> 13 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 14 times.
+SAPlayer 1 algo-target: We got scored on at <27, 13> 14 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 14 times.
+SAPlayer 1 algo-target: We got scored on at <27, 13> 15 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 14 times.
+SAPlayer 1 algo-target: We got scored on at <27, 13> 16 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 14 times.
+SAPlayer 1 algo-target: We got scored on at <27, 13> 17 times.
+SAPlayer 1 algo-target: We got scored on at <3, 10> 12 times.
+SAPlayer 1 algo-target: We got scored on at <0, 13> 14 times.
+sent game end playerIndex: 0
+sent game end playerIndex: 1
+sent game end playerIndex: 0
+sent game end playerIndex: 1
+Done waiting now exiting finished game.
+Hard Exiting Now
+Closing stream
+Closing playerIndex: 0
+Closing stream
+Closing playerIndex: 1
+Exited for loop
+End of main
+Closing stream
+Closing stream
+

@@ -10,6 +10,7 @@ import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.units.UnitType;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.c1games.terminal.algo.map.GameState.TowerUnitCategory;
 
@@ -285,9 +286,53 @@ public class StrategyUtility {
       for (int j = 0; j <= 14 - i%2; j++) {
         int x = j + (i-13)/2;
         int y = i - x;
-
+        prediction.allUnits[x][y] = move.allUnits[x][y].stream().map(unit -> {
+          Unit newUnit = new Unit(unit.type, unit.health, unit.id, unit.owner, move.config);
+          if (unit.upgraded) newUnit.upgrade();
+          return newUnit;
+        }).collect(Collectors.toList());
+        List<Unit> history = enemyBaseHistory[x][y];
+        if (y > 13 && !history.isEmpty()) {
+          Unit lastUnit = history.get(history.size() - 1);
+          Unit secondToLast = history.size() > 1 ? history.get(history.size() - 2) : null;
+          if (lastUnit != null && (history.size() <= 1 || secondToLast != null)) {
+            Unit strongerUnit = lastUnit;
+            boolean upgraded = lastUnit.upgraded;
+            if (secondToLast != null) {
+              if (!prediction.isStructure(strongerUnit.type) || secondToLast.type == UnitType.Turret) strongerUnit = secondToLast;
+              upgraded |= secondToLast.upgraded;
+            }
+            if (!prediction.isStructure(strongerUnit.type)) {
+              continue;
+            }
+            if (prediction.allUnits[x][y].isEmpty()) {
+              Unit newUnit = new Unit(strongerUnit.type, strongerUnit.health, strongerUnit.id+"hi", strongerUnit.owner, prediction.config);
+              if (upgraded) newUnit.upgrade();
+              prediction.allUnits[x][y].add(newUnit);
+            } else {
+              Unit sameTypeUnit = lastUnit.type == prediction.allUnits[x][y].get(0).type ? lastUnit : (secondToLast != null && secondToLast.type == prediction.allUnits[x][y].get(0).type ? secondToLast : null);
+              if (sameTypeUnit != null) {
+                prediction.allUnits[x][y].get(0).upgraded |= sameTypeUnit.upgraded;
+              }
+            }
+          }
+//          Map<UnitType, Integer> unitTypeCounts = new HashMap<>();
+//          Map<UnitType, Boolean> unitUpgraded = new HashMap<>();
+//          for (Unit oldUnit : history) {
+//            unitTypeCounts.put(oldUnit.type, unitTypeCounts.getOrDefault(oldUnit.type, 0) + 1);
+//            unitUpgraded.put(oldUnit.type, unitUpgraded.getOrDefault(oldUnit.type, false) || oldUnit.upgraded);
+//          }
+//          UnitType mostCommon = unitTypeCounts.keySet().stream().max(Comparator.comparingInt(unitTypeCounts::get)).orElse(null);
+//          if (mostCommon != null) {
+//            Unit newUnit = new Unit(mostCommon);
+//            if (unitUpgraded.get(newUnit))
+//            prediction.allUnits[x][y].add(newUnit);
+//          }
+        }
       }
     }
+    GameIO.debug().println("PREDICTED GAME STATE=========");
+    Utility.printGameBoard(prediction.allUnits);
     return prediction;
   }
 

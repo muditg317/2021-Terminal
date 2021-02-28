@@ -99,6 +99,7 @@ public class MyAlgo implements GameLoop {
 
     // remember their layout
     if (move.data.turnInfo.actionPhaseFrameNumber == 0) {
+      List<Unit>[][] currentBoard = new ArrayList[MapBounds.BOARD_SIZE][MapBounds.BOARD_SIZE];
       for (int i = 13; i < 41; i++) {
         for (int j = 0; j <= 14 - i%2; j++) {
           int x = j + (i-13)/2;
@@ -108,11 +109,12 @@ public class MyAlgo implements GameLoop {
             if (unit.upgraded) newUnit.upgrade();
             return newUnit;
           }).collect(Collectors.toList());
+          currentBoard[x][y] = structureAtCoords;
           enemyBaseHistory[x][y].add(structureAtCoords.size() > 0 ? structureAtCoords.get(0) : null);
         }
       }
 
-//      Utility.printGameBoard();
+      Utility.printGameBoard(currentBoard);
     }
 
 

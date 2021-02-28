@@ -30,11 +30,11 @@ public class DefenseUtility {
   }
 
   /**
-   * Returns whether or not we have been hit in either corner this game. Requires MyAlgo.scoredOnLocations to work correctly.
+   * Returns the amount of damage taken in either corner this game. Requires MyAlgo.scoredOnLocations to work correctly.
    * @param move
    * @return
    */
-  static boolean cornerHasBeenHit(GameState move) {
+  static int cornerDamageTaken(GameState move) {
     final Coords[] cornerLocations = {
         new Coords(0, 13),
         new Coords(1, 12),
@@ -46,7 +46,7 @@ public class DefenseUtility {
       totalCornerHits += MyAlgo.scoredOnLocations.getOrDefault(loc, 0);
     }
     GameIO.debug().printf("cornerHasBeenHit is %d\n", totalCornerHits);
-    return totalCornerHits > 0;
+    return totalCornerHits;
   }
 
 }
