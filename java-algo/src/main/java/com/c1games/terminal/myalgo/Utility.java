@@ -264,6 +264,10 @@ public class Utility {
     }
   }
 
+  public static boolean onEnemyCorner(int x, int y) {
+    return y > 13 && (x > 13 ? (x >= (y+9)) : (x <= (18-y)));
+  }
+
   public static class Pair<T,K> {
     public T key;
     public K value;

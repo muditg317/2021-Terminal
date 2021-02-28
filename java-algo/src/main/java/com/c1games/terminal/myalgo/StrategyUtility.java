@@ -291,42 +291,47 @@ public class StrategyUtility {
         int x = j + (i-13)/2;
         int y = i - x;
         List<Unit> history = enemyBaseHistory[x][y];
-        if (y > 13 && !history.isEmpty()) {
-          Unit lastUnit = history.get(history.size() - 1);
-          Unit secondToLast = history.size() > 1 ? history.get(history.size() - 2) : null;
-          if (lastUnit != null && (history.size() <= 1 || secondToLast != null)) {
-            Unit strongerUnit = lastUnit;
-            boolean upgraded = lastUnit.upgraded;
-            if (secondToLast != null) {
-              if (!prediction.isStructure(strongerUnit.type) || secondToLast.type == UnitType.Turret) strongerUnit = secondToLast;
-              upgraded |= secondToLast.upgraded;
-            }
-            if (!prediction.isStructure(strongerUnit.type)) {
-              continue;
-            }
-            if (prediction.allUnits[x][y].isEmpty()) {
-              Unit newUnit = new Unit(strongerUnit.type, strongerUnit.health, strongerUnit.id+"hi", strongerUnit.owner, prediction.config);
-              if (upgraded) newUnit.upgrade();
-              prediction.allUnits[x][y].add(newUnit);
-            } else {
-              Unit sameTypeUnit = lastUnit.type == prediction.allUnits[x][y].get(0).type ? lastUnit : (secondToLast != null && secondToLast.type == prediction.allUnits[x][y].get(0).type ? secondToLast : null);
-              if (sameTypeUnit != null) {
-                prediction.allUnits[x][y].get(0).upgraded |= sameTypeUnit.upgraded;
+        boolean onCorner = Utility.onEnemyCorner(x,y);
+        boolean pickBest = onCorner;
+        int maxUnits = onCorner ? 5 : 2;
+        List<Unit> relevantHistory = history.stream().skip(Math.max(0, history.size() - maxUnits)).limit(maxUnits).collect(Collectors.toList());
+        if (y > 13 && !relevantHistory.isEmpty()) {
+          if (prediction.allUnits[x][y].isEmpty()) {
+            Unit newUnit = new Unit(relevantHistory.get(0).type, relevantHistory.get(0).health, relevantHistory.get(0).id+"hi", relevantHistory.get(0).owner, prediction.config);
+            if (relevantHistory.get(0).upgraded) newUnit.upgrade();
+            Unit[] detectedUnit = new Unit[]{newUnit};
+            relevantHistory.stream().skip(1).forEach(unit -> {
+              if ((!pickBest && detectedUnit[0] == null) || unit == null) {
+                if (!pickBest) detectedUnit[0] = null;
+                return;
               }
+              if (unit.type == UnitType.Turret) {
+                Unit temp = new Unit(unit.type, unit.health, unit.id+"hi", unit.owner, prediction.config);
+                if (unit.upgraded || (detectedUnit[0] != null && detectedUnit[0].type == UnitType.Turret && detectedUnit[0].upgraded)) temp.upgrade();
+                detectedUnit[0] = temp;
+              } else if (unit.type == UnitType.Support && (detectedUnit[0] == null || detectedUnit[0].type != UnitType.Turret)) {
+                Unit temp = new Unit(unit.type, unit.health, unit.id+"hi", unit.owner, prediction.config);
+                if (unit.upgraded || (detectedUnit[0] != null && detectedUnit[0].type == UnitType.Support && detectedUnit[0].upgraded)) temp.upgrade();
+                detectedUnit[0] = temp;
+              } else if ((detectedUnit[0] == null || (detectedUnit[0].type != UnitType.Turret && detectedUnit[0].type != UnitType.Support))) {
+                Unit temp = new Unit(unit.type, unit.health, unit.id+"hi", unit.owner, prediction.config);
+                if (unit.upgraded || (detectedUnit[0] != null && detectedUnit[0].type == UnitType.Support && detectedUnit[0].upgraded)) temp.upgrade();
+                detectedUnit[0] = temp;
+              }
+            });
+            if (detectedUnit[0] != null) {
+              Unit temp = new Unit(detectedUnit[0].type, detectedUnit[0].health, detectedUnit[0].id+"hi", detectedUnit[0].owner, prediction.config);
+              if (detectedUnit[0].upgraded) temp.upgrade();
+              prediction.allUnits[x][y].add(temp);
             }
+          } else if (!prediction.allUnits[x][y].get(0).upgraded) {
+            Unit predictedUnit = prediction.allUnits[x][y].get(0);
+            relevantHistory.forEach(unit -> {
+              if (unit.type == predictedUnit.type && unit.upgraded && !predictedUnit.upgraded) {
+                predictedUnit.upgrade();
+              }
+            });
           }
-//          Map<UnitType, Integer> unitTypeCounts = new HashMap<>();
-//          Map<UnitType, Boolean> unitUpgraded = new HashMap<>();
-//          for (Unit oldUnit : history) {
-//            unitTypeCounts.put(oldUnit.type, unitTypeCounts.getOrDefault(oldUnit.type, 0) + 1);
-//            unitUpgraded.put(oldUnit.type, unitUpgraded.getOrDefault(oldUnit.type, false) || oldUnit.upgraded);
-//          }
-//          UnitType mostCommon = unitTypeCounts.keySet().stream().max(Comparator.comparingInt(unitTypeCounts::get)).orElse(null);
-//          if (mostCommon != null) {
-//            Unit newUnit = new Unit(mostCommon);
-//            if (unitUpgraded.get(newUnit))
-//            prediction.allUnits[x][y].add(newUnit);
-//          }
         }
       }
     }

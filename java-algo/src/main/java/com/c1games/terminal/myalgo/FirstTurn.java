@@ -19,12 +19,13 @@ public class FirstTurn {
     Coords[] firstTurrets = {Locations.Essentials.firstLeftTurret, Locations.Essentials.firstRightTurret};
     Coords[] firstWalls = {Locations.Essentials.firstLeftTurretWall, Locations.Essentials.firstRightTurretWall};
     //Get the core corner turrets downs
-    SpawnUtility.placeTurrets(move, firstTurrets);
+    SpawnUtility.placeTurrets(move, Locations.Essentials.mainTurrets);
+    SpawnUtility.applyUpgrade(move, Locations.Essentials.mainTurrets[0]);
+    SpawnUtility.applyUpgrade(move, Locations.Essentials.mainTurrets[2]);
 
-    SpawnUtility.applyUpgrades(move, firstTurrets);
-    SpawnUtility.placeWalls(move, firstWalls);
-    //get the main wall down (this won't place all main walls down but that's okay).
-    SpawnUtility.placeWalls(move, Locations.Essentials.mainWallCoords);
+    SpawnUtility.placeWalls(move, Locations.Essentials.cornerWalls);
+    //get more walls down infront of turrets
+    SpawnUtility.placeWalls(move, Locations.Essentials.mainTurretWalls);
 
     //place corner walls down
 

@@ -6,8 +6,8 @@ import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.units.UnitType;
 import com.c1games.terminal.algo.GameIO;
 
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
+
 public class ScoutRush extends Attack {
   private static final Coords[] UPGRADED_SUPPORT_LOCATIONS = {
 
@@ -41,13 +41,14 @@ public class ScoutRush extends Attack {
   double spBudget;
 
 
-  public ScoutRush(Coords startCoord, double spBudget, int numScouts, int scoutHealth) {
+  public ScoutRush(Coords startCoord, Coords exitingHole, double spBudget, int numScouts, int scoutHealth) {
     this.startCoord = startCoord;
     this.spBudget = spBudget;
     this.numScouts = numScouts;
     this.scoutHealth = scoutHealth;
     this.targetSide = startCoord.x <= 13 ? MapBounds.EDGE_TOP_RIGHT : MapBounds.EDGE_TOP_LEFT;
     this.clearLocations = new HashSet<>();
+    this.clearLocations.add(exitingHole);
   }
 
   /**
@@ -59,15 +60,35 @@ public class ScoutRush extends Attack {
    */
   public static ScoutRush evaluate(GameState move, double spBudget) {
     int mp = (int) move.data.p1Stats.bits;
-    double scoutBaseHealth = move.config.unitInformation.get(UnitType.Scout.ordinal()).startHealth.orElse(15);;
-    int estimatedSupports = (int) (spBudget / 4);
-    int estimatedScoutHealth = (int) (scoutBaseHealth + (estimatedSupports * 3.5));
-    ScoutRush leftSr = new ScoutRush(new Coords(14, 0), spBudget, mp, estimatedScoutHealth);
-    ScoutRush rightSr = new ScoutRush(new Coords(13, 0), spBudget, mp, estimatedScoutHealth);
-    leftSr.calculateSurvivingScouts(move); //targeting the left side
-    rightSr.calculateSurvivingScouts(move);
+    List<ScoutRush> potentialSrs = new ArrayList<>();
+    for (Coords exit : Locations.Essentials.mainWallHookHoles) {
+      GameState moveCopy = Utility.duplicateState(move);
+      ScoutRush leftSr = new ScoutRush(new Coords(14, 0), exit, spBudget, mp, 0);
+      ScoutRush rightSr = new ScoutRush(new Coords(13, 0), exit, spBudget, mp, 0);
+      int remainingSpBudget = (int) (spBudget - leftSr.fillOtherHookHoles(moveCopy));
+      double scoutBaseHealth = move.config.unitInformation.get(UnitType.Scout.ordinal()).startHealth.orElse(15);;
+      int estimatedSupports = (int) (remainingSpBudget / 4);
+      int estimatedScoutHealth = (int) (scoutBaseHealth + (estimatedSupports * 3.5));
+      leftSr.scoutHealth = estimatedScoutHealth;
+      rightSr.scoutHealth = estimatedScoutHealth;
+      leftSr.calculateSurvivingScouts(move); //targeting the left side
+      rightSr.calculateSurvivingScouts(move);
+      potentialSrs.add(leftSr);
+      potentialSrs.add(rightSr);
+    }
 
-    ScoutRush bestSr = leftSr.expectedDamage >= rightSr.expectedDamage ? leftSr : rightSr;
+    potentialSrs.sort((sr1, sr2) -> {
+      return sr2.expectedDamage - sr1.expectedDamage;
+    });
+
+
+
+    if (potentialSrs.isEmpty()) {
+      GameIO.debug().println("ERROR: No scout rushes evaluated???");
+      return null;
+    }
+
+    ScoutRush bestSr = potentialSrs.get(0);
 
     GameIO.debug().printf("BEST SCOUT RUSH EVALUATION==========\n\tSpBudget:%.2f\tNumScouts:%d\tScoutHealth: %d\n\tExpected Damage:%d\tOnline Adjustment:%.2f\n",
         bestSr.spBudget, bestSr.numScouts, bestSr.scoutHealth, bestSr.expectedDamage, ScoutRush.onlineAdjustment);
@@ -81,11 +102,30 @@ public class ScoutRush extends Attack {
     return bestSr;
   }
 
+
   /**
-   * Executes this scout rush
+   * Fills the other hook holes for this scout attack but leaves the one needed open
+   * @param gameState
+   * @return the amount spent
+   */
+  private int fillOtherHookHoles(GameState gameState) {
+    int spent = 0;
+    for (Coords loc : Locations.Essentials.mainWallHookHoles) {
+      if (clearLocations.contains(loc)) {
+        continue;
+      }
+      if (SpawnUtility.placeWall(gameState, loc)) {
+        spent++;
+      }
+    }
+    return spent;
+  }
+  /**
+   * Executes this scout rush. Fills other hook holes that are not needed.
    * @param move
    */
   public void execute(GameState move) {
+    fillOtherHookHoles(move);
     placeSupports(move);
     SpawnUtility.spawnScouts(move, startCoord, numScouts);
   }
@@ -127,7 +167,7 @@ public class ScoutRush extends Attack {
    * @param move
    */
   private void placeSupports(GameState move) {
-
+    /*
     for (int i = 0; i < UPGRADED_SUPPORT_LOCATIONS.length && spBudget >= 8; i++) {
       Coords location = UPGRADED_SUPPORT_LOCATIONS[i];
       if (i < 3) {
@@ -149,6 +189,23 @@ public class ScoutRush extends Attack {
     //at this point we can only afford one or 0 supports (this may or may not place)
     if (spBudget >= 4 && SpawnUtility.placeSupport(move, UNUPGRADED_SUPPORT_LOCATION)) { //placed
       SpawnUtility.removeBuilding(move, UNUPGRADED_SUPPORT_LOCATION);
+    }
+    */
+
+    for (int y = 1; y < 7; y++) {
+      for (int x = 0; x < MapBounds.BOARD_SIZE; x++) {
+        Coords loc = new Coords(x, y);
+        if (spBudget < 4) {
+          return;
+        }
+        if (x == 13 || x == 14) {
+          continue;
+        }
+        if (SpawnUtility.placeSupport(move, loc)) {
+          SpawnUtility.removeBuilding(move, loc);
+          spBudget -= 4;
+        }
+      }
     }
   }
 
