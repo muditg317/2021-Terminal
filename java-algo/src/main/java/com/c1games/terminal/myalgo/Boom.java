@@ -193,7 +193,7 @@ public class Boom {
     double supportCost = move.config.unitInformation.get(UnitType.Support.ordinal()).cost1.orElse(4);
 
     // check if we have anough sp to fill the lid
-    if (move.data.p1Stats.bits < (checkWalls.size() + lidWalls.size()) * wallCost) return false;
+//    if (move.data.p1Stats.bits < (checkWalls.size() + lidWalls.size()) * wallCost) return false;
 
     // place the lid
     checkWalls.forEach(coords -> SpawnUtility.placeWall(move, coords));
