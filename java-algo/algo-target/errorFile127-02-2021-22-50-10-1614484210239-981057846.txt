@@ -1,8 +1,0 @@
-Exception in thread "main" java.lang.IllegalStateException: java.io.IOException: stream closed
-	at com.c1games.terminal.algo.io.DefaultGameIO.config(DefaultGameIO.java:38)
-	at com.c1games.terminal.algo.io.GameLoopDriver.run(GameLoopDriver.java:23)
-	at com.c1games.terminal.myalgo.MyAlgo.main(MyAlgo.java:37)
-Caused by: java.io.IOException: stream closed
-	at com.c1games.terminal.algo.io.TerminatedStringReader.await(TerminatedStringReader.java:57)
-	at com.c1games.terminal.algo.io.DefaultGameIO.config(DefaultGameIO.java:36)
-	... 2 more
