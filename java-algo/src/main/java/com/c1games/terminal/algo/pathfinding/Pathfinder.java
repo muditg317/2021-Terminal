@@ -230,7 +230,7 @@ public class Pathfinder {
      * Get the computed path that a unit at the start point will follow.
      */
     public List<Coords> getPath() {
-        // debugPrint();
+//         debugPrint();
 
         List<Coords> path = new ArrayList<>();
         path.add(start);

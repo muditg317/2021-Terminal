@@ -2,14 +2,17 @@ package com.c1games.terminal.algo;
 
 import com.c1games.terminal.algo.map.MapBounds;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Two-dimensional, integer coordinates.
  */
 public class Coords {
-    public int x;
-    public int y;
+    public final int x;
+    public final int y;
+    private static final Map<Coords, List<Coords>> neighbors = new HashMap<>();
 
     public Coords(int x, int y) {
         this.x = x;
@@ -17,12 +20,15 @@ public class Coords {
     }
 
     public List<Coords> neighbors() {
-        return List.of(
+        if (!neighbors.containsKey(this)) {
+            neighbors.put(this, List.of(
                 new Coords(x + 1, y),
                 new Coords(x - 1, y),
                 new Coords(x, y + 1),
                 new Coords(x, y - 1)
-        );
+            ));
+        }
+        return neighbors.get(this);
     }
 
     @Override
@@ -42,5 +48,9 @@ public class Coords {
     @Override
     public boolean equals(Object obj) {
         return obj instanceof Coords && ((Coords) obj).x == x && ((Coords) obj).y == y;
+    }
+
+    public double distanceSquared(Coords other) {
+        return ((x - other.x) * (x - other.x)) + ((y - other.y) * (y - other.y));
     }
 }

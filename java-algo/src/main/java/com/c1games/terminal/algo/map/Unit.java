@@ -24,6 +24,14 @@ public class Unit {
         this.owner = owner;
     }
 
+    public Unit(UnitType type, PlayerId owner, Config config) {
+        unitInformation = new Config.UnitInformation(config.unitInformation.get(type.ordinal()));
+        this.type = type;
+        this.health = (float) unitInformation.startHealth.orElseThrow();
+        this.id = "new unit id";
+        this.owner = owner;
+    }
+
     public void upgrade() {
         upgraded = true;
         unitInformation.upgrade();

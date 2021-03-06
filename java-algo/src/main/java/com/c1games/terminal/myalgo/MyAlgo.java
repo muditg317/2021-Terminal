@@ -10,29 +10,29 @@ import com.c1games.terminal.algo.io.GameLoopDriver;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
+import com.c1games.terminal.algo.units.UnitType;
+import com.c1games.terminal.simulation.SimBoard;
+import com.c1games.terminal.simulation.pathfinding.Edge;
+import com.c1games.terminal.simulation.pathfinding.PathFinder;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Turtle Algo:
+ * My Algo:
  */
 public class MyAlgo implements GameLoop {
 
-  final static int NUM_EARLY_GAME_TURNS = 5;
+  private static final int NUM_EARLY_GAME_TURNS = 5;
 
-  final Random rand = new Random();
-  //ArrayList<ArrayList<Coords>> scoredOnLocations = new ArrayList<>();
-  static HashMap<Coords, Integer> scoredOnLocations = new HashMap<>();
-  static HashMap<Coords, Double> wallDamage = new LinkedHashMap<>();
+  static final Random rand = new Random();
+  static final HashMap<Coords, Integer> scoredOnLocations = new HashMap<>();
+  static final HashMap<Coords, Double> wallDamage = new LinkedHashMap<>();
   static Attack lastAttack = null;
   static double attackActualValue;
-  int enemySupportTowerCoresInvestment = 0;
-  //boolean awaitingBoom = false;
-  //int turnsUntilBoom = -1;
-  //String boomSide = "";
 
-  List<Unit>[][] enemyBaseHistory = new ArrayList[MapBounds.BOARD_SIZE][MapBounds.BOARD_SIZE];
+  @SuppressWarnings("unchecked") // the list type will be correct
+  static final List<Unit>[][] enemyBaseHistory = new ArrayList[MapBounds.BOARD_SIZE][MapBounds.BOARD_SIZE];
 
   public static void main(String[] args) {
     new GameLoopDriver(new MyAlgo()).run();
@@ -48,10 +48,9 @@ public class MyAlgo implements GameLoop {
 
     for (int x = 0; x < MapBounds.BOARD_SIZE; x++) {
       for (int y = 0; y < MapBounds.BOARD_SIZE; y++) {
-        enemyBaseHistory[x][y] = new ArrayList<Unit>();
+        enemyBaseHistory[x][y] = new ArrayList<>();
       }
     }
-
   }
 
   /**
@@ -60,6 +59,18 @@ public class MyAlgo implements GameLoop {
   @Override
   public void onTurn(GameIO io, GameState move) {
     GameIO.debug().println("Performing turn " + move.data.turnInfo.turnNumber + " of your custom algo strategy");
+
+    for (int x = 0; x < 28; x++) {
+      move.attemptSpawn(new Coords(x, 13), UnitType.Wall);
+    }
+
+    if (move.data.turnInfo.turnNumber == 42) {
+      GameIO.debug().print("PATH TO TR from <6,7>:\n\t");
+      PathFinder.findPath(new SimBoard(move), new Coords(6, 7), Edge.TOP_RIGHT).forEach(GameIO.debug()::print);
+      GameIO.debug().println();
+    }
+
+    /*
     if (lastAttack != null) {
       lastAttack.learn(attackActualValue);
     }
@@ -80,6 +91,8 @@ public class MyAlgo implements GameLoop {
     }
 
     //scoredOnLocations.add(new ArrayList<Coords>());
+
+     */
   }
 
   /**
@@ -99,7 +112,8 @@ public class MyAlgo implements GameLoop {
 
     //Remember where we take wall damage
     for (FrameData.Events.DamageEvent damage : move.data.events.damage) {
-      if (damage.unitOwner == PlayerId.Player1) {
+      if (damage.unitOwner == PlayerId.Player1 && MapBounds.inArena(damage.coords)) {
+//        GameIO.debug().println("Damage event!\n"+damage);
         Unit wall = move.getWallAt(damage.coords);
         if (wall != null && wall.type == Utility.WALL) {
           wallDamage.put(damage.coords, wallDamage.getOrDefault(damage.coords, 0.0) + damage.damage);
@@ -109,6 +123,7 @@ public class MyAlgo implements GameLoop {
 
     // remember their layout
     if (move.data.turnInfo.actionPhaseFrameNumber == 0) {
+      @SuppressWarnings("unchecked") // the type will be correct
       List<Unit>[][] currentBoard = new ArrayList[MapBounds.BOARD_SIZE][MapBounds.BOARD_SIZE];
       for (int x = 0; x < MapBounds.BOARD_SIZE; x++) {
         for(int y = 0; y < MapBounds.BOARD_SIZE; y++) {

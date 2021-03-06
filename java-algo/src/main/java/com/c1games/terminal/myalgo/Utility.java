@@ -263,22 +263,22 @@ public class Utility {
 
   private static String boardLocationToChar(List<Unit>[][] board, int x, int y) {
     if (!MapBounds.ARENA[x][y] || board[x][y] == null) {
-      return "  ";
+      return "   ";
     }
     List<Unit> units = board[x][y];
     if (units.isEmpty()) {
-      return " .";
+      return " . ";
     }
     Unit unit = units.get(0);
     switch (unit.type) {
       case Wall:
-        return unit.upgraded ? " O" : " o";
+        return unit.upgraded ? " O " : " o ";
       case Support:
-        return unit.upgraded ? " S" : " s";
+        return unit.upgraded ? " S " : " s ";
       case Turret:
-        return unit.upgraded ? " X" : " x";
+        return unit.upgraded ? " X " : " x ";
       default:
-        return (units.size() < 10 ? " " : "") + units.size();
+        return String.format("%2d ", units.size());
     }
   }
 

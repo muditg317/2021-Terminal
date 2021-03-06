@@ -1,0 +1,106 @@
+Configuring your custom java algo strategy...
+Set random seed to: -7377883920424669429
+Performing turn 0 of your custom algo strategy
+==============BOARD STATE==============
+                           . .                          
+                         . . . .                        
+                       . . . . . .                      
+                     . . . . . . . .                    
+                   . . . . . . . . . .                  
+                 . . . . . . . . . . . .                
+               . . . . . . . . . . . . . .              
+             . . . . . . . . . . . . . . . .            
+           . . . . . . . . . . . . . . . . . .          
+         . . . . . . . . . . . . . . . . . . . .        
+       . . . . . . . . . . . . . . . . . . . . . .      
+     . . . . . . . . . . . . . . . . . . . . . . . .    
+   . . . . . . . . . . . . . . . . . . . . . . . . . .  
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ o o o o . . . . . . . . . . . . . . . . . . . . . o o o
+   . . X . . . . . . . . . . . . . . . . . . . . x . .  
+     . . . . . o . . . o . . . . o . . . . . . . . .    
+       . . . . x . . . X . . . . x . . . x . . . .      
+         . . . . . . . . . . . . . . . . . . . .        
+           . . . . . . . . . . . . . . . . . .          
+             . . . . . . . . . . . . . . . .            
+               . . . . . . . . . . . . . .              
+                 . . . . . . . . . . . .                
+                   . . . . . . . . . .                  
+                     . . . . . . . .                    
+                       . . . . . .                      
+                         . . . .                        
+                           . .                          
+============END BOARD STATE============
+Performing turn 1 of your custom algo strategy
+Turn 1: We currently have 5.0 SP and 7.0 MP!
+scoutRushDefense:0
+reducedScoutRushDefense: 0
+spent: 5.0 of 5.0 || finishedBudget @ LINE 74
+spent: 5.0 of 5.0 || finishedBudget @ LINE 74
+BOOM STATE BEFORE DECISION=======awaitingBoom:	false
+turnsUntilBoom:	-1
+BOOM DECISION: ===========
+awaitingBoom:	false
+turnsUntilBoom:	-1
+PREDICTED GAME STATE=========
+==============BOARD STATE==============
+                           . .                          
+                         . . . .                        
+                       . . . . . .                      
+                     . . . . . . . .                    
+                   . . . . . . . . . .                  
+                 . . . . . . . . . . . .                
+               . . . . . . . . . . . . . .              
+             . . . . . . . . . . . . . . . .            
+           . . . . . . . . . . . . . . . . . .          
+         . . . . . . . . . . . . . . . . . . . .        
+       . . . . . . . . . . . . . . . . . . . . . .      
+     . . . . . . . . . . . . . . . . . . . . . . . .    
+   . . . . . . . . . . . . . . . . . . . . . . . . . .  
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ o o o o . . . . . . . . . . . . . . . . . . . . o o o o
+   . . X o . . . . . . . . . . . . . . . . . . o x . .  
+     . . . . o o . . . o . . . . o . . . o . . . . .    
+       . . . . x . . . X . . . . x . . . x . . . .      
+         . . . . . . . . . . . . . . . . . . . .        
+           . . . . . . . . . . . . . . . . . .          
+             . . . . . . . . . . . . . . . .            
+               . . . . . . . . . . . . . .              
+                 . . . . . . . . . . . .                
+                   . . . . . . . . . .                  
+                     . . . . . . . .                    
+                       . . . . . .                      
+                         . . . .                        
+                           . .                          
+============END BOARD STATE============
+0.0 saveCores! We currently have 0.0 cores!
+Defense budget: 12.00================HOOK ANALYSIS========
+SP: 5.00	MP: 6.00	minDamage:7.00
+Hook Attack Online Adjustment: 1.00
+================DAMAGES========
+none: 0 options
+================END HOOK ANALYSIS========
+Not doing enough damage!
+================DEMO ANALYSIS========
+MP: 7.00	minDamage:7.00
+DEMO RUN Online Adjustment: 1.00
+================DAMAGES========
+none: 0 options
+================END DEMO ANALYSIS========
+Set up defenses!	Budget: 0.00	Max spending: 0.00
+BEST SCOUT RUSH EVALUATION==========
+	SpBudget:5.00	NumScouts:7	ScoutHealth: 18
+	Expected Damage:7	Online Adjustment:1.00
+SENDING SCOUT RUSH!
+	SpBudget:5.00	NumScouts:7	ScoutHealth: 18
+	Expected Damage:7	Online Adjustment:1.00
+spent: 0.0 of 0.0 || finishedBudget @ LINE 74
+Set up defenses!	Budget: 0.00	Max spending: 0.00
+Exception in thread "main" java.lang.IllegalStateException: java.io.IOException: stream closed
+	at com.c1games.terminal.algo.io.DefaultGameIO.nextFrameAnyType(DefaultGameIO.java:59)
+	at com.c1games.terminal.algo.io.GameLoopDriver.run(GameLoopDriver.java:27)
+	at com.c1games.terminal.myalgo.MyAlgo.main(MyAlgo.java:38)
+Caused by: java.io.IOException: stream closed
+	at com.c1games.terminal.algo.io.TerminatedStringReader.await(TerminatedStringReader.java:57)
+	at com.c1games.terminal.algo.io.DefaultGameIO.nextFrameAnyType(DefaultGameIO.java:57)
+	... 2 more
