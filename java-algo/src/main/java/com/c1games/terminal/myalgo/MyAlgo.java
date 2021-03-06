@@ -10,6 +10,7 @@ import com.c1games.terminal.algo.io.GameLoopDriver;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
+import com.c1games.terminal.algo.units.UnitType;
 import com.c1games.terminal.simulation.Simulator;
 
 import java.util.*;
@@ -66,6 +67,12 @@ public class MyAlgo implements GameLoop {
     //Utility.buildReactiveDefenses(move);
     int turnNumber = move.data.turnInfo.turnNumber;
 
+    for (int x = 0; x < 28; x++) {
+      move.attemptSpawn(new Coords(x, 13), UnitType.Wall);
+    }
+
+    /*
+
     if (turnNumber == 0) {
       FirstTurn.execute(this, move);
     } else if (turnNumber == 1) {
@@ -80,6 +87,9 @@ public class MyAlgo implements GameLoop {
     //scoredOnLocations.add(new ArrayList<Coords>());
 
     GameIO.debug().printf("Sims run: %d\n", Simulator.simCount);
+
+
+     */
   }
 
   /**
