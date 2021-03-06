@@ -1,20 +1,17 @@
 package com.c1games.terminal.simulation;
 
-import com.c1games.terminal.algo.Config;
-import com.c1games.terminal.algo.Coords;
-import com.c1games.terminal.algo.GameIO;
-import com.c1games.terminal.algo.PlayerId;
+import com.c1games.terminal.algo.*;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.units.UnitType;
+import com.c1games.terminal.simulation.pathfinding.PathFinder;
 import com.c1games.terminal.simulation.units.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class SimBoard {
-  private final static boolean DEBUG = true;
   private final static double ROOT2 = 1.41421356237;
   private final static int yPosXWidth = 7;
   private final static int maxYPosX = 4;
@@ -23,6 +20,7 @@ public class SimBoard {
   private final static int numBuckets = (maxYNegX+1) * (maxYPosX+1);
 
   private Config config;
+  private FrameData data;
   private int minMovementsToSelfDestruct;
 
   private final Map<Integer, HashSet<SimUnit>> unitBuckets;
@@ -85,10 +83,11 @@ public class SimBoard {
         move.allUnits[x][y].stream().filter(unit -> unit.type != UnitType.Remove && unit.type != UnitType.Upgrade && (!unit.id.equals("spawned") || includeSpawnedUnits)).forEach(unit -> addUnit(SimUnit.fromAPIUnit(unit, x,y)));
       }
     }
-    this.config = move.config;
+    config = move.config;
+    data = move.data;
     p1Health = move.data.p1Stats.integrity;
     p2Health = move.data.p2Stats.integrity;
-    minMovementsToSelfDestruct = move.config.mechanics.stepsRequiredSelfDestruct;
+    minMovementsToSelfDestruct = 5; // move.config.mechanics.stepsRequiredSelfDestruct; <- mechanics is null for some reason
   }
 
   // makes tilted spatial hashing for the map
@@ -164,7 +163,7 @@ public class SimBoard {
    * moves a unit from one bucket to another
    * @return true if the unit bucket changed
    */
-  public boolean updateUnitBucket(SimUnit unit, Coords prevLocation) {
+  private boolean updateUnitBucket(SimUnit unit, Coords prevLocation) {
     int oldIndex = getHashIndex(prevLocation);
     int unitIndex = getHashIndex(unit);
     if (oldIndex == unitIndex) {
@@ -179,15 +178,17 @@ public class SimBoard {
    * updates the necessary fields based on a unit's movement
    * @return true if the unit actually moved
    */
-  public boolean updateUnitLocation(SimUnit unit, Coords prevLocation) {
+  private boolean updateUnitLocation(SimUnit unit, Coords prevLocation) {
     if (unit.getLocation().equals(prevLocation)) {
       return false;
     }
     updateUnitBucket(unit, prevLocation);
+    unitListArrays[prevLocation.x][prevLocation.y].remove(unit);
+    unitListArrays[unit.getX()][unit.getY()].add(unit);
     return true;
   }
 
-  public List<SimUnit> interactableUnits(SimUnit unit) {
+  private List<SimUnit> interactableUnits(SimUnit unit) {
     if (unit.getRange() == 0) {
       return List.of();
     }
@@ -215,11 +216,20 @@ public class SimBoard {
 
   public boolean hasWall(Coords coords) {
     for (SimUnit unit : this.unitListArrays[coords.x][coords.y]) {
-      if (unit instanceof StructureUnit && unit.getLocation().equals(coords)) {
+      if (unit instanceof StructureUnit) {
         return true;
       }
     }
     return false;
+  }
+
+  public StructureUnit getStructureAt(Coords coords) {
+    for (SimUnit unit : this.unitListArrays[coords.x][coords.y]) {
+      if (unit instanceof StructureUnit) {
+        return (StructureUnit) unit;
+      }
+    }
+    return null;
   }
 
   /**
@@ -227,7 +237,9 @@ public class SimBoard {
    */
   public void simulate() {
     while (mobileUnits.size() > 0) {
-      if (DEBUG) debugPrint();
+      if (Simulator.DEBUG) debugPrint();
+
+      PathFinder.updateIfNecessary(this);
 
       simulateMovement();
 
@@ -252,6 +264,7 @@ public class SimBoard {
           if (mobileUnit.onTargetEdge()) {
             if (mobileUnit.isEnemy()) p1Health--;
             else p2Health--;
+            mobileUnit.takeDamage(mobileUnit.getHealth());
           } else if (mobileUnit.getTimesMoved() >= minMovementsToSelfDestruct) {
             simulateSelfDestruct(mobileUnit);
           }
@@ -281,10 +294,8 @@ public class SimBoard {
    * updates the list of interactable units for every unit
    */
   private void simulateTargeting() {
-    for (Set<SimUnit> unitSet : unitBuckets.values()) {
-      for (SimUnit unit : unitSet) {
-        unit.setInteractable(interactableUnits(unit));
-      }
+    for (SimUnit unit : allUnits) {
+      unit.setInteractable(interactableUnits(unit));
     }
   }
 
@@ -319,11 +330,9 @@ public class SimBoard {
    * removes all units with 0 health
    */
   private void simulateDeaths() {
-    for (Set<SimUnit> unitSet : unitBuckets.values()) {
-      for (SimUnit unit : unitSet) {
-        if (unit.getHealth() <= 0) {
-          removeUnit(unit);
-        }
+    for (SimUnit unit : new ArrayList<>(allUnits)) {
+      if (unit.getHealth() <= 0) {
+        removeUnit(unit);
       }
     }
   }
@@ -334,6 +343,42 @@ public class SimBoard {
 
   public float getP2Health() {
     return p2Health;
+  }
+
+  public SortedSet<SimUnit> getAllUnits() {
+    return allUnits;
+  }
+
+  public SortedSet<StructureUnit> getStructures() {
+    return structures;
+  }
+
+  public SortedSet<Wall> getWalls() {
+    return walls;
+  }
+
+  public SortedSet<SupportTower> getSupportTowers() {
+    return supportTowers;
+  }
+
+  public SortedSet<Turret> getTurrets() {
+    return turrets;
+  }
+
+  public SortedSet<MobileUnit> getMobileUnits() {
+    return mobileUnits;
+  }
+
+  public SortedSet<Scout> getScouts() {
+    return scouts;
+  }
+
+  public SortedSet<Interceptor> getInterceptors() {
+    return interceptors;
+  }
+
+  public SortedSet<Demolisher> getDemolishers() {
+    return demolishers;
   }
 
   private void debugPrint() {

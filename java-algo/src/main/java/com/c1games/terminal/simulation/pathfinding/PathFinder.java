@@ -1,6 +1,7 @@
 package com.c1games.terminal.simulation.pathfinding;
 
 import com.c1games.terminal.algo.Coords;
+import com.c1games.terminal.algo.GameIO;
 import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.simulation.SimBoard;
 import com.c1games.terminal.simulation.units.MobileUnit;
@@ -79,12 +80,20 @@ public class PathFinder {
   }
 
   /**
+   * checks the structure layout of the board and decides whether or not to update the board
+   */
+  public static void updateIfNecessary(SimBoard board) {
+    if (needsToUpdate(board)) {
+      processBoard(board);
+      finders.get(Edge.TOP_RIGHT).debugPrint();
+    }
+  }
+
+  /**
    * processes the board state if the blocked set is changed, then returns the desired path
    */
   public static List<Coords> findPath(SimBoard board, Coords start, Edge target) {
-    if (needsToUpdate(board)) {
-      processBoard(board);
-    }
+    updateIfNecessary(board);
     return findPathStrict(start, target);
   }
 
@@ -252,25 +261,25 @@ public class PathFinder {
     final String INVALID_TEXT = " . ";
     final String OUTSIDE_TEXT = "   ";
     for (int y = MapBounds.BOARD_SIZE - 1; y >= 0; y--) {
-      System.err.printf("%2d ", y);
+      GameIO.debug().printf("%2d ", y);
       for (int x = 0; x < MapBounds.BOARD_SIZE; x++) {
         Coords c = new Coords(x, y);
         if (!MapBounds.inArena(c))
-          System.err.print(OUTSIDE_TEXT);
+          GameIO.debug().print(OUTSIDE_TEXT);
         else if (blocked.contains(c))
-          System.err.print(WALL_TEXT);
+          GameIO.debug().print(WALL_TEXT);
         else if (pathLengths[c.x][c.y] < Integer.MAX_VALUE)
-          System.err.printf("%2d ", pathLengths[c.x][c.y]);
+          GameIO.debug().printf("%2d ", pathLengths[c.x][c.y]);
         else
-          System.err.print(INVALID_TEXT);
+          GameIO.debug().print(INVALID_TEXT);
       }
-      System.err.println();
+      GameIO.debug().println();
     }
-    System.err.print("   ");
+    GameIO.debug().print("   ");
     for(int i = 0; i < MapBounds.BOARD_SIZE; i++){
-      System.err.printf("%2d ", i);
+      GameIO.debug().printf("%2d ", i);
     }
-    System.err.println();
+    GameIO.debug().println();
   }
 
   /**
@@ -302,10 +311,10 @@ public class PathFinder {
     neighbor1Good = prevDirection == Direction.SPAWNED && neighbor1Dir == Direction.VERTICAL;
     neighbor2Good = prevDirection == Direction.SPAWNED && neighbor2Dir == Direction.VERTICAL;
     if (neighbor1Good && !neighbor2Good) {
-//      System.err.println("case 1a " + curr + " -> " + neighbor1);
+//      GameIO.debug().println("case 1a " + curr + " -> " + neighbor1);
       return -1;
     } else if (!neighbor1Good && neighbor2Good) {
-//      System.err.println("case 1b " + curr + " -> " + neighbor2);
+//      GameIO.debug().println("case 1b " + curr + " -> " + neighbor2);
       return 1;
     }
 
@@ -313,10 +322,10 @@ public class PathFinder {
     neighbor1Good = prevDirection != neighbor1Dir;
     neighbor2Good = prevDirection != neighbor2Dir;
     if (neighbor1Good && !neighbor2Good) {
-//      System.err.println("case 2a " + curr + " -> " + neighbor1);
+//      GameIO.debug().println("case 2a " + curr + " -> " + neighbor1);
       return -1;
     } else if (!neighbor1Good && neighbor2Good) {
-//      System.err.println("case 2b " + curr + " -> " + neighbor2);
+//      GameIO.debug().println("case 2b " + curr + " -> " + neighbor2);
       return 1;
     }
 
@@ -325,10 +334,10 @@ public class PathFinder {
         (targetEdge == Edge.TOP_LEFT && (neighbor1.x < neighbor2.x || neighbor1.y > neighbor2.y)) ||
         (targetEdge == Edge.BOTTOM_RIGHT && (neighbor1.x > neighbor2.x || neighbor1.y < neighbor2.y)) ||
         (targetEdge == Edge.BOTTOM_LEFT && (neighbor1.x < neighbor2.x || neighbor1.y < neighbor2.y))) {
-//      System.err.println("case 3a " + curr + " -> " + neighbor1);
+//      GameIO.debug().println("case 3a " + curr + " -> " + neighbor1);
       return -1;
     } else {
-//      System.err.println("case 3b " + curr + " -> " + neighbor2);
+//      GameIO.debug().println("case 3b " + curr + " -> " + neighbor2);
       return 1;
     }
   }

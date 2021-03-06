@@ -15,7 +15,7 @@ public class Turret extends StructureUnit {
 
   public Turret(Unit turret, Coords location) {
     super(turret.owner == PlayerId.Player2, turret.id, turret.unitInformation.startHealth.orElse(Turret.startHealth), turret.unitInformation.attackRange.orElse(Turret.range), turret.unitInformation.attackDamageWalker.orElse(Turret.walkerDamage), turret.unitInformation.attackDamageTower.orElse(Turret.structureDamage), location, turret.health, turret.upgraded);
-    interactiblityFilter = simUnit -> simUnit instanceof MobileUnit && simUnit.isEnemy != this.isEnemy;
+    interactiblityFilter = simUnit -> simUnit instanceof MobileUnit && simUnit.isEnemy() != this.isEnemy();
   }
 
   @Override

@@ -10,8 +10,8 @@ import java.util.Map;
  * Two-dimensional, integer coordinates.
  */
 public class Coords {
-    public final int x;
-    public final int y;
+    public int x;
+    public int y;
     private static final Map<Coords, List<Coords>> neighbors = new HashMap<>();
 
     public Coords(int x, int y) {

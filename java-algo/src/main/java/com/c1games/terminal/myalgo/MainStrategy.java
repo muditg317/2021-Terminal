@@ -69,8 +69,8 @@ public class MainStrategy {
     //DECIDE TO BOOM OR NOT HERE.==========================
     Boom.evaluate(predictedEnemyBaseLayout, reducedScoutRushDefense);
 
-    GameIO.debug().println("PREDICTED GAME STATE=========");
-    Utility.printGameBoard(predictedEnemyBaseLayout.allUnits);
+//    GameIO.debug().println("PREDICTED GAME STATE=========");
+//    Utility.printGameBoard(predictedEnemyBaseLayout.allUnits);
 
     //make sure we have enough for boom wall
     double saveCores = 0;

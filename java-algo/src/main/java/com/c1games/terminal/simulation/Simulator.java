@@ -14,37 +14,29 @@ import java.util.List;
 import java.util.Map;
 
 public class Simulator {
+  public static boolean DEBUG = false;
 
-//  SimBoard board;
-//
-//  public Simulator(GameState move) {
-//    this.board = new SimBoard(move);
-//  }
+  public static int simCount = 0;
 
-  public SimBoard simulate(GameState state) {
+  public static SimBoard simulate(GameState state) {
+    simCount++;
     // prepare board object
     SimBoard board = new SimBoard(state, false);
-//    for (Map.Entry<Coords, Utility.Pair<UnitType, Integer>> spawnEvent : spawnEvents.entrySet()) {
-//      Coords spawnLocation = spawnEvent.getKey();
-//      for (int num = spawnEvent.getValue().value; num >= 0; num--) {
-//        board.spawnUnit(spawnLocation, spawnEvent.getValue().key);
-//      }
-//    }
 
+    // run spawn commands in order (used to maintain good IDs on the units)
     for (SpawnCommand spawnCommand : state.buildStack) {
       if (spawnCommand.type != UnitType.Upgrade && spawnCommand.type != UnitType.Remove) {
         board.spawnUnit(new Coords(spawnCommand.x, spawnCommand.y), spawnCommand.type);
       }
     }
-
     for (SpawnCommand spawnCommand : state.deployStack) {
       if (spawnCommand.type != UnitType.Upgrade && spawnCommand.type != UnitType.Remove) {
         board.spawnUnit(new Coords(spawnCommand.x, spawnCommand.y), spawnCommand.type);
       }
     }
 
+    // simulate on the board
     board.simulate();
-
     return board;
   }
 }

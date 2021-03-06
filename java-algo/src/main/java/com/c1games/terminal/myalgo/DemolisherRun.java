@@ -4,7 +4,6 @@ import com.c1games.terminal.algo.Config;
 import com.c1games.terminal.algo.Coords;
 import com.c1games.terminal.algo.GameIO;
 import com.c1games.terminal.algo.PlayerId;
-import com.c1games.terminal.algo.io.GameLoop;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
@@ -204,8 +203,8 @@ public class DemolisherRun extends Attack {
 
     for (Map.Entry<Utility.Pair<Coords,Coords>, ExpectedDefense> entry : damages.entrySet()) {
       if (entry.getValue().structureHealth > bestED.structureHealth) {
-        bestAttack = entry.getKey().key;
-        hookHole = entry.getKey().value;
+        bestAttack = entry.getKey().getKey();
+        hookHole = entry.getKey().getValue();
         bestED = entry.getValue();
       }
     }

@@ -65,7 +65,8 @@ public abstract class MobileUnit extends SimUnit {
     Coords prev = null;
     if (--framesSinceMoved == 0) {
       prev = super.getLocation();
-      this.setLocation(PathFinder.getNextMove(this));
+      super.setLocation(PathFinder.getNextMove(this));
+      this.prevDirection = Direction.fromCoordinates(prev, super.getLocation());
       timesMoved++;
       framesSinceMoved = speed;
     }

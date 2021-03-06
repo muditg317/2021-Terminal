@@ -10,10 +10,7 @@ import com.c1games.terminal.algo.io.GameLoopDriver;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
-import com.c1games.terminal.algo.units.UnitType;
-import com.c1games.terminal.simulation.SimBoard;
-import com.c1games.terminal.simulation.pathfinding.Edge;
-import com.c1games.terminal.simulation.pathfinding.PathFinder;
+import com.c1games.terminal.simulation.Simulator;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -60,17 +57,7 @@ public class MyAlgo implements GameLoop {
   public void onTurn(GameIO io, GameState move) {
     GameIO.debug().println("Performing turn " + move.data.turnInfo.turnNumber + " of your custom algo strategy");
 
-    for (int x = 0; x < 28; x++) {
-      move.attemptSpawn(new Coords(x, 13), UnitType.Wall);
-    }
 
-    if (move.data.turnInfo.turnNumber == 42) {
-      GameIO.debug().print("PATH TO TR from <6,7>:\n\t");
-      PathFinder.findPath(new SimBoard(move), new Coords(6, 7), Edge.TOP_RIGHT).forEach(GameIO.debug()::print);
-      GameIO.debug().println();
-    }
-
-    /*
     if (lastAttack != null) {
       lastAttack.learn(attackActualValue);
     }
@@ -92,7 +79,7 @@ public class MyAlgo implements GameLoop {
 
     //scoredOnLocations.add(new ArrayList<Coords>());
 
-     */
+    GameIO.debug().printf("Sims run: %d\n", Simulator.simCount);
   }
 
   /**
@@ -137,7 +124,7 @@ public class MyAlgo implements GameLoop {
         }
       }
 
-      Utility.printGameBoard(currentBoard);
+//      Utility.printGameBoard(currentBoard);
     }
 
 
@@ -151,8 +138,10 @@ public class MyAlgo implements GameLoop {
 
     } else if (lastAttack instanceof DemolisherRun || lastAttack instanceof HookAttack) {
       for (FrameData.Events.DamageEvent damage : move.data.events.damage) {
+        if (!MapBounds.inArena(damage.coords)) {
+          continue;
+        }
         Unit attacked = move.getWallAt(damage.coords);
-
         if (attacked != null && damage.unitOwner == PlayerId.Player2) {
           double damageDone = damage.damage;
           damageDone = Math.min(damageDone, attacked.health);

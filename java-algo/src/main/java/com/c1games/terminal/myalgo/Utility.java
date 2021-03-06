@@ -7,6 +7,7 @@ import com.c1games.terminal.algo.GameIO;
 import com.c1games.terminal.algo.PlayerId;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.MapBounds;
+import com.c1games.terminal.algo.map.SpawnCommand;
 import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.pathfinding.IllegalPathStartException;
 import com.c1games.terminal.algo.units.UnitType;
@@ -241,6 +242,8 @@ public class Utility {
         }).collect(Collectors.toList());
       }
     }
+    duplicate.buildStack.addAll(state.buildStack);
+    duplicate.deployStack.addAll(state.deployStack);
     return duplicate;
   }
 
@@ -287,12 +290,20 @@ public class Utility {
   }
 
   public static class Pair<T,K> {
-    public T key;
-    public K value;
+    private T key;
+    private K value;
 
     public Pair(T key, K value) {
       this.key = key;
       this.value = value;
+    }
+
+    public T getKey() {
+      return key;
+    }
+
+    public K getValue() {
+      return value;
     }
   }
 
