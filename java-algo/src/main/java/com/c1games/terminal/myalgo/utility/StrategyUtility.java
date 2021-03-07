@@ -1,4 +1,4 @@
-package com.c1games.terminal.myalgo;
+package com.c1games.terminal.myalgo.utility;
 
 import com.c1games.terminal.algo.Config;
 import com.c1games.terminal.algo.Coords;
@@ -13,10 +13,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.c1games.terminal.algo.map.GameState.TowerUnitCategory;
+import static com.c1games.terminal.algo.map.GameState.WalkerUnitCategory;
 
 public class StrategyUtility {
 
-  static double mpCapacity(GameState move, int turnNumber) {
+  public static double mpCapacity(GameState move, int turnNumber) {
     float baseMPIncome = move.config.resources.bitsPerRound + move.config.resources.bitGrowthRate * turnNumber / move.config.resources.turnIntervalForBitSchedule;
     double mpCapacity = baseMPIncome * 4;
     return mpCapacity;
@@ -27,7 +28,7 @@ public class StrategyUtility {
    * @param move
    * @return the estimated number of inters needed to defend a scout rush this turn given our defenses
    */
-  static int neededScoutRushDefense(GameState move) {
+  public static int neededScoutRushDefense(GameState move) {
     int mp = (int) move.data.p1Stats.bits;
     int sp = (int) move.data.p1Stats.cores;
     int turnNumber = move.data.turnInfo.turnNumber;
@@ -52,7 +53,7 @@ public class StrategyUtility {
    * @param move  the game state to inspect
    * @return the number of cores we should spend in defenses
    */
-  static int neededDefenseSpending(GameState move) {
+  public static int neededDefenseSpending(GameState move) {
     float enemyMP = move.data.p2Stats.bits;
     float ourHealth = move.data.p1Stats.integrity;
     float baseMPIncome = move.config.resources.bitsPerRound + move.config.resources.bitGrowthRate * (move.data.turnInfo.turnNumber) / move.config.resources.turnIntervalForBitSchedule;
@@ -84,7 +85,7 @@ public class StrategyUtility {
    * @param move
    * @return the predicted max enemy scout rush health this turn
    */
-  static int maxEnemyScoutRushHealth(GameState move) {
+  public static int maxEnemyScoutRushHealth(GameState move) {
     int enemyMP = (int) move.data.p2Stats.bits;
     double scoutBaseHealth = move.config.unitInformation.get(UnitType.Scout.ordinal()).startHealth.orElse(15);;
     return (int) (enemyMP * (scoutBaseHealth + potentialEnemyShieldPower(move)));
@@ -139,7 +140,7 @@ public class StrategyUtility {
    * @param budget   the MP we have available
    * @return the number of units we can spawn
    */
-  static double numAffordableWithBudget(GameState move, UnitType type, boolean upgrade, double budget) {
+  public static double numAffordableWithBudget(GameState move, UnitType type, boolean upgrade, double budget) {
     if (type == UnitType.Remove) {
       throw new IllegalArgumentException("Cannot query number affordable of remove unit type use removeFirewall");
     }
@@ -160,7 +161,7 @@ public class StrategyUtility {
    * @move the boi
    * @return the total shield power on the enemy field right now
    */
-  static double currentEnemyShieldPower(GameState move) {
+  public static double currentEnemyShieldPower(GameState move) {
     double shieldPower = 0;
     List<Unit>[][] allUnits = move.allUnits;
     for (int x = 0; x < allUnits.length; x++) {
@@ -191,7 +192,7 @@ public class StrategyUtility {
    * @param move the boi
    * @return the potential total shield power the enemy can have next turn
    */
-  static double potentialEnemyShieldPower(GameState move) {
+  public static double potentialEnemyShieldPower(GameState move) {
     double shieldPower = currentEnemyShieldPower(move);
     double enemySP = move.data.p2Stats.bits;
     //apply the conversion of 1 to 1 assuming as average
@@ -201,40 +202,34 @@ public class StrategyUtility {
 
   /**
    *
-   * @param move the boi
+   * @param allUnits the unit list of the board
    * @return the current SP on the enemy has on the board (what they would get if they refunded everything)
    */
-  static double enemySPOnBoard(GameState move) {
+  public static double enemySPOnBoard(List<Unit>[][] allUnits) {
     double enemySP = 0;
-    List<Unit>[][] allUnits = move.allUnits;
     for (int x = 0; x < allUnits.length; x++) {
       List<Unit>[] row = allUnits[x];
       for (int y = 0; y < row.length; y++) {
         List<Unit> units = row[y];
-        if (units.isEmpty() || move.isInfo(units.get(0).type)) {
+        if (units.isEmpty() || units.get(0).unitInformation.unitCategory.orElse(-1) == WalkerUnitCategory) {
           continue;
         }
         // there is a structure here
         Unit unit = units.get(0);
         if (unit.owner == PlayerId.Player2) {
           Config.UnitInformation info = unit.unitInformation;
-          double cost = info.cost1.orElse(0);
-          if (unit.upgraded) {
-            enemySP += 0.90 * cost * unit.health / info.startHealth.getAsDouble();
-          } else {
-            enemySP += 0.97 * cost * unit.health / info.startHealth.getAsDouble();
-          }
+          enemySP += Utility.healthToSP(info, unit.health);
         }
       }
     }
     return enemySP;
   }
 
-  static double totalEnemySp(GameState move) {
-    return enemySPOnBoard(move) + move.data.p2Stats.cores;
+  public static double totalEnemySp(GameState move) {
+    return enemySPOnBoard(move.allUnits) + move.data.p2Stats.cores;
   }
 
-  static boolean pathHitsTargetEdge(List<Coords> path, int targetEdge) {
+  public static boolean pathHitsTargetEdge(List<Coords> path, int targetEdge) {
     for (Coords coord : path) {
       if (MapBounds.IS_ON_EDGE[targetEdge][coord.x][coord.y]) {
         return true;
@@ -249,7 +244,7 @@ public class StrategyUtility {
    * @param coords
    * @return everything that can see and it can see
    */
-  static Map<Unit, Coords> getTowerLocations(GameState move, Coords coords, double walkerRange) {
+  public static Map<Unit, Coords> getTowerLocations(GameState move, Coords coords, double walkerRange) {
     Map<Unit, Coords> attackers = new HashMap<>();
     if (!MapBounds.inArena(coords)) {
       GameIO.debug().println("Checking attackers out of bounds! " + coords);
@@ -284,7 +279,7 @@ public class StrategyUtility {
     return attackers;
   }
 
-  static GameState predictGameState(GameState move, List<Unit>[][] enemyBaseHistory) {
+  public static GameState predictGameState(GameState move, List<Unit>[][] enemyBaseHistory) {
     GameState prediction = Utility.duplicateState(move);
     for (int i = 13; i < 41; i++) {
       for (int j = 0; j <= 14 - i%2; j++) {

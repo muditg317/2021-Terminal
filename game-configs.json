@@ -66,7 +66,7 @@
       "shorthand":"DF",
       "startHealth":60.0,
       "unitCategory": 0,
-      "refundPercentage": 0.98,
+      "refundPercentage": 0.97,
       "turnsRequiredToRemove": 1,
       "upgrade": {
         "cost1": 4.0,

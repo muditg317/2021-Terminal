@@ -1,10 +1,10 @@
-package com.c1games.terminal.myalgo;
+package com.c1games.terminal.myalgo.utility;
 
 import com.c1games.terminal.algo.Coords;
-import com.c1games.terminal.algo.GameIO;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.PlayerId;
+import com.c1games.terminal.myalgo.MyAlgo;
 
 import java.util.*;
 
@@ -18,7 +18,7 @@ public class DefenseUtility {
    * @param spots
    * @return the right most turret. Null if there are no turrets.
    */
-  static Coords findRightMostTurret(GameState move, Coords[] spots) {
+  public static Coords findRightMostTurret(GameState move, Coords[] spots) {
     Coords lastTurretLocation = null;
     for(Coords location : spots) {
       Unit unit = move.getWallAt(location);
@@ -37,7 +37,7 @@ public class DefenseUtility {
    * @param move
    * @return
    */
-  static int cornerDamageTaken(GameState move) {
+  public static int cornerDamageTaken(GameState move) {
     final Coords[] cornerLocations = {
         new Coords(0, 13),
         new Coords(1, 12),
@@ -48,7 +48,7 @@ public class DefenseUtility {
     for (Coords loc : cornerLocations) {
       totalCornerHits += MyAlgo.scoredOnLocations.getOrDefault(loc, 0);
     }
-    GameIO.debug().printf("cornerHasBeenHit is %d\n", totalCornerHits);
+//    GameIO.debug().printf("cornerHasBeenHit is %d\n", totalCornerHits);
     return totalCornerHits;
   }
 
@@ -56,7 +56,7 @@ public class DefenseUtility {
    * Returns the walls that need to be upgraded based on prior damage. Requires MyAlgo.wallDamage to work correctly.
    *
    */
-  static List<Coords> getHighPriorityWalls(GameState move) {
+  public static List<Coords> getHighPriorityWalls(GameState move) {
     final int MAX_PRIORITY_WALLS = 5;
     List<Coords> highPriorityWalls = new ArrayList<Coords>();
 
@@ -78,7 +78,7 @@ public class DefenseUtility {
         break;
       }
     }
-    GameIO.debug().println("Sorted Wall Damages: " + sortedWallDamage);
+//    GameIO.debug().println("Sorted Wall Damages: " + sortedWallDamage);
 
     return highPriorityWalls;
   }

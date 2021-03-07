@@ -16,7 +16,7 @@ public class Demolisher extends MobileUnit {
 
   private final Function<SimUnit, Boolean> interactiblityFilter;
 
-  public Demolisher(Unit demolisher, Coords location) {
+  Demolisher(Unit demolisher, Coords location) {
     super(demolisher.owner == PlayerId.Player2, demolisher.id, demolisher.unitInformation.startHealth.orElse(Demolisher.startHealth), demolisher.unitInformation.attackRange.orElse(Demolisher.range), demolisher.unitInformation.attackDamageWalker.orElse(Demolisher.walkerDamage), demolisher.unitInformation.attackDamageTower.orElse(Demolisher.structureDamage), demolisher.unitInformation.speed.orElse(Demolisher.speed), location, demolisher.health, Direction.SPAWNED);
     interactiblityFilter = simUnit -> simUnit.isEnemy() != this.isEnemy();
   }

@@ -16,7 +16,7 @@ public class Scout extends MobileUnit {
 
   private final Function<SimUnit, Boolean> interactiblityFilter;
 
-  public Scout(Unit scout, Coords location) {
+  Scout(Unit scout, Coords location) {
     super(scout.owner == PlayerId.Player2, scout.id, scout.unitInformation.startHealth.orElse(Scout.startHealth), scout.unitInformation.attackRange.orElse(Scout.range), scout.unitInformation.attackDamageWalker.orElse(Scout.walkerDamage), scout.unitInformation.attackDamageTower.orElse(Scout.structureDamage), scout.unitInformation.speed.orElse(Scout.speed), location, scout.health, Direction.SPAWNED);
     interactiblityFilter = simUnit -> simUnit.isEnemy() != this.isEnemy();
   }

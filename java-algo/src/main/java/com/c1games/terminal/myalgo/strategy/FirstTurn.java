@@ -1,7 +1,10 @@
-package com.c1games.terminal.myalgo;
+package com.c1games.terminal.myalgo.strategy;
 
 import com.c1games.terminal.algo.Coords;
 import com.c1games.terminal.algo.map.GameState;
+import com.c1games.terminal.myalgo.MyAlgo;
+import com.c1games.terminal.myalgo.utility.Locations;
+import com.c1games.terminal.myalgo.utility.SpawnUtility;
 
 public class FirstTurn {
   private static MyAlgo algoState;
@@ -11,7 +14,7 @@ public class FirstTurn {
    * Places the two factories, turret, and wall as first turn
    * @param move the game state dude bruh
    */
-  static void execute(MyAlgo algoState, GameState move) {
+  public static void execute(MyAlgo algoState, GameState move) {
     FirstTurn.algoState = algoState;
     FirstTurn.move = move;
 

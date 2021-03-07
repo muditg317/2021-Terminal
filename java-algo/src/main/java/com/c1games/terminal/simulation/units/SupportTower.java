@@ -18,7 +18,7 @@ public class SupportTower extends StructureUnit {
   private final double shieldAmount;
   private final Set<SimUnit> shielded;
 
-  public SupportTower(Unit supportTower, Coords location) {
+  SupportTower(Unit supportTower, Coords location) {
     super(supportTower.owner == PlayerId.Player2, supportTower.id, supportTower.unitInformation.startHealth.orElse(SupportTower.startHealth), supportTower.unitInformation.attackRange.orElse(SupportTower.range), supportTower.unitInformation.attackDamageWalker.orElse(SupportTower.walkerDamage), supportTower.unitInformation.attackDamageTower.orElse(SupportTower.structureDamage), location, supportTower.health, supportTower.upgraded);
     shielded = new HashSet<>();
     interactiblityFilter = simUnit -> simUnit instanceof MobileUnit && simUnit.isEnemy() == super.isEnemy() && !shielded.contains(simUnit);

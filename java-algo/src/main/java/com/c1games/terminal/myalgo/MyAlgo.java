@@ -10,7 +10,16 @@ import com.c1games.terminal.algo.io.GameLoopDriver;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
-import com.c1games.terminal.algo.units.UnitType;
+import com.c1games.terminal.myalgo.attack.Attack;
+import com.c1games.terminal.myalgo.attack.DemolisherRun;
+import com.c1games.terminal.myalgo.attack.HookAttack;
+import com.c1games.terminal.myalgo.attack.ScoutRush;
+import com.c1games.terminal.myalgo.strategy.EarlyGame;
+import com.c1games.terminal.myalgo.strategy.FirstTurn;
+import com.c1games.terminal.myalgo.strategy.MainStrategy;
+import com.c1games.terminal.myalgo.strategy.SecondTurn;
+import com.c1games.terminal.myalgo.utility.StrategyUtility;
+import com.c1games.terminal.myalgo.utility.Utility;
 import com.c1games.terminal.simulation.Simulator;
 
 import java.util.*;
@@ -23,14 +32,14 @@ public class MyAlgo implements GameLoop {
 
   private static final int NUM_EARLY_GAME_TURNS = 5;
 
-  static final Random rand = new Random();
-  static final HashMap<Coords, Integer> scoredOnLocations = new HashMap<>();
-  static final HashMap<Coords, Double> wallDamage = new LinkedHashMap<>();
-  static Attack lastAttack = null;
-  static double attackActualValue;
+  public static final Random rand = new Random();
+  public static final HashMap<Coords, Integer> scoredOnLocations = new HashMap<>();
+  public static final HashMap<Coords, Double> wallDamage = new LinkedHashMap<>();
+  public static Attack lastAttack = null;
+  public static double attackActualValue;
 
   @SuppressWarnings("unchecked") // the list type will be correct
-  static final List<Unit>[][] enemyBaseHistory = new ArrayList[MapBounds.BOARD_SIZE][MapBounds.BOARD_SIZE];
+  public static final List<Unit>[][] enemyBaseHistory = new ArrayList[MapBounds.BOARD_SIZE][MapBounds.BOARD_SIZE];
 
   public static void main(String[] args) {
     new GameLoopDriver(new MyAlgo()).run();
@@ -49,6 +58,8 @@ public class MyAlgo implements GameLoop {
         enemyBaseHistory[x][y] = new ArrayList<>();
       }
     }
+
+//    GameIO.debug().println("Using Config:\n" + config + "\n========");
   }
 
   /**
@@ -57,21 +68,29 @@ public class MyAlgo implements GameLoop {
   @Override
   public void onTurn(GameIO io, GameState move) {
     GameIO.debug().println("Performing turn " + move.data.turnInfo.turnNumber + " of your custom algo strategy");
-
+    GameIO.debug().printf("Sims run: %d\n", Simulator.simCount);
 
     if (lastAttack != null) {
+      if (lastAttack instanceof HookAttack || lastAttack instanceof DemolisherRun) {
+        List<Unit>[][] oldBoard = new List[MapBounds.BOARD_SIZE][MapBounds.BOARD_SIZE];
+        for (int x = 0; x < MapBounds.BOARD_SIZE; x++) {
+          for(int y = 0; y < MapBounds.BOARD_SIZE; y++) {
+            Unit structure = enemyBaseHistory[x][y].get(enemyBaseHistory[x][y].size() - 1);
+            List<Unit> structureAtCoords = structure == null ? List.of() : List.of(structure);
+            oldBoard[x][y] = structureAtCoords;
+          }
+        }
+        double spThen = StrategyUtility.enemySPOnBoard(oldBoard);
+        double spNow = StrategyUtility.enemySPOnBoard(move.allUnits);
+        attackActualValue = spThen - spNow;
+      }
+      GameIO.debug().printf("Last attack (%s) summary:\n\texpected: %.2f\n\tactual: %.2f\n", lastAttack.getClass().getSimpleName(), lastAttack.getExpectedAttackValue(), attackActualValue);
       lastAttack.learn(attackActualValue);
     }
     attackActualValue = 0;
     lastAttack = null;
     //Utility.buildReactiveDefenses(move);
     int turnNumber = move.data.turnInfo.turnNumber;
-
-    for (int x = 0; x < 28; x++) {
-      move.attemptSpawn(new Coords(x, 13), UnitType.Wall);
-    }
-
-    /*
 
     if (turnNumber == 0) {
       FirstTurn.execute(this, move);
@@ -87,9 +106,6 @@ public class MyAlgo implements GameLoop {
     //scoredOnLocations.add(new ArrayList<Coords>());
 
     GameIO.debug().printf("Sims run: %d\n", Simulator.simCount);
-
-
-     */
   }
 
   /**
@@ -147,17 +163,20 @@ public class MyAlgo implements GameLoop {
       }
 
     } else if (lastAttack instanceof DemolisherRun || lastAttack instanceof HookAttack) {
-      for (FrameData.Events.DamageEvent damage : move.data.events.damage) {
-        if (!MapBounds.inArena(damage.coords)) {
-          continue;
-        }
-        Unit attacked = move.getWallAt(damage.coords);
-        if (attacked != null && damage.unitOwner == PlayerId.Player2) {
-          double damageDone = damage.damage;
-          damageDone = Math.min(damageDone, attacked.health);
-          attackActualValue += Utility.damageToSp(attacked, damageDone);
-        }
-      }
+//      for (FrameData.Events.DamageEvent damage : move.data.events.damage) {
+//        if (!MapBounds.inArena(damage.coords)) {
+//          continue;
+//        }
+//        Unit attacked = move.getWallAt(damage.coords);
+//        if (attacked != null && damage.unitOwner == PlayerId.Player2) {
+//          double damageDone = damage.damage;
+//          damageDone = Math.min(damageDone, attacked.health);
+//          attackActualValue += Utility.damageToSp(attacked, damageDone);
+////          if (move.data.turnInfo.turnNumber == 3) {
+////            GameIO.debug().printf("Damage done!\t%.2f to %s. Total SP damage: %.2f\n", damageDone, attacked, attackActualValue);
+////          }
+//        }
+//      }
     }
   }
 

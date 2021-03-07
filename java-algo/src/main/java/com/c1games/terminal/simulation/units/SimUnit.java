@@ -1,15 +1,21 @@
 package com.c1games.terminal.simulation.units;
 
+import com.c1games.terminal.algo.Config;
 import com.c1games.terminal.algo.Coords;
 import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
+import com.c1games.terminal.algo.units.UnitType;
 import com.c1games.terminal.simulation.pathfinding.Edge;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 public abstract class SimUnit {
   private static int defaultID = 1000;
+
+  private Config.UnitInformation config;
 
   private final boolean isEnemy;
   private final int id;
@@ -25,7 +31,7 @@ public abstract class SimUnit {
   private List<SimUnit> interactable;
 
 
-  public SimUnit(boolean isEnemy, String id, double startHealth, double range, double walkerDamage, double structureDamage, Coords location, double health) {
+  protected SimUnit(boolean isEnemy, String id, double startHealth, double range, double walkerDamage, double structureDamage, Coords location, double health) {
     this.isEnemy = isEnemy;
     int thisID;
     try {thisID = Integer.parseInt(id);} catch (NumberFormatException e) {thisID = defaultID++;}
@@ -39,22 +45,31 @@ public abstract class SimUnit {
   }
 
   public static SimUnit fromAPIUnit(Unit unit, int x, int y) {
+    SimUnit simUnit;
     switch (unit.type) {
       case Scout:
-        return new Scout(unit, new Coords(x,y));
+        simUnit = new Scout(unit, new Coords(x,y));
+        break;
       case Interceptor:
-        return new Interceptor(unit, new Coords(x,y));
+        simUnit = new Interceptor(unit, new Coords(x,y));
+        break;
       case Demolisher:
-        return new Demolisher(unit, new Coords(x,y));
+        simUnit = new Demolisher(unit, new Coords(x,y));
+        break;
       case Wall:
-        return new Wall(unit, new Coords(x,y));
+        simUnit = new Wall(unit, new Coords(x,y));
+        break;
       case Support:
-        return new SupportTower(unit, new Coords(x,y));
+        simUnit = new SupportTower(unit, new Coords(x,y));
+        break;
       case Turret:
-        return new Turret(unit, new Coords(x,y));
+        simUnit = new Turret(unit, new Coords(x,y));
+        break;
       default:
-        return null;
+        throw new IllegalArgumentException("Unit not a standard type: " + unit.type);
     }
+    simUnit.config = unit.unitInformation;
+    return simUnit;
   }
 
   public abstract Function<SimUnit, Boolean> getInteractabilityFilter();
@@ -155,6 +170,10 @@ public abstract class SimUnit {
   public void takeDamage(double amount) {
     health -= amount;
     if (health < 0) health = 0;
+  }
+
+  public Config.UnitInformation getConfig() {
+    return config;
   }
 
   public boolean isEnemy() {

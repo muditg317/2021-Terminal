@@ -1,17 +1,9 @@
 package com.c1games.terminal.simulation;
 
 import com.c1games.terminal.algo.Coords;
-import com.c1games.terminal.algo.FrameData;
-import com.c1games.terminal.algo.PlayerId;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.SpawnCommand;
-import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.units.UnitType;
-import com.c1games.terminal.myalgo.Utility;
-import com.c1games.terminal.simulation.units.SimUnit;
-
-import java.util.List;
-import java.util.Map;
 
 public class Simulator {
   public static boolean DEBUG = false;

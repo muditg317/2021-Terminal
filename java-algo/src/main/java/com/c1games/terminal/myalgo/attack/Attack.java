@@ -1,4 +1,4 @@
-package com.c1games.terminal.myalgo;
+package com.c1games.terminal.myalgo.attack;
 import com.c1games.terminal.algo.Coords;
 import com.c1games.terminal.algo.map.GameState;
 
@@ -13,4 +13,5 @@ public abstract class Attack {
 
   public abstract double evaluation(GameState move);
 
+  public abstract double getExpectedAttackValue();
 }

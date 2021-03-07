@@ -1,13 +1,11 @@
-package com.c1games.terminal.myalgo;
+package com.c1games.terminal.myalgo.utility;
 
 import com.c1games.terminal.algo.Config;
 import com.c1games.terminal.algo.Coords;
 import com.c1games.terminal.algo.FrameData;
 import com.c1games.terminal.algo.GameIO;
-import com.c1games.terminal.algo.PlayerId;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.MapBounds;
-import com.c1games.terminal.algo.map.SpawnCommand;
 import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.pathfinding.IllegalPathStartException;
 import com.c1games.terminal.algo.units.UnitType;
@@ -26,16 +24,16 @@ import java.util.stream.Collectors;
 
 public class Utility {
 
-  static final UnitType TURRET = UnitType.Turret;
-  static final UnitType WALL = UnitType.Wall;
-  static final UnitType SUPPORT = UnitType.Support;
-  static final UnitType UPGRADE = UnitType.Upgrade;
-  static final UnitType REMOVE = UnitType.Remove;
-  static final UnitType SCOUT = UnitType.Scout;
-  static final UnitType DEMOLISHER = UnitType.Demolisher;
-  static final UnitType INTERCEPTOR = UnitType.Interceptor;
+  public static final UnitType TURRET = UnitType.Turret;
+  public static final UnitType WALL = UnitType.Wall;
+  public static final UnitType SUPPORT = UnitType.Support;
+  public static final UnitType UPGRADE = UnitType.Upgrade;
+  public static final UnitType REMOVE = UnitType.Remove;
+  public static final UnitType SCOUT = UnitType.Scout;
+  public static final UnitType DEMOLISHER = UnitType.Demolisher;
+  public static final UnitType INTERCEPTOR = UnitType.Interceptor;
 
-  static final List<Coords> friendlyEdges = new ArrayList<>();
+  public static final List<Coords> friendlyEdges = new ArrayList<>();
   static {
     friendlyEdges.addAll(Arrays.asList(MapBounds.EDGE_LISTS[MapBounds.EDGE_BOTTOM_LEFT]));
     friendlyEdges.addAll(Arrays.asList(MapBounds.EDGE_LISTS[MapBounds.EDGE_BOTTOM_RIGHT]));
@@ -49,7 +47,7 @@ public class Utility {
    * @param gameState
    * @return the amount spent
    */
-  static int fillOtherHookHoles(GameState gameState, Coords noFill) {
+  public static int fillOtherHookHoles(GameState gameState, Coords noFill) {
     int spent = 0;
     for (Coords loc : Locations.Essentials.mainWallHookHoles) {
       if (loc.equals(noFill)) {
@@ -69,7 +67,7 @@ public class Utility {
    * @param locations
    * @return
    */
-  static Map<Coords, Float> damagePerSpawnLocation(GameState move, List<Coords> locations) {
+  public static Map<Coords, Float> damagePerSpawnLocation(GameState move, List<Coords> locations) {
     if (locations == null) {
       locations = friendlyEdges;
     }
@@ -108,7 +106,7 @@ public class Utility {
    * @param locations
    * @return the location with the least damaging path
    */
-  static Coords leastDamageSpawnLocation(GameState move, List<Coords> locations) {
+  public static Coords leastDamageSpawnLocation(GameState move, List<Coords> locations) {
     List<Float> damages = new ArrayList<>();
 
     for (Coords location : locations) {
@@ -143,7 +141,7 @@ public class Utility {
    * @param units Can be null, list of units to look for, null will check all
    * @return count of the number of units seen at the specified locations
    */
-  static int detectEnemyUnits(GameState move, List<Integer> xLocations, List<Integer> yLocations, List<UnitType> units) {
+  public static int detectEnemyUnits(GameState move, List<Integer> xLocations, List<Integer> yLocations, List<UnitType> units) {
     if (xLocations == null) {
       xLocations = new ArrayList<Integer>();
       for (int x = 0; x < MapBounds.BOARD_SIZE; x++) {
@@ -183,41 +181,11 @@ public class Utility {
   }
 
   /**
-   * Calculates the
-   * @param unit
-   * @param damageDone
+   * Calculates the SP of a certain unit based on its health and refund percentage
    * @return
    */
-  static double damageToSp(Unit unit, double damageDone) {
-    return (float) (damageDone / unit.unitInformation.startHealth.orElse(2) * unit.unitInformation.cost1.orElse(2) * (unit.upgraded ? 0.97f : 0.90f));
-
-  }
-
-  static void empLineStrategy(GameState move) {
-    /*
-    First lets fine the cheapest type of structure  stationary unit. We could hardcode this to FILTER probably
-    depending on the config but lets demonstrate how to use java-algo features.
-     */
-    Config.UnitInformation cheapestUnit = null;
-    for (Config.UnitInformation uinfo : move.config.unitInformation) {
-      if (uinfo.unitCategory.isPresent() && move.isStructure(uinfo.unitCategory.getAsInt())) {
-        float[] costUnit = uinfo.cost();
-        if((cheapestUnit == null || costUnit[0] + costUnit[1] <= cheapestUnit.cost()[0] + cheapestUnit.cost()[1])) {
-          cheapestUnit = uinfo;
-        }
-      }
-    }
-    if (cheapestUnit == null) {
-      GameIO.debug().println("There are no structure s?");
-    }
-
-    for (int x = 27; x>=5; x--) {
-      move.attemptSpawn(new Coords(x, 11), move.unitTypeFromShorthand(cheapestUnit.shorthand.get()));
-    }
-
-    for (int i = 0; i<22; i++) {
-      move.attemptSpawn(new Coords(24, 10), DEMOLISHER);
-    }
+  public static double healthToSP(Config.UnitInformation unitInformation, double health) {
+    return (float) (health / unitInformation.startHealth.orElseThrow() * unitInformation.cost1.orElseThrow() * unitInformation.refundPercentage.orElseThrow());
   }
 
   public static <T> void printObjs(T[] objs, Function<T, Boolean> cond, Function<T, String> str) {

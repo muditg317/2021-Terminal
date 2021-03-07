@@ -13,7 +13,7 @@ public class Wall extends StructureUnit {
   private static final double structureDamage = 0;
   private static final Function<SimUnit, Boolean> interactiblityFilter = simUnit -> false;
 
-  public Wall(Unit wall, Coords location) {
+  Wall(Unit wall, Coords location) {
     super(wall.owner == PlayerId.Player2, wall.id, wall.unitInformation.startHealth.orElse(Wall.startHealth), wall.unitInformation.attackRange.orElse(Wall.range), wall.unitInformation.attackDamageWalker.orElse(Wall.walkerDamage), wall.unitInformation.attackDamageTower.orElse(Wall.structureDamage), location, wall.health, wall.upgraded);
   }
 

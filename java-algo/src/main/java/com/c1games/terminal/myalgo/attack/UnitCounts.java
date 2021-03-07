@@ -1,7 +1,8 @@
-package com.c1games.terminal.myalgo;
+package com.c1games.terminal.myalgo.attack;
 
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.units.UnitType;
+import com.c1games.terminal.myalgo.utility.SpawnUtility;
 
 public class UnitCounts {
   int numScouts;

@@ -16,7 +16,7 @@ public class Interceptor extends MobileUnit {
 
   private final Function<SimUnit, Boolean> interactiblityFilter;
 
-  public Interceptor(Unit interceptor, Coords location) {
+  Interceptor(Unit interceptor, Coords location) {
     super(interceptor.owner == PlayerId.Player2, interceptor.id, interceptor.unitInformation.startHealth.orElse(Interceptor.startHealth), interceptor.unitInformation.attackRange.orElse(Interceptor.range), interceptor.unitInformation.attackDamageWalker.orElse(Interceptor.walkerDamage), interceptor.unitInformation.attackDamageTower.orElse(Interceptor.structureDamage), interceptor.unitInformation.speed.orElse(Interceptor.speed), location, interceptor.health, Direction.SPAWNED);
     interactiblityFilter = simUnit -> simUnit instanceof MobileUnit && simUnit.isEnemy() != this.isEnemy();
   }

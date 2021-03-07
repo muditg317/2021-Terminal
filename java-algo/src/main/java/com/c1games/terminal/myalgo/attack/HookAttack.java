@@ -1,4 +1,4 @@
-package com.c1games.terminal.myalgo;
+package com.c1games.terminal.myalgo.attack;
 
 import com.c1games.terminal.algo.Config;
 import com.c1games.terminal.algo.Coords;
@@ -7,6 +7,10 @@ import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.units.UnitType;
+import com.c1games.terminal.myalgo.utility.Locations;
+import com.c1games.terminal.myalgo.utility.SpawnUtility;
+import com.c1games.terminal.myalgo.utility.StrategyUtility;
+import com.c1games.terminal.myalgo.utility.Utility;
 import com.c1games.terminal.simulation.SimBoard;
 import com.c1games.terminal.simulation.Simulator;
 import com.c1games.terminal.simulation.units.StructureUnit;
@@ -14,8 +18,6 @@ import com.c1games.terminal.simulation.units.StructureUnit;
 import java.util.*;
 
 public class HookAttack extends Attack {
-  static boolean LOGGED = false;
-  static int LOG_TURN = 4;
   static double onlineAdjustment = 1;
 
   int hookX;
@@ -37,18 +39,26 @@ public class HookAttack extends Attack {
     this.numDemolishers = numDemolishers;
   }
 
+  @Override
+  public double getExpectedAttackValue() {
+    return expectedDefense.structureHealth;
+  }
+
   /**
    * Does the hook attack ;o
    * @param move
    */
   public void execute(GameState move) {
+//    GameIO.debug().println("ABOUT TO HOOK ON THIS BOARD==================");
+//    Utility.printGameBoard(move.allUnits);
+
+    Utility.fillOtherHookHoles(move, hookHole);
+
     placeHookBar(move, hookX, hookY, hookHole, hookSide);
     placeSupports(move, hookX, hookY, hookHole, hookSide);
 
     SpawnUtility.spawnDemolishers(move, getDemoStart(move, hookX, hookY, hookHole, hookSide), numDemolishers);
     SpawnUtility.spawnInterceptors(move, getInterStart(move, hookX, hookY, hookHole, hookSide), (int) move.data.p1Stats.bits);
-
-    Utility.fillOtherHookHoles(move, hookHole);
   }
 
   static Coords getDemoStart(GameState state, int x, int y, Coords hole, int side) {
@@ -56,7 +66,7 @@ public class HookAttack extends Attack {
   }
 
   static Coords getInterStart(GameState state, int x, int y, Coords hole, int side) {
-    return new Coords(side == 0 ? (y+14) : (13-y), y - 1);
+    return new Coords(side == 0 ? (y+13) : (14-y), y - 1);
   }
 
   static List<Coords> placeHookBar(GameState state, int x, int y, Coords hole, int side) {
@@ -77,6 +87,18 @@ public class HookAttack extends Attack {
     return placed;
   }
 
+  static boolean checkHookBar(GameState state, int x, int y, Coords hole, int side) {
+    int topWallStartX = side == 0 ? (12+y) : (15-y);
+    int wallBuildDir = side * 2-1;
+
+    for (int wallX = topWallStartX; (side == 0 ? wallX > x : wallX < x); wallX += wallBuildDir) {
+      if (state.getWallAt(new Coords(wallX, y)) == null) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   static List<Coords> placeSupports(GameState state, int x, int y, Coords hole, int side) {
     List<Coords> neededSupports = new ArrayList<>();
     for (int supportY = 1; supportY < 7; supportY++) {
@@ -86,7 +108,7 @@ public class HookAttack extends Attack {
           continue;
         }
         Coords supportLoc = new Coords(supportX, supportY);
-        if (state.getWallAt(supportLoc) == null) {
+        if (MapBounds.inArena(supportLoc) && state.getWallAt(supportLoc) == null) {
           if (!SpawnUtility.placeSupport(state, supportLoc)) {
             break;
           }
@@ -108,7 +130,7 @@ public class HookAttack extends Attack {
    * @param availableMP
    * @return
    */
-  static HookAttack evaluate(GameState move, double availableSP, double availableMP, int minX, int maxX, int minY, int maxY, float minDamage) {
+  public static HookAttack evaluate(GameState move, double availableSP, double availableMP, int minX, int maxX, int minY, int maxY, float minDamage) {
     Map<Utility.Pair<Utility.Pair<Integer, Coords>, Integer>, ExpectedDefense> damages = new HashMap<>();
 
     Config.UnitInformation demolisherInfo = move.config.unitInformation.get(UnitType.Demolisher.ordinal());
@@ -146,16 +168,21 @@ public class HookAttack extends Attack {
 
           // Walls of the actual hook bar
           placeHookBar(testState, hookX, hookY, hookExit, side);
+          if (!checkHookBar(testState, hookX, hookY, hookExit, side)) {
+            continue;
+          }
 
           placeSupports(testState, hookX, hookY, hookExit, side);
 
           SpawnUtility.spawnDemolishers(testState, getDemoStart(testState, hookX, hookY, hookExit, side), numDemolishers);
-          SpawnUtility.spawnInterceptors(testState, getInterStart(testState, hookX, hookY, hookExit, side), (int) testState.data.p1Stats.bits);
+          SpawnUtility.spawnInterceptors(testState, getInterStart(testState, hookX, hookY, hookExit, side), (int) (availableMP - numDemolishers*demolisherInfo.cost2.orElse(3)));
+
+
+          double oldSP = StrategyUtility.enemySPOnBoard(testState.allUnits);
+          SimBoard simulationResult = Simulator.simulate(testState);
+          double newSP = simulationResult.enemySPOnBoard();
 
           float spTaken = 0;
-//          float expectedDamage = 0;
-
-          SimBoard simulationResult = Simulator.simulate(testState);
 
           for (int x = 0; x < MapBounds.BOARD_SIZE; x++) {
             for (int y = 0; y < MapBounds.BOARD_SIZE; y++) {
@@ -166,14 +193,16 @@ public class HookAttack extends Attack {
                 if (simStructure != null) {
                   newHealth = simStructure.getHealth();
                 }
-                spTaken += Utility.damageToSp(structure, structure.health - newHealth);
+                spTaken += Utility.healthToSP(structure.unitInformation, structure.health - newHealth);
               }
             }
           }
 
+          spTaken = (float) (oldSP - newSP);
+
           spTaken *= onlineAdjustment;
           if (spTaken >= minDamage/2) { // ignore result if it doesn't help
-            damages.put(new Utility.Pair<>(new Utility.Pair<>(hookX, hookExit), side), new ExpectedDefense(move, new Coords[]{new Coords(-1,-1)}, spTaken, 0));
+            damages.put(new Utility.Pair<>(new Utility.Pair<>(hookX, hookExit), side), new ExpectedDefense(move, simulationResult.getTraversedPoints().toArray(new Coords[0]), spTaken, 0));
           }
         }
       }
@@ -197,31 +226,9 @@ public class HookAttack extends Attack {
         bestED = entry.getValue();
       }
     }
-    if (move.data.turnInfo.turnNumber == 8) { // TODO: delete this block
-//      LOGGED=true;
-      GameState hookState = Utility.duplicateState(move);
-      Utility.fillOtherHookHoles(hookState, hookHole);
-      placeHookBar(hookState, hookX, hookY, hookHole, hookSide);
-
-      placeSupports(hookState, hookX, hookY, hookHole, hookSide);
-
-      SpawnUtility.spawnDemolishers(hookState, getDemoStart(hookState, hookX, hookY, hookHole, hookSide), numDemolishers);
-      SpawnUtility.spawnInterceptors(hookState, getInterStart(hookState, hookX, hookY, hookHole, hookSide), (int) hookState.data.p1Stats.bits);
-
-      GameIO.debug().println("RE-SIMULATE BEST HOOK");
-      Simulator.DEBUG = true;
-      Simulator.simulate(hookState);
-      Simulator.DEBUG = false;
-      GameIO.debug().println("=============================================================");
-    }
 
     if (hookHole == null || bestED.structureHealth < minDamage) {
       GameIO.debug().println("Not doing enough damage!");
-//      damages.forEach((key, value) -> GameIO.debug().printf("x:%d,y:%d, %s. damage:%.2f, need:%.2f. path_len: %d: ends:%s\n",
-//          key.key.x, key.key.y, key.value == 0 ? "R" : "L",
-//          value.value.structureHealth, minDamage,
-//          value.value.path.length, value.value.path[value.value.path.length-1].toString()));
-//          Arrays.toString(Arrays.stream(value.value.path).limit(15).map(Coords::toString).toArray(String[]::new))));
       if (hookHole != null) {
         GameIO.debug().printf("Current best hook: x:%d, hole:%s, %s. damage: %.2f out of %.2f. path_len: %d. ends:%s\n",
             hookX, hookHole, hookSide == 0 ? "R" : "L",

@@ -1,4 +1,4 @@
-package com.c1games.terminal.myalgo;
+package com.c1games.terminal.myalgo.utility;
 
 import com.c1games.terminal.algo.Coords;
 
@@ -8,13 +8,13 @@ import java.util.stream.Stream;
 /**
  * Holds the hard coded locations of stuff for our algorithm.
  */
-class Locations {
+public class Locations {
   // OFFENSIVE ===================
-  static final Coords[] hailmaryInters = {
+  public static final Coords[] hailmaryInters = {
     new Coords(15,1)
   };
 
-  static final Coords[] spacedInters5 = {
+  public static final Coords[] spacedInters5 = {
     new Coords(3,10),
     new Coords(9,4),
     new Coords(17,3),
@@ -22,7 +22,7 @@ class Locations {
     new Coords(25,11)
   };
 
-  static final Coords[] spacedInters7 = {
+  public static final Coords[] spacedInters7 = {
     new Coords(3,10),
     new Coords(9,4),
     new Coords(17,3),
@@ -31,13 +31,13 @@ class Locations {
   };
 
 
-  static class Essentials {
-    static final Coords firstLeftTurret = new Coords(3, 12);
-    static final Coords firstRightTurret = new Coords(24, 12);
-    static final Coords firstLeftTurretWall = new Coords(firstLeftTurret.x, firstLeftTurret.y + 1);
-    static final Coords firstRightTurretWall = new Coords(firstRightTurret.x, firstRightTurret.y + 1);
+  public static class Essentials {
+    public static final Coords firstLeftTurret = new Coords(3, 12);
+    public static final Coords firstRightTurret = new Coords(24, 12);
+    public static final Coords firstLeftTurretWall = new Coords(firstLeftTurret.x, firstLeftTurret.y + 1);
+    public static final Coords firstRightTurretWall = new Coords(firstRightTurret.x, firstRightTurret.y + 1);
 
-    static final Coords[] mainTurrets = {
+    public static final Coords[] mainTurrets = {
         new Coords(3, 12),
 
         new Coords(7, 10),
@@ -50,7 +50,7 @@ class Locations {
     };
 
 
-    static final Coords[] mainTurretWalls;
+    public static final Coords[] mainTurretWalls;
     static {
       mainTurretWalls = new Coords[mainTurrets.length];
       for (int i = 0; i < mainTurretWalls.length; i++) {
@@ -59,10 +59,10 @@ class Locations {
       }
     }
 
-    static final Coords leftEntranceTurret = new Coords(5, 10);
+    public static final Coords leftEntranceTurret = new Coords(5, 10);
 
     //THE MAIN WALL ======================
-    static final Coords[] mainWallCoords = {
+    public static final Coords[] mainWallCoords = {
         new Coords(4, 12),
         new Coords(23, 12),
 
@@ -80,7 +80,7 @@ class Locations {
 
     };
 
-    static final Set<Coords> mainWallHookHoles = new LinkedHashSet<Coords>(
+    public static final Set<Coords> mainWallHookHoles = new LinkedHashSet<Coords>(
         Arrays.asList(
             new Coords(5, 11),
             new Coords(8, 10),
@@ -90,21 +90,21 @@ class Locations {
             new Coords(22, 11)
         ));
 
-    static final Coords[] leftCornerWalls = {
+    public static final Coords[] leftCornerWalls = {
         new Coords(2, 13),
         new Coords(1, 13),
         new Coords(0, 13),
 
 
     };
-    static final Coords[] rightCornerWalls = {
+    public static final Coords[] rightCornerWalls = {
         new Coords(25, 13),
         new Coords(26, 13),
         new Coords(27, 13),
 
     };
 
-    static final Coords[] cornerWalls;
+    public static final Coords[] cornerWalls;
     static {
       cornerWalls = new Coords[leftCornerWalls.length + rightCornerWalls.length];
       int i = 0;
@@ -119,7 +119,7 @@ class Locations {
 
 
 
-  static final Coords[] cornerTurrets = {
+  public static final Coords[] cornerTurrets = {
 
       new Coords(2, 12),
       new Coords(25, 12),
@@ -128,13 +128,13 @@ class Locations {
       new Coords(26, 12)
   };
 
-  static final Coords[] rightTurrets = {
+  public static final Coords[] rightTurrets = {
       new Coords(25, 12),
       new Coords(26, 12),
   };
 
 
-  static final Coords[] extraTurrets = {
+  public static final Coords[] extraTurrets = {
       new Coords(6, 10),
       new Coords(21, 10),
       new Coords(4, 11),
@@ -143,7 +143,7 @@ class Locations {
       new Coords(17, 10),
   };
 
-  static final Coords[] extraWallCoords = {
+  public static final Coords[] extraWallCoords = {
       new Coords(8,13),
       new Coords(9, 13),
       new Coords(10, 13),
@@ -152,7 +152,7 @@ class Locations {
       new Coords(11, 11)
   };
 
-  static final Coords[] extraMainWallUpgrades = {
+  public static final Coords[] extraMainWallUpgrades = {
       new Coords(23,11),
       new Coords(22,10),
       new Coords(21,9),
@@ -165,13 +165,13 @@ class Locations {
 
 
   //ENEMY LOCATIONS
-  static final Coords[] enemyLeftCornerCoords = {
+  public static final Coords[] enemyLeftCornerCoords = {
           new Coords(13, 2),
           new Coords(14, 2),
   };
   //DEFAULT GARBAGE =====================
 
-  static final Coords[] boomPath_right = {
+  public static final Coords[] boomPath_right = {
 
       new Coords(23,10),
       new Coords(24,10),
@@ -182,8 +182,8 @@ class Locations {
       new Coords(26,13),
       //new Coords(27,13),
   };
-  
-  static final Coords[] boomLid_right = {
+
+  public static final Coords[] boomLid_right = {
       new Coords(7, 6),
       new Coords(8, 6),
       new Coords(9, 6),
@@ -195,15 +195,15 @@ class Locations {
       new Coords(15, 4),
       new Coords(16, 4)
   };
-  static final Coords[] boomCheck_right;
-  static{
-    boomCheck_right = Stream.concat(Stream.concat(Arrays.stream(
-        Essentials.leftCornerWalls),
+  public static final Coords[] boomCheck_right;
+  static {
+    boomCheck_right = Stream.concat(Stream.concat(
+        Arrays.stream(Essentials.leftCornerWalls),
         Arrays.stream(Essentials.mainWallCoords)),
         Essentials.mainWallHookHoles.stream()).toArray(Coords[]::new);
   }
 
-  static final Coords[] safeSupportLocations = {
+  public static final Coords[] safeSupportLocations = {
       new Coords(13, 3),
       new Coords(14, 3),
 
@@ -227,8 +227,6 @@ class Locations {
       new Coords(15, 6),
       new Coords(16, 6),
       new Coords(17, 6),
-
-
 
   };
 }

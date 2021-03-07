@@ -1,10 +1,13 @@
-package com.c1games.terminal.myalgo;
+package com.c1games.terminal.myalgo.strategy;
 
 import com.c1games.terminal.algo.*;
 import com.c1games.terminal.algo.map.CanSpawn;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.units.UnitType;
+import com.c1games.terminal.myalgo.MyAlgo;
+import com.c1games.terminal.myalgo.attack.*;
+import com.c1games.terminal.myalgo.utility.*;
 
 import javax.naming.InsufficientResourcesException;
 import java.lang.reflect.InvocationTargetException;
@@ -17,7 +20,7 @@ public class MainStrategy {
 
   private static GameState predictedEnemyBaseLayout;
 
-  static void execute(MyAlgo algoState, GameState move) {
+  public static void execute(MyAlgo algoState, GameState move) {
     MainStrategy.algoState = algoState;
     MainStrategy.move = move;
 
@@ -35,7 +38,7 @@ public class MainStrategy {
    * Places the two factories, turret, and wall as first turn
    * @param move the game state dude bruh
    */
-  static void executeHelper() {
+  private static void executeHelper() {
     // Defenses
     /*
     We need a good heuristic that considers the enemy MP and factories to decide when to put more defenses vs more factories
@@ -50,11 +53,11 @@ public class MainStrategy {
     GameIO.debug().println("Turn " + turnNumber+ ": We currently have " + move.data.p1Stats.cores + " SP and " + move.data.p1Stats.bits + " MP!" );
 
 
-    int scoutRushDefense = StrategyUtility.neededScoutRushDefense(move);
-    int reducedScoutRushDefense = (int) Math.max(0, scoutRushDefense - move.data.p1Stats.integrity + 1);
+    int scoutRushDefense = StrategyUtility.neededScoutRushDefense(predictedEnemyBaseLayout);
+    int reducedScoutRushDefense = (int) Math.max(0, scoutRushDefense - predictedEnemyBaseLayout.data.p1Stats.integrity + 1);
 
-    GameIO.debug().println("scoutRushDefense:" + scoutRushDefense);
-    GameIO.debug().println("reducedScoutRushDefense: " + reducedScoutRushDefense);
+    GameIO.debug().println("needed defense for scout rush:\t" + scoutRushDefense);
+    GameIO.debug().println("reduced defense for scout rush:\t" + reducedScoutRushDefense);
     //GameIO.debug().println("Enemy left corner heuristic: " + Boom.enemyDefenseHeuristic(move, Side.LEFT));
     //GameIO.debug().println("Enemy right corner heuristic: " + Boom.enemyDefenseHeuristic(move, Side.RIGHT));
 
@@ -63,14 +66,18 @@ public class MainStrategy {
 
     //setUpEssentialDefense(move, move.data.p1Stats.cores - Locations.Essentials.mainWallHookHoles.size() * move.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1));
     //setUpEssentialDefense(predictedEnemyBaseLayout, predictedEnemyBaseLayout.data.p1Stats.cores - Locations.Essentials.mainWallHookHoles.size() * predictedEnemyBaseLayout.config.unitInformation.get(UnitType.Wall.ordinal()).cost1.orElse(1));
+
     setUpEssentialDefense(move, move.data.p1Stats.cores);
     setUpEssentialDefense(predictedEnemyBaseLayout, predictedEnemyBaseLayout.data.p1Stats.cores);
+
 
     //DECIDE TO BOOM OR NOT HERE.==========================
     Boom.evaluate(predictedEnemyBaseLayout, reducedScoutRushDefense);
 
-//    GameIO.debug().println("PREDICTED GAME STATE=========");
-//    Utility.printGameBoard(predictedEnemyBaseLayout.allUnits);
+//    GameIO.debug().println("PROVIDED GAME STATE=========");
+//    Utility.printGameBoard(move.allUnits);
+    GameIO.debug().println("PREDICTED GAME STATE=========");
+    Utility.printGameBoard(predictedEnemyBaseLayout.allUnits);
 
     //make sure we have enough for boom wall
     double saveCores = 0;
@@ -91,7 +98,7 @@ public class MainStrategy {
 
 
     double defenseBudget = StrategyUtility.neededDefenseSpending(move);
-    GameIO.debug().printf("Defense budget: %.2f", defenseBudget);
+    GameIO.debug().printf("Defense budget: %.2f\n", defenseBudget);
     defenseBudget = Math.min(Math.max(defenseBudget, 0), move.data.p1Stats.cores);
     double attackSpBudget = sp - defenseBudget;
     /*
@@ -103,6 +110,10 @@ public class MainStrategy {
     sp = move.data.p1Stats.cores;
 
     if (Boom.awaitingBoom && Boom.turnsUntilBoom == 0 && Boom.attack != null) { // DO THE BOOM
+      if (move.data.turnInfo.turnNumber == 35) {
+        GameIO.debug().println("EXECUTING BOOM ON THIS BOARD==========");
+        Utility.printGameBoard(move.allUnits);
+      }
       if (Boom.attack.execute(move)) {
         GameIO.debug().printf("DOING THE BOOM: %s\n", Boom.attack.sideToBoom.toString());
         fillHookHoles(move); //done by the Boom execution
@@ -129,7 +140,13 @@ public class MainStrategy {
       setUpDefenseWithBudget(move, defenseBudget, move.data.p1Stats.cores);
       return;
     }
+//    GameIO.debug().println("CHOOSING ATTACK ON THIS BOARD==================");
+//    Utility.printGameBoard(move.allUnits);
+//    Utility.printGameBoard(predictedEnemyBaseLayout.allUnits);
     Attack chosenAttack = chooseAttack(attackSpBudget, defenseBudget);
+//    GameIO.debug().println("CHOSEN ATTACK ON THIS BOARD==================");
+//    Utility.printGameBoard(move.allUnits);
+//    Utility.printGameBoard(predictedEnemyBaseLayout.allUnits);
     if (chosenAttack != null) {
       MyAlgo.lastAttack = chosenAttack;
       if (!(chosenAttack instanceof HookAttack)) {
@@ -154,73 +171,63 @@ public class MainStrategy {
    */
   private static Attack chooseAttack(double attackSpBudget, double defenseSPBudget) {
     List<Attack> potentialAttacks = new ArrayList<>();
-    float mp = move.data.p1Stats.bits;
+    float mp = predictedEnemyBaseLayout.data.p1Stats.bits;
     //GameIO.debug().println("CHECK FOR HOOK==================");
-    int maxDemos = (int) (mp / move.config.unitInformation.get(UnitType.Demolisher.ordinal()).cost2.orElse(3));
-    double enemySP = StrategyUtility.enemySPOnBoard(move) + move.data.p2Stats.cores;
-    float minDamagePerDemo = (float) (enemySP * 0.2 / maxDemos);//5 TODO: CHANGE BACK TO 5!!
-//        if (maxDemos < 2) {
-//          minDamagePerDemo *= 1.5;
-//        }
-    HookAttack upperHookAttack = HookAttack.evaluate(predictedEnemyBaseLayout, attackSpBudget, mp - (move.data.p2Stats.bits > 5 ? (move.data.p2Stats.bits > 12 ? 2 : 1) : 0), 9, 27 - 9, 13, 13, maxDemos*minDamagePerDemo);
-    HookAttack potentialHookAttack = null;
-
-    if (upperHookAttack != null) {
-      potentialHookAttack = upperHookAttack;
+    int maxDemos = (int) (mp / predictedEnemyBaseLayout.config.unitInformation.get(UnitType.Demolisher.ordinal()).cost2.orElse(3));
+    double enemySP = StrategyUtility.enemySPOnBoard(predictedEnemyBaseLayout.allUnits) + predictedEnemyBaseLayout.data.p2Stats.cores;
+    float minDamagePerDemo = (float) (enemySP * 0.2 / maxDemos);
+    if (maxDemos < 2) {
+      minDamagePerDemo *= 1.5;
     }
+    HookAttack potentialHookAttack = HookAttack.evaluate(predictedEnemyBaseLayout, attackSpBudget, mp - (predictedEnemyBaseLayout.data.p2Stats.bits > 5 ? (predictedEnemyBaseLayout.data.p2Stats.bits > 12 ? 2 : 1) : 0), 9, 27 - 9, 13, 13, maxDemos*minDamagePerDemo);
 
     if (potentialHookAttack != null) {
-      GameIO.debug().printf("HOOKING!!!\tx:%d,y:%d,s:%s\n",potentialHookAttack.hookX,potentialHookAttack.hookY,potentialHookAttack.hookSide == 0 ? "R" : "L");
+//      GameIO.debug().printf("HOOKING!!!\tx:%d,y:%d,s:%s\n",potentialHookAttack.hookX,potentialHookAttack.hookY,potentialHookAttack.hookSide == 0 ? "R" : "L");
       potentialAttacks.add(potentialHookAttack);
     }
 
     DemolisherRun potentialDemolisherRun = DemolisherRun.evaluate(predictedEnemyBaseLayout, mp, maxDemos * minDamagePerDemo);
     if (potentialDemolisherRun != null) {
-      GameIO.debug().printf("DEMO RUN!\tat:%s\t damage:%.2f\n",potentialDemolisherRun.demolisherLocation, potentialDemolisherRun.expectedDefense.structureHealth);
+//      GameIO.debug().printf("DEMO RUN!\tat:%s\t damage:%.2f\n",potentialDemolisherRun.demolisherLocation, potentialDemolisherRun.expectedDefense.structureHealth);
       potentialAttacks.add(potentialDemolisherRun);
     }
 
-    GameState defendedState = Utility.duplicateState(move);
+    GameState defendedState = Utility.duplicateState(predictedEnemyBaseLayout);
     setUpDefenseWithBudget(defendedState, defenseSPBudget, defenseSPBudget);
     double scoutRushSPBudet = attackSpBudget - fillHookHoles(defendedState);
 
 
-    ScoutRush potentialScoutRush = ScoutRush.evaluate(predictedEnemyBaseLayout, attackSpBudget);
+    ScoutRush potentialScoutRush = ScoutRush.evaluate(defendedState, attackSpBudget);
     if (potentialScoutRush != null) {
-      GameIO.debug().printf("SENDING SCOUT RUSH!\n\tSpBudget:%.2f\tNumScouts:%d\tScoutHealth: %d\n\tExpected Damage:%d\tOnline Adjustment:%.2f\n",
-          potentialScoutRush.spBudget, potentialScoutRush.numScouts, potentialScoutRush.scoutHealth, potentialScoutRush.expectedDamage, ScoutRush.onlineAdjustment);
+//      GameIO.debug().printf("SENDING SCOUT RUSH!\n\tSpBudget:%.2f\tNumScouts:%d\tScoutHealth: %d\n\tExpected Damage:%d\tOnline Adjustment:%.2f\n",
+//          potentialScoutRush.spBudget, potentialScoutRush.numScouts, potentialScoutRush.scoutHealth, potentialScoutRush.expectedDamage, ScoutRush.onlineAdjustment);
       potentialAttacks.add(potentialScoutRush);
     }
 
 
-    if (potentialAttacks.isEmpty() && move.data.p1Stats.bits > StrategyUtility.mpCapacity(move, move.data.turnInfo.turnNumber) * 0.8) {
-      upperHookAttack = HookAttack.evaluate(predictedEnemyBaseLayout, attackSpBudget, mp - (move.data.p2Stats.bits > 5 ? (move.data.p2Stats.bits > 12 ? 2 : 1) : 0), 9, 27 - 9, 13, 13, 0);
-      potentialHookAttack = null;
-
-      if (upperHookAttack != null) {
-        potentialHookAttack = upperHookAttack;
-      }
+    if (potentialAttacks.isEmpty() && predictedEnemyBaseLayout.data.p1Stats.bits > 0.8 * StrategyUtility.mpCapacity(predictedEnemyBaseLayout, predictedEnemyBaseLayout.data.turnInfo.turnNumber)) {
+      potentialHookAttack = HookAttack.evaluate(predictedEnemyBaseLayout, attackSpBudget, mp - (predictedEnemyBaseLayout.data.p2Stats.bits > 5 ? (predictedEnemyBaseLayout.data.p2Stats.bits > 12 ? 2 : 1) : 0), 9, 27 - 9, 13, 13, 0);
 
       if (potentialHookAttack != null) {
-        GameIO.debug().printf("fall back hook::\n\tx:%d,y:%d,s:%s\n",potentialHookAttack.hookX,potentialHookAttack.hookY,potentialHookAttack.hookSide == 0 ? "R" : "L");
+//        GameIO.debug().printf("fall back hook::\n\tx:%d,y:%d,s:%s\n",potentialHookAttack.hookX,potentialHookAttack.hookY,potentialHookAttack.hookSide == 0 ? "R" : "L");
         potentialAttacks.add(potentialHookAttack);
       }
 
       potentialDemolisherRun = DemolisherRun.evaluate(predictedEnemyBaseLayout, mp, 0);
       if (potentialDemolisherRun != null) {
-        GameIO.debug().printf("fallback demo run::\n\tat:%s\t damage:%.2f\n", potentialDemolisherRun.demolisherLocation, potentialDemolisherRun.expectedDefense.structureHealth);
+//        GameIO.debug().printf("fallback demo run::\n\tat:%s\t damage:%.2f\n", potentialDemolisherRun.demolisherLocation, potentialDemolisherRun.expectedDefense.structureHealth);
         potentialAttacks.add(potentialDemolisherRun);
       }
 
 
-      defendedState = Utility.duplicateState(move);
+      defendedState = Utility.duplicateState(predictedEnemyBaseLayout);
       setUpDefenseWithBudget(defendedState, defenseSPBudget, defenseSPBudget);
       scoutRushSPBudet = attackSpBudget - fillHookHoles(defendedState);
 
       potentialScoutRush = ScoutRush.evaluate(defendedState, scoutRushSPBudet);
       if (potentialScoutRush != null) {
-        GameIO.debug().printf("fallback scout rush::\n\tSpBudget:%.2f\tNumScouts:%d\tScoutHealth: %d\n\tExpected Damage:%d\tOnline Adjustment:%.2f\n",
-            potentialScoutRush.spBudget, potentialScoutRush.numScouts, potentialScoutRush.scoutHealth, potentialScoutRush.expectedDamage, ScoutRush.onlineAdjustment);
+//        GameIO.debug().printf("fallback scout rush::\n\tSpBudget:%.2f\tNumScouts:%d\tScoutHealth: %d\n\tExpected Damage:%d\tOnline Adjustment:%.2f\n",
+//            potentialScoutRush.spBudget, potentialScoutRush.numScouts, potentialScoutRush.scoutHealth, potentialScoutRush.expectedDamage, ScoutRush.onlineAdjustment);
         potentialAttacks.add(potentialScoutRush);
       }
     }
@@ -229,7 +236,7 @@ public class MainStrategy {
 
     //sort attacks by some criteria
     potentialAttacks.sort((a1,a2) -> {
-      return (int) Math.signum(a2.evaluation(move) - a1.evaluation(move));
+      return (int) Math.signum(a2.evaluation(predictedEnemyBaseLayout) - a1.evaluation(predictedEnemyBaseLayout));
     });
 
 
@@ -311,13 +318,13 @@ public class MainStrategy {
   /**
    * Sets up essential defenses (the triangle and some towers)
    */
-  private static void setUpEssentialDefense(GameState move, double budget) {
-//    int budget = (int) move.data.p1Stats.cores; //can use everything to setup essential defense
+  private static void setUpEssentialDefense(GameState gameState, double budget) {
+//    int budget = (int) gameState.data.p1Stats.cores; //can use everything to setup essential defense
     double spent = 0;
     try {
 
       for (Coords loc : Locations.Essentials.mainTurrets) {
-        spent += attemptSpawnIfAffordable(move, loc, Utility.TURRET, false, budget - spent);
+        spent += attemptSpawnIfAffordable(gameState, loc, Utility.TURRET, false, budget - spent);
 
       }
 
@@ -330,18 +337,18 @@ public class MainStrategy {
         } else {
           location = Locations.Essentials.rightCornerWalls[i / 2];
         }
-        spent += attemptSpawnIfAffordable(move, location, Utility.WALL, false, budget - spent);
+        spent += attemptSpawnIfAffordable(gameState, location, Utility.WALL, false, budget - spent);
       }
 
       //place walls in front of main Turrets
       for (Coords loc : Locations.Essentials.mainTurretWalls) {
-        spent += attemptSpawnIfAffordable(move, loc, Utility.WALL, false, budget - spent);
+        spent += attemptSpawnIfAffordable(gameState, loc, Utility.WALL, false, budget - spent);
       }
 
       //upgrade every other turret in main turrets
       for (int i = 0; i < Locations.Essentials.mainTurrets.length; i += 2) {
         Coords loc = Locations.Essentials.mainTurrets[i];
-        spent += attemptSpawnIfAffordable(move, loc, Utility.TURRET, true, budget - spent);
+        spent += attemptSpawnIfAffordable(gameState, loc, Utility.TURRET, true, budget - spent);
 
       }
 
@@ -350,7 +357,7 @@ public class MainStrategy {
         if (/*algoState.hooking && */ Locations.Essentials.mainWallHookHoles.contains(location)) {
           continue;
         }
-        spent += attemptSpawnIfAffordable(move, location, Utility.WALL, false, budget - spent);
+        spent += attemptSpawnIfAffordable(gameState, location, Utility.WALL, false, budget - spent);
 
       }
 
@@ -358,7 +365,7 @@ public class MainStrategy {
 
       for (int i = 0; i < Locations.Essentials.mainTurretWalls.length; i += 2) {
         Coords loc = Locations.Essentials.mainTurrets[i];
-        spent += attemptSpawnIfAffordable(move, loc, Utility.WALL, true, budget - spent);
+        spent += attemptSpawnIfAffordable(gameState, loc, Utility.WALL, true, budget - spent);
       }
 
 
@@ -367,35 +374,35 @@ public class MainStrategy {
       ADAPTIVE DEFENSES BELOW ==========================
        */
       //if we have been hit in the corners hard this is now considered essential...
-      int cornerDamage = DefenseUtility.cornerDamageTaken(move);
-      if (cornerDamage >= move.data.p1Stats.integrity / 5) {
+      int cornerDamage = DefenseUtility.cornerDamageTaken(gameState);
+      if (cornerDamage >= gameState.data.p1Stats.integrity / 5) {
         for (int i = Locations.Essentials.leftCornerWalls.length - 1; i > 0; i--) {
           Coords location = Locations.Essentials.leftCornerWalls[i];
-          spent += attemptSpawnIfAffordable(move, location, Utility.WALL, true, budget - spent);
+          spent += attemptSpawnIfAffordable(gameState, location, Utility.WALL, true, budget - spent);
         }
         for (int i = Locations.Essentials.rightCornerWalls.length - 1; i > 0; i--) {
           Coords location = Locations.Essentials.rightCornerWalls[i];
-          spent += (int) attemptSpawnIfAffordable(move, location, Utility.WALL, true, budget - spent);
+          spent += (int) attemptSpawnIfAffordable(gameState, location, Utility.WALL, true, budget - spent);
         }
 
         //place corner turrets down
         for (Coords loc : Locations.cornerTurrets) {
-          spent += attemptSpawnIfAffordable(move, loc, Utility.TURRET, false, budget - spent);
+          spent += attemptSpawnIfAffordable(gameState, loc, Utility.TURRET, false, budget - spent);
         }
 
         if (cornerDamage > 6) { //larger threshold to upgrade these towers
           for (Coords loc : Locations.cornerTurrets) {
-            spent += attemptSpawnIfAffordable(move, loc, Utility.TURRET, true, budget - spent);
+            spent += attemptSpawnIfAffordable(gameState, loc, Utility.TURRET, true, budget - spent);
           }
         }
 
       } //end corner placing
 
-      List<Coords> highPriorityWalls = DefenseUtility.getHighPriorityWalls(move);
-      GameIO.debug().println("List of High Priority Walls: " + highPriorityWalls);
+      List<Coords> highPriorityWalls = DefenseUtility.getHighPriorityWalls(gameState);
+//      GameIO.debug().println("List of High Priority Walls: " + highPriorityWalls);
       if (highPriorityWalls != null) {
         for (Coords loc : highPriorityWalls) {
-          spent += attemptSpawnIfAffordable(move, loc, Utility.WALL, true, budget - spent);
+          spent += attemptSpawnIfAffordable(gameState, loc, Utility.WALL, true, budget - spent);
         }
       }
 
@@ -449,13 +456,13 @@ public class MainStrategy {
 
       //upgrade all main turrets
       for (Coords loc : Locations.Essentials.mainTurrets) {
-        spent += attemptSpawnIfAffordable(move, loc, Utility.TURRET, true, budget - spent);
+        spent += attemptSpawnIfAffordable(gameState, loc, Utility.TURRET, true, budget - spent);
       }
 
       //upgrade walls infront of middle mainTurrets
       for (int i = 1; i < Locations.Essentials.mainTurretWalls.length - 1; i++) {
         Coords loc = Locations.Essentials.mainTurretWalls[i];
-        spent += attemptSpawnIfAffordable(move, loc, Utility.WALL, true, budget - spent);
+        spent += attemptSpawnIfAffordable(gameState, loc, Utility.WALL, true, budget - spent);
       }
 
       //upgrade all turret walls
@@ -485,8 +492,8 @@ public class MainStrategy {
       for (int y = topY; y >= bottomY; y--) {
         for (int x = 0; x <= 27; x++) {
           Coords location = new Coords(x, y);
-          Unit wall = move.getWallAt(location);
-          if (move.getWallAt(location) != null && wall.type == Utility.WALL) {
+          Unit wall = gameState.getWallAt(location);
+          if (gameState.getWallAt(location) != null && wall.type == Utility.WALL) {
             spent += (int) spawnMethod.invoke(null, gameState, location, Utility.WALL, true, budget - spent);
           }
         }
@@ -496,8 +503,8 @@ public class MainStrategy {
       for (int y = topY; y >= bottomY; y--) {
         for (int x = 0; x <= 27; x++) {
           Coords location = new Coords(x, y);
-          Unit wall = move.getWallAt(location);
-          if (move.getWallAt(location) != null && wall.type == Utility.TURRET) {
+          Unit wall = gameState.getWallAt(location);
+          if (gameState.getWallAt(location) != null && wall.type == Utility.TURRET) {
             spent += (int) spawnMethod.invoke(null, gameState, location, Utility.TURRET, true, budget - spent);
           }
         }
@@ -508,13 +515,13 @@ public class MainStrategy {
 
       //      for(Coords location : Locations.extraTurretCoords) {
       //        spent += (int) spawnMethod.invoke(null, gameState, location, Utility.TURRET, false, budget - spent);
-      //        if (autoDelete) SpawnUtility.removeBuilding(move, location);
+      //        if (autoDelete) SpawnUtility.removeBuilding(gameState, location);
       //        spent += (int) spawnMethod.invoke(null, gameState, location, Utility.TURRET, true, budget - spent);
       //      }
       //
       //      for(Coords location : Locations.extraWallCoords) {
       //        spent += (int) spawnMethod.invoke(null, gameState, location, Utility.WALL, false, budget - spent);
-      //        if (autoDelete) SpawnUtility.removeBuilding(move, location);
+      //        if (autoDelete) SpawnUtility.removeBuilding(gameState, location);
       //        spent += (int) spawnMethod.invoke(null, gameState, location, Utility.WALL, true, budget - spent);
       //      }
 
@@ -549,15 +556,14 @@ public class MainStrategy {
       if (Boom.turnsUntilBoom == 0) {
         for (Coords openLocation : Locations.boomPath_right) {
           if (Boom.attack != null) {
-            Coords adjustedLoc = new Coords(Boom.attack.sideToBoom == Side.RIGHT ? openLocation.x : 27 - openLocation.x, openLocation.y);
+            Coords adjustedLoc = new Coords(Boom.attack.sideToBoom == Side.RIGHT ? openLocation.x : (27 - openLocation.x), openLocation.y);
             if (location.equals(adjustedLoc)) {
               return 0;
             }
           }
 
         }
-      }
-      else if (Boom.turnsUntilBoom < 2) {
+      } else if (Boom.turnsUntilBoom < 2) {
         //GameIO.debug().println("Prevented spawn at" +location);
         for (Coords openLocation : Locations.boomPath_right) {
           if ((openLocation.x == location.x || (27 - openLocation.x) == location.x) && openLocation.y == location.y) {

@@ -71,6 +71,11 @@ public final class Config {
         public OptionalDouble iconxScale = OptionalDouble.empty();
         public OptionalDouble iconyScale = OptionalDouble.empty();
 
+        // custom additions
+        public OptionalDouble refundPercentage = OptionalDouble.empty();
+        public OptionalDouble selfDestructStepsRequired = OptionalDouble.empty();
+        // end custom additions
+
         public Optional<UnitInformation> upgrade = Optional.empty(); // stats that will change when you upgrade
         // Not this only covers most commonly used information about a unit,
         // there are missing variables like selfDestructRange that shouldn't be needed for most strategies and leave you to add.
@@ -104,6 +109,11 @@ public final class Config {
             copyFrom.iconxScale.ifPresent(newVal -> this.iconxScale = OptionalDouble.of(newVal));
             copyFrom.iconyScale.ifPresent(newVal -> this.iconyScale = OptionalDouble.of(newVal));
 
+            // custom additions
+            copyFrom.refundPercentage.ifPresent(newVal -> this.refundPercentage = OptionalDouble.of(newVal));
+            copyFrom.selfDestructStepsRequired.ifPresent(newVal -> this.selfDestructStepsRequired = OptionalDouble.of(newVal));
+            // end custom additions
+
             copyFrom.upgrade.ifPresent(newVal -> this.upgrade = Optional.of(new UnitInformation(newVal)));
 
             copyFrom.display.ifPresent(newVal -> this.display = Optional.of(newVal));
@@ -131,6 +141,10 @@ public final class Config {
                     "speed=" + speed +
                     "cost1=" + cost1 +
                     "cost2=" + cost2 +
+                    // custom additions
+                    "refundPercentage=" + refundPercentage +
+                    "selfDestructStepsRequired=" + selfDestructStepsRequired +
+                    // end custom additions
                     "upgrade=\n" + upgrade +
                     '}';
         }
@@ -158,6 +172,11 @@ public final class Config {
                 upgrade.get().speed.ifPresent(newVal -> this.speed = OptionalDouble.of(newVal));
                 upgrade.get().cost1.ifPresent(newVal -> this.cost1 = OptionalDouble.of(newVal + (this.cost1.isPresent() ? this.cost1.getAsDouble() : 0) ));
                 upgrade.get().cost2.ifPresent(newVal -> this.cost2 = OptionalDouble.of(newVal + (this.cost2.isPresent() ? this.cost2.getAsDouble() : 0) ));
+
+                // custom additions
+                upgrade.get().refundPercentage.ifPresent(newVal -> this.refundPercentage = OptionalDouble.of(newVal));
+                upgrade.get().selfDestructStepsRequired.ifPresent(newVal -> this.selfDestructStepsRequired = OptionalDouble.of(newVal));
+                // end custom additions
 
                 this.upgrade = Optional.empty();
             }

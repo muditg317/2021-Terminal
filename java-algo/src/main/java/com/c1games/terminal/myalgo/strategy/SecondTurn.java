@@ -1,4 +1,4 @@
-package com.c1games.terminal.myalgo;
+package com.c1games.terminal.myalgo.strategy;
 
 import com.c1games.terminal.algo.Coords;
 import com.c1games.terminal.algo.FrameData;
@@ -7,6 +7,10 @@ import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.pathfinding.IllegalPathStartException;
 import com.c1games.terminal.algo.units.UnitType;
+import com.c1games.terminal.myalgo.MyAlgo;
+import com.c1games.terminal.myalgo.utility.Locations;
+import com.c1games.terminal.myalgo.utility.SpawnUtility;
+import com.c1games.terminal.myalgo.utility.Utility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +28,7 @@ public class SecondTurn {
    *
    * @param move
    */
-  static void execute(MyAlgo algoState, GameState move) {
+  public static void execute(MyAlgo algoState, GameState move) {
 
     MainStrategy.execute(algoState, move); //We may not need this SecondTurn anymore...
 

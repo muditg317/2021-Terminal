@@ -5,6 +5,7 @@ import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.units.UnitType;
+import com.c1games.terminal.myalgo.utility.Utility;
 import com.c1games.terminal.simulation.pathfinding.PathFinder;
 import com.c1games.terminal.simulation.units.*;
 
@@ -37,6 +38,7 @@ public class SimBoard {
 //  private final Map<Class<? extends SimUnit>, List<SortedSet<? extends SimUnit>>> unitSetListMap;
   private float p1Health;
   private float p2Health;
+  private Set<Coords> traversedPoints;
 
   public SimBoard() {
     unitBuckets = new HashMap<>(numBuckets);
@@ -236,6 +238,7 @@ public class SimBoard {
    * performs a complete simulation of the board state until all mobile units are dead
    */
   public void simulate() {
+    traversedPoints = new HashSet<>();
     while (mobileUnits.size() > 0) {
       if (Simulator.DEBUG) debugPrint();
 
@@ -260,6 +263,7 @@ public class SimBoard {
     for (MobileUnit mobileUnit : mobileUnits) {
       Coords prevLocation;
       if ((prevLocation = mobileUnit.attemptMove()) != null) {
+        traversedPoints.add(prevLocation);
         if (!updateUnitLocation(mobileUnit, prevLocation)) { // executes if the mobile unit moved to the same place
           if (mobileUnit.onTargetEdge()) {
             if (mobileUnit.isEnemy()) p1Health--;
@@ -279,8 +283,12 @@ public class SimBoard {
   private void simulateSelfDestruct(MobileUnit mobileUnit) {
     mobileUnit.takeDamage(mobileUnit.getHealth());
     double selfDestructDamage = mobileUnit.getStartHealth();
-    for (int x = mobileUnit.getX() - 1; x <= mobileUnit.getX() + 1; x++) {
-      for (int y = mobileUnit.getY() - 1; y <= mobileUnit.getY() + 1; y++) {
+    int minX = Math.max(mobileUnit.getX() - 1, 0);
+    int maxX = Math.min(mobileUnit.getX() + 1, MapBounds.BOARD_SIZE - 1);
+    int minY = Math.max(mobileUnit.getY() - 1, 0);
+    int maxY = Math.min(mobileUnit.getY() + 1, MapBounds.BOARD_SIZE - 1);
+    for (int x = minX; x <= maxX; x++) {
+      for (int y = minY; y <= maxY; y++) {
         for (SimUnit unit : unitListArrays[x][y]) {
           if (unit instanceof StructureUnit && unit.isEnemy() != mobileUnit.isEnemy()) {
             unit.takeDamage(selfDestructDamage);
@@ -337,12 +345,36 @@ public class SimBoard {
     }
   }
 
+  public double enemySPOnBoard() {
+    double enemySP = 0;
+    for (int x = 0; x < unitListArrays.length; x++) {
+      List<SimUnit>[] row = unitListArrays[x];
+      for (int y = 0; y < row.length; y++) {
+        List<SimUnit> units = row[y];
+        if (units.isEmpty() || units.get(0) instanceof MobileUnit) {
+          continue;
+        }
+        // there is a structure here
+        StructureUnit unit = (StructureUnit) units.get(0);
+        if (unit.isEnemy()) {
+          Config.UnitInformation info = unit.getConfig();
+          enemySP += Utility.healthToSP(info, unit.getHealth());
+        }
+      }
+    }
+    return enemySP;
+  }
+
   public float getP1Health() {
     return p1Health;
   }
 
   public float getP2Health() {
     return p2Health;
+  }
+
+  public Set<Coords> getTraversedPoints() {
+    return traversedPoints;
   }
 
   public SortedSet<SimUnit> getAllUnits() {

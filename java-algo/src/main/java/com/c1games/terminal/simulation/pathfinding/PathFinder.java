@@ -4,6 +4,7 @@ import com.c1games.terminal.algo.Coords;
 import com.c1games.terminal.algo.GameIO;
 import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.simulation.SimBoard;
+import com.c1games.terminal.simulation.Simulator;
 import com.c1games.terminal.simulation.units.MobileUnit;
 
 import java.util.*;
@@ -35,6 +36,7 @@ public class PathFinder {
    * updates the set of blocked coordinates based on a board
    */
   private static void updateBlockedListFromBoard(SimBoard board) {
+    blocked.clear();
     for (int x = 0; x < MapBounds.BOARD_SIZE; x++) {
       for (int y = 0; y < MapBounds.BOARD_SIZE; y++) {
         if (MapBounds.ARENA[x][y]) {
@@ -85,7 +87,7 @@ public class PathFinder {
   public static void updateIfNecessary(SimBoard board) {
     if (needsToUpdate(board)) {
       processBoard(board);
-      finders.get(Edge.TOP_RIGHT).debugPrint();
+      if (Simulator.DEBUG) finders.get(Edge.TOP_LEFT).debugPrint();
     }
   }
 

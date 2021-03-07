@@ -1,10 +1,14 @@
-package com.c1games.terminal.myalgo;
+package com.c1games.terminal.myalgo.attack;
 import com.c1games.terminal.algo.Coords;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.units.UnitType;
 import com.c1games.terminal.algo.GameIO;
+import com.c1games.terminal.myalgo.utility.Locations;
+import com.c1games.terminal.myalgo.utility.SpawnUtility;
+import com.c1games.terminal.myalgo.utility.StrategyUtility;
+import com.c1games.terminal.myalgo.utility.Utility;
 
 import java.util.*;
 
@@ -51,6 +55,11 @@ public class ScoutRush extends Attack {
     this.targetSide = startCoord.x <= 13 ? MapBounds.EDGE_TOP_RIGHT : MapBounds.EDGE_TOP_LEFT;
     this.clearLocations = new HashSet<>();
     this.clearLocations.add(exitingHole);
+  }
+
+  @Override
+  public double getExpectedAttackValue() {
+    return expectedDamage;
   }
 
   /**

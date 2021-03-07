@@ -1,4 +1,4 @@
-package com.c1games.terminal.myalgo;
+package com.c1games.terminal.myalgo.attack;
 
 import com.c1games.terminal.algo.Config;
 import com.c1games.terminal.algo.Coords;
@@ -9,6 +9,10 @@ import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
 import com.c1games.terminal.algo.pathfinding.IllegalPathStartException;
 import com.c1games.terminal.algo.units.UnitType;
+import com.c1games.terminal.myalgo.utility.Locations;
+import com.c1games.terminal.myalgo.utility.SpawnUtility;
+import com.c1games.terminal.myalgo.utility.StrategyUtility;
+import com.c1games.terminal.myalgo.utility.Utility;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,6 +34,11 @@ public class DemolisherRun extends Attack {
     this.numDemolishers = numDemolishers;
     this.clearLocations = new HashSet<>(Arrays.asList(expectedDefense.path));
     this.clearLocations.add(hookHole);
+  }
+
+  @Override
+  public double getExpectedAttackValue() {
+    return expectedDefense.structureHealth;
   }
 
 
@@ -60,7 +69,7 @@ public class DemolisherRun extends Attack {
    * @param availableMP
    * @return
    */
-  static DemolisherRun evaluate(GameState move, double availableMP, float minDamage) {
+  public static DemolisherRun evaluate(GameState move, double availableMP, float minDamage) {
     Map<Utility.Pair<Coords, Coords>, ExpectedDefense> damages = new HashMap<>();
 
     Config.UnitInformation demolisherInfo = move.config.unitInformation.get(UnitType.Demolisher.ordinal());
@@ -145,7 +154,7 @@ public class DemolisherRun extends Attack {
                     }
                   }
                   float damageDone = initialTowerHealth - attacker.health;
-                  spTaken += (float) Utility.damageToSp(attacker, damageDone);
+                  spTaken += (float) Utility.healthToSP(attacker.unitInformation, damageDone);
                 }
 
                 if (demolisherHealths.size() > 0) {

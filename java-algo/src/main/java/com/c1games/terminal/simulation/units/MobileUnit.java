@@ -17,7 +17,7 @@ public abstract class MobileUnit extends SimUnit {
   private int framesSinceMoved;
   private int timesMoved;
 
-  public MobileUnit(boolean isEnemy, String id, double startHealth, double range, double walkerDamage, double structureDamage, double speed, Coords location, double health, Direction prevDirection) {
+  protected MobileUnit(boolean isEnemy, String id, double startHealth, double range, double walkerDamage, double structureDamage, double speed, Coords location, double health, Direction prevDirection) {
     super(isEnemy, id, startHealth, range, walkerDamage, structureDamage, location, health);
     this.speed = (int) Math.round(1/speed);
     this.prevDirection = prevDirection;
