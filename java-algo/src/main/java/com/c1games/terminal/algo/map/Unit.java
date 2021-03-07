@@ -16,20 +16,26 @@ public class Unit {
     public boolean removing = false;
     public boolean upgraded = false;
 
-    public Unit(UnitType type, float health, String id, PlayerId owner, Config config) {
-        unitInformation = new Config.UnitInformation(config.unitInformation.get(type.ordinal()));
+    public Unit(UnitType type, float health, String id, PlayerId owner, Config.UnitInformation unitConfig) {
+        unitInformation = new Config.UnitInformation(unitConfig);
         this.type = type;
         this.health = health;
         this.id = id;
         this.owner = owner;
     }
 
+    public Unit(UnitType type, float health, String id, PlayerId owner, Config config) {
+        this(type, health, id, owner, config.unitInformation.get(type.ordinal()));
+    }
+
     public Unit(UnitType type, PlayerId owner, Config config) {
-        unitInformation = new Config.UnitInformation(config.unitInformation.get(type.ordinal()));
-        this.type = type;
-        this.health = (float) unitInformation.startHealth.orElseThrow();
-        this.id = "new unit id";
-        this.owner = owner;
+        this(type, (float) config.unitInformation.get(type.ordinal()).startHealth.orElseThrow(), "new unit id", owner, config);
+    }
+
+    public Unit(Unit toCopy) {
+        this(toCopy.type, toCopy.health, toCopy.id, toCopy.owner, toCopy.unitInformation);
+        if (toCopy.upgraded) upgraded = true;
+        if (toCopy.removing) removing = true;
     }
 
     public void upgrade() {

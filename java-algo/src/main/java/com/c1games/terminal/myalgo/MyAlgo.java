@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  */
 public class MyAlgo implements GameLoop {
 
-  private static final int NUM_EARLY_GAME_TURNS = 5;
+  private static final int NUM_EARLY_GAME_TURNS = 0;
 
   public static final Random rand = new Random();
   public static final HashMap<Coords, Integer> scoredOnLocations = new HashMap<>();
@@ -68,6 +68,7 @@ public class MyAlgo implements GameLoop {
   @Override
   public void onTurn(GameIO io, GameState move) {
     GameIO.debug().println("Performing turn " + move.data.turnInfo.turnNumber + " of your custom algo strategy");
+    GameIO.debug().printf("My stats: %s\n", move.data.p1Stats);
     GameIO.debug().printf("Sims run: %d\n", Simulator.simCount);
 
     if (lastAttack != null) {

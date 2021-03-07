@@ -7,7 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 public enum Edge {
-  TOP_RIGHT, TOP_LEFT, BOTTOM_LEFT, BOTTOM_RIGHT;
+  TOP_RIGHT(0), TOP_LEFT(1), BOTTOM_LEFT(2), BOTTOM_RIGHT(3);
+
+  private boolean top;
+  private boolean right;
+
+  Edge(int index) {
+    top = index % 3 == 0;
+    right = index <= 1;
+  }
 
   private static final int[] distanceOffsets = {41,14,-13,14};
   private static final List<Edge> edges = List.of(Edge.values());
@@ -37,11 +45,11 @@ public enum Edge {
   }
 
   public boolean isTop() {
-    return this == TOP_LEFT || this == TOP_RIGHT; // ordinal <= 1
+    return top; // ordinal <= 1
   }
 
   public boolean isRight() {
-    return this == TOP_RIGHT || this == BOTTOM_RIGHT; // ordinal%3 == 0
+    return right; // ordinal%3 == 0
   }
 
   /**

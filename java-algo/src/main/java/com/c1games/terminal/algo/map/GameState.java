@@ -33,6 +33,10 @@ public class GameState {
     public List<SpawnCommand> deployStack = new ArrayList<>();
 
     public GameState(Config config, FrameData data) {
+        this(config, data, true);
+    }
+
+    public GameState(Config config, FrameData data, boolean useData) {
         this.config = config;
         this.data = data;
 
@@ -44,6 +48,10 @@ public class GameState {
             for (int j = 0; j < MapBounds.BOARD_SIZE; j++) {
                 allUnits[i][j] = new ArrayList<Unit>();
             }
+        }
+
+        if (!useData) {
+            return;
         }
 
         // for each player

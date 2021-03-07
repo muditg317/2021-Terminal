@@ -12,6 +12,7 @@ import com.c1games.terminal.algo.units.UnitType;
 import com.c1games.terminal.algo.units.UnitTypeAtlas;
 import com.google.gson.Gson;
 
+import java.awt.*;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -196,22 +197,46 @@ public class Utility {
     }
   }
 
-  public static GameState duplicateState(GameState state) {
-    Gson frameDataGSON = FrameData.gson(new UnitTypeAtlas(state.config));
-    FrameData copiedData = frameDataGSON.fromJson(frameDataGSON.toJson(state.data), FrameData.class);
+  public static FrameData duplicateFrameData(FrameData data) {
+//    Gson frameDataGSON = FrameData.gson(new UnitTypeAtlas(state.config));
+//    FrameData copiedData = frameDataGSON.fromJson(frameDataGSON.toJson(data), FrameData.class);
 
-    GameState duplicate = new GameState(state.config, copiedData);
+    FrameData copiedData = new FrameData();
+    copiedData.turnInfo = new FrameData.TurnInfo();
+    copiedData.turnInfo.phase = data.turnInfo.phase;
+    copiedData.turnInfo.turnNumber = data.turnInfo.turnNumber;
+    copiedData.turnInfo.actionPhaseFrameNumber = data.turnInfo.actionPhaseFrameNumber;
+
+    copiedData.p1Stats = new FrameData.PlayerStats();
+    copiedData.p1Stats.integrity = data.p1Stats.integrity;
+    copiedData.p1Stats.cores = data.p1Stats.cores;
+    copiedData.p1Stats.bits = data.p1Stats.bits;
+    copiedData.p1Stats.timeTakenLastTurnMillis = data.p1Stats.timeTakenLastTurnMillis;
+
+    copiedData.p2Stats = new FrameData.PlayerStats();
+    copiedData.p2Stats.integrity = data.p2Stats.integrity;
+    copiedData.p2Stats.cores = data.p2Stats.cores;
+    copiedData.p2Stats.bits = data.p2Stats.bits;
+    copiedData.p2Stats.timeTakenLastTurnMillis = data.p2Stats.timeTakenLastTurnMillis;
+
+    // TODO: duplicate the other data as well if desired
+
+    return copiedData;
+  }
+
+  public static GameState duplicateState(GameState state) {
+
+    FrameData copiedData = duplicateFrameData(state.data);
+
+    GameState duplicate = new GameState(state.config, copiedData, false);
     for (int _x = 0; _x < MapBounds.BOARD_SIZE; _x++) {
       for (int _y = 0; _y < MapBounds.BOARD_SIZE; _y++) {
-        duplicate.allUnits[_x][_y] = state.allUnits[_x][_y].stream().map(unit -> {
-          Unit newUnit = new Unit(unit.type, unit.health, unit.id, unit.owner, duplicate.config);
-          if (unit.upgraded) newUnit.upgrade();
-          return newUnit;
-        }).collect(Collectors.toList());
+        duplicate.allUnits[_x][_y] = state.allUnits[_x][_y].stream().map(Unit::new).collect(Collectors.toList());
       }
     }
     duplicate.buildStack.addAll(state.buildStack);
     duplicate.deployStack.addAll(state.deployStack);
+
     return duplicate;
   }
 

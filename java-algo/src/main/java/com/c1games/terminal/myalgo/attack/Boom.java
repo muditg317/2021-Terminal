@@ -355,6 +355,7 @@ public class Boom {
 
     GameIO.debug().println("====EVALUATING BOOM====");
     GameIO.debug().printf("MP: %.2f, requiredDamage: %.2f\n", availableMP, minDamage);
+    GameIO.debug().printf("Sims run: %d\n", Simulator.simCount);
 
     Map<Boom, Double> damages = new HashMap<>();
     for (Side side : Side.values()) {

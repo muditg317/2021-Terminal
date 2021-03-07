@@ -15,12 +15,18 @@ public class PathFinder {
 
   private static final Set<Coords> blocked = new HashSet<>();
 
-  private static final Map<Edge, PathFinder> finders = Map.ofEntries(
-      new AbstractMap.SimpleEntry<>(Edge.TOP_RIGHT, new PathFinder(Edge.TOP_RIGHT)),
-      new AbstractMap.SimpleEntry<>(Edge.TOP_LEFT, new PathFinder(Edge.TOP_LEFT)),
-      new AbstractMap.SimpleEntry<>(Edge.BOTTOM_LEFT, new PathFinder(Edge.BOTTOM_LEFT)),
-      new AbstractMap.SimpleEntry<>(Edge.BOTTOM_RIGHT, new PathFinder(Edge.BOTTOM_RIGHT))
-  );
+  private static final EnumMap<Edge, PathFinder> finders = new EnumMap<>(Map.ofEntries(
+      new AbstractMap.SimpleImmutableEntry<>(Edge.TOP_RIGHT, new PathFinder(Edge.TOP_RIGHT)),
+      new AbstractMap.SimpleImmutableEntry<>(Edge.TOP_LEFT, new PathFinder(Edge.TOP_LEFT)),
+      new AbstractMap.SimpleImmutableEntry<>(Edge.BOTTOM_LEFT, new PathFinder(Edge.BOTTOM_LEFT)),
+      new AbstractMap.SimpleImmutableEntry<>(Edge.BOTTOM_RIGHT, new PathFinder(Edge.BOTTOM_RIGHT))
+  ));
+//  private static final Map<Edge, PathFinder> finders = Map.ofEntries(
+//      new AbstractMap.SimpleEntry<>(Edge.TOP_RIGHT, new PathFinder(Edge.TOP_RIGHT)),
+//      new AbstractMap.SimpleEntry<>(Edge.TOP_LEFT, new PathFinder(Edge.TOP_LEFT)),
+//      new AbstractMap.SimpleEntry<>(Edge.BOTTOM_LEFT, new PathFinder(Edge.BOTTOM_LEFT)),
+//      new AbstractMap.SimpleEntry<>(Edge.BOTTOM_RIGHT, new PathFinder(Edge.BOTTOM_RIGHT))
+//  );
 
   Edge startEdge;
   Edge targetEdge;
@@ -86,9 +92,16 @@ public class PathFinder {
    */
   public static void updateIfNecessary(SimBoard board) {
     if (needsToUpdate(board)) {
-      processBoard(board);
-      if (Simulator.DEBUG) finders.get(Edge.TOP_LEFT).debugPrint();
+      forceUpdate(board);
     }
+  }
+
+  /**
+   * forces the path finder to update with the specified board
+   */
+  public static void forceUpdate(SimBoard board) {
+    processBoard(board);
+    if (Simulator.DEBUG) finders.get(Edge.TOP_LEFT).debugPrint();
   }
 
   /**
