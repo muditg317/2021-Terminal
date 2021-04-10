@@ -231,7 +231,12 @@ public class Utility {
     GameState duplicate = new GameState(state.config, copiedData, false);
     for (int _x = 0; _x < MapBounds.BOARD_SIZE; _x++) {
       for (int _y = 0; _y < MapBounds.BOARD_SIZE; _y++) {
-        duplicate.allUnits[_x][_y] = state.allUnits[_x][_y].stream().map(Unit::new).collect(Collectors.toList());
+        List<Unit> unitList = new ArrayList<>(state.allUnits[_x][_y].size());
+        List<Unit> units = state.allUnits[_x][_y];
+        for (int i = 0, unitsSize = units.size(); i < unitsSize; i++) {
+          unitList.add(new Unit(units.get(i)));
+        }
+        duplicate.allUnits[_x][_y] = unitList;
       }
     }
     duplicate.buildStack.addAll(state.buildStack);

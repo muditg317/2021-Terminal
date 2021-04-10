@@ -14,16 +14,13 @@ public class Interceptor extends MobileUnit {
   private static final double structureDamage = 0;
   private static final double speed = 4; //num frames to move
 
-  private final Function<SimUnit, Boolean> interactiblityFilter;
-
   Interceptor(Unit interceptor, Coords location) {
     super(interceptor.owner == PlayerId.Player2, interceptor.id, interceptor.unitInformation.startHealth.orElse(Interceptor.startHealth), interceptor.unitInformation.attackRange.orElse(Interceptor.range), interceptor.unitInformation.attackDamageWalker.orElse(Interceptor.walkerDamage), interceptor.unitInformation.attackDamageTower.orElse(Interceptor.structureDamage), interceptor.unitInformation.speed.orElse(Interceptor.speed), location, interceptor.health, Direction.SPAWNED);
-    interactiblityFilter = simUnit -> simUnit instanceof MobileUnit && simUnit.isEnemy() != this.isEnemy();
   }
 
   @Override
-  public Function<SimUnit, Boolean> getInteractabilityFilter() {
-    return interactiblityFilter;
+  public boolean isInteractable(SimUnit simUnit) {
+    return simUnit instanceof MobileUnit && simUnit.isEnemy() != this.isEnemy();
   }
 
 

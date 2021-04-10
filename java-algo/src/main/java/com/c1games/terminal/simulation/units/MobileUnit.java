@@ -13,7 +13,7 @@ public abstract class MobileUnit extends SimUnit {
 
   private final Edge targetEdge;
   private Direction prevDirection;
-  private Set<StructureUnit> previouslyInRange;
+//  private final Set<StructureUnit> previouslyInRange;
   private int framesSinceMoved;
   private int timesMoved;
 
@@ -21,7 +21,7 @@ public abstract class MobileUnit extends SimUnit {
     super(isEnemy, id, startHealth, range, walkerDamage, structureDamage, location, health);
     this.speed = (int) Math.round(1/speed);
     this.prevDirection = prevDirection;
-    this.previouslyInRange = new HashSet<>();
+//    this.previouslyInRange = new HashSet<>();
     this.framesSinceMoved = this.speed;
     this.timesMoved = 0;
     this.targetEdge = Edge.fromStart(location);

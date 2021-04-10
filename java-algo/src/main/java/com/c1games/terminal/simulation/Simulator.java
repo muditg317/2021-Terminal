@@ -1,6 +1,7 @@
 package com.c1games.terminal.simulation;
 
 import com.c1games.terminal.algo.Coords;
+import com.c1games.terminal.algo.GameIO;
 import com.c1games.terminal.algo.map.GameState;
 import com.c1games.terminal.algo.map.SpawnCommand;
 import com.c1games.terminal.algo.units.UnitType;
@@ -12,6 +13,7 @@ public class Simulator {
 
   public static SimBoard simulate(GameState state) {
     simCount++;
+    GameIO.debug().printf("sim:%d|",simCount);
     // prepare board object
     SimBoard board = new SimBoard(state, false);
 

@@ -304,7 +304,9 @@ public class PathFinder {
   private Coords getNextMove(Coords curr, Direction prevDirection) {
     Coords bestNeighbor = curr;
     int bestPathlength = pathLengths[curr.x][curr.y];
-    for (Coords neighbor : curr.neighbors()) {
+    List<Coords> neighbors = curr.neighbors();
+    for (int i = 0, neighborsSize = neighbors.size(); i < neighborsSize; i++) {
+      Coords neighbor = neighbors.get(i);
       if (MapBounds.inArena(neighbor) && !blocked.contains(neighbor) && (pathLengths[neighbor.x][neighbor.y] < bestPathlength || pathLengths[neighbor.x][neighbor.y] == bestPathlength && (bestNeighbor == curr || compareDirections(curr, prevDirection, neighbor, bestNeighbor) < 0))) {
         bestNeighbor = neighbor;
         bestPathlength = pathLengths[neighbor.x][neighbor.y];

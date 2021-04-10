@@ -184,19 +184,19 @@ public class HookAttack extends Attack {
 
           float spTaken = 0;
 
-          for (int x = 0; x < MapBounds.BOARD_SIZE; x++) {
-            for (int y = 0; y < MapBounds.BOARD_SIZE; y++) {
-              Unit structure = testState.getWallAt(new Coords(x,y));
-              if (structure != null) {
-                double newHealth = 0;
-                StructureUnit simStructure = simulationResult.getStructureAt(new Coords(x,y));
-                if (simStructure != null) {
-                  newHealth = simStructure.getHealth();
-                }
-                spTaken += Utility.healthToSP(structure.unitInformation, structure.health - newHealth);
-              }
-            }
-          }
+//          for (int x = 0; x < MapBounds.BOARD_SIZE; x++) {
+//            for (int y = 0; y < MapBounds.BOARD_SIZE; y++) {
+//              Unit structure = testState.getWallAt(new Coords(x,y));
+//              if (structure != null) {
+//                double newHealth = 0;
+//                StructureUnit simStructure = simulationResult.getStructureAt(new Coords(x,y));
+//                if (simStructure != null) {
+//                  newHealth = simStructure.getHealth();
+//                }
+//                spTaken += Utility.healthToSP(structure.unitInformation, structure.health - newHealth);
+//              }
+//            }
+//          }
 
           spTaken = (float) (oldSP - newSP);
 

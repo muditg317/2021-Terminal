@@ -42,7 +42,7 @@ public class Coords {
 
     @Override
     public int hashCode() {
-        return x + y * MapBounds.BOARD_SIZE;
+        return x + y * 31;//MapBounds.BOARD_SIZE;
     }
 
     @Override

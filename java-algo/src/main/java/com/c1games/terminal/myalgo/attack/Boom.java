@@ -1,6 +1,5 @@
 package com.c1games.terminal.myalgo.attack;
 
-import com.c1games.terminal.algo.Config;
 import com.c1games.terminal.algo.Coords;
 import com.c1games.terminal.algo.GameIO;
 import com.c1games.terminal.algo.PlayerId;
@@ -279,24 +278,27 @@ public class Boom {
   /**
    * Returns the weaker side (Side.LEFT, Side.RIGHT) and the num of estimated bits needed to break the wall
    * @param move  the game state for which we're predicting
+   * @param useSimulator
    * @return Boom with where to attack and the related units needed
    */
-  static Boom attackThreshold(GameState move) {
-//    UnitCounts leftUnitCounts = enemyDefenseHeuristic(move, Side.LEFT);
-//    int leftCost = leftUnitCounts.cost;
-//
-//    UnitCounts rightUnitCounts = enemyDefenseHeuristic(move, Side.RIGHT);
-//    int rightCost = rightUnitCounts.cost;
-//
-//    int enemyHealth = (int) move.data.p2Stats.integrity;
-//    int minDamage = Math.min(10, enemyHealth);
-//
-//    Side weakerSide = leftCost < rightCost ? Side.LEFT : Side.RIGHT;
-//    UnitCounts correctUnitCounts = leftCost < rightCost ? leftUnitCounts : rightUnitCounts;
-//    correctUnitCounts.numScouts = minDamage;
-//    correctUnitCounts.cost += minDamage;
-//    return new Boom(move, weakerSide, correctUnitCounts.numInterceptors, UnitType.Scout, correctUnitCounts.numScouts);
-    return bestBoom(move, move.data.p1Stats.bits, move.data.p2Stats.integrity / 4);
+  static Boom attackThreshold(GameState move, boolean useSimulator) {
+    if (useSimulator) {
+      return bestBoom(move, move.data.p1Stats.bits, move.data.p2Stats.integrity / 4);
+    }
+    UnitCounts leftUnitCounts = enemyDefenseHeuristic(move, Side.LEFT);
+    int leftCost = leftUnitCounts.cost;
+
+    UnitCounts rightUnitCounts = enemyDefenseHeuristic(move, Side.RIGHT);
+    int rightCost = rightUnitCounts.cost;
+
+    int enemyHealth = (int) move.data.p2Stats.integrity;
+    int minDamage = Math.min(10, enemyHealth);
+
+    Side weakerSide = leftCost < rightCost ? Side.LEFT : Side.RIGHT;
+    UnitCounts correctUnitCounts = leftCost < rightCost ? leftUnitCounts : rightUnitCounts;
+    correctUnitCounts.numScouts = minDamage;
+    correctUnitCounts.cost += minDamage;
+    return new Boom(move, weakerSide, correctUnitCounts.numInterceptors, UnitType.Scout, correctUnitCounts.numScouts);
   }
 
   /**
@@ -313,7 +315,7 @@ public class Boom {
     duplicate.data.p1Stats.cores += 5 * turns;
     duplicate.data.p1Stats.bits = extrapolateFutureMP(move, turns, 0);
 
-    return attackThreshold(duplicate);
+    return attackThreshold(duplicate, turns == 1); // only run simulator for deciding the immediate next turn's boom
   }
 
   /**

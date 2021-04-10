@@ -4,13 +4,9 @@ import com.c1games.terminal.algo.Config;
 import com.c1games.terminal.algo.Coords;
 import com.c1games.terminal.algo.map.MapBounds;
 import com.c1games.terminal.algo.map.Unit;
-import com.c1games.terminal.algo.units.UnitType;
 import com.c1games.terminal.simulation.pathfinding.Edge;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 
 public abstract class SimUnit {
   private static int defaultID = 1000;
@@ -42,6 +38,8 @@ public abstract class SimUnit {
     this.structureDamage = structureDamage;
     this.location = location;
     this.health = health;
+
+//    this.interactable = List.of();
   }
 
   public static SimUnit fromAPIUnit(Unit unit, int x, int y) {
@@ -72,7 +70,7 @@ public abstract class SimUnit {
     return simUnit;
   }
 
-  public abstract Function<SimUnit, Boolean> getInteractabilityFilter();
+  public abstract boolean isInteractable(SimUnit simUnit);
 
   /**
    * tests if another unit is interactable with the calling unit
@@ -80,7 +78,7 @@ public abstract class SimUnit {
    * @param other the oter unit
    */
   public boolean testUnitInteractable(SimUnit other) {
-    return this.getInteractabilityFilter().apply(other) && this.inRange(other);
+    return this.isInteractable(other) && this.inRange(other);
   }
 
   public boolean inRange(SimUnit other) {

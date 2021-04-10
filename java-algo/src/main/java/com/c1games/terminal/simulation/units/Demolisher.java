@@ -14,16 +14,14 @@ public class Demolisher extends MobileUnit {
   private static final double structureDamage = 8;
   private static final double speed = 2; //num frames to move
 
-  private final Function<SimUnit, Boolean> interactiblityFilter;
 
   Demolisher(Unit demolisher, Coords location) {
     super(demolisher.owner == PlayerId.Player2, demolisher.id, demolisher.unitInformation.startHealth.orElse(Demolisher.startHealth), demolisher.unitInformation.attackRange.orElse(Demolisher.range), demolisher.unitInformation.attackDamageWalker.orElse(Demolisher.walkerDamage), demolisher.unitInformation.attackDamageTower.orElse(Demolisher.structureDamage), demolisher.unitInformation.speed.orElse(Demolisher.speed), location, demolisher.health, Direction.SPAWNED);
-    interactiblityFilter = simUnit -> simUnit.isEnemy() != this.isEnemy();
   }
 
   @Override
-  public Function<SimUnit, Boolean> getInteractabilityFilter() {
-    return interactiblityFilter;
+  public boolean isInteractable(SimUnit simUnit) {
+    return simUnit.isEnemy() != this.isEnemy();
   }
 
 }
